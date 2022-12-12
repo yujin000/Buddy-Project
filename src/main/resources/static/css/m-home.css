@@ -1,0 +1,75 @@
+@media (max-width: 600px) {
+  body {
+    background: thistle;
+  }
+
+  .wrap {
+    width: 100%;
+    margin-top: 20vw;
+  }
+  .logo {
+    width: 110px;
+    height: 110px;
+  }
+  .slogan {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  form {
+    margin-top: 20px;
+    width: 90vw;
+  }
+
+  input[class^="login"] {
+    width: 100%;
+    height: 50px;
+  }
+
+  .loginId {
+    margin-bottom: 10px;
+  }
+
+  a[class^="a"] {
+    font-size: 0.9rem;
+    color: #222;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+
+  .aLeft {
+    float: left;
+    margin-left: 10px;
+  }
+
+  .aRight {
+    float: right;
+    margin-right: 10px;
+    font-size: 1rem;
+  }
+  .loginBtn {
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .snsLogin {
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+  }
+
+  #goSignup {
+    color: #000;
+    font-size: 1rem;
+    display: block;
+    text-align: center;
+  }
+}

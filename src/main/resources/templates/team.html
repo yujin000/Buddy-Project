@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>당신의 동료, 영원한 친구 buddy</title>
+    <link rel="stylesheet" href="css/team.css" />
+    <link rel="stylesheet" href="css/moblie/m-team.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="header">
+        <div class="logo">
+          <a href="">
+            <img src="" alt="" />
+            logo
+          </a>
+        </div>
+        <ul id="teamList" class="teamList" style="overflow: hidden">
+          <li>
+            <a href="team.html">teamList1</a
+            ><button id="toggle" class="headerToggle">toggle</button>
+          </li>
+          <li><a href="team.html">teamList2</a></li>
+          <li><a href="team.html">teamList2</a></li>
+          <li><a href="team.html">teamList2</a></li>
+        </ul>
+        <span id="menu" class="iconMenu">menu</span>
+      </div>
+      <div class="main">
+        <aside>
+          <div id="profile" class="asideTitle">
+            <img src="" alt="" />
+            <p><a href="">userName</a></p>
+            <button><a href="">로그아웃</a></button>
+          </div>
+          <div id="topic" class="asideList">
+            <div class="asideTitle">토픽</div>
+            <div class="asideItem">
+              <ul>
+                <li>list</li>
+                <li>list</li>
+                <li>list</li>
+                <li>list</li>
+              </ul>
+            </div>
+          </div>
+
+          <div id="chat" class="asideList">
+            <div class="asideTitle">채팅</div>
+            <div class="asideItem">
+              <ul>
+                <li>list</li>
+                <li>list</li>
+                <li>list</li>
+                <li>list</li>
+              </ul>
+            </div>
+          </div>
+          <div class="asideTool">
+            <div class="asideTitle">드라이브</div>
+            <div class="asideTitle">캘린더</div>
+          </div>
+        </aside>
+        <section></section>
+      </div>
+    </div>
+    <script>
+      $(document).ready(function () {
+        let toggle = false;
+
+        $("#toggle").click(function () {
+          if (toggle == false) {
+            $("#teamList").css("overflow", "visible");
+            let toggle = true;
+          } else if (toggle == true) {
+            $("#teamList").css("overflow", "hidden");
+            let toggle = false;
+          } else {
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -20,6 +20,12 @@ public class MemberController {
         return "error";
     }
 
+    // 회원가입 페이지 이동
+    @RequestMapping("toSignUp")
+    public String toSignUp() throws Exception{
+        return "signup";
+    }
+
     // 회원가입 (signUp)
     @RequestMapping("signUp")
     public String signUp(MemberDTO memberDto) throws Exception{

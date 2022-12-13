@@ -76,7 +76,7 @@ p[class*="Hidden"] {
   text-align: center;
 }
 /* 휴대폰번호 css */
-#inputPhone,#phoneCheckVal{
+.inputPhone,#phoneCheckVal{
   width:300px;
 }
 /* 휴대폰 인증 css */

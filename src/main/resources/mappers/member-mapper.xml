@@ -4,7 +4,32 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.fivet.buddy.mapper.MemberMapper">
-    <select id="test" resultType="Integer">
-        select 1 from dual
+    <!-- 일반 회원가입 -->
+    <insert id="signUp">
+        insert into
+            member
+        values
+            (member_seq.nextval, #{member_id}, #{member_pw}, #{member_name}, #{member_phone}, sysdate, 'normal')
+
+    </insert>
+
+    <!-- 계정 ID/PW 체크 -->
+    <select id="isAccountExist" resultType="boolean">
+        select
+            case when count(*) = 1 then 1 else 0 end
+        from
+            member
+        where
+            member_id = #{memberId} and member_pw = #{memberPw} and member_logtype = 'normal'
+    </select>
+
+    <!-- 계정 정보 출력 -->
+    <select id="selectAccountInfo" resultType="com.fivet.buddy.dto.MemberDTO">
+        select
+            *
+        from
+            member
+        where
+            member_id = #{memberId} and member_pw = #{memberPw} and member_logtype = 'normal'
     </select>
 </mapper>

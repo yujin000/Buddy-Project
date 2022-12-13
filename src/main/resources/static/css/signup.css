@@ -75,3 +75,12 @@ p[class*="Hidden"] {
   margin-top: 10px;
   text-align: center;
 }
+/* 휴대폰번호 css */
+#inputPhone,#phoneCheckVal{
+  width:300px;
+}
+/* 휴대폰 인증 css */
+#Timer{
+  width:50px;
+  border:none;
+}

@@ -9,8 +9,7 @@
         insert into
             member
         values
-            (member_seq.nextval, #{member_id}, #{member_pw}, #{member_name}, #{member_phone}, sysdate, 'normal')
-
+            (member_seq.nextval, #{memberId}, #{memberPw}, #{memberName}, #{memberPhone}, sysdate, #{memberLogtype})
     </insert>
 
     <!-- 계정 ID/PW 체크 -->
@@ -20,7 +19,27 @@
         from
             member
         where
-            member_id = #{memberId} and member_pw = #{memberPw} and member_logtype = 'normal'
+            member_id = #{memberId} and member_pw = #{memberPw} and member_logtype = #{memberLogtype}
+    </select>
+
+    <!-- 카카오 로그인 시 회원 체크-->
+    <select id="isKakaoExist" resultType="boolean">
+        select
+            case when count(*) = 1 then 1 else 0 end
+        from
+            member
+        where
+            member_id = #{memberId} and member_name = #{memberName} and member_logtype = #{memberLogtype}
+    </select>
+
+    <!-- 네이버 로그인 시 회원 체크 -->
+    <select id="isNaverExist" resultType="boolean">
+        select
+            case when count(*) = 1 then 1 else 0 end
+        from
+            member
+        where
+            member_id = #{memberId} and member_name = #{memberName} and member_logtype = 'naver'
     </select>
 
     <!-- 계정 정보 출력 -->
@@ -30,6 +49,26 @@
         from
             member
         where
-            member_id = #{memberId} and member_pw = #{memberPw} and member_logtype = 'normal'
+            member_id = #{memberId} and member_pw = #{memberPw} and member_logtype = #{memberLogtype}
+    </select>
+
+    <!-- 계정 정보 출력(카카오 / 네이버) -->
+    <select id="selectAccountInfoForNK" resultType="com.fivet.buddy.dto.MemberDTO">
+        select
+            *
+        from
+            member
+        where
+            member_id = #{memberId} and member_name = #{memberName} and member_logtype = #{memberLogtype}
+    </select>
+
+    <!-- 로그인 상태일 때 마이페이지로 돌려보내기 -->
+    <select id="selectMyInfo" resultType="com.fivet.buddy.dto.MemberDTO">
+        select
+            *
+        from
+            member
+        where
+            member_seq = #{value}
     </select>
 </mapper>

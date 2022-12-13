@@ -12,10 +12,7 @@ public class MemberDAO {
     private MemberMapper memberMapper;
 
     // 회원가입 (signUp)
-    public void signUp(MemberDTO memberDto) throws Exception{
+    public void signUp(MemberDTO memberDto) throws Exception {
         memberMapper.signUp(memberDto);
-    }
-    public int test() throws Exception{
-        return memberMapper.test();
     }
 }

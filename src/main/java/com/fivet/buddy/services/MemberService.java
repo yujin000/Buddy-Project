@@ -15,7 +15,4 @@ public class MemberService {
         memberDao.signUp(memberDto);
     }
 
-    public int test() throws Exception{
-        return memberDao.test();
-    }
 }

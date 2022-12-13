@@ -27,10 +27,5 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @RequestMapping("test")
-    public String test() throws Exception{
-        int result = memberService.test();
-        System.out.println(result);
-        return "redirect:/";
-    }
+
 }

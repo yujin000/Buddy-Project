@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>당신의 동료, 영원한 친구 buddy</title>
-    <link rel="stylesheet" href="css/mypage.css" />
-    <link rel="stylesheet" href="css/moblie/m-mypage.css" />
+    <link rel="stylesheet" href="/static/css/mypage.css" />
+    <link rel="stylesheet" href="/static/css/moblie/m-mypage.css" />
     <script
       src="https://code.jquery.com/jquery-3.6.1.min.js"
       integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
@@ -24,8 +24,8 @@
         <div class="myProfile">
           <img src="" alt="" id="myImg" class="profileImg" />
           <div class="info">
-            <h1 id="myName" class="name">userName</h1>
-            <p id="myEmail" class="email">userEmail</p>
+            <h1 id="myName" class="name" th:text="${memberInfo.getMemberName()}">userName</h1>
+            <p id="myEmail" class="email" th:text="${memberInfo.getMemberId()}">userEmail</p>
           </div>
           <button type="button" id="logout" class="floatBtn">
             <a href="home.html">로그아웃</a>

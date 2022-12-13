@@ -1,0 +1,113 @@
+@import url(reset.css);
+
+.wrap {
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+}
+.header {
+  width: 100%;
+  height: 50px;
+  border: 1px dashed #000;
+  display: flex;
+  position: fixed;
+  z-index: 10;
+}
+.logo {
+  width: 120px;
+  height: 100%;
+  margin-right: 10px;
+  border: 1px solid magenta;
+}
+
+.teamList {
+  width: 150px;
+  border: 1px solid magenta;
+}
+
+.teamList > li {
+  width: 100%;
+  height: 50px;
+  line-height: 45px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.hiddenList ul > li {
+  width: 100%;
+  height: 50px;
+  line-height: 45px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.iconMenu {
+  width: 50px;
+  height: 50px;
+  right: 0px;
+  border: 1px solid magenta;
+  position: absolute;
+  cursor: pointer;
+}
+
+.main {
+  width: 100vw;
+  height: 100%;
+  padding-top: 50px;
+  border: 1px solid black;
+  z-index: 1;
+  display: flex;
+}
+
+aside {
+  width: 300px;
+  border: 1px dashed #000;
+  background: silver;
+}
+
+.asideList {
+  max-height: 250px;
+  overflow: scroll;
+}
+
+.asideTitle {
+  width: 100%;
+  height: 50px;
+  border: 1px solid magenta;
+  display: flex;
+}
+
+.asideItem {
+  width: 100%;
+  border: 1px solid magenta;
+}
+
+.asideItem ul > li {
+  width: 100%;
+  height: 50px;
+  border: 1px solid yellowgreen;
+}
+
+.asideTool {
+  width: 100%;
+  height: 100px;
+  background: skyblue;
+  bottom: 1px;
+}
+
+.asideList::-webkit-scrollbar {
+  width: 8px; /* 스크롤바의 너비 */
+}
+
+.asideList::-webkit-scrollbar-thumb {
+  height: 10%; /* 스크롤바의 길이 */
+  background: #555; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
+}
+
+.asideList::-webkit-scrollbar-track {
+  background: rgba(33, 122, 244, 0); /*스크롤바 뒷 배경 색상*/
+}

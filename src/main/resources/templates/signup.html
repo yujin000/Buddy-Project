@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <link rel="stylesheet" href="css/signup.css" />
+    <link rel="stylesheet" href="css/moblie/m-signup.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="logo">
+        <img src="" alt="" />
+      </div>
+      <h1>회원가입</h1>
+      <form action="">
+        <p id="titleName" class="titleName">이름</p>
+        <input type="text" name="inputName" id="name" class="inputName" />
+        <p id="titleEmail" class="titleEmail">이메일</p>
+        <input type="text" name="inputEmail" id="email" class="inputEmail" />
+        <p id="titlePw" class="titlePw">비밀번호</p>
+        <p id="comment" class="comment">
+          비밀번호는 8~20자 영문,숫자,특수문자로 입력하세요
+        </p>
+        <input type="text" name="pw" id="inputPw" class="inputPw" />
+        <p class="commentHidden">
+          영문,숫자,특수문자를 조합한 8자 이상이여야 합니다!
+        </p>
+        <p id="titleTest" class="titleTest">비밀번호 확인</p>
+        <input type="text" name="testPw" id="testPw" class="testPw" />
+        <p class="commentHidden">비밀번호가 일치 하지 않습니다!</p>
+        <button type="" id="signupBtn" class="signupBtn">회원가입</button>
+        <p class="goLogin">
+          이미 가입 하셨나요? <a href="home.html"><strong>로그인</strong></a>
+        </p>
+      </form>
+    </div>
+    <script>
+      let hide = document.getElementsByClassName("commentHidden");
+
+      // $(hide).css("display", "block"); 경고 메세지
+    </script>
+  </body>
+</html>

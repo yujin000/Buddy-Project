@@ -17,5 +17,5 @@ public class MemberDTO {
     private String memberName;
     private String memberPhone;
     private Timestamp memberSignupDate;
-    private String memberLogType;
+    private String memberLogtype;
 }

@@ -19,24 +19,173 @@
         <img src="" alt="" />
       </div>
       <p class="slogan">당신의 동료, 영원한 친구</p>
-      <form action="" id="">
-        <input type="text" name="" id="id" class="loginId" />
-        <input type="text" name="loginPw" id="pw" class="loginPw" />
+      <form action="/member/login" method="post" id="loginForm">
+        <input type="text" name="memberId" id="id" class="loginId" />
+        <input type="text" name="memberPw" id="pw" class="loginPw" />
         <a href="" id="sessionEmail" class="aLeft">이메일 기억하기</a>
         <a href="" id="findPw" class="aRight">비밀번호 찾기</a>
-        <button type="" id="loginBtn" class="loginBtn">
-          <a href="mypage.html">로그인</a>
-        </button>
-        <button type="" id="naver" class="snsLogin">
-          <a href="mypage.html">네이버</a>
-        </button>
-        <button type="" id="kakao" class="snsLogin">
-          <a href="mypage.html">카카오</a>
-        </button>
-        <a href="signup.html" id="goSignup"
+        <button type="button" id="loginBtn" class="loginBtn">로그인</button>
+
+        <!-- 네이버 로그인 / div로 설정해야 작동함-->
+        <div id="button_area"></div>
+        <div id="naverIdLogin"></div>
+
+        <!-- 카카오 로그인 -->
+<!--        <button type="" id="kakao" class="snsLogin">-->
+        <a href="javascript:kakaoLogin();"><img src="/static/img/kakao_login_medium_narrow.png" alt="카카오계정 로그인" style="height: 100px;"/></a>
+<!--        </button>-->
+
+        <a href="/member/toSignUp" id="goSignup"
           >아직 회원이 아니신가요? <strong>회원가입</strong></a
         >
       </form>
     </div>
+
+    <!-- 로그인 폼 -->
+    <script>
+      let form = $("#loginForm");
+      let loginBtn = $("#loginBtn");
+
+      // 로그인 시 아이디와 비밀번호 비어있는지 확인
+      loginBtn.on("click",function(){
+        let id = $('#id').val();
+        let pw = $('#pw').val();
+
+        if(id == "" || pw == ""){
+          alert("아이디, 비밀번호를 모두 입력해야 합니다.");
+        }else{
+          form.submit();
+        }
+      });
+    </script>
+
+
+
+    <!-- 카카오 로그인 script -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script type="text/javascript">
+      // let kakaoBtn = $("#kakao");
+      // kakaoBtn.on("click",function(){
+      //   location.href = "javascript:kakaoLogin()";
+      // });
+
+
+      window.Kakao.init('7916c939205e8db616216bc236bc79c3');
+
+      function kakaoLogin() {
+        window.Kakao.Auth.login({
+          scope: 'profile_nickname, profile_image, account_email', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
+          success: function(response) {
+            console.log(response) // 로그인 성공하면 받아오는 데이터
+            window.Kakao.API.request({ // 사용자 정보 가져오기
+              url: '/v2/user/me',
+              success: (res) => {
+                console.log(res);
+                const kakao_account = res.kakao_account;
+                const kakao_properties = res.properties;
+
+                let name = kakao_properties.nickname;
+                let email = kakao_account.email;
+
+                // location.href = "/member/isExist?name="+name+"&email="+email;
+
+                // $.ajax({
+                //     url : "/member/isExist",
+                //     type : "post",
+                //     data : {
+                //         email : kakao_account.email,
+                //         name : kakao_properties.nickname
+                //     },
+                // })
+                //     .done(function (rsp){
+                //     location.href="/member/isExist";
+                // });
+
+                //location.href="../member/isExist";
+              }
+            });
+            // window.location.href='/' //리다이렉트 되는 코드
+          },
+          fail: function(error) {
+            console.log(error);
+          }
+        });
+      }
+    </script>
+
+    <!-- 네이버 로그인 script -->
+    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+    <script type="text/javascript">
+
+      const naverLogin = new naver.LoginWithNaverId(
+              {
+                clientId: "MPvUbOX30trYmVJWI5qi",
+                callbackUrl: "http://192.168.150.33//",
+                loginButton: {color: "green", type: 2, height: 40}
+              }
+      );
+
+
+      naverLogin.init();
+      naverLogin.getLoginStatus(function (status) {
+        if (status) {
+          const userName=naverLogin.user.getName();
+          const nickName=naverLogin.user.getNickName();
+          const age=naverLogin.user.getAge();
+          const birthday=naverLogin.user.getBirthday();
+
+          if(userName===null||userName===undefined ){
+            alert("별명이 필요합니다. 정보제공을 동의해주세요.");
+            naverLogin.reprompt();
+            return ;
+          }else{
+            setLoginStatus();
+          }
+        }
+      });
+
+      console.log(naverLogin);
+
+      function setLoginStatus(){
+        console.log(naverLogin);
+        const message_area=document.getElementById('message');
+
+        const name = naverLogin.user.getName();
+        console.log(naverLogin.user.getName());
+        const email = naverLogin.user.getEmail();
+        const phone = naverLogin.user.getMobile();
+        // location.href="/member/naverSignUp?name="+ name + "&email="+ email + "&phone=" + phone;
+        // $.ajax({
+        //   url : "/member/naverSignUp",
+        //   type : "post",
+        //   data : {
+        //     name : name,
+        //     email : email,
+        //     phone : phone
+        //   },
+        // })
+
+        // message_area.innerHTML=`
+        //         <h3> Login 성공 </h3>
+        //         <div>user Nickname : ${naverLogin.user.name}</div>
+        //         <div>user Nickname : ${naverLogin.user.email}</div>
+        //         <img src="${naverLogin.user.profile_image}">
+        //         <div>user Nickname : ${naverLogin.user.mobile}</div>
+        //       `;
+
+        const button_area=document.getElementById('button_area');
+        button_area.innerHTML="<button id='btn_logout' type='button'>로그아웃</button>";
+
+        const logout=document.getElementById('btn_logout');
+        logout.addEventListener('click',(e)=>{
+          //location.href = "http://nid.naver.com/nidlogin.logout";
+          naverLogin.logout();
+          location.replace("http://192.168.150.33");
+        })
+      }
+
+
+    </script>
+
   </body>
 </html>

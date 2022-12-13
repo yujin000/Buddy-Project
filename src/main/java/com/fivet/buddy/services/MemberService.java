@@ -15,4 +15,13 @@ public class MemberService {
         memberDao.signUp(memberDto);
     }
 
+    // 로그인 시 아이디 있는지 체크
+    public boolean isAccountExist(MemberDTO memberDto) throws Exception{
+        return memberDao.isAccountExist(memberDto);
+    }
+
+    // 로그인 시 정보 불러오기
+    public MemberDTO selectAccountInfo(MemberDTO memberDto) throws Exception{
+        return memberDao.selectAccountInfo(memberDto);
+    }
 }

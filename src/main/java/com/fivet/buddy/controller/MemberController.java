@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -35,10 +36,29 @@ public class MemberController {
     // 회원가입 (signUp)
     @RequestMapping("signUp")
     public String signUp(MemberDTO memberDto) throws Exception{
-        logger.info(memberDto.getMemberId() + " : " + memberDto.getMemberPw() + " : " + memberDto.getMemberName() + " : " + memberDto.getMemberPhone());
         memberService.signUp(memberDto);
         return "redirect:/";
     }
 
+    // 로그인
+    @RequestMapping("login")
+    public String isAccountExist(MemberDTO memberDto, Model model) throws Exception{
+        boolean result = memberService.isAccountExist(memberDto);
+        if(result){
+            MemberDTO dto = memberService.selectAccountInfo(memberDto);
+            model.addAttribute("memberInfo",dto);
+            return "mypage";
+        }else{
+            logger.info("2");
+            return "redirect:/";
+        }
+
+    }
+
+    // 카카오 로그인
+    @RequestMapping("kakaoLogin")
+    public String kakaoLogin()throws Exception{
+        return "redirect:/";
+    }
 
 }

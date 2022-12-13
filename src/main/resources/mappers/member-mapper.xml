@@ -8,7 +8,7 @@
         insert into
             member
         values
-            (member_seq.nextval, #{memberId}, #{memberPw}, #{memberName}, #{memberPhone}, sysdate)
+            (member_seq.nextval, #{memberId}, #{memberPw}, #{memberName}, #{memberPhone}, sysdate, 'normal')
 
     </insert>
 

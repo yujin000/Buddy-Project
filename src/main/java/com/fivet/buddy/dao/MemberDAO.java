@@ -18,7 +18,7 @@ public class MemberDAO {
     }
 
     // 로그인 시 아이디 있는지 체크
-    public boolean isAccountExist(MemberDTO memberDto) throws  Exception{
+    public boolean isAccountExist(MemberDTO memberDto) throws  Exception {
         return memberMapper.isAccountExist(memberDto);
     }
 
@@ -26,4 +26,25 @@ public class MemberDAO {
     public MemberDTO selectAccountInfo(MemberDTO memberDto) throws Exception{
         return memberMapper.selectAccountInfo(memberDto);
     }
+
+    // 로그인 시 정보 불러오기(네이버/카카오)
+    public MemberDTO selectAccountInfoForNK(MemberDTO memberDto) throws Exception{
+        return memberMapper.selectAccountInfoForNK(memberDto);
+    }
+
+    // 카카오 로그인 시 아이디 있는지 체크
+    public boolean isKakaoExist(MemberDTO memberDto) throws Exception{
+        return memberMapper.isKakaoExist(memberDto);
+    }
+
+    // 네이버 로그인 시 아이디 있는지 체크
+    public boolean isNaverExist(MemberDTO memberDto) throws Exception{
+        return memberMapper.isNaverExist(memberDto);
+    }
+
+    // 로그인 상태에서 로그인페이지 접근 차단
+    public MemberDTO selectMyInfo(String memberSeq) throws Exception{
+        return memberMapper.selectMyInfo(memberSeq);
+    }
+
 }

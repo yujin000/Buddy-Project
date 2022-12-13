@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,6 +12,9 @@
       integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
       crossorigin="anonymous"
     ></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </head>
   <body>
     <div class="wrap">
@@ -19,41 +22,77 @@
         <img src="" alt="" />
       </div>
       <h1>회원가입</h1>
-      <form action="/member/signUp" method="post">
+      <form method="post" id="form">
         <p id="titleName" class="titleName">이름</p>
-          <input type="text" name="memberName" id="name" class="inputName" />
-        <p id="titleEmail" class="titleEmail">이메일</p>
-          <input type="text" name="memberId" id="email" class="inputEmail" />
-        <p id="titlePw" class="titlePw">비밀번호</p>
-        <p id="comment" class="comment">
-          비밀번호는 8~20자 영문,숫자,특수문자로 입력하세요
-        </p>
-          <input type="text" name="memberPw" id="inputPw" class="inputPw" />
-        <p class="commentHidden">
-          영문,숫자,특수문자를 조합한 8자 이상이여야 합니다!
-        </p>
-        <p id="titleTest" class="titleTest">비밀번호 확인</p>
-          <input type="text" name="testPw" id="testPw" class="testPw" />
-        <p class="commentHidden">비밀번호가 일치 하지 않습니다!</p>
-        <p class="titlePhone" >휴대전화</p>
-        <p class="comment">
-          휴대폰 번호는 '-'를 제외하고 입력해주세요.
-        </p>
-          <input type="text" name="memberPhone" id="inputPhone" class="inputPhone" />
-        <!-- 휴대폰 인증 -->
-          <button type="button" id="sendSms">인증문자발송</button>
+          <th:block th:if="${userInfo.getMemberLogtype() != 'normal'}">
+            <input type="text" name="memberName" class="inputName" th:value="${userInfo.getMemberName()}" readonly/>
+            <input type="hidden" name="memberLogtype" th:value="${userInfo.getMemberLogtype()}" >
+            <input type="hidden" name="memberPw" value="">
+          </th:block>
+          <th:block th:if="${userInfo.getMemberLogtype() == 'normal'}">
+            <input type="text" name="memberName" class="inputName" />
+            <input type="hidden" name="memberLogtype" value="normal">
+          </th:block>
 
+        <p id="titleEmail" class="titleEmail">이메일</p>
+          <th:block th:if="${userInfo.getMemberLogtype() != 'normal'}">
+            <input type="text" name="memberId" class="inputEmail"  th:value="${userInfo.getMemberId()}" readonly/>
+          </th:block>
+          <th:block th:if="${userInfo.getMemberLogtype() == 'normal'}">
+            <input type="text" name="memberId" class="inputEmail" />
+          </th:block>
+
+        <th:block th:if="${userInfo.getMemberLogtype() == 'normal'}">
+          <p id="titlePw" class="titlePw">비밀번호</p>
+          <p id="comment" class="comment">
+            비밀번호는 8~20자 영문,숫자,특수문자로 입력하세요
+          </p>
+          <input type="text" name="memberPw" id="inputPw" class="inputPw" />
+          <p class="commentHidden">
+            영문,숫자,특수문자를 조합한 8자 이상이여야 합니다!
+          </p>
+          <p id="titleTest" class="titleTest">비밀번호 확인</p>
+          <input type="text" name="testPw" id="testPw" class="testPw" />
+          <p class="commentHidden">비밀번호가 일치 하지 않습니다!</p>
+        </th:block>
+
+        <p class="titlePhone" >휴대전화</p>
+
+
+        <th:block th:if="${userInfo.getMemberLogtype() == 'normal' || userInfo.getMemberLogtype() == 'kakao'}">
+          <p class="comment">
+            휴대폰 번호는 '-'를 제외하고 입력해주세요.
+          </p>
+          <input type="text" name="memberPhone" class="inputPhone" id="inputPhone"/>
+          <!-- 휴대폰 인증 -->
+          <button type="button" id="sendSms">인증문자발송</button>
           <input type="test" id="phoneCheckVal" placeholder="인증번호를 입력하세요.">
-        <!-- 타이머 생성 -->
+          <!-- 타이머 생성 -->
           <label for="Timer" id="timerLabel">남은 시간:</label>
           <input id="Timer" type="text" value="" readonly/>
-          <button type="button" id="phoneConfirm">인증번호 확인</button>
+          <button type="button" id="phoneConfirm" disabled>인증번호 확인</button>
+        </th:block>
+        <th:block th:if="${userInfo.getMemberLogtype() == 'naver'}">
+          <input type="text" name="memberPhone" class="inputPhone" th:value="${userInfo.getMemberPhone()}" readonly/>
+        </th:block>
+
           <button id="signupBtn" class="signupBtn">회원가입</button>
         <p class="goLogin">
           이미 가입 하셨나요? <a href="/"><strong>로그인</strong></a>
         </p>
       </form>
     </div>
+
+    <!-- 회원가입 -->
+    <script>
+      let signupBtn = $("#signupBtn");
+
+      signupBtn.on("click",function(){
+        $("#form").attr("action","/member/signUp").submit();
+      })
+    </script>
+
+    <!-- 문자인증-->
     <script>
       let hide = document.getElementsByClassName("commentHidden");
 
@@ -64,8 +103,41 @@
       let inputPhone = $("#inputPhone");
 
       sendSms.on("click",function(){
-        sendSms.attr("disabled",false); // 문자 발송 버튼 비활성화(3분간)
-        inputPhone.attr("readonly",true);
+        let inputPhoneVal = inputPhone.val();
+        console.log(inputPhone.val());
+        if(inputPhone.val() == "") {
+          alert("휴대폰 번호를 입력하세요"); // 휴대폰 번호 regex해야됨
+        }else{
+          console.log(inputPhoneVal);
+          sendSms.attr("disabled",false); // 문자 발송 버튼 비활성화(3분간)
+          inputPhone.attr("readonly",true);
+
+          let param = {"to":inputPhoneVal};
+
+          $.ajax({
+            url : "/sms/send",
+            type : "post",
+            contentType: 'application/json',
+            data : JSON.stringify(param)
+          }).done(function (rsp){
+            // 인증번호 확인 버튼 활성화
+            let phoneConfirm = $("#phoneConfirm");
+            phoneConfirm.removeAttr("disabled");
+
+            // rsp : 문자 번호
+            let smsNum = rsp;
+            phoneConfirm.on("click",function (){
+              if(smsNum == $("#phoneCheckVal").val()){
+                alert("인증번호 일치");
+                // 유효성검사 추가하기
+              }else{
+                alert("다시 입력 해주세요");
+              }
+            })
+
+          })
+
+        }
       });
 
       // 타이머
@@ -84,34 +156,27 @@
 
         function TIMER() {
           PlAYTIME = setInterval(function () {
-            time = time - 1000; //1초씩 줄어듦
-            min = time / (60 * 1000); //초를 분으로 나눠준다.
+            time = time - 1000;
+            min = time / (60 * 1000);
 
-            if (sec > 0) { //sec=60 에서 1씩 빼서 출력해준다.
+            if (sec > 0) {
               sec = sec - 1;
-              Timer.value = Math.floor(min) + ':' + sec; //실수로 계산되기 때문에 소숫점 아래를 버리고 출력해준다.
+              Timer.value = Math.floor(min) + ':' + sec;
 
             }
             if (sec === 0) {
-              // 0에서 -1을 하면 -59가 출력된다.
-              // 그래서 0이 되면 바로 sec을 60으로 돌려주고 value에는 0을 출력하도록 해준다.
               sec = 60;
               Timer.value = Math.floor(min) + ':' + '00'
             }
 
-          }, 1000); //1초마다
+          }, 1000);
         }
         TIMER();
         setTimeout(function(){
           clearInterval(PlAYTIME);
           sendSms.attr("disabled",false); // 3분이 지나면 버튼 활성화
-        },180000);//3분이 되면 타이머를 삭제한다.
+        },180000);//3분이 되면 타이머를 삭제
       });
-
-
-
-
-
     </script>
   </body>
 </html>

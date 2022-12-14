@@ -12,6 +12,16 @@
             (member_seq.nextval, #{memberId}, #{memberPw}, #{memberName}, #{memberPhone}, sysdate, #{memberLogtype})
     </insert>
 
+    <!-- 회원가입 시 아이디 체크 -->
+    <select id="idCheck" resultType="boolean">
+        select
+            case when count(*) = 1 then 1 else 0 end
+        from
+            member
+        where
+            member_id = #{value} and member_logtype = 'normal'
+    </select>
+
     <!-- 계정 ID/PW 체크 -->
     <select id="isAccountExist" resultType="boolean">
         select

@@ -15,6 +15,11 @@ public class MemberService {
         memberDao.signUp(memberDto);
     }
 
+    // 회원가입 시 아이디(이메일) 중복체크
+    public boolean idCheck(String id) throws Exception{
+        return memberDao.idCheck(id);
+    }
+
     // 로그인 시 아이디 있는지 체크
     public boolean isAccountExist(MemberDTO memberDto) throws Exception{
         return memberDao.isAccountExist(memberDto);
@@ -45,6 +50,5 @@ public class MemberService {
         return memberDao.selectMyInfo(memberSeq);
     }
 
-    // 로그인 한 유저 seq
 
 }

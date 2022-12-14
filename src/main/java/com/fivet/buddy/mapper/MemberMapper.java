@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MemberMapper {
 
     void signUp(MemberDTO memberDto);
+    boolean idCheck(String id);
     boolean isAccountExist(MemberDTO memberDto);
     boolean isKakaoExist(MemberDTO memberDto);
     boolean isNaverExist(MemberDTO memberDto);

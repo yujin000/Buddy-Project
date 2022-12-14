@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"
+    ></script>
+</head>
+<body>
+
+<form action="/member/goMypage" method="post" id="form">
+    <input type="hidden" th:value="${session.memberSeq}" name="memberSeq">
+</form>
+<script>
+    $(function(){
+        alert("오류 : 메인페이지로 이동합니다.");
+        $("#form").submit();
+    })
+</script>
+</body>
+</html>

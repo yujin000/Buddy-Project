@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -37,7 +39,7 @@ public class MemberController {
         // 세션확인
         if(session.getAttribute("memberSeq")!=null){
             model.addAttribute("memberSeq",session.getAttribute("memberSeq"));
-            return "indexError";
+            return "duplLogin";
         }
 
         // 일반회원인지 카카오 / 네이버 회원인지 검토
@@ -57,13 +59,21 @@ public class MemberController {
         return "redirect:/";
     }
 
+    // 회원가입 아이디 체크
+    @ResponseBody
+    @RequestMapping(value="idCheck",produces = "text/html;charest=utf8")
+    public String idCheck(String id ) throws Exception{
+        boolean result = memberService.idCheck(id);
+        return String.valueOf(result);
+    }
+
     // 로그인
-    @RequestMapping("login")
+    @PostMapping("login")
     public String login(MemberDTO memberDto, Model model) throws Exception{
         // 세션확인
         if(session.getAttribute("memberSeq")!=null){
             model.addAttribute("memberSeq",session.getAttribute("memberSeq"));
-            return "indexError";
+            return "duplLogin";
         }
 
         boolean result = memberService.isAccountExist(memberDto);
@@ -74,7 +84,7 @@ public class MemberController {
             session.setAttribute("memberSeq",dto.getMemberSeq());
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
             model.addAttribute("userInfo",dto);
-            return "mypage";
+            return "index";
         }else{
             // 로그인 정보가 없으면 새로고침
             return "redirect:/";
@@ -96,7 +106,7 @@ public class MemberController {
         // 세션확인
         if(session.getAttribute("memberSeq")!=null){
             model.addAttribute("memberSeq",session.getAttribute("memberSeq"));
-            return "indexError";
+            return "duplLogin";
         }
 
         boolean result = memberService.isKakaoExist(memberDto);
@@ -111,7 +121,7 @@ public class MemberController {
             session.setAttribute("memberSeq",dto.getMemberSeq());
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
             model.addAttribute("userInfo",dto);
-            return "mypage";
+            return "index";
         }
     }
 
@@ -121,7 +131,7 @@ public class MemberController {
         // 세션확인
         if(session.getAttribute("memberSeq")!=null){
             model.addAttribute("memberSeq",session.getAttribute("memberSeq"));
-            return "indexError";
+            return "duplLogin";
         }
 
         boolean result = memberService.isNaverExist(memberDto);
@@ -136,7 +146,7 @@ public class MemberController {
             session.setAttribute("memberSeq",dto.getMemberSeq());
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
             model.addAttribute("userInfo",dto);
-            return "mypage";
+            return "index";
         }
     }
 
@@ -145,7 +155,7 @@ public class MemberController {
     public String selectMyInfo(String memberSeq,Model model) throws Exception{
         MemberDTO dto = memberService.selectMyInfo(memberSeq);
         model.addAttribute("userInfo",dto);
-        return "mypage";
+        return "index";
     }
 
 

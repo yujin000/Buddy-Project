@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>당신의 동료, 영원한 친구 buddy</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <link rel="stylesheet" href="/static/css/home.css" />
+    <link rel="stylesheet" href="/static/css/mypage.css" />
     <link rel="stylesheet" href="/static/css/m-home.css" />
-    <script
-      src="https://code.jquery.com/jquery-3.6.1.min.js"
-      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-      crossorigin="anonymous"
-    ></script>
+    <link rel="stylesheet" href="/static/css/m-mypage.css" />
   </head>
   <body>
+  <th:block th:if="${#strings. isEmpty(session.memberSeq)}">
     <div class="wrap">
       <div class="logo">
         <img src="" alt="" />
       </div>
       <p class="slogan">당신의 동료, 영원한 친구</p>
-      <form action="/member/login?memberLogtype=normal" method="post" id="loginForm">
-        <input type="text" name="memberId" id="id" class="loginId" />
-        <input type="text" name="memberPw" id="pw" class="loginPw" />
+      <form action="/member/login" method="post" id="loginForm">
+        <input type="text" name="memberId" id="id" class="loginId" placeholder="이메일"/>
+        <input type="text" name="memberPw" id="pw" class="loginPw" placeholder="비밀번호"/>
+        <input type="hidden" name="memberLogtype" value="normal"/>
         <a href="" id="sessionEmail" class="aLeft">이메일 기억하기</a>
         <a href="" id="findPw" class="aRight">비밀번호 찾기</a>
         <button type="button" id="loginBtn" class="loginBtn">로그인</button>
@@ -40,8 +40,76 @@
           >아직 회원이 아니신가요? <strong>회원가입</strong></a
         >
       </form>
-      <a href="/member/test">테스트 돌아가기</a>
+      <a href="/member/logout">테스트 돌아가기</a>
     </div>
+  </th:block>
+  <th:block th:if="${not #strings. isEmpty(session.memberSeq)}">
+    <!-- 마이페이지 -->
+    <div class="wrap">
+      <div class="logo">
+        <img src="" alt="" />
+      </div>
+
+      <div id="profileBox" class="profileBox">
+        <p class="title">profile</p>
+        <div class="myProfile">
+          <img src="" alt="" id="myImg" class="profileImg" />
+          <div class="info">
+            <!-- 세션에 뿌려진 값으로 해결하기 -->
+            <h1 id="myName" class="name" th:text="${session.memberSeq}">userName</h1>
+            <p id="myEmail" class="email" th:text="${session.memberLogtype}">userEmail</p>
+<!--            <input type="hidden" th:value="${userInfo.getMemberLogtype()}" name="memberLogtype" id="loginType">-->
+          </div>
+          <button type="button" id="logout" class="floatBtn">
+            로그아웃
+          </button>
+        </div>
+      </div>
+      <div class="temListBox">
+        <p class="title">list</p>
+        <div class="teamProfile">
+          <img src="" alt="" id="teamImg" class="profileImg" />
+          <div class="info">
+            <h1 id="teamName" class="name">teamName</h1>
+            <p id="teamEmail" class="email">teamEmail</p>
+          </div>
+          <button type="button" id="goTeam" class="floatBtn">
+            <a href="">팀으로 가기</a>
+          </button>
+        </div>
+        <div class="teamProfile">
+          <img src="" alt="" id="teamImg" class="profileImg" />
+          <div class="info">
+            <h1 id="teamName" class="name">teamName</h1>
+            <p id="teamEmail" class="email">teamEmail</p>
+          </div>
+          <button type="button" id="goTeam" class="floatBtn">
+            <a href="">팀으로 가기</a>
+          </button>
+        </div>
+        <div class="teamProfile">
+          <img src="" alt="" id="teamImg" class="profileImg" />
+          <div class="info">
+            <h1 id="teamName" class="name">teamName</h1>
+            <p id="teamEmail" class="email">teamEmail</p>
+          </div>
+          <button type="button" id="goTeam" class="floatBtn">
+            <a href="">팀으로 가기</a>
+          </button>
+        </div>
+        <div class="teamProfile">
+          <img src="" alt="" id="teamImg" class="profileImg" />
+          <div class="info">
+            <h1 id="teamName" class="name">teamName</h1>
+            <p id="teamEmail" class="email">teamEmail</p>
+          </div>
+          <button type="button" id="goTeam" class="floatBtn">
+            <a href="">팀으로 가기</a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </th:block>
 
     <!-- 로그인 폼 -->
     <script>
@@ -61,15 +129,9 @@
       });
     </script>
 
-
-
     <!-- 카카오 로그인 script -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script type="text/javascript">
-      // let kakaoBtn = $("#kakao");
-      // kakaoBtn.on("click",function(){
-      //   location.href = "javascript:kakaoLogin()";
-      // });
 
 
       window.Kakao.init('7916c939205e8db616216bc236bc79c3');
@@ -90,23 +152,8 @@
                 let name = kakao_properties.nickname;
 
                 location.href = "/member/kakaoLogin?memberId="+id+"&memberName="+name+"&memberLogtype=kakao";
-
-                // $.ajax({
-                //     url : "/member/kakaoLogin",
-                //     type : "post",
-                //     data : {
-                //         email : kakao_account.email,
-                //         name : kakao_properties.nickname
-                //     },
-                // })
-                //     .done(function (rsp){
-                //     location.href="/member/isExist";
-                // });
-
-                //location.href="../member/isExist";
               }
             });
-            // window.location.href='/' //리다이렉트 되는 코드
           },
           fail: function(error) {
             console.log(error);
@@ -143,29 +190,28 @@
               }
       );
 
-
       naverLogin.init();
       naverLogin.getLoginStatus(function (status) {
         if (status) {
-          const userName=naverLogin.user.getName();
-          const nickName=naverLogin.user.getNickName();
-          const age=naverLogin.user.getAge();
-          const birthday=naverLogin.user.getBirthday();
+          const name = naverLogin.user.getName();
+          const email = naverLogin.user.getEmail();
+          let phone = naverLogin.user.getMobile();
 
-          if(userName===null||userName===undefined ){
-            alert("별명이 필요합니다. 정보제공을 동의해주세요.");
+          if(name===null||name===undefined ){
+            alert("정보제공을 동의해주세요.");
             naverLogin.reprompt();
             return ;
           }else{
             setLoginStatus();
+            console.log(name);
+            console.log(email);
+            console.log(phone);
+            location.href="/member/naverLogin?memberId="+ email + "&memberName="+ name + "&memberPhone=" + phone + "&memberLogtype=naver";
           }
         }
       });
 
-      console.log(naverLogin);
-
       function setLoginStatus(){
-        console.log(naverLogin);
         const message_area=document.getElementById('message');
 
         const name = naverLogin.user.getName();
@@ -175,39 +221,35 @@
         phone = phone.replace(/\-/g,''); // 전화번호 '-' 제거 (정규표현식 사용)
 
         console.log(naverLogin.user.getName());
-        // location.href="/member/naverLogin?memberId="+ email + "&memberName="+ name + "&memberPhone=" + phone + "&memberLogtype=naver";
-        // $.ajax({
-        //   url : "/member/naverSignUp",
-        //   type : "post",
-        //   data : {
-        //     name : name,
-        //     email : email,
-        //     phone : phone
-        //   },
-        // })
-
-        // message_area.innerHTML=`
-        //         <h3> Login 성공 </h3>
-        //         <div>user Nickname : ${naverLogin.user.name}</div>
-        //         <div>user Nickname : ${naverLogin.user.email}</div>
-        //         <img src="${naverLogin.user.profile_image}">
-        //         <div>user Nickname : ${naverLogin.user.mobile}</div>
-        //       `;
-
-        const button_area=document.getElementById('button_area');
-        button_area.innerHTML="<button id='btn_logout' type='button'>로그아웃</button>";
-
-        const logout=document.getElementById('btn_logout');
-        logout.addEventListener('click',(e)=>{
-          //location.href = "http://nid.naver.com/nidlogin.logout";
-          naverLogin.logout();
-          location.replace("http://192.168.150.33");
-        })
-
       }
 
-
     </script>
+    <!-- 로그아웃 (일반 / kakao / naver) -->
+    <script type="text/javascript">
+      $("#logout").on("click",function(){
+        let loginType = $("#loginType").val();
+        if(confirm("로그아웃 하시겠습니까?")){
+          if(loginType == "normal"){
+            location.href="/member/logout";
+          }else if(loginType == "kakao"){
+            kakaoLogout();
 
+            function kakaoLogout() {
+              if (!Kakao.Auth.getAccessToken()) {
+                return;
+              }
+              Kakao.Auth.logout(function(response) {
+                alert(response +' logout');
+                window.location.href="/member/logout";
+              });
+            };
+          }else{
+            naverLogin.logout();
+            location.href="/member/logout";
+            //location.href = "http://nid.naver.com/nidlogin.logout";//logout()이 작동되지 않으면 이거 사용
+          }
+        }
+      });
+    </script>
   </body>
 </html>

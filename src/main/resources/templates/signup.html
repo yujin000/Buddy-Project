@@ -26,11 +26,12 @@
         <p id="titleName" class="titleName">이름</p>
           <th:block th:if="${userInfo.getMemberLogtype() != 'normal'}">
             <input type="text" name="memberName" class="inputName" th:value="${userInfo.getMemberName()}" readonly/>
-            <input type="hidden" name="memberLogtype" th:value="${userInfo.getMemberLogtype()}" >
+            <input type="hidden" name="memberLogtype" th:value="${userInfo.getMemberLogtype()}" id="typeCheck" >
             <input type="hidden" name="memberPw" value="">
           </th:block>
           <th:block th:if="${userInfo.getMemberLogtype() == 'normal'}">
-            <input type="text" name="memberName" class="inputName" />
+            <input type="text" name="memberName" class="inputName" id="inputName" maxlength='6'/>
+            <span id="nameStatus"></span>
             <input type="hidden" name="memberLogtype" value="normal">
           </th:block>
 
@@ -39,31 +40,28 @@
             <input type="text" name="memberId" class="inputEmail"  th:value="${userInfo.getMemberId()}" readonly/>
           </th:block>
           <th:block th:if="${userInfo.getMemberLogtype() == 'normal'}">
-            <input type="text" name="memberId" class="inputEmail" />
+            <input type="text" name="memberId" class="inputEmail" id="inputId" maxlength='30' placeholder="이메일을 입력해주세요."/>
+            <span id="idStatus"></span>
           </th:block>
 
         <th:block th:if="${userInfo.getMemberLogtype() == 'normal'}">
           <p id="titlePw" class="titlePw">비밀번호</p>
           <p id="comment" class="comment">
-            비밀번호는 8~20자 영문,숫자,특수문자로 입력하세요
+            비밀번호는 8~14자 영문,숫자,특수문자로 입력하세요
           </p>
-          <input type="text" name="memberPw" id="inputPw" class="inputPw" />
-          <p class="commentHidden">
-            영문,숫자,특수문자를 조합한 8자 이상이여야 합니다!
-          </p>
+          <input type="password" name="memberPw" id="inputPw" class="inputPw" maxlength='15' placeholder="비밀번호는 8~14자 영문,숫자,특수문자로 입력하세요."/>
           <p id="titleTest" class="titleTest">비밀번호 확인</p>
-          <input type="text" name="testPw" id="testPw" class="testPw" />
-          <p class="commentHidden">비밀번호가 일치 하지 않습니다!</p>
+          <input type="password" name="testPw" id="testPw" class="testPw" maxlength='15' placeholder="비밀번호를 다시 입력해주세요."/>
+          <span id="pwStatus"></span>
         </th:block>
 
         <p class="titlePhone" >휴대전화</p>
-
 
         <th:block th:if="${userInfo.getMemberLogtype() == 'normal' || userInfo.getMemberLogtype() == 'kakao'}">
           <p class="comment">
             휴대폰 번호는 '-'를 제외하고 입력해주세요.
           </p>
-          <input type="text" name="memberPhone" class="inputPhone" id="inputPhone"/>
+          <input type="text" name="memberPhone" class="inputPhone" id="inputPhone" maxlength='12'/>
           <!-- 휴대폰 인증 -->
           <button type="button" id="sendSms">인증문자발송</button>
           <input type="test" id="phoneCheckVal" placeholder="인증번호를 입력하세요.">
@@ -76,44 +74,200 @@
           <input type="text" name="memberPhone" class="inputPhone" th:value="${userInfo.getMemberPhone()}" readonly/>
         </th:block>
 
-          <button id="signupBtn" class="signupBtn">회원가입</button>
-        <p class="goLogin">
-          이미 가입 하셨나요? <a href="/"><strong>로그인</strong></a>
-        </p>
+          <button id="signupBtn" class="signupBtn" >회원가입</button>
+        <th:block th:if="${userInfo.getMemberLogtype() != 'naver'}">
+          <p class="goLogin">
+            이미 가입 하셨나요? <a href="/"><strong>로그인</strong></a>
+          </p>
+        </th:block>
       </form>
     </div>
 
-    <!-- 회원가입 -->
+    <!-- 회원가입 유효성 검사 -->
     <script>
-      let signupBtn = $("#signupBtn");
+      let nameChkResult = false;
+      let idChkResult = false;
+      let pwChkResult = false;
 
-      signupBtn.on("click",function(){
-        $("#form").attr("action","/member/signUp").submit();
-      })
+      // 이름 체크
+      const nameRegex = /^[가-힣]{1,5}$/;
+      let nameStatus = $("#nameStatus");
+      let inputName = $("#inputName");
+
+      inputName.on("blur",function (){
+        let inputNameVal = $("#inputName").val();
+        let nameResult = nameRegex.test(inputNameVal);
+
+        if(inputNameVal == ""){
+          nameStatus.html("이름을 입력해주세요.");
+          nameChkResult = false;
+        }else if(!nameResult){
+          nameStatus.html("이름은 1~5자 한글로 입력해주세요.");
+          nameChkResult = false;
+        }else{
+          nameStatus.html("");
+          nameChkResult = true;
+        }
+        console.log(nameChkResult);
+      });
+
+
+      // 아이디(이메일) 중복 체크
+      const idRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+      let idStatus = $("#idStatus");
+      let inputId = $("#inputId");
+
+      inputId.on("blur",function(){
+        let inputIdVal = $("#inputId").val();
+        let idResult = idRegex.test(inputIdVal);
+
+        if(inputIdVal == ""){
+          idStatus.html("이메일을 입력해주세요.");
+          idChkResult = false;
+        }else if(!idResult) {
+          idStatus.html("이메일 양식을 확인해주세요.");
+          idChkResult = false;
+        }else if(idResult){
+          $.ajax({
+            url : "/member/idCheck",
+            data : {
+              "id" : inputIdVal
+            }
+          }).done(function(rsp){
+            console.log(rsp);
+            if(rsp){
+              idStatus.html("사용 가능한 이메일입니다.");
+              idChkResult = true;
+            }else{
+              idStatus.html("이미 사용 중인 이메일입니다.");
+              idChkResult = false;
+            }
+          })
+        }
+
+      });
+      // 비밀번호 확인
+      let inputPw = $("#inputPw");
+      let pwStatus = $("#pwStatus");
+      let testPw = $("#testPw");
+      const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,14}$/;
+
+      inputPw.on("blur",function(){
+        let inputPwVal = $("#inputPw").val();
+        let testPwVal = $("#testPw").val();
+        let pwResult = pwRegex.test(inputPwVal);
+
+        if(inputPwVal == ""){
+          pwStatus.html("비밀번호를 입력해주세요.");
+          pwChkResult = false;
+        }else if(!pwResult){
+          pwStatus.html("비밀번호는 문자, 숫자, 특수문자를 포함한 8~10글자여야 합니다.");
+          pwChkResult = false;
+        }else{
+          pwStatus.html("");
+          if(inputPwVal == "" && testPwVal == ""){
+            pwStatus.html("");
+            pwChkResult = false;
+          }else if(inputPwVal != testPwVal){
+            pwStatus.html("패스워드가 일치하지 않습니다.");
+            pwChkResult = false;
+          }else if(inputPwVal == testPwVal){
+            pwStatus.html("패스워드가 일치합니다.");
+            pwChkResult = true;
+          }
+        }
+      });
+
+      testPw.on("blur",function(){
+        let inputPwVal = $("#inputPw").val();
+        let testPwVal = $("#testPw").val();
+        let pwResult = pwRegex.test(inputPwVal);
+
+        if(testPwVal == ""){
+          pwStatus.html("비밀번호를 입력해주세요.");
+          pwChkResult = false;
+        }else if(!pwResult){
+          pwStatus.html("비밀번호는 문자, 숫자, 특수문자를 포함한 8~10글자여야 합니다.");
+          pwChkResult = false;
+        }else{
+          pwStatus.html("");
+          if(inputPwVal == "" && testPwVal == ""){
+            pwStatus.html("");
+            pwChkResult = false;
+          }else if(inputPwVal != testPwVal){
+            pwStatus.html("패스워드가 일치하지 않습니다.");
+            pwChkResult = false;
+          }else if(inputPwVal == testPwVal){
+            pwStatus.html("패스워드가 일치합니다.");
+            pwChkResult = true;
+          }
+        }
+      });
     </script>
 
-    <!-- 문자인증-->
+    <!-- 문자인증 문자인증 regex -->
     <script>
-      let hide = document.getElementsByClassName("commentHidden");
-
-      // $(hide).css("display", "block"); 경고 메세지
+      let phoneChkResult = false;
+      const Timer = document.getElementById('Timer'); //스코어 기록창-분
+      let time= 180000;
+      let min=3;
+      let sec=60;
 
       // 문자 인증
       let sendSms = $("#sendSms");
       let inputPhone = $("#inputPhone");
+      const phoneRegex = /^010\d{4,4}?\d{4}$/;
 
       sendSms.on("click",function(){
         let inputPhoneVal = inputPhone.val();
-        console.log(inputPhone.val());
+        let phoneResult = phoneRegex.test(inputPhoneVal);
+
         if(inputPhone.val() == "") {
           alert("휴대폰 번호를 입력하세요"); // 휴대폰 번호 regex해야됨
-        }else{
-          console.log(inputPhoneVal);
+          phoneChkResult = false;
+
+        }else if(!phoneResult) {
+          alert("휴대폰 번호 양식을 확인해주세요.");
+          phoneChkResult = false;
+          return false;
+
+        }else if(phoneResult){
           sendSms.attr("disabled",false); // 문자 발송 버튼 비활성화(3분간)
           inputPhone.attr("readonly",true);
 
-          let param = {"to":inputPhoneVal};
+          // 타이머
+          alert("인증번호가 발송되었습니다.");
 
+          sendSms.attr("disabled", true); // 발송 버튼 비활성화
+
+          Timer.value = min + ":" + '00';
+
+          function TIMER() {
+            PlAYTIME = setInterval(function () {
+              time = time - 1000;
+              min = time / (60 * 1000);
+
+              if (sec > 0) {
+                sec = sec - 1;
+                Timer.value = Math.floor(min) + ':' + sec;
+
+              }
+              if (sec === 0) {
+                sec = 60;
+                Timer.value = Math.floor(min) + ':' + '00'
+              }
+
+            }, 1000);
+          }
+          TIMER();
+          setTimeout(function(){
+            clearInterval(PlAYTIME);
+            sendSms.attr("disabled",false); // 3분이 지나면 버튼 활성화
+            phoneChkResult = false;
+          },180000);//3분이 되면 타이머를 삭제
+
+          let param = {"to":inputPhoneVal};
+          // 문자 발송
           $.ajax({
             url : "/sms/send",
             type : "post",
@@ -128,10 +282,16 @@
             let smsNum = rsp;
             phoneConfirm.on("click",function (){
               if(smsNum == $("#phoneCheckVal").val()){
-                alert("인증번호 일치");
+                alert("인증번호가 일치합니다.");
+                phoneChkResult = true;
+                $("#phoneCheckVal").attr("readonly",true);
+                phoneConfirm.css("display","none");
+                $("#timerLabel").css("display","none");
+                $("#Timer").css("display","none");
                 // 유효성검사 추가하기
               }else{
-                alert("다시 입력 해주세요");
+                alert("인증번호가 일치하지 않습니다. 다시 확인 해주세요.");
+                phoneChkResult = false;
               }
             })
 
@@ -139,44 +299,35 @@
 
         }
       });
-
-      // 타이머
-      const Timer = document.getElementById('Timer'); //스코어 기록창-분
-      let time= 180000;
-      let min=3;
-      let sec=60;
-
-      sendSms.on("click",function() {
-
-        alert("인증번호가 발송되었습니다.");
-
-        sendSms.attr("disabled", true); // 발송 버튼 비활성화
-
-        Timer.value = min + ":" + '00';
-
-        function TIMER() {
-          PlAYTIME = setInterval(function () {
-            time = time - 1000;
-            min = time / (60 * 1000);
-
-            if (sec > 0) {
-              sec = sec - 1;
-              Timer.value = Math.floor(min) + ':' + sec;
-
-            }
-            if (sec === 0) {
-              sec = 60;
-              Timer.value = Math.floor(min) + ':' + '00'
-            }
-
-          }, 1000);
-        }
-        TIMER();
-        setTimeout(function(){
-          clearInterval(PlAYTIME);
-          sendSms.attr("disabled",false); // 3분이 지나면 버튼 활성화
-        },180000);//3분이 되면 타이머를 삭제
-      });
     </script>
+
+    <!-- 카카오 네이버 구분 -->
+    <script>
+      if($("#typeCheck").val() == "naver"){
+        nameChkResult = true;
+        idChkResult = true;
+        pwChkResult = true;
+        phoneChkResult = true;
+      }else if($("#typeCheck").val() == "kakao"){
+        nameChkResult = true;
+        idChkResult = true;
+        pwChkResult = true;
+      }
+    </script>
+    <!-- 회원가입 -->
+    <script>
+
+      let signupBtn = $("#signupBtn");
+
+      signupBtn.on("click",function(){
+        if(!nameChkResult || !idChkResult || !pwChkResult || !phoneChkResult){
+          alert("이름, 이메일, 비밀번호, 휴대폰인증을 모두 완료해주세요.");
+          return false;
+        }else{
+          $("#form").attr("action","/member/signUp").submit();
+        }
+      })
+    </script>
+
   </body>
 </html>

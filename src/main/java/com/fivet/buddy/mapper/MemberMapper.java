@@ -8,5 +8,9 @@ public interface MemberMapper {
 
     void signUp(MemberDTO memberDto);
     boolean isAccountExist(MemberDTO memberDto);
+    boolean isKakaoExist(MemberDTO memberDto);
+    boolean isNaverExist(MemberDTO memberDto);
     MemberDTO selectAccountInfo(MemberDTO memberDto);
+    MemberDTO selectAccountInfoForNK(MemberDTO memberDto);
+    MemberDTO selectMyInfo(String memberSeq);
 }

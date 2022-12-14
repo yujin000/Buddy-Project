@@ -24,11 +24,12 @@
         <div class="myProfile">
           <img src="" alt="" id="myImg" class="profileImg" />
           <div class="info">
-            <h1 id="myName" class="name" th:text="${memberInfo.getMemberName()}">userName</h1>
-            <p id="myEmail" class="email" th:text="${memberInfo.getMemberId()}">userEmail</p>
+            <h1 id="myName" class="name" th:text="${userInfo.getMemberName()}">userName</h1>
+            <p id="myEmail" class="email" th:text="${userInfo.getMemberId()}">userEmail</p>
+            <input type="hidden" th:value="${userInfo.getMemberLogtype()}" name="memberLogtype" id="loginType">
           </div>
           <button type="button" id="logout" class="floatBtn">
-            <a href="home.html">로그아웃</a>
+            로그아웃
           </button>
         </div>
       </div>
@@ -76,5 +77,38 @@
         </div>
       </div>
     </div>
+  <!-- 로그아웃 (일반 / kakao / naver) -->
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    $("#logout").on("click",function(){
+      let loginType = $("#loginType").val();
+
+      if(confirm("로그아웃 하시겠습니까?")){
+        if(loginType == "normal"){
+          location.href="/member/logout";
+        }else if(loginType == "kakao"){
+          window.Kakao.init('7916c939205e8db616216bc236bc79c3');
+
+          kakaoLogout();
+
+          function kakaoLogout() {
+            if (!Kakao.Auth.getAccessToken()) {
+              console.log('Not logged in.');
+              return;
+            }
+            Kakao.Auth.logout(function(response) {
+              alert(response +' logout');
+              window.location.href="/member/logout";
+            });
+          };
+        }else{
+          naverLogin.logout();
+          location.href="/member/logout";
+          //location.href = "http://nid.naver.com/nidlogin.logout";//logout()이 작동되지 않으면 이거 사용
+        }
+      }
+    });
+  </script>
   </body>
 </html>

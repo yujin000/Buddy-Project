@@ -158,10 +158,4 @@ public class MemberController {
         return "index";
     }
 
-    //test
-    @RequestMapping("test")
-    public String test() throws Exception{
-        return "test";
-    }
-
 }

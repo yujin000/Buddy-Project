@@ -80,7 +80,19 @@ p[class*="Hidden"] {
   width:300px;
 }
 /* 휴대폰 인증 css */
-#Timer{
+#Timer,#emailTimer{
   width:50px;
   border:none;
+}
+#phoneCheckVal, #phoneConfirm, #Timer, #timerLabel{
+  display:none;
+}
+
+/* 이메일 인증 css */
+#inputId,#emailCheckVal{
+  width:300px;
+}
+
+#emailCheckVal, #emailConfirm,#emailTimer,#emailTimerLabel{
+  display: none;
 }

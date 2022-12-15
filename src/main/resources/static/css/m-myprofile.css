@@ -1,0 +1,17 @@
+@media (max-width: 600px) {
+    .wrap {
+        margin-top: 8vh;
+    }
+    .logo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .myProfile {
+        width: 100%;
+    }
+
+    .inputPw {
+        width: 200px;
+    }
+}

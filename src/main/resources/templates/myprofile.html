@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile</title>
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/myprofile.css" />
+  <link rel="stylesheet" href="/static/css/m-myprofile.css" />
+  <script
+          src="https://code.jquery.com/jquery-3.6.1.min.js"
+          integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+          crossorigin="anonymous"
+  ></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">
+    <img src="" alt="" />
+  </div>
+
+  <form action="">
+    <div class="myProfile">
+      <p class="title" id="titleImg">프로필 이미지</p>
+      <div class="profileImg" id="pImg">
+        <img src="" alt="" class="myImg" id="myImg" name="myImg" />
+        <button class="updateBtn" id="updateImg">수정</button>
+      </div>
+  </form>
+  <form action="">
+    <div class="update" id="updateName">
+      <p class="title">이름</p>
+      <input
+              type="text"
+              value="user"
+              class="valName"
+              name="myName"
+      /><button class="toggle" id="nameToggle" type="button" >tog</button>
+    </div>
+    <div class="hidden" id="hidn1" >
+      <button class="updateBtn">수정</button>
+    </div>
+  </form>
+
+  <form action="">
+    <div class="update" id="updateEmail">
+      <p class="title">이메일</p>
+      <input
+              type="text"
+              value="email"
+              class="valEmail"
+              name="myEmail"
+      /><button class="toggle" id="emailToggle" type="button">tog</button>
+    </div>
+    <div class="hidden" id="hidn2">
+      <button class="updateBtn">수정</button>
+    </div>
+  </form>
+
+  <form action="">
+    <div class="update" id="updatePw">
+      <p class="title">비밀번호 변경</p>
+      <button type="button" class="toggle" id="pwToggle">tog</button>
+    </div>
+    <div class="hidden" id="hidn3">
+      <p>현재 비밀번호</p>
+      <input
+              type="text"
+              value=""
+              name="oriPw"
+              id="origin"
+              class="inputPw"
+      />
+      <p>변경할 비밀번호</p>
+      <input
+              type="text"
+              value=""
+              name="newPw"
+              id="new"
+              class="inputPw"
+      />
+      <p>비밀번호 확인</p>
+      <input type="text" value="" id="checkPw" class="inputPw" />
+      <button class="updateBtn" id="floatBtn">수정</button>
+    </div>
+
+</div>
+</form>
+<strong><a href="index.html" id="goBack">뒤로가기</a></strong>
+</div>
+<script>
+  $(document).ready(function(){
+    $("#nameToggle").click( function(){
+      $("#hidn1").toggle();
+    })
+
+    $("#emailToggle").click( function(){
+      $("#hidn2").toggle();
+    })
+
+    $("#pwToggle").click(function() {
+      $("#hidn3").toggle();
+    })
+  })
+
+</script>
+</body>
+</html>

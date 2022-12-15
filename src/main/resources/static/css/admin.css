@@ -1,0 +1,265 @@
+@import url(reset.css);
+
+body {
+    width: 100vw;
+}
+.wrap {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    z-index: 0;
+}
+.header {
+    width: 100%;
+    height: 50px;
+    border: 1px dashed #000;
+    display: flex;
+    position: fixed;
+    z-index: 10;
+}
+.header p {
+    line-height: 50px;
+    font-weight: bold;
+}
+.logo a {
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    display: block;
+}
+.logo {
+    width: 120px;
+    height: 50px;
+    margin-right: 10px;
+    border: 1px solid magenta;
+}
+
+.iconMenu {
+    width: 50px;
+    height: 50px;
+    right: 0px;
+    border: 1px solid magenta;
+    position: absolute;
+    cursor: pointer;
+}
+
+#asideClose {
+    display: none;
+}
+
+.menuList {
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    width: 200px;
+    border: 1px solid #000;
+    background: white;
+    z-index: 10;
+    display: none;
+}
+
+.menuList ul li {
+    height: 30px;
+    border: 1px solid #000;
+}
+.menuList ul > li:hover {
+    color: red;
+}
+.main {
+    width: 100vw;
+    height: 100%;
+    padding-top: 50px;
+    border: 1px solid black;
+    z-index: 1;
+    display: flex;
+}
+
+aside {
+    min-width: 280px;
+    width: 280px;
+    height: 100%;
+    border: 1px dashed #000;
+    background: silver;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.asideTitle {
+    width: 100%;
+    min-height: 50px;
+    line-height: 50px;
+    border: 1px solid magenta;
+    display: flex;
+}
+
+.asideTitle p,
+a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: pointer;
+}
+
+.asideTitle:hover {
+    background: #333;
+}
+.asideTitle a:hover {
+    color: white;
+}
+#checked {
+    background: #333;
+}
+#checked * {
+    color: white;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    background: wheat;
+}
+
+.searchBar {
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+}
+
+.contentHeader {
+    display: flex;
+    height: 45px;
+    border: 1px solid #000;
+    position: relative;
+}
+
+.contentTitle {
+    float: left;
+}
+
+hr {
+    margin-top: 20px;
+    border: 1px solid #000;
+}
+
+.contentTable {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.tableTool {
+    margin-bottom: 10px;
+    border: 1px solid #000;
+
+    display: flex;
+}
+
+.delBtn {
+    width: 100px;
+    height: 30px;
+    border-radius: 15px;
+}
+
+.table {
+    width: 100%;
+    border: 1px solid red;
+}
+
+.table li {
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #000;
+    display: flex;
+}
+
+.table li span {
+    margin: 0;
+    padding: 0;
+    border: 1px solid #000;
+    text-align: center;
+}
+.table li span:nth-child(1) {
+    width: 10%;
+    text-align: center;
+}
+.table li span:nth-child(2) {
+    width: 20%;
+}
+.table li span:nth-child(3) {
+    width: 30%;
+}
+.table li span:nth-child(4) {
+    width: 30%;
+}
+.table li span:nth-child(5) {
+    width: 10%;
+}
+
+.thead > span:nth-child(4) {
+    width: 40%;
+}
+
+.delData {
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+.listNum {
+    width: 200px;
+    margin: 0 auto;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #000;
+    font-weight: bold;
+    display: flex;
+}
+
+.moblieView {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 20px;
+    }
+
+    .wrap {
+        display: none;
+    }
+
+    .moblieView {
+        height: 100%;
+        display: block;
+        position: relative;
+        border: 1px dashed #000;
+        text-align: center;
+    }
+    .logo {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+        margin-top: 5vh;
+        border: 1px dashed red;
+    }
+
+    h1 {
+        margin-top: 40px;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #000;
+        font-size: 1.5rem;
+    }
+
+    button {
+        width: 80%;
+        height: 40px;
+        margin-top: 20px;
+        border-radius: 20px;
+    }
+}

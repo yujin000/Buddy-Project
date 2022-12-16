@@ -72,8 +72,6 @@ public class EmailController {
     @PostMapping("inviteProve")
     public String inviteProve() throws Exception{
         String ranVal = inviteCode();
-        System.out.println("emailcontroller - 초대코드");
-        System.out.println(ranVal);
         return ranVal;
     }
 
@@ -89,8 +87,6 @@ public class EmailController {
                 key.append((rnd.nextInt(10)));
             }
         }
-        System.out.println("key");
-        System.out.println(key.toString());
         return key.toString();
     }
 }

@@ -237,7 +237,7 @@
               "id" : inputIdVal
             }
           }).done(function(rsp){
-            if(rsp){
+            if(!rsp){
               idStatus.html("사용 가능한 이메일입니다.");
               idDulCheck = true;
 
@@ -309,10 +309,11 @@
       }
 
       // 이메일 발송 함수
+
       function emailSend() {
         emailRan();
         let subject = "[Buddy] 회원가입 인증번호 입니다.";
-        let body = "안녕하세요 buddy 입니다. \n 회원가입 인증번호는 \n" + serialNo + " \n입니다.";
+        let body = serialNo;
         let emailAdd = $("#inputId").val();
         let emailConfirmBtn = $("#emailConfirm");
 
@@ -334,7 +335,7 @@
           }
           ,error: function () {
             alert("이메일 전송에 실패하였습니다. 이메일을 다시 확인해주세요.");
-            $("#inputId").attr("readonly",true);
+            $("#inputId").attr("readonly",false);
             $("#emailSend").attr("disabled",false);
           }
         }).done(function(){

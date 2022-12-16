@@ -8,5 +8,20 @@ import org.springframework.stereotype.Service;
 public class InviteService {
 
     @Autowired
-    private InviteDAO inviteDAO;
+    private InviteDAO inviteDao;
+
+    // 초대코드 여부 체크
+    public boolean codeCheck(String inviteCode) throws Exception{
+        return inviteDao.codeCheck(inviteCode);
+    }
+
+    // 초대코드 insert
+    public void codeInsert(String inviteCode) throws Exception{
+        inviteDao.codeInsert(inviteCode);
+    }
+
+    // 초대코드 delete
+    public void codeDelete(String inviteCode) throws Exception{
+        inviteDao.codeDelete(inviteCode);
+    }
 }

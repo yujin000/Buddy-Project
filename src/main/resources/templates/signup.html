@@ -237,7 +237,7 @@
               "id" : inputIdVal
             }
           }).done(function(rsp){
-            if(!rsp){
+            if(rsp == 'false'){;
               idStatus.html("사용 가능한 이메일입니다.");
               idDulCheck = true;
 
@@ -259,9 +259,10 @@
 
               }else{
                 alert("이메일을 다시 확인해주세요.(중복된 이메일 또는 유효하지 않은 이메일입니다.");
+                idDulCheck = false;
               }
 
-            }else{
+            }else if(rsp == 'true'){
               idStatus.html("이미 사용 중인 이메일입니다.");
               idDulCheck = false;
             }

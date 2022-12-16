@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Member;
 
 
 @Controller
@@ -153,10 +154,16 @@ public class MemberController {
     // 에러페이지 >> 마이페이지 이동
     @RequestMapping("goMypage")
     public String selectMyInfo(String memberSeq,Model model) throws Exception{
-        MemberDTO dto = memberService.selectMyInfo(memberSeq);
-        model.addAttribute("userInfo",dto);
+        MemberDTO memberDto = memberService.selectMyInfo(memberSeq);
+        model.addAttribute("userInfo",memberDto);
         return "index";
     }
 
-
+    //계정설정으로 이동
+    @RequestMapping("myProfile")
+    public String selectMyProfile(Model model) throws Exception {
+        MemberDTO memberDto = memberService.selectMyProfile(String.valueOf(session.getAttribute("memberSeq")));
+        model.addAttribute("myProfile",memberDto);
+        return "myprofile";
+    }
 }

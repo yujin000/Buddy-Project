@@ -50,5 +50,8 @@ public class MemberService {
         return memberDao.selectMyInfo(memberSeq);
     }
 
-
+    //계정설정으로 이동
+    public MemberDTO selectMyProfile(String memberSeq) throws Exception{
+        return memberDao.selectMyProfile(memberSeq);
+    }
 }

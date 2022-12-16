@@ -52,4 +52,9 @@ public class MemberDAO {
         return memberMapper.selectMyInfo(memberSeq);
     }
 
+    //계정설정으로 이동
+    public MemberDTO selectMyProfile(String memberSeq) throws Exception{
+        return memberMapper.selectMyProfile(memberSeq);
+    }
+
 }

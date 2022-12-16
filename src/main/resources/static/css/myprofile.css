@@ -109,9 +109,27 @@ div[class*="hidden"] {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+#hidn2 {
+    height: 100%;
+    padding: 10px;
+    position: relative;
+    display: none;
+}
+
+#hidn2 > p {
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 .inputPw {
     display: block;
     width: 250px;
+    height: 30px;
+}
+
+.inputPhone {
+    display: block;
+    width: 150px;
     height: 30px;
 }
 

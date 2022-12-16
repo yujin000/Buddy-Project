@@ -81,4 +81,9 @@
         where
             member_seq = #{value}
     </select>
+
+    <!-- 계정설정으로 이동 -->
+    <select id="selectMyProfile" resultType="com.fivet.buddy.dto.MemberDTO">
+        select * from member where member_seq = #{memberSeq}
+    </select>
 </mapper>

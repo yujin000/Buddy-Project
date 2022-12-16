@@ -60,6 +60,9 @@
             <p id="myEmail" class="email" th:text="${session.memberLogtype}">userEmail</p>
 <!--            <input type="hidden" th:value="${userInfo.getMemberLogtype()}" name="memberLogtype" id="loginType">-->
           </div>
+          <button type="button" id="myprofile" class="floatBtn">
+            계정설정
+          </button>
           <button type="button" id="logout" class="floatBtn">
             로그아웃
           </button>
@@ -249,6 +252,10 @@
             //location.href = "http://nid.naver.com/nidlogin.logout";//logout()이 작동되지 않으면 이거 사용
           }
         }
+      });
+
+      $('#myprofile').on("click",function (){
+          location.href="/member/myProfile";
       });
     </script>
   </body>

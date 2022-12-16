@@ -19,7 +19,7 @@
         from
             member
         where
-            member_id = #{value} and member_logtype = 'normal'
+            member_id = #{value}
     </select>
 
     <!-- 계정 ID/PW 체크 -->

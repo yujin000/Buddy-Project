@@ -5,12 +5,10 @@ import com.fivet.buddy.dto.SmsResponseDTO;
 import com.fivet.buddy.services.SmsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 
 import java.io.UnsupportedEncodingException;
@@ -25,6 +23,13 @@ public class SmsController {
 
     private final SmsService smsService;
 
+    // ExceptionHandler
+    @ExceptionHandler(Exception.class)
+    public String exceptionHandler(Exception e) {
+        e.printStackTrace();
+        return "error";
+    }
+
     @GetMapping("/send")
     public String getSmsPage() {
         return "sendSms";
@@ -33,12 +38,10 @@ public class SmsController {
     @ResponseBody
     @PostMapping("/sms/send")
     public String sendSms(@RequestBody SmsDTO smsDto, Model model) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
-        System.out.println(smsDto.getTo());
         // 랜덤 번호 변수
         String confirmVal = createSmsKey();
         // set 랜덤 번호
         smsDto.setContent("[Buddy] 회원가입 인증번호 [" + confirmVal + "]를 화면에 입력해주세요.");
-        System.out.println(confirmVal);
         // 문자 발송
         SmsResponseDTO response = smsService.sendSms(smsDto);
         // 응답확인(요청보낸 아이디, 요청 시간, 상태)
@@ -49,7 +52,7 @@ public class SmsController {
     }
 
     // 랜덤 번호 5자리 생성
-    public static String createSmsKey() {
+    public String createSmsKey() {
         StringBuffer key = new StringBuffer();
         Random rnd = new Random();
 
@@ -58,4 +61,6 @@ public class SmsController {
         }
         return key.toString();
     }
+
+
 }

@@ -41,15 +41,22 @@
           </th:block>
           <th:block th:if="${userInfo.getMemberLogtype() == 'normal'}">
             <input type="text" name="memberId" class="inputEmail" id="inputId" maxlength='30' placeholder="이메일을 입력해주세요."/>
+            <button type="button" id="emailSend">인증 이메일 발송</button>
+            <input type="test" id="emailCheckVal" placeholder="인증번호를 입력하세요.">
+            <button type="button" id="emailConfirm" >인증</button>
+            <!-- 타이머 생성 -->
+            <label for="emailTimer" id="emailTimerLabel">남은 시간:</label>
+            <input id="emailTimer" type="text" value="" readonly/>
+            <br>
             <span id="idStatus"></span>
           </th:block>
 
         <th:block th:if="${userInfo.getMemberLogtype() == 'normal'}">
           <p id="titlePw" class="titlePw">비밀번호</p>
           <p id="comment" class="comment">
-            비밀번호는 8~14자 영문,숫자,특수문자로 입력하세요
+            비밀번호는 영문,숫자,특수문자를 모두 포함한 8~14자로 입력하세요.
           </p>
-          <input type="password" name="memberPw" id="inputPw" class="inputPw" maxlength='15' placeholder="비밀번호는 8~14자 영문,숫자,특수문자로 입력하세요."/>
+          <input type="password" name="memberPw" id="inputPw" class="inputPw" maxlength='15' placeholder="비밀번호는 영문,숫자,특수문자를 모두 포함한 8~14자로 입력하세요."/>
           <p id="titleTest" class="titleTest">비밀번호 확인</p>
           <input type="password" name="testPw" id="testPw" class="testPw" maxlength='15' placeholder="비밀번호를 다시 입력해주세요."/>
           <span id="pwStatus"></span>
@@ -68,7 +75,7 @@
           <!-- 타이머 생성 -->
           <label for="Timer" id="timerLabel">남은 시간:</label>
           <input id="Timer" type="text" value="" readonly/>
-          <button type="button" id="phoneConfirm" disabled>인증번호 확인</button>
+          <button type="button" id="phoneConfirm" >인증번호 확인</button>
         </th:block>
         <th:block th:if="${userInfo.getMemberLogtype() == 'naver'}">
           <input type="text" name="memberPhone" class="inputPhone" th:value="${userInfo.getMemberPhone()}" readonly/>
@@ -83,6 +90,37 @@
       </form>
     </div>
 
+    <!-- 버튼 생성/제거 함수-->
+    <script>
+      // 이메일
+      function emailDisBlock(){
+        $("#emailCheckVal").css("display","inline-block");
+        $("#emailConfirm").css("display","block");
+        $("#emailTimer").css("display","block");
+        $("#emailTimerLabel").css("display","block");
+      }
+
+      function emailDisNone(){
+        $("#emailCheckVal").css("display","none");
+        $("#emailConfirm").css("display","none");
+        $("#emailTimer").css("display","none");
+        $("#emailTimerLabel").css("display","none");
+      }
+      // 휴대폰
+      function phoneDisBlock(){
+        $("#phoneCheckVal").css("display","inline-block");
+        $("#phoneConfirm").css("display","block");
+        $("#Timer").css("display","block");
+        $("#timerLabel").css("display","block");
+      }
+
+      function phoneDisNone(){
+        $("#phoneCheckVal").css("display","none");
+        $("#phoneConfirm").css("display","none");
+        $("#Timer").css("display","none");
+        $("#timerLabel").css("display","none");
+      }
+    </script>
     <!-- 회원가입 유효성 검사 -->
     <script>
       let nameChkResult = false;
@@ -108,44 +146,8 @@
           nameStatus.html("");
           nameChkResult = true;
         }
-        console.log(nameChkResult);
       });
 
-
-      // 아이디(이메일) 중복 체크
-      const idRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-      let idStatus = $("#idStatus");
-      let inputId = $("#inputId");
-
-      inputId.on("blur",function(){
-        let inputIdVal = $("#inputId").val();
-        let idResult = idRegex.test(inputIdVal);
-
-        if(inputIdVal == ""){
-          idStatus.html("이메일을 입력해주세요.");
-          idChkResult = false;
-        }else if(!idResult) {
-          idStatus.html("이메일 양식을 확인해주세요.");
-          idChkResult = false;
-        }else if(idResult){
-          $.ajax({
-            url : "/member/idCheck",
-            data : {
-              "id" : inputIdVal
-            }
-          }).done(function(rsp){
-            console.log(rsp);
-            if(rsp){
-              idStatus.html("사용 가능한 이메일입니다.");
-              idChkResult = true;
-            }else{
-              idStatus.html("이미 사용 중인 이메일입니다.");
-              idChkResult = false;
-            }
-          })
-        }
-
-      });
       // 비밀번호 확인
       let inputPw = $("#inputPw");
       let pwStatus = $("#pwStatus");
@@ -161,7 +163,7 @@
           pwStatus.html("비밀번호를 입력해주세요.");
           pwChkResult = false;
         }else if(!pwResult){
-          pwStatus.html("비밀번호는 문자, 숫자, 특수문자를 포함한 8~10글자여야 합니다.");
+          pwStatus.html("비밀번호는 영문,숫자,특수문자를 모두 포함한 8~14자로 입력하세요.");
           pwChkResult = false;
         }else{
           pwStatus.html("");
@@ -187,7 +189,7 @@
           pwStatus.html("비밀번호를 입력해주세요.");
           pwChkResult = false;
         }else if(!pwResult){
-          pwStatus.html("비밀번호는 문자, 숫자, 특수문자를 포함한 8~10글자여야 합니다.");
+          pwStatus.html("비밀번호는 영문,숫자,특수문자를 모두 포함한 8~14자로 입력하세요.");
           pwChkResult = false;
         }else{
           pwStatus.html("");
@@ -205,6 +207,154 @@
       });
     </script>
 
+    <!-- 이메일 인증 regex -->
+    <script>
+      // 아이디(이메일) 중복 체크
+      const idRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+      let idStatus = $("#idStatus");
+      let inputId = $("#inputId");
+      let idDulCheck = false;
+
+
+      // 이메일 발송 / 타이머
+      const emailTimer = document.getElementById('emailTimer');
+
+
+      $("#emailSend").on("click",function (){
+        let inputIdVal = $("#inputId").val();
+        let idResult = idRegex.test(inputIdVal);
+
+        if(inputIdVal == ""){
+          idStatus.html("이메일을 입력해주세요.");
+          idDulCheck = false;
+        }else if(!idResult) {
+          idStatus.html("이메일 양식을 확인해주세요.");
+          idDulCheck = false;
+        }else if(idResult){
+          $.ajax({
+            url : "/member/idCheck",
+            data : {
+              "id" : inputIdVal
+            }
+          }).done(function(rsp){
+            if(!rsp){
+              idStatus.html("사용 가능한 이메일입니다.");
+              idDulCheck = true;
+
+              if(idDulCheck){
+                $("#inputId").attr("readonly",true);
+                $("#emailSend").attr("disabled",true);
+
+                emailSend();
+                TIMER();
+
+                setTimeout(function(){
+                  alert("인증시간이 경과되었습니다. 다시 요청해주세요.");
+                  clearInterval(PlAYTIME);
+                  emailDisNone();
+                  $("#inputId").attr("readonly",false);
+                  $("#emailSend").attr("disabled",false); // 3분이 지나면 버튼 활성화
+                  idChkResult = false;
+                },180000);//3분이 되면 타이머를 삭제
+
+              }else{
+                alert("이메일을 다시 확인해주세요.(중복된 이메일 또는 유효하지 않은 이메일입니다.");
+              }
+
+            }else{
+              idStatus.html("이미 사용 중인 이메일입니다.");
+              idDulCheck = false;
+            }
+          })
+        }
+
+
+      })
+
+      // 타이머 함수
+      function TIMER() {
+        let time= 180000;
+        let min=3;
+        let sec=60;
+
+        emailTimer.value = min + ":" + '00';
+        PlAYTIME = setInterval(function () {
+          time = time - 1000;
+          min = time / (60 * 1000);
+
+          if (sec > 0) {
+            sec = sec - 1;
+            emailTimer.value = Math.floor(min) + ':' + sec;
+
+          }
+          if (sec === 0) {
+            sec = 60;
+            emailTimer.value = Math.floor(min) + ':' + '00'
+          }
+
+        }, 1000);
+      }
+
+      // 이메일 난수(6)생성 함수
+      let serialNo;
+
+      function emailRan(){
+        $.ajax({
+          url: "/email/emailProve"
+          ,type: "post"
+          ,async: false
+        }).done(function(rsp){
+          serialNo = rsp;
+        })
+      }
+
+      // 이메일 발송 함수
+
+      function emailSend() {
+        emailRan();
+        let subject = "[Buddy] 회원가입 인증번호 입니다.";
+        let body = serialNo;
+        let emailAdd = $("#inputId").val();
+        let emailConfirmBtn = $("#emailConfirm");
+
+        var params = {
+          userId: emailAdd
+          , subject: subject
+          , body: body
+        }
+
+        $.ajax({
+          url: "/email/sendEmail"
+          , type: "POST"
+          , accept: "application/json"
+          , contentType: "application/json; charset=utf-8"
+          , data: JSON.stringify(params)
+          , dataType: "json"
+          ,success: function(){
+            emailDisBlock();
+          }
+          ,error: function () {
+            alert("이메일 전송에 실패하였습니다. 이메일을 다시 확인해주세요.");
+            $("#inputId").attr("readonly",false);
+            $("#emailSend").attr("disabled",false);
+          }
+        }).done(function(){
+          emailConfirmBtn.on("click",function(){
+            if(serialNo == $("#emailCheckVal").val()){
+              alert("인증번호가 일치합니다.");
+              idChkResult = true;
+              emailDisNone();
+              $("#inputId").attr("readonly",true);
+              $("#emailSend").attr("disabled",true);
+            }else{
+              alert("인증번호가 일치하지 않습니다. 다시 확인해주세요.");
+            }
+          })
+
+        })
+      }
+
+    </script>
     <!-- 문자인증 문자인증 regex -->
     <script>
       let phoneChkResult = false;
@@ -261,10 +411,12 @@
           }
           TIMER();
           setTimeout(function(){
+            alert("인증시간이 경과되었습니다. 다시 요청해주세요.");
             clearInterval(PlAYTIME);
             sendSms.attr("disabled",false); // 3분이 지나면 버튼 활성화
             phoneChkResult = false;
-          },180000);//3분이 되면 타이머를 삭제
+            phoneDisNone();
+          },180000);// 1분이 되면 타이머를 삭제
 
           let param = {"to":inputPhoneVal};
           // 문자 발송
@@ -273,22 +425,23 @@
             type : "post",
             contentType: 'application/json',
             data : JSON.stringify(param)
+            ,success: function(){
+            $("#phoneCheckVal").css("display","inline-block");
+              phoneDisBlock();
+          }
+            ,error: function () {
+            alert("인증문자 전송에 실패하였습니다. 휴대폰 번호를 다시 확인해주세요.");
+            $("#inputPhone").attr("readonly",false);
+            $("#sendSms").attr("disabled",false);
+          }
           }).done(function (rsp){
-            // 인증번호 확인 버튼 활성화
-            let phoneConfirm = $("#phoneConfirm");
-            phoneConfirm.removeAttr("disabled");
-
             // rsp : 문자 번호
             let smsNum = rsp;
-            phoneConfirm.on("click",function (){
+            $("#phoneConfirm").on("click",function (){
               if(smsNum == $("#phoneCheckVal").val()){
                 alert("인증번호가 일치합니다.");
                 phoneChkResult = true;
-                $("#phoneCheckVal").attr("readonly",true);
-                phoneConfirm.css("display","none");
-                $("#timerLabel").css("display","none");
-                $("#Timer").css("display","none");
-                // 유효성검사 추가하기
+                phoneDisNone();
               }else{
                 alert("인증번호가 일치하지 않습니다. 다시 확인 해주세요.");
                 phoneChkResult = false;
@@ -315,8 +468,8 @@
       }
     </script>
     <!-- 회원가입 -->
-    <script>
 
+    <script>
       let signupBtn = $("#signupBtn");
 
       signupBtn.on("click",function(){
@@ -324,6 +477,7 @@
           alert("이름, 이메일, 비밀번호, 휴대폰인증을 모두 완료해주세요.");
           return false;
         }else{
+          alert("회원가입이 완료되었습니다.");
           $("#form").attr("action","/member/signUp").submit();
         }
       })

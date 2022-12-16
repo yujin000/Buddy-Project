@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Member;
 
 
 @Controller
@@ -84,6 +83,7 @@ public class MemberController {
             // 세션에 멤버 seq,logtype 뿌림
             session.setAttribute("memberSeq",dto.getMemberSeq());
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
+            session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
             return "index";
         }else{
@@ -121,6 +121,7 @@ public class MemberController {
             // 세션에 멤버 seq,logtype 뿌림
             session.setAttribute("memberSeq",dto.getMemberSeq());
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
+            session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
             return "index";
         }
@@ -138,6 +139,10 @@ public class MemberController {
         boolean result = memberService.isNaverExist(memberDto);
         if(!result){
             // 회원이 아닐 때 회원가입 페이지
+            String naverPhone = memberDto.getMemberPhone();
+            String replacePhone = naverPhone.replaceAll("-","");
+            memberDto.setMemberPhone(replacePhone);
+
             model.addAttribute("userInfo",memberDto);
             return "signup";
         }else{
@@ -146,6 +151,7 @@ public class MemberController {
             // 세션에 멤버 seq,logtype 뿌림
             session.setAttribute("memberSeq",dto.getMemberSeq());
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
+            session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
             return "index";
         }
@@ -154,8 +160,8 @@ public class MemberController {
     // 에러페이지 >> 마이페이지 이동
     @RequestMapping("goMypage")
     public String selectMyInfo(String memberSeq,Model model) throws Exception{
-        MemberDTO memberDto = memberService.selectMyInfo(memberSeq);
-        model.addAttribute("userInfo",memberDto);
+        MemberDTO dto = memberService.selectMyInfo(memberSeq);
+        model.addAttribute("userInfo",dto);
         return "index";
     }
 

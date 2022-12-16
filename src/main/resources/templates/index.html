@@ -41,6 +41,7 @@
         >
       </form>
       <a href="/member/logout">테스트 돌아가기</a>
+      <a href="/member/test">테스트 이메일</a>
     </div>
   </th:block>
   <th:block th:if="${not #strings. isEmpty(session.memberSeq)}">
@@ -56,9 +57,9 @@
           <img src="" alt="" id="myImg" class="profileImg" />
           <div class="info">
             <!-- 세션에 뿌려진 값으로 해결하기 -->
+            <a href="/invite/test">초대테스트 페이지로</a>
             <h1 id="myName" class="name" th:text="${session.memberSeq}">userName</h1>
             <p id="myEmail" class="email" th:text="${session.memberLogtype}">userEmail</p>
-<!--            <input type="hidden" th:value="${userInfo.getMemberLogtype()}" name="memberLogtype" id="loginType">-->
           </div>
           <button type="button" id="myprofile" class="floatBtn">
             계정설정

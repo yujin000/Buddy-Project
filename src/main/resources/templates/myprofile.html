@@ -68,26 +68,30 @@
         <p class="comment">
           휴대폰 번호는 '-'를 제외하고 입력해주세요.
         </p>
+
+        <form method="post" id="updatePhoneForm">
         <input
                 type="text"
                 value=""
-                name="oriPhone"
-                id="origin"
+                name="memberPhone"
+                id="inputPhone"
                 class="inputPhone"
+                maxlength='12'
         />
-        <button type="submit" style="float: right;">인증번호 발송</button>
-        <p>인증번호 입력</p>
+        </form>
+
+        <button type="button" id="sendSms">인증문자발송</button>
         <input
                 type="text"
                 value=""
                 name="newPhone"
-                id="new"
+                id="phoneCheckVal"
                 class="inputPhone"
+                placeholder="인증번호를 입력하세요."
         />
-        <button type="submit" style="float: right;">인증번호 확인</button>
-        <label for="Timer" id="timerLabel" style="float: left;">남은 시간:</label>
-        <input id="Timer" type="text" value="" class="inputPhone" readonly/>
-        <button class="updateBtn" id="floatBtn">수정</button>
+        <label for="Timer" id="timerLabel">남은 시간:</label>
+        <input id="Timer" type="text" class="inputPhone" value="" readonly/>
+        <button type="button" id="phoneConfirm" >인증번호 확인</button>
       </div>
 
     <div class="update" id="updatePw">
@@ -121,57 +125,36 @@
 <strong><a href="index.html" id="goBack">뒤로가기</a></strong>
 </div>
 <script>
-  let count =0;
+
   $(document).ready(function(){
-      $("#nameToggle").click(function () {
-        if(count==0) {
-          $("#hidn1").toggle();
-          $("#inputName").attr("disabled", false);
-          count=1;
-        }else{
-          $.ajax({
-            url:"/member/ajaxMyName",
-            success:function (){
-            },error:function (){
-            }
-          }).done(function (rsp){
-            count=0;
-            $("#hidn1").toggle();
-            $("#inputName").val(rsp);
-            $("#inputName").attr("disabled", true);
-          })
-        }
+      $("#PhoneToggle").click(function() {
+          $("#hidn2").toggle();
       })
 
     $("#pwToggle").click(function() {
       $("#hidn3").toggle();
-    })
-
-    $("#PhoneToggle").click(function() {
-      $("#hidn2").toggle();
-    })
-
-    $("#nameBtn").on("click",function (){
-      let updateName = $("#inputName").val();
-
-      $.ajax({
-        url:"/member/updateMyName",
-        data:{"memberName":updateName},
-        success:function (){
-        },error:function (){
-        }
-      }).done(function (){
-        count=0;
-        $("#hidn1").toggle();
-        $("#inputName").val(updateName);
-        $("#inputName").attr("disabled", true);
-      })
     })
   })
 
 </script>
 
 <script>
+  // 휴대폰
+  function phoneDisBlock(){
+    $("#phoneCheckVal").css("display","inline-block");
+    $("#phoneConfirm").css("display","block");
+    $("#Timer").css("display","block");
+    $("#timerLabel").css("display","block");
+  }
+
+  function phoneDisNone(){
+    $("#phoneCheckVal").css("display","none");
+    $("#phoneConfirm").css("display","none");
+    $("#Timer").css("display","none");
+    $("#timerLabel").css("display","none");
+    $("#sendSms").css("display","none");
+  }
+
   let phoneChkResult = false;
   const Timer = document.getElementById('Timer'); //스코어 기록창-분
   let time= 180000;
@@ -226,10 +209,12 @@
       }
       TIMER();
       setTimeout(function(){
+        alert("인증시간이 경과되었습니다. 다시 요청해주세요.");
         clearInterval(PlAYTIME);
         sendSms.attr("disabled",false); // 3분이 지나면 버튼 활성화
         phoneChkResult = false;
-      },180000);//3분이 되면 타이머를 삭제
+        phoneDisNone();
+      },180000);// 1분이 되면 타이머를 삭제
 
       let param = {"to":inputPhoneVal};
       // 문자 발송
@@ -238,22 +223,24 @@
         type : "post",
         contentType: 'application/json',
         data : JSON.stringify(param)
+        ,success: function(){
+          $("#phoneCheckVal").css("display","inline-block");
+          phoneDisBlock();
+        }
+        ,error: function () {
+          alert("인증문자 전송에 실패하였습니다. 휴대폰 번호를 다시 확인해주세요.");
+          $("#inputPhone").attr("readonly",false);
+          $("#sendSms").attr("disabled",false);
+        }
       }).done(function (rsp){
-        // 인증번호 확인 버튼 활성화
-        let phoneConfirm = $("#phoneConfirm");
-        phoneConfirm.removeAttr("disabled");
-
         // rsp : 문자 번호
         let smsNum = rsp;
-        phoneConfirm.on("click",function (){
+        $("#phoneConfirm").on("click",function (){
           if(smsNum == $("#phoneCheckVal").val()){
             alert("인증번호가 일치합니다.");
+            alert("휴대전화 변경이 완료되었습니다.");
             phoneChkResult = true;
-            $("#phoneCheckVal").attr("readonly",true);
-            phoneConfirm.css("display","none");
-            $("#timerLabel").css("display","none");
-            $("#Timer").css("display","none");
-            // 유효성검사 추가하기
+            $("#updatePhoneForm").attr("action","/member/updatePhone").submit();
           }else{
             alert("인증번호가 일치하지 않습니다. 다시 확인 해주세요.");
             phoneChkResult = false;

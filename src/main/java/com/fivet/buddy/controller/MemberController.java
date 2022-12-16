@@ -166,10 +166,18 @@ public class MemberController {
     }
 
     //계정설정으로 이동
-    @RequestMapping("myProfile")
+    @RequestMapping("goMyProfile")
     public String selectMyProfile(Model model) throws Exception {
         MemberDTO memberDto = memberService.selectMyProfile(String.valueOf(session.getAttribute("memberSeq")));
         model.addAttribute("myProfile",memberDto);
         return "myprofile";
+    }
+
+    //휴대전화 수정
+    @RequestMapping ("updatePhone")
+    public String updatePhone(MemberDTO memberDto,Model model) throws Exception{
+        memberDto.setMemberSeq((Integer) session.getAttribute("memberSeq"));
+        memberService.updatePhone(memberDto);
+        return "redirect:/member/goMyProfile";
     }
 }

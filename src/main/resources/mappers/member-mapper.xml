@@ -86,4 +86,9 @@
     <select id="selectMyProfile" resultType="com.fivet.buddy.dto.MemberDTO">
         select * from member where member_seq = #{memberSeq}
     </select>
+
+    <!-- 휴대전화 수정 -->
+    <update id="updatePhone">
+        update member set member_phone = #{memberPhone} where member_seq = #{memberSeq}
+    </update>
 </mapper>

@@ -57,4 +57,8 @@ public class MemberDAO {
         return memberMapper.selectMyProfile(memberSeq);
     }
 
+    //휴대전화 수정
+    public void updatePhone(MemberDTO memberDto) throws Exception{
+        memberMapper.updatePhone(memberDto);
+    }
 }

@@ -145,3 +145,25 @@ div[class*="hidden"] {
     text-align: center;
     display: block;
 }
+
+/* 휴대폰번호 css */
+#inputPhone{
+    float:left;
+}
+
+#phoneCheckVal {
+    float: left;
+    margin-top: 10px;
+}
+
+.inputPhone,#phoneCheckVal{
+    width:300px;
+}
+/* 휴대폰 인증 css */
+#Timer,#emailTimer{
+    width:50px;
+    border:none;
+}
+#phoneCheckVal, #phoneConfirm, #Timer, #timerLabel{
+    display:none;
+}

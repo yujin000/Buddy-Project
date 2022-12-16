@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"
+    ></script>
+</head>
+<body>
+회원초대 테스트 페이지 입니다.<br>
+<input type="text" name="inviteReceivememEmail" id="inviteEmail" placeholder="초대할 이메일" maxlength="30">
+<button type="button" id="inviteBtn">초대이메일 보내기</button>
+<a href="/invite/testInviteConfirm">이동</a>
+<script>
+
+    // 이메일 검증
+    const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    let emailCheck = false;
+
+    $("#inviteBtn").on("click", function () {
+        let inviteEmailVal = $("#inviteEmail").val();
+        let emailResult = emailRegex.test(inviteEmailVal);
+
+        if (inviteEmailVal == "") {
+            alert("이메일을 입력해주세요.");
+            emailCheck = false;
+        } else if (!emailResult) {
+            alert("이메일 양식을 확인해주세요.");
+            emailCheck = false;
+        } else {
+            emailCheck = true;
+            if (emailCheck) {
+                emailSend();
+                console.log("이메일 요청 완료");
+            } else {
+                alert("이메일을 다시 확인해주세요.(중복된 이메일 또는 유효하지 않은 이메일입니다.");
+            }
+        }
+    })
+
+    // 본문 생성 함수(초대코드포함)
+    let serialNo;
+
+    function emailRan(){
+        $.ajax({
+            url: "/email/inviteProve"
+            ,type: "post"
+            ,async: false
+            ,success: function (){
+                console.log("본문생성 성공");
+            },error: function (){
+                console.log("본문 생성 실패");
+            }
+        }).done(function(rsp){
+            serialNo = rsp;
+            console.log("본문 생성 완료");
+            console.log(rsp);
+        })
+    }
+
+    // 이메일 발송 함수
+
+    function emailSend() {
+        emailRan();
+        let subject = "[Buddy] [Sender]님이 회원님을 Buddy [chatRoom]에 초대합니다.";
+        let body = serialNo;
+        let emailAdd = $("#inviteEmail").val();
+
+        var params = {
+            userId: emailAdd
+            , subject: subject
+            , body: body
+        }
+
+        $.ajax({
+            url: "/email/sendInviteEmail"
+            , type: "POST"
+            , accept: "application/json"
+            , contentType: "application/json; charset=utf-8"
+            , data: JSON.stringify(params)
+            , dataType: "json"
+            ,success: function(){
+                console.log("메일전송 성공!");
+            }
+            ,error: function () {
+                console.log("메일전송 실패!");
+            }
+        }).done(function(){
+            console.log("done");
+        })
+    }
+</script>
+</body>
+</html>

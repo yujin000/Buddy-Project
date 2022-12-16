@@ -83,6 +83,7 @@ public class MemberController {
             // 세션에 멤버 seq,logtype 뿌림
             session.setAttribute("memberSeq",dto.getMemberSeq());
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
+            session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
             return "index";
         }else{
@@ -120,6 +121,7 @@ public class MemberController {
             // 세션에 멤버 seq,logtype 뿌림
             session.setAttribute("memberSeq",dto.getMemberSeq());
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
+            session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
             return "index";
         }
@@ -137,6 +139,10 @@ public class MemberController {
         boolean result = memberService.isNaverExist(memberDto);
         if(!result){
             // 회원이 아닐 때 회원가입 페이지
+            String naverPhone = memberDto.getMemberPhone();
+            String replacePhone = naverPhone.replaceAll("-","");
+            memberDto.setMemberPhone(replacePhone);
+
             model.addAttribute("userInfo",memberDto);
             return "signup";
         }else{
@@ -145,6 +151,7 @@ public class MemberController {
             // 세션에 멤버 seq,logtype 뿌림
             session.setAttribute("memberSeq",dto.getMemberSeq());
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
+            session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
             return "index";
         }

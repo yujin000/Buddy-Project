@@ -73,6 +73,7 @@
             userId: emailAdd
             , subject: subject
             , body: body
+            // , writer:writer
         }
 
         $.ajax({
@@ -83,7 +84,16 @@
             , data: JSON.stringify(params)
             , dataType: "json"
             ,success: function(){
-
+                $.ajax({
+                    url:"/invite/codeInsert"
+                    ,data:{
+                        inviteCode:serialNo
+                    },success:(function (){
+                        console.log("성공");
+                    }),error:(function (){
+                        console.log("실패");
+                    })
+                })
                 console.log("메일전송 성공!");
             }
             ,error: function () {

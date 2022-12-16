@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 
 import java.io.UnsupportedEncodingException;
@@ -26,6 +23,12 @@ public class SmsController {
 
     private final SmsService smsService;
 
+    // ExceptionHandler
+    @ExceptionHandler(Exception.class)
+    public String exceptionHandler(Exception e) {
+        e.printStackTrace();
+        return "error";
+    }
 
     @GetMapping("/send")
     public String getSmsPage() {
@@ -59,19 +62,5 @@ public class SmsController {
         return key.toString();
     }
 
-    // 숫자+영문 20자리 생성(초대에 써야징)
-    public String smsTimeOutVal() {
-        StringBuffer key = new StringBuffer();
-        Random rnd = new Random();
 
-        for (int i = 0; i < 10; i++) {
-            if (rnd.nextBoolean()) {
-                key.append((char) ((int) (rnd.nextInt(26)) + 97));
-            } else {
-                key.append((rnd.nextInt(10)));
-            }
-        }
-
-        return key.toString();
-    }
 }

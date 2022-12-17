@@ -14,4 +14,6 @@ public interface MemberMapper {
     MemberDTO selectAccountInfo(MemberDTO memberDto);
     MemberDTO selectAccountInfoForNK(MemberDTO memberDto);
     MemberDTO selectMyInfo(String memberSeq);
+    MemberDTO selectMyProfile(String memberSeq);
+    void updatePhone(MemberDTO memberDto);
 }

@@ -1,0 +1,37 @@
+.wrap {
+    width: 100vw;
+    height: 100vh;
+    margin-top: 20vh;
+    border: 1px dashed #000;
+    text-align: center;
+}
+
+.title {
+    margin: 40px 0px;
+    text-align: center;
+}
+
+.inputName {
+    width: 300px;
+    height: 40px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    display: block;
+}
+
+.sucess {
+    width: 150px;
+    height: 40px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+    background: #000;
+    color: white;
+    border: none;
+}
+
+@media (max-width: 600px) {
+    .wrap {
+        margin-top: 10vh;
+    }
+}

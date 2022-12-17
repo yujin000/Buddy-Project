@@ -18,4 +18,12 @@
   .name {
     font-size: 1.2rem;
   }
+
+  #myprofile{
+    top:12px;
+    right:10px;
+  }
+  #logout{
+    top: 50px;
+  }
 }

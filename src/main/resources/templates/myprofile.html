@@ -20,45 +20,80 @@
     <img src="" alt="" />
   </div>
 
-  <form action="">
+
     <div class="myProfile">
       <p class="title" id="titleImg">프로필 이미지</p>
       <div class="profileImg" id="pImg">
         <img src="" alt="" class="myImg" id="myImg" name="myImg" />
         <button class="updateBtn" id="updateImg">수정</button>
       </div>
-  </form>
-  <form action="">
+
+
     <div class="update" id="updateName">
       <p class="title">이름</p>
       <input
               type="text"
-              value="user"
+              th:value="${myProfile.memberName}"
               class="valName"
               name="myName"
-      /><button class="toggle" id="nameToggle" type="button" >tog</button>
+              id="inputName"
+              disabled
+      />
     </div>
-    <div class="hidden" id="hidn1" >
-      <button class="updateBtn">수정</button>
-    </div>
-  </form>
 
-  <form action="">
     <div class="update" id="updateEmail">
       <p class="title">이메일</p>
       <input
               type="text"
-              value="email"
+              th:value="${myProfile.memberId}"
               class="valEmail"
               name="myEmail"
-      /><button class="toggle" id="emailToggle" type="button">tog</button>
+              disabled
+      />
     </div>
-    <div class="hidden" id="hidn2">
-      <button class="updateBtn">수정</button>
-    </div>
-  </form>
 
-  <form action="">
+      <div class="update" id="updatePhone">
+        <p class="title">휴대전화</p>
+        <input
+                type="text"
+                th:value="${myProfile.memberPhone}"
+                class="valPhone"
+                name="myPhone"
+                id="idPhone"
+                disabled
+        /><button class="toggle" id="PhoneToggle" type="button" >tog</button>
+      </div>
+      <div class="hidden" id="hidn2" >
+        <p>변경할 휴대전화</p>
+        <p class="comment">
+          휴대폰 번호는 '-'를 제외하고 입력해주세요.
+        </p>
+
+        <form method="post" id="updatePhoneForm">
+        <input
+                type="text"
+                value=""
+                name="memberPhone"
+                id="inputPhone"
+                class="inputPhone"
+                maxlength='12'
+        />
+        </form>
+
+        <button type="button" id="sendSms">인증문자발송</button>
+        <input
+                type="text"
+                value=""
+                name="newPhone"
+                id="phoneCheckVal"
+                class="inputPhone"
+                placeholder="인증번호를 입력하세요."
+        />
+        <label for="Timer" id="timerLabel">남은 시간:</label>
+        <input id="Timer" type="text" class="inputPhone" value="" readonly/>
+        <button type="button" id="phoneConfirm" >인증번호 확인</button>
+      </div>
+
     <div class="update" id="updatePw">
       <p class="title">비밀번호 변경</p>
       <button type="button" class="toggle" id="pwToggle">tog</button>
@@ -86,24 +121,136 @@
     </div>
 
 </div>
-</form>
+
 <strong><a href="index.html" id="goBack">뒤로가기</a></strong>
 </div>
 <script>
-  $(document).ready(function(){
-    $("#nameToggle").click( function(){
-      $("#hidn1").toggle();
-    })
 
-    $("#emailToggle").click( function(){
-      $("#hidn2").toggle();
-    })
+  $(document).ready(function(){
+      $("#PhoneToggle").click(function() {
+          $("#hidn2").toggle();
+      })
 
     $("#pwToggle").click(function() {
       $("#hidn3").toggle();
     })
   })
 
+</script>
+
+<script>
+  // 휴대폰
+  function phoneDisBlock(){
+    $("#phoneCheckVal").css("display","inline-block");
+    $("#phoneConfirm").css("display","block");
+    $("#Timer").css("display","block");
+    $("#timerLabel").css("display","block");
+  }
+
+  function phoneDisNone(){
+    $("#phoneCheckVal").css("display","none");
+    $("#phoneConfirm").css("display","none");
+    $("#Timer").css("display","none");
+    $("#timerLabel").css("display","none");
+    $("#sendSms").css("display","none");
+  }
+
+  let phoneChkResult = false;
+  const Timer = document.getElementById('Timer'); //스코어 기록창-분
+  let time= 180000;
+  let min=3;
+  let sec=60;
+
+  // 문자 인증
+  let sendSms = $("#sendSms");
+  let inputPhone = $("#inputPhone");
+  const phoneRegex = /^010\d{4,4}?\d{4}$/;
+
+  sendSms.on("click",function(){
+    let inputPhoneVal = inputPhone.val();
+    let phoneResult = phoneRegex.test(inputPhoneVal);
+
+    if(inputPhone.val() == "") {
+      alert("휴대폰 번호를 입력하세요"); // 휴대폰 번호 regex해야됨
+      phoneChkResult = false;
+
+    }else if(!phoneResult) {
+      alert("휴대폰 번호 양식을 확인해주세요.");
+      phoneChkResult = false;
+      return false;
+
+    }else if(phoneResult){
+      sendSms.attr("disabled",false); // 문자 발송 버튼 비활성화(3분간)
+      inputPhone.attr("readonly",true);
+
+      // 타이머
+      alert("인증번호가 발송되었습니다.");
+
+      sendSms.attr("disabled", true); // 발송 버튼 비활성화
+
+      Timer.value = min + ":" + '00';
+
+      function TIMER() {
+        PlAYTIME = setInterval(function () {
+          time = time - 1000;
+          min = time / (60 * 1000);
+
+          if (sec > 0) {
+            sec = sec - 1;
+            Timer.value = Math.floor(min) + ':' + sec;
+
+          }
+          if (sec === 0) {
+            sec = 60;
+            Timer.value = Math.floor(min) + ':' + '00'
+          }
+
+        }, 1000);
+      }
+      TIMER();
+      setTimeout(function(){
+        alert("인증시간이 경과되었습니다. 다시 요청해주세요.");
+        clearInterval(PlAYTIME);
+        sendSms.attr("disabled",false); // 3분이 지나면 버튼 활성화
+        phoneChkResult = false;
+        phoneDisNone();
+      },180000);// 1분이 되면 타이머를 삭제
+
+      let param = {"to":inputPhoneVal};
+      // 문자 발송
+      $.ajax({
+        url : "/sms/send",
+        type : "post",
+        contentType: 'application/json',
+        data : JSON.stringify(param)
+        ,success: function(){
+          $("#phoneCheckVal").css("display","inline-block");
+          phoneDisBlock();
+        }
+        ,error: function () {
+          alert("인증문자 전송에 실패하였습니다. 휴대폰 번호를 다시 확인해주세요.");
+          $("#inputPhone").attr("readonly",false);
+          $("#sendSms").attr("disabled",false);
+        }
+      }).done(function (rsp){
+        // rsp : 문자 번호
+        let smsNum = rsp;
+        $("#phoneConfirm").on("click",function (){
+          if(smsNum == $("#phoneCheckVal").val()){
+            alert("인증번호가 일치합니다.");
+            alert("휴대전화 변경이 완료되었습니다.");
+            phoneChkResult = true;
+            $("#updatePhoneForm").attr("action","/member/updatePhone").submit();
+          }else{
+            alert("인증번호가 일치하지 않습니다. 다시 확인 해주세요.");
+            phoneChkResult = false;
+          }
+        })
+
+      })
+
+    }
+  });
 </script>
 </body>
 </html>

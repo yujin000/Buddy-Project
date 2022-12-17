@@ -50,5 +50,13 @@ public class MemberService {
         return memberDao.selectMyInfo(memberSeq);
     }
 
+    //계정설정으로 이동
+    public MemberDTO selectMyProfile(String memberSeq) throws Exception{
+        return memberDao.selectMyProfile(memberSeq);
+    }
 
+    //휴대전화 수정
+    public void updatePhone(MemberDTO memberDto) throws Exception{
+        memberDao.updatePhone(memberDto);
+    }
 }

@@ -29,7 +29,7 @@
         from
             member
         where
-            member_id = #{memberId} and member_pw = #{memberPw} and member_logtype = #{memberLogtype}
+            member_id = #{memberId} and member_pw = #{memberPw} and (member_logtype = 'normal' or member_logtype = 'admin')
     </select>
 
     <!-- 카카오 로그인 시 회원 체크-->
@@ -59,7 +59,7 @@
         from
             member
         where
-            member_id = #{memberId} and member_pw = #{memberPw} and member_logtype = #{memberLogtype}
+            member_id = #{memberId} and member_pw = #{memberPw} and (member_logtype = 'normal' or member_logtype = 'admin')
     </select>
 
     <!-- 계정 정보 출력(카카오 / 네이버) -->
@@ -91,4 +91,14 @@
     <update id="updatePhone">
         update member set member_phone = #{memberPhone} where member_seq = #{memberSeq}
     </update>
+
+    <!-- 회원 목록 출력 -->
+    <select id="selectMembers" resultType="com.fivet.buddy.dto.MemberDTO">
+        select * from member
+    </select>
+
+    <!-- 회원 검색 -->
+    <select id="memberSearch" resultType="com.fivet.buddy.dto.MemberDTO">
+        select * from member where ${searchPick} like '%'||#{memberSearchText}||'%'
+    </select>
 </mapper>

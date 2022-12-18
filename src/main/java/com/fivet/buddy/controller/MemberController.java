@@ -175,9 +175,26 @@ public class MemberController {
 
     //휴대전화 수정
     @RequestMapping ("updatePhone")
-    public String updatePhone(MemberDTO memberDto,Model model) throws Exception{
+    public String updatePhone(MemberDTO memberDto) throws Exception{
         memberDto.setMemberSeq((Integer) session.getAttribute("memberSeq"));
         memberService.updatePhone(memberDto);
+        return "redirect:/member/goMyProfile";
+    }
+
+    //현재 비밀번호 일치여부
+//    @ResponseBody
+//    @RequestMapping("myProfileCheckPw")
+//    public String selectMyProfilePw(MemberDTO memberDto) throws Exception{
+//        memberDto.setMemberSeq((Integer) session.getAttribute("memberSeq"));
+//        boolean result = memberService.selectMyProfilePw(memberDto);
+//        return String.valueOf(result);
+//    }
+
+    //비밀번호 수정
+    @RequestMapping ("updatePw")
+    public String updatePw(MemberDTO memberDto) throws Exception{
+        memberDto.setMemberSeq((Integer) session.getAttribute("memberSeq"));
+        memberService.updatePw(memberDto);
         return "redirect:/member/goMyProfile";
     }
 }

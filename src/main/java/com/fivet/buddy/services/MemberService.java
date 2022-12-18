@@ -59,4 +59,15 @@ public class MemberService {
     public void updatePhone(MemberDTO memberDto) throws Exception{
         memberDao.updatePhone(memberDto);
     }
+
+    //현재비밀번호 일치여부
+//    public boolean selectMyProfilePw(MemberDTO memberDto) throws Exception{
+//        return memberDao.selectMyProfilePw(memberDto);
+//    }
+
+    //비밀번호 수정
+    public void updatePw(MemberDTO memberDto) throws Exception{
+        memberDao.updatePw(memberDto);
+    }
+
 }

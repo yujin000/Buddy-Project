@@ -91,4 +91,14 @@
     <update id="updatePhone">
         update member set member_phone = #{memberPhone} where member_seq = #{memberSeq}
     </update>
+
+    <!-- 현재비밀번호 일치여부 -->
+    <select id="selectMyProfilePw" resultType="com.fivet.buddy.dto.MemberDTO">
+        select * from member where member_seq = #{memberSeq} and member_pw= #{memberPw}
+    </select>
+
+    <!-- 비밀번호 수정 -->
+    <update id="updatePw">
+        update member set member_pw = #{memberPw} where member_seq = #{memberSeq}
+    </update>
 </mapper>

@@ -3,6 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fivet.buddy.mapper.InviteMapper">
+
+    <!-- 초대코드가 있는지 체크 -->
     <select id="codeCheck" resultType="boolean">
         select
             case when count(*) >=1 then 1 else 0 end
@@ -11,17 +13,37 @@
         where invite_code = #{value}
     </select>
 
+    <!-- 초대 발송 시 코드 입력 -->
     <insert id="codeInsert">
         insert into
-            invite(invite_code)
+            invite
         values
-            (#{value})
+            (#{inviteTeamSeq}, #{inviteSendMemSeq}, #{inviteReceiveMemEmail}, #{inviteCode})
     </insert>
 
+    <!-- 초대 코드 사용 시 코드 삭제 -->
     <delete id="codeDelete">
         delete
             invite
         where
             invite_code = #{value}
     </delete>
+
+    <!-- 초대코드 입력 시 팀 입장 -->
+    <insert id="enterTeam">
+        insert into
+            team_member
+        values
+            (#{teamSeq}, #{memberSeq}, #{teamMemberNickname}, 'normal', sysdate)
+    </insert>
+
+    <!-- 팀 번호 초대코드로 select -->
+    <select id="selectTeamSeqByCode" resultType="Integer">
+        select
+            invite_team_seq
+        from
+            invite
+        where
+            invite_code = #{value}
+    </select>
 </mapper>

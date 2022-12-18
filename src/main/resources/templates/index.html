@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>당신의 동료, 영원한 친구 buddy</title>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/home.css" />
     <link rel="stylesheet" href="/static/css/mypage.css" />
     <link rel="stylesheet" href="/static/css/m-home.css" />
     <link rel="stylesheet" href="/static/css/m-mypage.css" />
+    <script src="/static/js/jQeuryCheck.js"></script>
   </head>
   <body>
   <th:block th:if="${#strings. isEmpty(session.memberSeq)}">
@@ -110,6 +112,12 @@
           <button type="button" id="goTeam" class="floatBtn">
             <a href="">팀으로 가기</a>
           </button>
+        </div>
+
+        <div class="addTeam">
+          <a href="">
+            팀 생성 하기
+          </a>
         </div>
       </div>
     </div>

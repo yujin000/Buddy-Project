@@ -8,9 +8,11 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
             crossorigin="anonymous"
     ></script>
+    <script src="/static/js/jQeuryCheck.js"></script>
 </head>
 <body>
 회원초대 테스트 페이지 입니다.<br>
+<input type="text" id="teamSeq" name="teamSeq">
 <input type="text" name="inviteReceivememEmail" id="inviteEmail" placeholder="초대할 이메일" maxlength="30">
 <button type="button" id="inviteBtn">초대이메일 보내기</button>
 <a href="/invite/testInviteConfirm">이동</a>
@@ -68,6 +70,7 @@
         let subject = "[Buddy] [Sender]님이 회원님을 Buddy [chatRoom]에 초대합니다.";
         let body = serialNo;
         let emailAdd = $("#inviteEmail").val();
+        let sendTeamSeq = $("#teamSeq").val();
 
         var params = {
             userId: emailAdd
@@ -84,10 +87,14 @@
             , data: JSON.stringify(params)
             , dataType: "json"
             ,success: function(){
+                console.log(sendTeamSeq);
+                console.log(emailAdd);
                 $.ajax({
                     url:"/invite/codeInsert"
                     ,data:{
-                        inviteCode:serialNo
+                        inviteCode : serialNo
+                        ,inviteTeamSeq : sendTeamSeq
+                        ,inviteReceiveMemEmail : emailAdd
                     },success:(function (){
                         console.log("성공");
                     }),error:(function (){

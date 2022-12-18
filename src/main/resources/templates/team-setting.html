@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>팀 관리</title>
+  <link rel="stylesheet" href="/static/css/reset.css" />
+  <link rel="stylesheet" href="/static/css/team-setting.css" />
+  <link rel="stylesheet" href="/static/css/m-team-setting.css" />
+  <script
+          src="https://code.jquery.com/jquery-3.6.1.min.js"
+          integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+          crossorigin="anonymous"
+  ></script>
+  <script src="/static/js/jQeuryCheck.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <h1 class="title">팀 관리</h1>
+  <div class="content_wrap">
+    <div class="team_profile">
+      <p class="sub_title">팀 프로필</p>
+      <form action="">
+        <div class="article">
+          <input
+                  type="text"
+                  name="team_name"
+                  id="team_name"
+                  class="input_text"
+                  value="팀 이름"
+          />
+          <button type="submit" id="change_team" class="edit_btn">
+            변경
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="member_profile">
+      <p class="sub_title">멤버 관리</p>
+      <form action="">
+        <div class="article">
+          <div class="meta_data">
+            <img src="" alt="" class="profileImg" />
+            <div class="texts">
+              <input
+                      type="text"
+                      name="member_name"
+                      id="member_name"
+                      class="input_text"
+                      value="이름"
+                      readonly
+              />
+              <input
+                      type="text"
+                      name="member_email"
+                      id="member_email"
+                      class="input_email"
+                      value="이메일"
+                      readonly
+              />
+            </div>
+          </div>
+          <div class="btns">
+            <button
+                    type="button"
+                    name="grade"
+                    id="grade"
+                    class="grade_btn"
+                    onclick="opener()"
+            >
+              등급
+            </button>
+            <button type="submit" class="edit_btn" id="eidt_member">
+              변경
+            </button>
+            <button type="submit" class="del_btn" id="del_member">
+              강퇴
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal">
+    <div class="modal_wrap">
+      <h1>🤔</h1>
+      <h3>
+        member 님의 등급을 <br />
+        어떻게 변경할까요?
+      </h3>
+      <button id="master" class="modal_btn" onclick="changer(this)">
+        마스터
+      </button>
+      <button id="manager" class="modal_btn" onclick="changer(this)">
+        매니저
+      </button>
+      <button
+              id="staff"
+              type="button"
+              class="modal_btn"
+              onclick="changer(this)"
+      >
+        팀원
+      </button>
+      <button id="go_back" type="button" onclick="closer()">나가기</button>
+    </div>
+  </div>
+
+  <p style="text-align: center; margin-top: 20px;">팀을 삭제하시겠습니까? <a href="" id="del_team"><strong>삭제</strong></a></p>
+</div>
+<script>
+  var modal = document.querySelector(".modal");
+  var grade = document.querySelector("#grade");
+  var gradeBtn = document.querySelector(".grade_btn");
+  var modalBtn = document.querySelectorAll(".modal_btn");
+  var master = document.querySelector("#master");
+  var manager = document.querySelector("#manager");
+  var staff = document.querySelector("#staff");
+  var choice = $(".staff").html();
+  // modal 열림 함수
+  function closer() {
+    modal.style.display = "none";
+  }
+  // modal 닫힘 함수
+  function opener() {
+    modal.style.display = "block";
+  }
+  // 등급 선택시 이벤트 행동
+  function changer(e) {
+    grade.innerText = e.innerText;
+    modal.style.display = "none";
+  }
+ // 팀 삭제 시 경고메세지
+  $("#del_team").click( function (){
+    var result = confirm("팀을 정말 삭제 하시겠습니까?");
+    if(result) {
+      alert("팀이 삭제 되었습니다")
+    }
+    else {
+      alert("잘 생각하셨어요!")
+    }
+  })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+@media (max-width: 600px) {
+    .wrap {
+        margin-top: 5vh;
+        padding: 0 10px;
+    }
+    .member_profile > form > .article {
+        height: 120px;
+        position: relative;
+    }
+    .btns {
+        right: 10px;
+        bottom: 10px;
+        display: flex;
+        position: absolute;
+        justify-content: center;
+    }
+
+    .modal_wrap {
+        width: 70vw;
+    }
+
+    #team_name {
+        width: 160px;
+        overflow-x: scroll;
+    }
+}

@@ -2,60 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script
-            src="https://code.jquery.com/jquery-3.6.1.min.js"
-            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-            crossorigin="anonymous"
-    ></script>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 </head>
 <body>
-    회원초대 테스트 페이지 입니다.<br>
-    <input type="text" name="" id="inviteConfirm" placeholder="인증번호" maxlength="11">
-    <button type="button" id="inviteConfirmBtn">초대코드 확인</button>
+회원초대 테스트 페이지 입니다.<br>
+<input type="text" name="" id="inviteConfirm" placeholder="인증번호" maxlength="11">
+<button type="button" id="inviteConfirmBtn">초대코드 확인</button>
 
+<!-- 인증코드 -->
+<script>
+    // 인증번호가 있는지 확인
+    let chkResult = false;
 
-    <!-- 인증코드 -->
-    <script>
-        // 인증번호가 있는지 확인
-        let chkResult = false;
-
-        $("#inviteConfirmBtn").on("click",function (){
-            let inputInviteCode = $("#inviteConfirm").val();
-            console.log(inputInviteCode);
-            $.ajax({
-                url:"/invite/codeCheck"
-                ,data:{
-                    inviteCode : inputInviteCode
-                },success:(function (){
-                    console.log("성공");
-                    chkResult = true;
-                    console.log(chkResult);
-                }),error:(function(){
-                    alert("유효하지 않은 초대 코드입니다. 다시 확인해주세요.");
-                    chkResult = false;
-                })
-            }).done(function (){
-                console.log("done 도착");
-                console.log(inputInviteCode);
-                if(chkResult){
-                    $.ajax({
-                        url:"/invite/codeDelete"
-                        ,data:{
-                            inviteCode: inputInviteCode
-                        },success:(function (){
-                            console.log("삭제 성공쓰");
-                        }),error:(function (){
-                            console.log("삭제 실패쓰");
-                        })
-                    })
-                }else{
-                    alert("유효하지 않습니다요.");
-                }
+    $("#inviteConfirmBtn").on("click",function (){
+        let inputInviteCode = $("#inviteConfirm").val();
+        console.log(inputInviteCode);
+        $.ajax({
+            url:"/invite/codeCheck"
+            ,data:{
+                inviteCode : inputInviteCode
+            },success:(function (){
+                console.log("성공");
+                chkResult = true;
+                console.log(chkResult);
+            }),error:(function(){
+                alert("유효하지 않은 초대 코드입니다. 다시 확인해주세요.");
+                chkResult = false;
             })
+        }).done(function (){
+            console.log("done 도착");
+            console.log(inputInviteCode);
+            if(chkResult){
+                $.ajax({
+                    url:"/invite/codeDelete"
+                    ,data:{
+                        inviteCode: inputInviteCode
+                    },success:(function (){
+                        console.log("삭제 성공쓰");
+                    }),error:(function (){
+                        console.log("삭제 실패쓰");
+                    })
+                }).done(function (rsp){
+                    console.log(rsp);
+                    location.href="/invite/enterTeam?teamSeq="+rsp;
+                })
+            }else{
+                alert("유효하지 않습니다요.");
+            }
         })
+    })
 
 
-    </script>
+</script>
 </body>
 </html>

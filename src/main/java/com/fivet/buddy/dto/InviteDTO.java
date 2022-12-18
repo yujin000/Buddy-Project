@@ -11,8 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class InviteDTO {
     private int inviteTeamSeq;
-    private int inviteSendmemSeq;
-    private String inviteReceivememEmail;
+    private int inviteSendMemSeq;
+    private String inviteReceiveMemEmail;
     private String inviteCode;
-    private String inviteUsageStatus;
 }

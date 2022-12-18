@@ -15,17 +15,17 @@
     <!-- 회원가입 시 아이디 체크 -->
     <select id="idCheck" resultType="boolean">
         select
-            case when count(*) = 1 then 1 else 0 end
+            case when count(*) >= 1 then 1 else 0 end
         from
             member
         where
-            member_id = #{value}
+            member_id = #{value} and member_logtype = 'normal'
     </select>
 
     <!-- 계정 ID/PW 체크 -->
     <select id="isAccountExist" resultType="boolean">
         select
-            case when count(*) = 1 then 1 else 0 end
+            case when count(*) >= 1 then 1 else 0 end
         from
             member
         where
@@ -35,7 +35,7 @@
     <!-- 카카오 로그인 시 회원 체크-->
     <select id="isKakaoExist" resultType="boolean">
         select
-            case when count(*) = 1 then 1 else 0 end
+            case when count(*) >= 1 then 1 else 0 end
         from
             member
         where
@@ -45,7 +45,7 @@
     <!-- 네이버 로그인 시 회원 체크 -->
     <select id="isNaverExist" resultType="boolean">
         select
-            case when count(*) = 1 then 1 else 0 end
+            case when count(*) >= 1 then 1 else 0 end
         from
             member
         where

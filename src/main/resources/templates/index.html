@@ -43,7 +43,7 @@
         >
       </form>
       <a href="/member/logout">테스트 돌아가기</a>
-      <a href="/member/test">테스트 이메일</a>
+      <a href="/invite/test">테스트 이메일</a>
     </div>
   </th:block>
   <th:block th:if="${not #strings. isEmpty(session.memberSeq)}">
@@ -197,7 +197,7 @@
       const naverLogin = new naver.LoginWithNaverId(
               {
                 clientId: "MPvUbOX30trYmVJWI5qi",
-                callbackUrl: "http://192.168.150.33//",
+                callbackUrl: "http://43.201.133.173//",
                 loginButton: {color: "green", type: 2, height: 40}
               }
       );

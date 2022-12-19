@@ -18,6 +18,6 @@ public class BasicFilesController {
     // fileDrive.html로 이동
     @RequestMapping("toFileDrive")
     public String toFileDrive() throws Exception{
-        return "fileDrive";
+        return "drive/fileDrive";
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
@@ -94,7 +95,6 @@ public class MemberController {
     }
 
     // 로그아웃
-
     @RequestMapping("logout")
     public String logout(String memberLogtype) throws Exception{
         session.invalidate();
@@ -179,5 +179,21 @@ public class MemberController {
         memberDto.setMemberSeq((Integer) session.getAttribute("memberSeq"));
         memberService.updatePhone(memberDto);
         return "redirect:/member/goMyProfile";
+    }
+
+    // 관리자 페이지로 이동
+    @RequestMapping("toAdminPage")
+    public String toAdminPage(Model model) throws Exception{
+        List<MemberDTO> list = memberService.selectMembers();
+        model.addAttribute("memberList",list);
+        return "admin-main";
+    }
+
+    // 회원 검색
+    @RequestMapping("memberSearch")
+    public String memberSearch(String searchPick, String memberSearchText, Model model) throws Exception{
+        List<MemberDTO> list = memberService.memberSearch(searchPick, memberSearchText);
+        model.addAttribute("memberList",list);
+        return "admin-main";
     }
 }

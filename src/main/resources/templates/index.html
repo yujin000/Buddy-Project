@@ -23,7 +23,6 @@
       <form action="/member/login" method="post" id="loginForm">
         <input type="text" name="memberId" id="id" class="loginId" placeholder="이메일"/>
         <input type="text" name="memberPw" id="pw" class="loginPw" placeholder="비밀번호"/>
-        <input type="hidden" name="memberLogtype" value="normal"/>
         <a href="" id="sessionEmail" class="aLeft">이메일 기억하기</a>
         <a href="" id="findPw" class="aRight">비밀번호 찾기</a>
         <button type="button" id="loginBtn" class="loginBtn">로그인</button>
@@ -70,6 +69,11 @@
             로그아웃
           </button>
         </div>
+        <th:block th:if="${#strings.equals(session.memberLogtype,'admin')}">
+          <button type="button" id="adminPage" class="floatBtn">
+            관리자페이지
+          </button>
+        </th:block>
       </div>
       <div class="temListBox">
         <p class="title">list</p>
@@ -267,5 +271,13 @@
           location.href="/member/goMyProfile";
       });
     </script>
+
+    <!-- 관리자 페이지로 이동 -->
+  <script>
+    $("#adminPage").on("click",function(){
+      location.href = "/member/toAdminPage";
+    });
+  </script>
+
   </body>
 </html>

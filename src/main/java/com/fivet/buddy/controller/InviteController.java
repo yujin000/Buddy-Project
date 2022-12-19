@@ -1,7 +1,7 @@
 package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.InviteDTO;
-import com.fivet.buddy.dto.TeamDTO;
+import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.services.InviteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,11 +61,11 @@ public class InviteController {
 
     // 초대된 팀으로 입장
     @RequestMapping("enterTeam")
-    public String enterTeam(TeamDTO teamDto) throws Exception{
-        teamDto.setMemberSeq(Integer.parseInt(session.getAttribute("memberSeq").toString()));
+    public String enterTeam(TeamMemberDTO teamMemberDto) throws Exception{
+        teamMemberDto.setMemberSeq(Integer.parseInt(session.getAttribute("memberSeq").toString()));
         // 팀 닉네임 (default : 이름)
-        teamDto.setTeamMemberNickname(session.getAttribute("memberName").toString());
-        inviteService.enterTeam(teamDto);
+        teamMemberDto.setTeamMemberNickname(session.getAttribute("memberName").toString());
+        inviteService.enterTeam(teamMemberDto);
         return "redirect:/";
     }
 

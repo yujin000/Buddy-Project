@@ -34,7 +34,7 @@
         insert into
             team_member
         values
-            (#{teamSeq}, #{memberSeq}, #{teamMemberNickname}, 'normal', sysdate)
+            (#{teamSeq}, #{memberSeq}, #{teamMemberNickname}, 'coworker', sysdate)
     </insert>
 
     <!-- 팀 번호 초대코드로 select -->

@@ -2,7 +2,6 @@ package com.fivet.buddy.dao;
 
 import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.mapper.MemberMapper;
-import org.apache.ibatis.executor.ExecutionPlaceholder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

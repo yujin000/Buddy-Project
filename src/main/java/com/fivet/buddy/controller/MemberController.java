@@ -170,7 +170,7 @@ public class MemberController {
     public String selectMyProfile(Model model) throws Exception {
         MemberDTO memberDto = memberService.selectMyProfile(String.valueOf(session.getAttribute("memberSeq")));
         model.addAttribute("myProfile",memberDto);
-        return "myProfile";
+        return "member/myProfile";
     }
 
     //휴대전화 수정

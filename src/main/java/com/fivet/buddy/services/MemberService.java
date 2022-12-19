@@ -68,6 +68,7 @@ public class MemberService {
 
     //현재비밀번호 일치여부
     public boolean selectMyProfilePw(MemberDTO memberDto) throws Exception{
+        memberDto.setMemberPw(getSHA512(memberDto.getMemberPw()));
         if(memberDao.selectMyProfilePw(memberDto)==1){
             return true;
         }else{
@@ -77,6 +78,7 @@ public class MemberService {
 
     //비밀번호 수정
     public void updatePw(MemberDTO memberDto) throws Exception{
+        memberDto.setMemberPw(getSHA512(memberDto.getMemberPw()));
         memberDao.updatePw(memberDto);
     }
 

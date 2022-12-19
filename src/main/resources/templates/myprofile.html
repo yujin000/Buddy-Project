@@ -109,7 +109,7 @@
               class="inputPw"
       />
       <span id="oriCheck"></span>
-      <p>변경할 비밀번호</p>
+      <p id="newComment1">변경할 비밀번호</p>
       <p id="comment" class="comment">
         영문,숫자,특수문자를 모두 포함한 8~14자로 입력하세요.
       </p>
@@ -120,16 +120,18 @@
               id="newPw"
               class="inputPw"
       />
-      <p>비밀번호 확인</p>
-      <input type="text" value="" id="checkPw" class="inputPw" />
+      <p id="newComment2">비밀번호 확인</p>
+      <form method="post" id="updatePwForm">
+      <input type="text" value="" id="checkPw" class="inputPw" name="memberPw" />
       <span id="pwStatus"></span>
       <button class="updateBtn" id="floatBtn">수정</button>
+      </form>
     </div>
       </th:block>
 
 </div>
 
-<strong><a href="index.html" id="goBack">뒤로가기</a></strong>
+<strong><a href="/" id="goBack">뒤로가기</a></strong>
 </div>
 <script>
 
@@ -140,6 +142,7 @@
     $("#pwToggle").click(function() {
       $("#hidn3").toggle();
     })
+    pwDisNone();
   })
 
 </script>
@@ -260,36 +263,61 @@
 </script>
 
 <script>
-  // 비밀번호 확인
+  // 비밀번호
   let newPw = $("#newPw");
   let pwStatus = $("#pwStatus");
   let checkPw = $("#checkPw");
   const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,14}$/;
+  let resultCheck = false;
 
+  function pwDisNone(){
+    $("#newComment1").css("display","none");
+    $("#comment").css("display","none");
+    $("#newPw").css("display","none");
+    $("#newComment2").css("display","none");
+    $("#checkPw").css("display","none");
+    $("#pwStatus").css("display","none");
+    $("#floatBtn").css("display","none");
+  }
 
-  // $("#oriPw").on("input"),function () {
-  //   let oriCheck = $("#oriPw").val();
-  //   if ($("#oriPw").length == 0) {
-  //     $("#oriCheck").html("");
-  //   } else {
-  //     $.ajax({
-  //       url: "/member/myProfileCheckPw",
-  //       data: {"memberPw": oriCheck},
-  //       success: function () {
-  //         console.log("성공")
-  //       }, error: function () {
-  //         console.log("실패")
-  //       }
-  //     }).done(function (rsp) {
-  //       console.log(rsp);
-  //       if (result == "true") {
-  //         $("#oriCheck").html("일치합니다");
-  //       } else {
-  //         $("#oriCheck").html("일치하지 않습니다.");
-  //       }
-  //     })
-  //   }
-  // }
+  function pwDisBlock(){
+    $("#newComment1").css("display","block");
+    $("#comment").css("display","block");
+    $("#newPw").css("display","block");
+    $("#newComment2").css("display","block");
+    $("#checkPw").css("display","block");
+    $("#pwStatus").css("display","block");
+    $("#floatBtn").css("display","block");
+  }
+
+  $("#oriPw").on("input",function () {
+    let oriCheck = $("#oriPw").val();
+    if ($("#oriPw").length == 0) {
+      $("#oriCheck").html("");
+    } else {
+      $.ajax({
+        url: "/member/myProfileCheckPw",
+        data: {"memberPw": oriCheck},
+        success: function () {
+        }, error: function () {
+        }
+      }).done(function (rsp) {
+        if (rsp == "true") {
+          $("#oriCheck").html("일치합니다");
+          resultCheck=true;
+          pwDisBlock();
+        } else {
+          $("#oriCheck").html("일치하지 않습니다.");
+          resultCheck=false;
+          pwDisNone();
+          $("#newPw").val("");
+          $("#checkPw").val("");
+          pwStatus.html("");
+        }
+      })
+    }
+  });
+
 
   newPw.on("blur",function(){
     let newPwVal = $("#newPw").val();
@@ -342,6 +370,17 @@
       }
     }
   });
+
+  $("#floatBtn").on("click",function (){
+    let pwResult = pwRegex.test($("#newPw").val());
+    if(resultCheck && pwResult && pwChkResult){
+      alert("비밀번호 변경이 완료되었습니다.");
+      $("#updatePwForm").attr("action","/member/updatePw").submit();
+    }else{
+      alert("비밀번호를 다시 확인해주세요. ");
+      return false;
+    }
+  })
 </script>
 </body>
 </html>

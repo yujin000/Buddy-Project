@@ -61,9 +61,13 @@ public class MemberService {
     }
 
     //현재비밀번호 일치여부
-//    public boolean selectMyProfilePw(MemberDTO memberDto) throws Exception{
-//        return memberDao.selectMyProfilePw(memberDto);
-//    }
+    public boolean selectMyProfilePw(MemberDTO memberDto) throws Exception{
+        if(memberDao.selectMyProfilePw(memberDto)==1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     //비밀번호 수정
     public void updatePw(MemberDTO memberDto) throws Exception{

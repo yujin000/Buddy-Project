@@ -182,13 +182,13 @@ public class MemberController {
     }
 
     //현재 비밀번호 일치여부
-//    @ResponseBody
-//    @RequestMapping("myProfileCheckPw")
-//    public String selectMyProfilePw(MemberDTO memberDto) throws Exception{
-//        memberDto.setMemberSeq((Integer) session.getAttribute("memberSeq"));
-//        boolean result = memberService.selectMyProfilePw(memberDto);
-//        return String.valueOf(result);
-//    }
+    @ResponseBody
+    @RequestMapping(value="myProfileCheckPw", produces = "text/html;charset=utf8")
+    public String selectMyProfilePw(MemberDTO memberDto) throws Exception{
+        memberDto.setMemberSeq((Integer) session.getAttribute("memberSeq"));
+        boolean result = memberService.selectMyProfilePw(memberDto);
+        return String.valueOf(result);
+    }
 
     //비밀번호 수정
     @RequestMapping ("updatePw")

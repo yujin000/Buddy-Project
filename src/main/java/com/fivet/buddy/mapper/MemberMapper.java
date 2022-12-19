@@ -16,7 +16,7 @@ public interface MemberMapper {
     MemberDTO selectMyInfo(String memberSeq);
     MemberDTO selectMyProfile(String memberSeq);
     void updatePhone(MemberDTO memberDto);
-//    boolean selectMyProfilePw(MemberDTO memberDto);
+    int selectMyProfilePw(MemberDTO memberDto);
     void updatePw(MemberDTO memberDto);
 
 }

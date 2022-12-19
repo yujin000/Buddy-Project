@@ -63,9 +63,9 @@ public class MemberDAO {
     }
 
     //현재비밀번호 일치여부
-//    public boolean selectMyProfilePw(MemberDTO memberDto) throws Exception{
-//        return memberMapper.selectMyProfilePw(memberDto);
-//    }
+    public int selectMyProfilePw(MemberDTO memberDto) throws Exception{
+        return memberMapper.selectMyProfilePw(memberDto);
+    }
     //비밀번호 수정
     public void updatePw(MemberDTO memberDto) throws Exception{
         memberMapper.updatePw(memberDto);

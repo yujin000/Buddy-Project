@@ -99,6 +99,19 @@
 
     <!-- 회원 검색 -->
     <select id="memberSearch" resultType="com.fivet.buddy.dto.MemberDTO">
-        select * from member where ${searchPick} like '%'||#{memberSearchText}||'%'
+        select
+            *
+        from
+            member
+        where ${searchPick} like '%'||#{memberSearchText}||'%'
     </select>
+
+    <!-- 회원 강퇴 -->
+    <delete id="memberKickOut">
+        delete
+            member
+        where
+            member_seq = #{value}
+    </delete>
+
 </mapper>

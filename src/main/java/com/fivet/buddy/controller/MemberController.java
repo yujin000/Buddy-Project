@@ -189,11 +189,21 @@ public class MemberController {
         return "admin-main";
     }
 
-    // 회원 검색
+    // 회원 검색(관리자)
     @RequestMapping("memberSearch")
     public String memberSearch(String searchPick, String memberSearchText, Model model) throws Exception{
         List<MemberDTO> list = memberService.memberSearch(searchPick, memberSearchText);
         model.addAttribute("memberList",list);
         return "admin-main";
     }
+
+    // 회원 강퇴(관리자)
+    @RequestMapping("memberKickOut")
+    public String memberKickOut(int memberSeq, Model model) throws Exception{
+        memberService.memberKickOut(memberSeq);
+        List<MemberDTO> list = memberService.selectMembers();
+        model.addAttribute("memberList",list);
+        return "admin-main";
+    }
+
 }

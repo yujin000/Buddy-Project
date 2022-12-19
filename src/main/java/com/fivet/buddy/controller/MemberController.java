@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 
 @Controller
@@ -95,6 +94,7 @@ public class MemberController {
     }
 
     // 로그아웃
+
     @RequestMapping("logout")
     public String logout(String memberLogtype) throws Exception{
         session.invalidate();
@@ -170,12 +170,12 @@ public class MemberController {
     public String selectMyProfile(Model model) throws Exception {
         MemberDTO memberDto = memberService.selectMyProfile(String.valueOf(session.getAttribute("memberSeq")));
         model.addAttribute("myProfile",memberDto);
-        return "myProfile";
+        return "myprofile";
     }
 
     //휴대전화 수정
     @RequestMapping ("updatePhone")
-    public String updatePhone(MemberDTO memberDto) throws Exception{
+    public String updatePhone(MemberDTO memberDto,Model model) throws Exception{
         memberDto.setMemberSeq((Integer) session.getAttribute("memberSeq"));
         memberService.updatePhone(memberDto);
         return "redirect:/member/goMyProfile";
@@ -196,21 +196,5 @@ public class MemberController {
         memberDto.setMemberSeq((Integer) session.getAttribute("memberSeq"));
         memberService.updatePw(memberDto);
         return "redirect:/member/goMyProfile";
-    }
-
-    // 관리자 페이지로 이동
-    @RequestMapping("toAdminPage")
-    public String toAdminPage(Model model) throws Exception{
-        List<MemberDTO> list = memberService.selectMembers();
-        model.addAttribute("memberList",list);
-        return "adminMain";
-    }
-
-    // 회원 검색
-    @RequestMapping("memberSearch")
-    public String memberSearch(String searchPick, String memberSearchText, Model model) throws Exception{
-        List<MemberDTO> list = memberService.memberSearch(searchPick, memberSearchText);
-        model.addAttribute("memberList",list);
-        return "adminMain";
     }
 }

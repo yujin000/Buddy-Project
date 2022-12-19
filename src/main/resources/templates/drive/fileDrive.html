@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>BuddyDrive</title>
-    <link rel="stylesheet" href="/css/reset.css">
-    <link rel="stylesheet" href="/css/fileDrive.css" />
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/fileDrive.css" />
     <script
             src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
@@ -67,6 +67,7 @@
                         <li>문서</li>
                         <li>음악</li>
                         <li>동영상</li>
+                        <li>휴지통</li>
                     </ul>
                 </div>
             </div>
@@ -87,24 +88,31 @@
             <!-- 헤더-버튼 -->
             <div class="attachBtnArea">
                 <input type="checkbox">
-                <button type="button">올리기</button>
-                <button type="button">새 폴더</button>
+                <label for="uploadFile" class="fileLabel">
+                    올리기
+                    <input type="file" name="" id="uploadFile">
+                </label>
+                <label for="newFolder" class="fileLabel">
+                    새 폴더
+                    <input type="file" name="" id="newFolder">
+                </label>
                 <button type="button">공유</button>
             </div>
             <!-- 본문 -->
             <div class="fileMainPlace">
-                <ul class="listThumb">
-                    <li class title="새 폴더">
-                        <label for="foot">
-                            <a class="item"></a>
-                        </label>
-                    </li>
-                </ul>
+                <div id="listArea">
+                    <ul class="listThumb">
+                        <li class title="">
+                            리스트
+                        </li>
+                    </ul>
+                </div>
+                <div id="fileInfo">
+                    파일 정보
+                </div>
             </div>
-            <!-- 본문 -->
-            <div class="msgSend">
 
-            </div>
+
         </section>
     </div>
 </div>
@@ -145,6 +153,13 @@
         $("#appToggle").click(function () {
             $("#appList").toggle();
         });
+    });
+</script>
+
+<!-- 새 폴더 생성 -->
+<script>
+    $("#newFolder").on('click',function (){
+
     });
 </script>
 

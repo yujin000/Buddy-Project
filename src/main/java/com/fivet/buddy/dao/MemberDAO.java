@@ -64,6 +64,15 @@ public class MemberDAO {
         memberMapper.updatePhone(memberDto);
     }
 
+    //현재비밀번호 일치여부
+    public int selectMyProfilePw(MemberDTO memberDto) throws Exception{
+        return memberMapper.selectMyProfilePw(memberDto);
+    }
+    //비밀번호 수정
+    public void updatePw(MemberDTO memberDto) throws Exception{
+        memberMapper.updatePw(memberDto);
+    }
+
     // 회원 목록 출력
     public List<MemberDTO> selectMembers() throws Exception{
         return memberMapper.selectMembers();

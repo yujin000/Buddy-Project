@@ -66,6 +66,23 @@ public class MemberService {
         memberDao.updatePhone(memberDto);
     }
 
+    //현재비밀번호 일치여부
+    public boolean selectMyProfilePw(MemberDTO memberDto) throws Exception{
+        memberDto.setMemberPw(getSHA512(memberDto.getMemberPw()));
+        if(memberDao.selectMyProfilePw(memberDto)==1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //비밀번호 수정
+    public void updatePw(MemberDTO memberDto) throws Exception{
+        memberDto.setMemberPw(getSHA512(memberDto.getMemberPw()));
+        memberDao.updatePw(memberDto);
+    }
+
+
     // 회원 목록 출력
     public List<MemberDTO> selectMembers() throws Exception{
         return memberDao.selectMembers();

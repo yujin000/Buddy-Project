@@ -18,6 +18,8 @@ public interface MemberMapper {
     MemberDTO selectMyInfo(String memberSeq);
     MemberDTO selectMyProfile(String memberSeq);
     void updatePhone(MemberDTO memberDto);
+    int selectMyProfilePw(MemberDTO memberDto);
+    void updatePw(MemberDTO memberDto);
     List<MemberDTO> selectMembers();
     List<MemberDTO> memberSearch(String searchPick, String memberSearchText);
     void memberKickOut(int memberSeq);

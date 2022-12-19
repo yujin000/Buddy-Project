@@ -3,6 +3,8 @@ package com.fivet.buddy.mapper;
 import com.fivet.buddy.dto.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface MemberMapper {
 
@@ -18,5 +20,6 @@ public interface MemberMapper {
     void updatePhone(MemberDTO memberDto);
     int selectMyProfilePw(MemberDTO memberDto);
     void updatePw(MemberDTO memberDto);
-
+    List<MemberDTO> selectMembers();
+    List<MemberDTO> memberSearch(String searchPick, String memberSearchText);
 }

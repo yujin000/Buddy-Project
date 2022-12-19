@@ -2,7 +2,7 @@ package com.fivet.buddy.services;
 
 import com.fivet.buddy.dao.InviteDAO;
 import com.fivet.buddy.dto.InviteDTO;
-import com.fivet.buddy.dto.TeamDTO;
+import com.fivet.buddy.dto.TeamMemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +28,8 @@ public class InviteService {
     }
 
     // 초대된 팀으로 입장
-    public void enterTeam(TeamDTO teamDto) throws Exception{
-        inviteDao.enterTeam(teamDto);
+    public void enterTeam(TeamMemberDTO teamMemberDto) throws Exception{
+        inviteDao.enterTeam(teamMemberDto);
     }
 
     // 코드에 맞는 팀 seq 검색

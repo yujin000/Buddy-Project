@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,7 +13,7 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
             crossorigin="anonymous"
     ></script>
-    <script src="/static/js/jQeuryCheck.js"></script>
+    <script src="/js/jQeuryCheck.js"></script>
 </head>
 <body>
 <div class="moblieView">
@@ -26,12 +26,12 @@
         죄송합니다. <br />
         어드민 모드는 모바일 환경을 지원하지 않습니다.
     </h1>
-    <button><a href="index.html">뒤로가기</a></button>
+    <button><a href="../index.html">뒤로가기</a></button>
 </div>
 <div class="wrap">
     <div class="header">
         <div class="logo">
-            <a href="index.html">
+            <a href="../index.html">
                 <img src="" alt="" />
             </a>
         </div>
@@ -56,28 +56,38 @@
         <aside>
             <div id="checked" class="asideTitle">
                 <img src="" alt="" />
-                <p><a href="admin-main.html">회원관리</a></p>
+                <p><a href="adminMain.html">회원관리</a></p>
             </div>
             <div class="asideTitle">
                 <img src="" alt="" />
-                <p><a href="admin-news.html">뉴스관리</a></p>
+                <p><a href="adminNews.html">뉴스관리</a></p>
             </div>
             <div class="asideTitle">
                 <img src="" alt="" />
-                <p><a href="admin-qna.html">문의내역</a></p>
+                <p><a href="adminQna.html">문의내역</a></p>
             </div>
         </aside>
         <div class="content">
             <div class="contentHeader">
                 <h1 class="contentTitle">회원관리</h1>
-                <input
-                        type="search"
-                        id="searchBar"
-                        class="searchBar"
-                        name="search"
-                        placeholder="회원검색"
-                        style="padding-left: 10px"
-                />
+                <form action="/member/memberSearch">
+                    <select name="searchPick" id="selectPick">
+                        <option value="member_seq">회원번호</option>
+                        <option value="member_name">회원이름</option>
+                        <option value="member_id">이메일</option>
+                        <option value="member_phone">전화번호</option>
+                        <option value="member_logtype">회원유형</option>
+                    </select>
+                    <input
+                            type="search"
+                            id="searchBar"
+                            class="searchBar"
+                            name="memberSearchText"
+                            placeholder="회원검색"
+                            style="padding-left: 10px"
+                    />
+                    <button id="memberSearch">검색</button>
+                </form>
             </div>
 
             <hr />
@@ -90,38 +100,20 @@
                 <div class="table">
                     <ul>
                         <li class="thead">
-                            <span>번호</span><span>이름</span><span>이메일</span
-                        ><span>전화번호</span><span>삭제</span>
+                            <span>번호</span>
+                            <span>이름</span>
+                            <span>이메일</span>
+                            <span>전화번호</span>
+                            <span>회원유형</span>
+                            <span>삭제</span>
                         </li>
-                        <li class="tdata">
-                            <span>1</span><span>company</span><span>kh@gmail.com</span
-                        ><span>010-1234-1234</span>
-                            <span><button class="delData">del</button></span>
-                        </li>
-                        <li class="tdata">
-                            <span>1</span><span>company</span><span>kh@gmail.com</span
-                        ><span>010-1234-1234</span>
-                            <span><button class="delData">del</button></span>
-                        </li>
-                        <li class="tdata">
-                            <span>1</span><span>company</span><span>kh@gmail.com</span
-                        ><span>010-1234-1234</span>
-                            <span><button class="delData">del</button></span>
-                        </li>
-                        <li class="tdata">
-                            <span>1</span><span>company</span><span>kh@gmail.com</span
-                        ><span>010-1234-1234</span>
-                            <span><button class="delData">del</button></span>
-                        </li>
-                        <li class="tdata">
-                            <span>1</span><span>company</span><span>kh@gmail.com</span
-                        ><span>010-1234-1234</span>
-                            <span><button class="delData">del</button></span>
-                        </li>
-                        <li class="tdata">
-                            <span>1</span><span>company</span><span>kh@gmail.com</span
-                        ><span>010-1234-1234</span>
-                            <span><button class="delData">del</button></span>
+                        <li th:each="members : ${memberList}" class="tdata">
+                            <span th:text="${members.memberSeq}"></span>
+                            <span th:text="${members.memberName}"></span>
+                            <span th:text="${members.memberId}"></span>
+                            <span th:text="${members.memberPhone}"></span>
+                            <span th:text="${members.memberLogtype}"></span>
+                            <span><button class="delData">탈퇴</button></span>
                         </li>
                     </ul>
                     <hr />

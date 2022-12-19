@@ -190,12 +190,15 @@ hr {
     width: 20%;
 }
 .table li span:nth-child(3) {
-    width: 30%;
+    width: 25%;
 }
 .table li span:nth-child(4) {
-    width: 30%;
+    width: 25%;
 }
 .table li span:nth-child(5) {
+    width: 10%;
+}
+.table li span:nth-child(6) {
     width: 10%;
 }
 
@@ -262,4 +265,14 @@ hr {
         margin-top: 20px;
         border-radius: 20px;
     }
+}
+
+/* 멤버 검색 버튼 */
+#memberSearch{
+    right: 100px;
+    position: absolute;
+}
+#selectPick{
+    right:200px;
+    position: absolute;
 }

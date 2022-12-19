@@ -4,6 +4,7 @@ import com.fivet.buddy.dao.MemberDAO;
 import com.fivet.buddy.dto.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class MemberService {
@@ -72,6 +73,17 @@ public class MemberService {
     //비밀번호 수정
     public void updatePw(MemberDTO memberDto) throws Exception{
         memberDao.updatePw(memberDto);
+    }
+
+
+    // 회원 목록 출력
+    public List<MemberDTO> selectMembers() throws Exception{
+        return memberDao.selectMembers();
+    }
+
+    // 검색한 회원 출력
+    public List<MemberDTO> memberSearch(String searchPick, String memberSearchText) throws Exception{
+        return memberDao.memberSearch(searchPick, memberSearchText);
     }
 
 }

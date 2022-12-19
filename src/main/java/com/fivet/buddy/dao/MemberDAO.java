@@ -6,6 +6,8 @@ import org.apache.ibatis.executor.ExecutionPlaceholder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class MemberDAO {
 
@@ -69,5 +71,15 @@ public class MemberDAO {
     //비밀번호 수정
     public void updatePw(MemberDTO memberDto) throws Exception{
         memberMapper.updatePw(memberDto);
+    }
+
+    // 회원 목록 출력
+    public List<MemberDTO> selectMembers() throws Exception{
+        return memberMapper.selectMembers();
+    }
+
+    // 검색한 회원 출력
+    public List<MemberDTO> memberSearch(String searchPick, String memberSearchText) throws Exception{
+        return memberMapper.memberSearch(searchPick, memberSearchText);
     }
 }

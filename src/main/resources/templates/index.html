@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/static/css/mypage.css" />
     <link rel="stylesheet" href="/static/css/m-home.css" />
     <link rel="stylesheet" href="/static/css/m-mypage.css" />
-    <script src="/static/js/jQeuryCheck.js"></script>
+    <script src="/static/js/jQueryCheck.js"></script>
   </head>
   <body>
   <th:block th:if="${#strings. isEmpty(session.memberSeq)}">
@@ -22,7 +22,7 @@
       <p class="slogan">당신의 동료, 영원한 친구</p>
       <form action="/member/login" method="post" id="loginForm">
         <input type="text" name="memberId" id="id" class="loginId" placeholder="이메일"/>
-        <input type="text" name="memberPw" id="pw" class="loginPw" placeholder="비밀번호"/>
+        <input type="password" name="memberPw" id="pw" class="loginPw" placeholder="비밀번호"/>
         <a href="" id="sessionEmail" class="aLeft">이메일 기억하기</a>
         <a href="" id="findPw" class="aRight">비밀번호 찾기</a>
         <button type="button" id="loginBtn" class="loginBtn">로그인</button>
@@ -59,7 +59,7 @@
           <div class="info">
             <!-- 세션에 뿌려진 값으로 해결하기 -->
             <a href="/invite/test">초대테스트 페이지로</a>
-            <h1 id="myName" class="name" th:text="${session.memberSeq}">userName</h1>
+            <h1 id="myName" class="name" th:text="${session.memberName}">userName</h1>
             <p id="myEmail" class="email" th:text="${session.memberLogtype}">userEmail</p>
           </div>
           <button type="button" id="myprofile" class="floatBtn">

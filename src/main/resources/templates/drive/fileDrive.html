@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BuddyDrive</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/fileDrive.css" />
+    <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"
+    ></script>
+    <script src="/static/js/jQueryCheck.js"></script>
+</head>
+<body>
+<div class="wrap">
+    <div class="header">
+        <div class="logo">
+            <a href="/static">
+                <img src="" alt="" />
+                logo
+            </a>
+        </div>
+        <div class="secondLogo">
+            secondLogo
+        </div>
+
+        <button id="menu" class="iconMenu">menu</button>
+        <button id="asideClose">aside</button>
+    </div>
+    <div class="main">
+        <aside>
+            <div id="profile" class="asideTitle">
+                <img src="" alt="" />
+                <h3><a href="/member/goMyProfile" th:text="${session.memberName}"></a></h3>
+            </div>
+
+            <div id="allFiles" class="asideList">
+                <div class="asideTitle">
+                    <h3>모든 파일</h3>
+                    <button id="allFilesBtn" class="toggle">v</button>
+                </div>
+                <div id="folderList" class="asideItem">
+                    <ul>
+                        <li>folder</li>
+                        <li>folder</li>
+                        <li>folder</li>
+                        <li>folder</li>
+                        <li>folder</li>
+                        <li>folder</li>
+                        <li>folder</li>
+                        <li>folder</li>
+                        <li>folder</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="chat" class="asideList">
+                <div class="asideTitle">
+                    <h3>유형별 보기</h3>
+                    <input type="search" placeholder="검색" id="searchMsg" />
+                    <button id="fileTypeToggle" class="toggle">v</button>
+                </div>
+                <div id="chatList" class="asideItem">
+                    <ul>
+                        <li>사진</li>
+                        <li>문서</li>
+                        <li>음악</li>
+                        <li>동영상</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="asideTool">
+                <button id="appToggle" class="appToggle">앱 toggle</button>
+                <div id="appList">
+                    <button class="app" id="appDrive"><a href="">드라이브</a></button>
+                    <button class="app" id="appCal"><a href="">캘린더</a></button>
+                </div>
+            </div>
+        </aside>
+        <section class="fileSection">
+            <!-- 헤더 -->
+            <div class="fileHeader">
+                <h1>MYBOX</h1>
+            </div>
+            <!-- 헤더-버튼 -->
+            <div class="attachBtnArea">
+                <input type="checkbox">
+                <button type="button">올리기</button>
+                <button type="button">새 폴더</button>
+                <button type="button">공유</button>
+            </div>
+            <!-- 본문 -->
+            <div class="fileMainPlace">
+                <ul class="listThumb">
+                    <li class title="새 폴더">
+                        <label for="foot">
+                            <a class="item"></a>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <!-- 본문 -->
+            <div class="msgSend">
+
+            </div>
+        </section>
+    </div>
+</div>
+<div id="menuList" class="menuList">
+    <ul>
+        <li><a href="">logout</a></li>
+        <li>list</li>
+        <li>list</li>
+        <li>list</li>
+        <li>list</li>
+        <li>list</li>
+        <li>list</li>
+    </ul>
+</div>
+<!-- 토글 -->
+<script>
+    $(document).ready(function () {
+        $("#headerToggle").click(function () {
+            $("#dropdownList").toggle();
+        });
+
+        $("#menu").click(function () {
+            $("#menuList").toggle();
+        });
+
+        $("#allFilesBtn").click(function () {
+            $("#folderList").toggle();
+        });
+
+        $("#fileTypeToggle").click(function () {
+            $("#chatList").toggle();
+        });
+
+        $("#asideClose").click(function () {
+            $("aside").toggle();
+        });
+
+        $("#appToggle").click(function () {
+            $("#appList").toggle();
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -22,4 +22,5 @@ public interface MemberMapper {
     void updatePw(MemberDTO memberDto);
     List<MemberDTO> selectMembers();
     List<MemberDTO> memberSearch(String searchPick, String memberSearchText);
+    void memberKickOut(int memberSeq);
 }

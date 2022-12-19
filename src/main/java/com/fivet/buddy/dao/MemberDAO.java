@@ -82,4 +82,10 @@ public class MemberDAO {
     public List<MemberDTO> memberSearch(String searchPick, String memberSearchText) throws Exception{
         return memberMapper.memberSearch(searchPick, memberSearchText);
     }
+
+
+    // 회원 강퇴(관리자)
+    public void memberKickOut(int memberSeq) throws Exception{
+        memberMapper.memberKickOut(memberSeq);
+    }
 }

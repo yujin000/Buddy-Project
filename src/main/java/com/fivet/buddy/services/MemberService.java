@@ -4,6 +4,9 @@ import com.fivet.buddy.dao.MemberDAO;
 import com.fivet.buddy.dto.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.List;
 
 @Service
@@ -13,6 +16,7 @@ public class MemberService {
 
     // 회원가입 (signUp)
     public void signUp(MemberDTO memberDto) throws Exception{
+        memberDto.setMemberPw(getSHA512(memberDto.getMemberPw()));
         memberDao.signUp(memberDto);
     }
 
@@ -23,6 +27,7 @@ public class MemberService {
 
     // 로그인 시 아이디 있는지 체크
     public boolean isAccountExist(MemberDTO memberDto) throws Exception{
+        memberDto.setMemberPw(getSHA512(memberDto.getMemberPw()));
         return memberDao.isAccountExist(memberDto);
     }
 
@@ -84,6 +89,21 @@ public class MemberService {
     // 검색한 회원 출력
     public List<MemberDTO> memberSearch(String searchPick, String memberSearchText) throws Exception{
         return memberDao.memberSearch(searchPick, memberSearchText);
+    }
+
+    // 회원 강퇴(관리자)
+    public void memberKickOut(int memberSeq) throws Exception{
+        memberDao.memberKickOut(memberSeq);
+    }
+
+    // getSHA512
+    public static String getSHA512(String input) throws Exception{
+        String toReturn = null;
+        MessageDigest digest = MessageDigest.getInstance("SHA-512");
+        digest.reset();
+        digest.update(input.getBytes("utf8"));
+        toReturn = String.format("%0128x", new BigInteger(1, digest.digest()));
+        return toReturn;
     }
 
 }

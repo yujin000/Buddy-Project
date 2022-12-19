@@ -113,7 +113,7 @@
                             <span th:text="${members.memberId}"></span>
                             <span th:text="${members.memberPhone}"></span>
                             <span th:text="${members.memberLogtype}"></span>
-                            <span><button class="delData">탈퇴</button></span>
+                            <span><button class="delData" th:value="${members.memberSeq}">탈퇴</button></span>
                         </li>
                     </ul>
                     <hr />
@@ -145,6 +145,15 @@
             window.history.back();
         }
     });
+
+    // 회원 강퇴
+    $(".delData").on('click',function(){
+       let memberSeq = $(this).val();
+       location.href="/member/memberKickOut?memberSeq=" + memberSeq;
+    });
+
+
+
 </script>
 </body>
 </html>

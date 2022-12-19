@@ -95,6 +95,7 @@
         <button type="button" id="phoneConfirm" >인증번호 확인</button>
       </div>
 
+      <th:block th:if="${myProfile.memberLogtype == 'normal'}">
     <div class="update" id="updatePw">
       <p class="title">비밀번호 변경</p>
       <button type="button" class="toggle" id="pwToggle">tog</button>
@@ -102,28 +103,35 @@
     <div class="hidden" id="hidn3">
       <p>현재 비밀번호</p>
       <input
-              type="text"
-              value=""
+              type="password"
               name="oriPw"
-              id="origin"
+              id="oriPw"
               class="inputPw"
       />
-      <p>변경할 비밀번호</p>
+      <span id="oriCheck"></span>
+      <p id="newComment1">변경할 비밀번호</p>
+      <p id="comment" class="comment">
+        영문,숫자,특수문자를 모두 포함한 8~14자로 입력하세요.
+      </p>
       <input
-              type="text"
+              type="password"
               value=""
               name="newPw"
-              id="new"
+              id="newPw"
               class="inputPw"
       />
-      <p>비밀번호 확인</p>
-      <input type="text" value="" id="checkPw" class="inputPw" />
+      <p id="newComment2">비밀번호 확인</p>
+      <form method="post" id="updatePwForm">
+      <input type="password" value="" id="checkPw" class="inputPw" name="memberPw" />
+      <span id="pwStatus"></span>
       <button class="updateBtn" id="floatBtn">수정</button>
+      </form>
     </div>
+      </th:block>
 
 </div>
 
-<strong><a href="../index.html" id="goBack">뒤로가기</a></strong>
+<strong><a href="/" id="goBack">뒤로가기</a></strong>
 </div>
 <script>
 
@@ -131,10 +139,10 @@
       $("#PhoneToggle").click(function() {
           $("#hidn2").toggle();
       })
-
     $("#pwToggle").click(function() {
       $("#hidn3").toggle();
     })
+    pwDisNone();
   })
 
 </script>
@@ -252,6 +260,127 @@
 
     }
   });
+</script>
+
+<script>
+  // 비밀번호
+  let newPw = $("#newPw");
+  let pwStatus = $("#pwStatus");
+  let checkPw = $("#checkPw");
+  const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,14}$/;
+  let resultCheck = false;
+
+  function pwDisNone(){
+    $("#newComment1").css("display","none");
+    $("#comment").css("display","none");
+    $("#newPw").css("display","none");
+    $("#newComment2").css("display","none");
+    $("#checkPw").css("display","none");
+    $("#pwStatus").css("display","none");
+    $("#floatBtn").css("display","none");
+  }
+
+  function pwDisBlock(){
+    $("#newComment1").css("display","block");
+    $("#comment").css("display","block");
+    $("#newPw").css("display","block");
+    $("#newComment2").css("display","block");
+    $("#checkPw").css("display","block");
+    $("#pwStatus").css("display","block");
+    $("#floatBtn").css("display","block");
+  }
+
+  $("#oriPw").on("input",function () {
+    let oriCheck = $("#oriPw").val();
+    if ($("#oriPw").length == 0) {
+      $("#oriCheck").html("");
+    } else {
+      $.ajax({
+        url: "/member/myProfileCheckPw",
+        data: {"memberPw": oriCheck},
+        success: function () {
+        }, error: function () {
+        }
+      }).done(function (rsp) {
+        if (rsp == "true") {
+          $("#oriCheck").html("일치합니다");
+          resultCheck=true;
+          pwDisBlock();
+        } else {
+          $("#oriCheck").html("일치하지 않습니다.");
+          resultCheck=false;
+          pwDisNone();
+          $("#newPw").val("");
+          $("#checkPw").val("");
+          pwStatus.html("");
+        }
+      })
+    }
+  });
+
+
+  newPw.on("blur",function(){
+    let newPwVal = $("#newPw").val();
+    let checkPwVal = $("#checkPw").val();
+    let pwResult = pwRegex.test(newPwVal);
+
+    if(newPwVal == ""){
+      pwStatus.html("비밀번호를 입력해주세요.");
+      pwChkResult = false;
+    }else if(!pwResult){
+      pwStatus.html("비밀번호는 영문,숫자,특수문자를 모두 포함한 8~14자로 입력하세요.");
+      pwChkResult = false;
+    }else{
+      pwStatus.html("");
+      if(newPwVal == "" && checkPwVal == ""){
+        pwStatus.html("");
+        pwChkResult = false;
+      }else if(newPwVal != checkPwVal){
+        pwStatus.html("패스워드가 일치하지 않습니다.");
+        pwChkResult = false;
+      }else if(newPwVal == checkPwVal){
+        pwStatus.html("패스워드가 일치합니다.");
+        pwChkResult = true;
+      }
+    }
+  });
+
+  checkPw.on("blur",function(){
+    let newPwVal = $("#newPw").val();
+    let checkPwVal = $("#checkPw").val();
+    let pwResult = pwRegex.test(newPwVal);
+
+    if(checkPwVal == ""){
+      pwStatus.html("비밀번호를 입력해주세요.");
+      pwChkResult = false;
+    }else if(!pwResult){
+      pwStatus.html("비밀번호는 영문,숫자,특수문자를 모두 포함한 8~14자로 입력하세요.");
+      pwChkResult = false;
+    }else{
+      pwStatus.html("");
+      if(newPwVal == "" && checkPwVal == ""){
+        pwStatus.html("");
+        pwChkResult = false;
+      }else if(newPwVal != checkPwVal){
+        pwStatus.html("패스워드가 일치하지 않습니다.");
+        pwChkResult = false;
+      }else if(newPwVal == checkPwVal){
+        pwStatus.html("패스워드가 일치합니다.");
+        pwChkResult = true;
+      }
+    }
+  });
+
+  $("#floatBtn").on("click",function (){
+    let pwResult = pwRegex.test($("#newPw").val());
+    if(resultCheck && pwResult && pwChkResult){
+      alert("비밀번호 변경이 완료되었습니다.");
+      $("#updatePwForm").attr("action","/member/updatePw").submit();
+    }else{
+      alert("비밀번호를 다시 확인해주세요. ");
+      return false;
+    }
+  })
 </script>
 </body>
 </html>

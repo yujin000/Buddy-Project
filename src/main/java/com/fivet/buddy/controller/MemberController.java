@@ -40,7 +40,7 @@ public class MemberController {
         // 세션확인
         if(session.getAttribute("memberSeq")!=null){
             model.addAttribute("memberSeq",session.getAttribute("memberSeq"));
-            return "duplLogin";
+            return "member/duplLogin";
         }
 
         // 일반회원인지 카카오 / 네이버 회원인지 검토
@@ -50,7 +50,7 @@ public class MemberController {
         }else{
             model.addAttribute("userInfo",memberDto);
         }
-        return "signup";
+        return "member/signup";
     }
 
     // 회원가입 (signUp)
@@ -74,7 +74,7 @@ public class MemberController {
         // 세션확인
         if(session.getAttribute("memberSeq")!=null){
             model.addAttribute("memberSeq",session.getAttribute("memberSeq"));
-            return "duplLogin";
+            return "member/duplLogin";
         }
 
         boolean result = memberService.isAccountExist(memberDto);
@@ -107,14 +107,14 @@ public class MemberController {
         // 세션확인
         if(session.getAttribute("memberSeq")!=null){
             model.addAttribute("memberSeq",session.getAttribute("memberSeq"));
-            return "duplLogin";
+            return "member/duplLogin";
         }
 
         boolean result = memberService.isKakaoExist(memberDto);
         if(!result){
             // 회원이 아닐 때 회원가입 페이지
             model.addAttribute("userInfo",memberDto);
-            return "signup";
+            return "member/signup";
         }else{
             // 회원일 때 마이페이지
             MemberDTO dto = memberService.selectAccountInfoForNK(memberDto);
@@ -133,7 +133,7 @@ public class MemberController {
         // 세션확인
         if(session.getAttribute("memberSeq")!=null){
             model.addAttribute("memberSeq",session.getAttribute("memberSeq"));
-            return "duplLogin";
+            return "member/duplLogin";
         }
 
         boolean result = memberService.isNaverExist(memberDto);
@@ -144,7 +144,7 @@ public class MemberController {
             memberDto.setMemberPhone(replacePhone);
 
             model.addAttribute("userInfo",memberDto);
-            return "signup";
+            return "member/signup";
         }else{
             // 회원일 때 마이페이지
             MemberDTO dto = memberService.selectAccountInfoForNK(memberDto);
@@ -186,14 +186,24 @@ public class MemberController {
     public String toAdminPage(Model model) throws Exception{
         List<MemberDTO> list = memberService.selectMembers();
         model.addAttribute("memberList",list);
-        return "adminMain";
+        return "admin/adminMain";
     }
 
-    // 회원 검색
+    // 회원 검색(관리자)
     @RequestMapping("memberSearch")
     public String memberSearch(String searchPick, String memberSearchText, Model model) throws Exception{
         List<MemberDTO> list = memberService.memberSearch(searchPick, memberSearchText);
         model.addAttribute("memberList",list);
-        return "adminMain";
+        return "admin/adminMain";
     }
+
+    // 회원 강퇴(관리자)
+    @RequestMapping("memberKickOut")
+    public String memberKickOut(int memberSeq, Model model) throws Exception{
+        memberService.memberKickOut(memberSeq);
+        List<MemberDTO> list = memberService.selectMembers();
+        model.addAttribute("memberList",list);
+        return "admin/adminMain";
+    }
+
 }

@@ -1,0 +1,313 @@
+@import url(reset.css);
+
+.wrap {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    z-index: 0;
+}
+.header {
+    width: 100%;
+    height: 50px;
+    border: 1px dashed #000;
+    display: flex;
+    position: fixed;
+    z-index: 10;
+}
+.logo {
+    width: 120px;
+    height: 100%;
+    margin-right: 10px;
+    border: 1px solid magenta;
+}
+
+.secondLogo{
+    width:100px;
+    height: 100%;
+    border: 1px solid blue;
+}
+
+#dropdownList {
+    display: none;
+    border: 1px solid blue;
+}
+
+.hiddenList ul > li {
+    width: 100%;
+    height: 50px;
+    line-height: 45px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.iconMenu {
+    width: 50px;
+    height: 50px;
+    right: 0px;
+    border: 1px solid magenta;
+    position: absolute;
+    cursor: pointer;
+}
+
+.main {
+    width: 100vw;
+    height: 100%;
+    padding-top: 50px;
+    border: 1px solid black;
+    z-index: 1;
+    display: flex;
+}
+
+aside {
+    min-width: 280px;
+    width: 280px;
+    height: 100%;
+    border: 1px dashed #000;
+    background: silver;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.asideTitle {
+    width: 100%;
+    min-height: 50px;
+    border: 1px solid magenta;
+    display: flex;
+}
+
+.asideTitle h3 {
+    padding-left: 10px;
+    line-height: 50px;
+}
+#alarmView {
+    width: 60px;
+}
+.toggle {
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+    right: 10px;
+    position: absolute;
+}
+.asideItem {
+    width: 100%;
+    max-height: 280px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border: 1px solid magenta;
+    /* -ms-overflow-style: none; */
+}
+.asideItem::-webkit-scrollbar {
+    width: 10px; /*스크롤바의 너비*/
+}
+
+.asideItem::-webkit-scrollbar-thumb {
+    /*스크롤바의 색상*/
+    background-color: black;
+    border-radius: 20px;
+}
+
+.asideItem::-webkit-scrollbar-track {
+    background-color: transparent; /*스크롤바 트랙 색상*/
+}
+
+@media (max-height: 800px) {
+    .asideItem {
+        width: 100%;
+        height: 200px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        border: 1px solid magenta;
+        -ms-overflow-style: none;
+    }
+}
+
+.asideItem ul > li {
+    width: 100%;
+    height: 40px;
+    border: 1px solid magenta;
+}
+
+.asideTool {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+}
+
+.appToggle {
+    width: 100%;
+}
+
+#appList {
+    display: none;
+    height: 60px;
+    background: white;
+}
+
+.app {
+    width: 120px;
+    margin-top: 10px;
+    border-radius: 15px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #000;
+
+    display: inline-block;
+    text-align: center;
+}
+#asideClose {
+    display: none;
+}
+
+.fileSection {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.fileHeader {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #000;
+    display: flex;
+    position: relative;
+}
+
+.fileHeader h1 {
+    line-height: 40px;
+    margin-left: 10px;
+}
+
+#memberView {
+    width: 49px;
+    height: 49px;
+    right: 0px;
+    position: absolute;
+    border: 1px solid #000;
+}
+
+/* 검색 */
+#searchMsg {
+    width: 200px;
+    height: 39px;
+    left: 10px;
+    bottom: 50px;
+    border-radius: 5px;
+    position: absolute;
+}
+
+.subItem {
+    width: 100%;
+    border: 1px solid #000;
+    background: white;
+    position: relative;
+}
+
+.subItem h1 {
+    height: 40px;
+    text-align: center;
+    border: 1px solid #000;
+    line-height: 30px;
+}
+
+#memberList {
+    display: none;
+}
+
+#memberList li {
+    padding: 10px;
+    height: 60px;
+    border: 1px solid #000;
+    display: flex;
+}
+
+#memberList li img {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    border: 1px solid #000;
+}
+
+#memberList li span {
+    margin-left: 10px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #000;
+}
+
+#memberList li span:last-child {
+    min-width: 50px;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 20px;
+    border: 1px solid red;
+    position: absolute;
+    right: 10px;
+    margin-top: 10px;
+}
+
+#resultList {
+    top: 0;
+    position: absolute;
+    display: none;
+}
+
+#resultList li {
+    margin: 10px;
+    border: 1px solid #000;
+}
+#alarmList {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 100px;
+    overflow-y: scroll;
+    top: 50px;
+    background: white;
+    position: absolute;
+    display: none;
+    z-index: 1;
+}
+
+#alarmList li {
+    margin: 10px;
+    height: 40px;
+    border: 1px solid #000;
+}
+
+.fileMainPlace {
+    width: 100%;
+    height: 100%;
+}
+
+.menuList {
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    width: 200px;
+    border: 1px solid #000;
+    z-index: 10;
+    display: none;
+    background: white;
+}
+
+.menuList ul li {
+    height: 30px;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+.menuList ul li:hover {
+    font-weight: bold;
+}
+
+/* 헤더 버튼 공간*/
+.attachBtnArea{
+    border: 1px solid black;
+    width:100%;
+    height:40px;
+}

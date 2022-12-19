@@ -1,7 +1,7 @@
 @import url(reset.css);
 
 .wrap {
-    width: 100%;
+    width: 100vh;
     height: 100vh;
     position: relative;
     z-index: 0;
@@ -278,10 +278,26 @@ aside {
     height: 40px;
     border: 1px solid #000;
 }
-
+/* 파일 메인 place */
 .fileMainPlace {
     width: 100%;
     height: 100%;
+}
+
+/* 파일 리스트 들어갈 구간 */
+#listArea{
+    border:1px solid black;
+    width: 80%;
+    height: 100%;
+    float: left;
+    margin-left:25px;
+    padding: 30px 25px 16px 0px;
+}
+
+@media(max-width: 1300px) {
+    #listArea{
+        width:95%;
+    }
 }
 
 .menuList {
@@ -310,4 +326,34 @@ aside {
     border: 1px solid black;
     width:100%;
     height:40px;
+    padding: 7px 0px 0px 25px;
+}
+
+/* 본문 파일 정보 */
+#fileInfo{
+    right:0px;
+    height:100%;
+    width:15vw;
+    position: absolute;
+    border:1px solid red;
+}
+
+@media(max-width: 1300px) {
+    #fileInfo{
+        display:none;
+    }
+}
+
+/* 파일 라벨 */
+.fileLabel{
+    background-color:aquamarine;
+    border:1px solid black;
+    width:50px;
+    height:10px;
+    cursor: pointer;
+    margin-right:6px;
+}
+
+#uploadFile, #newFolder{
+    display:none;
 }

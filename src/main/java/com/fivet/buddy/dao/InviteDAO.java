@@ -1,7 +1,7 @@
 package com.fivet.buddy.dao;
 
 import com.fivet.buddy.dto.InviteDTO;
-import com.fivet.buddy.dto.TeamDTO;
+import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.mapper.InviteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,8 +27,8 @@ public class InviteDAO {
     }
 
     // 초대된 팀으로 입장
-    public void enterTeam(TeamDTO teamDto) throws Exception{
-        inviteMapper.enterTeam(teamDto);
+    public void enterTeam(TeamMemberDTO teamMemberDto) throws Exception{
+        inviteMapper.enterTeam(teamMemberDto);
     }
 
     // 코드에 맞는 팀 seq 검색

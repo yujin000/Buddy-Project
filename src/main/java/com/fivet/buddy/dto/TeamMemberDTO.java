@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeamDTO {
+public class TeamMemberDTO {
     private int teamSeq;
     private int memberSeq;
     private String teamMemberNickname;

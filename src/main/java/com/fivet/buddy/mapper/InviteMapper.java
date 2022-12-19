@@ -1,7 +1,7 @@
 package com.fivet.buddy.mapper;
 
 import com.fivet.buddy.dto.InviteDTO;
-import com.fivet.buddy.dto.TeamDTO;
+import com.fivet.buddy.dto.TeamMemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -13,7 +13,7 @@ public interface InviteMapper {
 
     void codeDelete(String inviteCode);
 
-    void enterTeam(TeamDTO teamDto);
+    void enterTeam(TeamMemberDTO teamMemberDto);
 
     int selectTeamSeqByCode(String inviteCode);
 }

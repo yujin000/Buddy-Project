@@ -95,7 +95,6 @@ public class MemberController {
     }
 
     // 로그아웃
-
     @RequestMapping("logout")
     public String logout(String memberLogtype) throws Exception{
         session.invalidate();

@@ -170,7 +170,7 @@ public class MemberController {
     public String selectMyProfile(Model model) throws Exception {
         MemberDTO memberDto = memberService.selectMyProfile(String.valueOf(session.getAttribute("memberSeq")));
         model.addAttribute("myProfile",memberDto);
-        return "myprofile";
+        return "myProfile";
     }
 
     //휴대전화 수정
@@ -186,7 +186,7 @@ public class MemberController {
     public String toAdminPage(Model model) throws Exception{
         List<MemberDTO> list = memberService.selectMembers();
         model.addAttribute("memberList",list);
-        return "admin-main";
+        return "adminMain";
     }
 
     // 회원 검색(관리자)
@@ -194,7 +194,7 @@ public class MemberController {
     public String memberSearch(String searchPick, String memberSearchText, Model model) throws Exception{
         List<MemberDTO> list = memberService.memberSearch(searchPick, memberSearchText);
         model.addAttribute("memberList",list);
-        return "admin-main";
+        return "adminMain";
     }
 
     // 회원 강퇴(관리자)

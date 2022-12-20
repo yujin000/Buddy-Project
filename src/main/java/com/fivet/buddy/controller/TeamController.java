@@ -30,7 +30,7 @@ public class TeamController {
     //팀 생성
     @RequestMapping("create")
     public String create(TeamDTO teamDto) throws Exception {
-        teamDto.setTeamSeq((Integer) session.getAttribute("memberSeq"));
+        teamDto.setTeamOwnerSeq((Integer) session.getAttribute("memberSeq"));
         Map<String, String> param = new HashMap<>();
         param.put("memberSeq", session.getAttribute("memberSeq").toString());
         // session값인 이름만 닉네임에 담아 service에 전송.

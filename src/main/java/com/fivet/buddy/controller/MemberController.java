@@ -1,7 +1,9 @@
 package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.MemberDTO;
+import com.fivet.buddy.dto.TeamDTO;
 import com.fivet.buddy.services.MemberService;
+import com.fivet.buddy.services.TeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +13,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.util.List;
-import java.util.UUID;
-
 
 @Controller
 @RequestMapping("/member/")
 public class MemberController {
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private TeamService teamService;
 
     @Autowired
     private HttpSession session;
@@ -77,7 +78,7 @@ public class MemberController {
         // 세션확인
         if(session.getAttribute("memberSeq")!=null){
             model.addAttribute("memberSeq",session.getAttribute("memberSeq"));
-            return "member/duplLogin";
+            return "member/duplLog여in";
         }
 
         boolean result = memberService.isAccountExist(memberDto);
@@ -89,12 +90,16 @@ public class MemberController {
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
             session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
+            List <TeamDTO> teamDtoList = teamService.selectMemberTeam(dto.getMemberSeq());
+            for (TeamDTO teamDto : teamDtoList) {
+                System.out.println(teamDto.getTeamName());
+            }
+            model.addAttribute("teamDtoList", teamDtoList);
             return "index";
         }else{
             // 로그인 정보가 없으면 새로고침
             return "redirect:/";
         }
-
     }
 
     // 로그아웃

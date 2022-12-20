@@ -12,7 +12,7 @@ public class TeamDAO {
 
 //    팀 생성
     public void insert(TeamDTO teamDto) {
-        teamMapper.insert(teamDto);
+        teamMapper.insertTeam(teamDto);
     }
 
 

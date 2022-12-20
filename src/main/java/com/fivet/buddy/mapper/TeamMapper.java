@@ -5,5 +5,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface TeamMapper {
-    void insert(TeamDTO dto);
+    void insertTeam(TeamDTO dto);
 }

@@ -7,18 +7,32 @@
   <title>팀 생성하기</title>
   <link rel="stylesheet" href="/static/css/reset.css" />
   <link rel="stylesheet" href="/static/css/teamAdd.css" />
-  <script src="/static/js/jQueryCheck.js"></script>
+<!--  <script src="/static/js/jQueryCheck.js"></script>-->
+  <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1 class="title">팀 생성</h1>
-  <form action="">
-    <input type="text" name="teamName" id="teamName" class="inputName" />
-    <button type="submit" class="sucess">완료</button>
+  <form action="/team/create" id="form">
+    <input type="text" name="teamName" id="teamName" class="inputName" placeholder="팀 이름" />
+    <button type="button" id="confirm" class="success">완료</button>
   </form>
   <p class="cancel">
-    팀 생성을 취소할까요? <a href=""><strong>취소</strong></a>
+    팀 생성을 취소할까요? <a href="/"><strong>취소</strong></a>
   </p>
 </div>
+  <script>
+
+    $("#confirm").on("click", function () {
+      if ($("#teamName").val().length==0) {
+          alert("팀명을 입력하셔야 합니다.");
+      } else {
+          alert("생성 완료!");
+          $("#form").submit();
+      }
+    })
+
+
+  </script>
 </body>
 </html>

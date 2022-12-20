@@ -72,6 +72,11 @@ public class MemberDAO {
         memberMapper.updatePw(memberDto);
     }
 
+    //회원 탈퇴
+    public void deleteMember(String memberSeq) throws Exception{
+        memberMapper.deleteMember(memberSeq);
+    }
+
     // 회원 목록 출력
     public List<MemberDTO> selectMembers() throws Exception{
         return memberMapper.selectMembers();

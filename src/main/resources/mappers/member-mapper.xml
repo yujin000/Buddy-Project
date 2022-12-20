@@ -124,4 +124,7 @@
             member_seq = #{value}
     </delete>
 
+    <delete id="deleteMember">
+        delete member where member_seq=#{value}
+    </delete>
 </mapper>

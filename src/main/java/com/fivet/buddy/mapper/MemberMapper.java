@@ -20,6 +20,7 @@ public interface MemberMapper {
     void updatePhone(MemberDTO memberDto);
     int selectMyProfilePw(MemberDTO memberDto);
     void updatePw(MemberDTO memberDto);
+    void deleteMember(String memberSeq);
     List<MemberDTO> selectMembers();
     List<MemberDTO> memberSearch(String searchPick, String memberSearchText);
     void memberKickOut(int memberSeq);

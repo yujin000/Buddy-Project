@@ -27,6 +27,7 @@
       <div class="profileImg" id="pImg">
         <img src="" alt="" class="myImg" id="myImg" name="myImg" />
         <button class="updateBtn" id="updateImg">수정</button>
+        <button class="updateBtn" id="deleteImg">삭제</button>
       </div>
 
 
@@ -132,6 +133,9 @@
 </div>
 
 <strong><a href="/" id="goBack">뒤로가기</a></strong>
+  <p class="cancel">
+    회원탈퇴 하시겠습니까? <a href="#" onclick="delClick();"><strong>탈퇴</strong></a>
+  </p>
 </div>
 <script>
 
@@ -144,6 +148,15 @@
     })
     pwDisNone();
   })
+
+  function delClick(){
+    if(confirm("회원 탈퇴 하시겠습니까?")){
+      location.href = "/member/deleteMember";
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 </script>
 

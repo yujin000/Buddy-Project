@@ -1,6 +1,7 @@
 package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.MemberDTO;
+import com.fivet.buddy.dto.MemberImgDTO;
 import com.fivet.buddy.services.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -202,22 +203,24 @@ public class MemberController {
     }
 
     //프로필 이미지 수정
-//    @RequestMapping("updateImg")
-//    public String updateImg(MultipartFile profile) throws Exception{
-//        String realPath=session.getServletContext().getRealPath("upload");
-//        File filePath = new File(realPath);
-//        if(!filePath.exists()) {
-//            filePath.mkdir();
-//        }// 파일 업로드 폴더가 없다면 생성하는 코드
-//
-//        String oriName = profile.getOriginalFilename();
-//        String sysName = UUID.randomUUID() + "_" + oriName;
-//        //UUID.randomUUID() : 현재 시간과 자체 매커니즘을 통해 겹치지 않는 기다란 문자를 자동으로 생성해줌
-//        profile.transferTo(new File(filePath+"/"+sysName));
-//        dto.setImg(sysName);
-//        memberService.insert(dto);
-//        return "redirect:/member/goMyProfile";
-//    }
+    @RequestMapping("updateImg")
+    public String updateImg(MemberImgDTO memberImgDto, MultipartFile profile) throws Exception{
+        String realPath=session.getServletContext().getRealPath("upload");
+        File filePath = new File(realPath);
+        if(!filePath.exists()) {
+            filePath.mkdir();
+        }// 파일 업로드 폴더가 없다면 생성하는 코드
+
+        String oriName = profile.getOriginalFilename();
+        String sysName = UUID.randomUUID() + "_" + oriName;
+        //UUID.randomUUID() : 현재 시간과 자체 매커니즘을 통해 겹치지 않는 기다란 문자를 자동으로 생성해줌
+        profile.transferTo(new File(filePath+"/"+sysName));
+        memberImgDto.setMemberImgMemberSeq((Integer) session.getAttribute("memberSeq"));
+        memberImgDto.setMemberImgOriName(oriName);
+        memberImgDto.setMemberImgSysName(sysName);
+        memberService.updateProfileImg(memberImgDto);
+        return "redirect:/member/goMyProfile";
+    }
 
     //회원 탈퇴
     @RequestMapping("deleteMember")

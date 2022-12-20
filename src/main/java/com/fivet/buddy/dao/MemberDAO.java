@@ -1,6 +1,7 @@
 package com.fivet.buddy.dao;
 
 import com.fivet.buddy.dto.MemberDTO;
+import com.fivet.buddy.dto.MemberImgDTO;
 import com.fivet.buddy.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -70,6 +71,11 @@ public class MemberDAO {
     //비밀번호 수정
     public void updatePw(MemberDTO memberDto) throws Exception{
         memberMapper.updatePw(memberDto);
+    }
+
+    //프로필 이미지 업로드
+    public void updateProfileImg(MemberImgDTO memberImgDto) throws Exception{
+        memberMapper.updateProfileImg(memberImgDto);
     }
 
     //회원 탈퇴

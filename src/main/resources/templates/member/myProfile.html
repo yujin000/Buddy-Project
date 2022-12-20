@@ -26,7 +26,9 @@
       <p class="title" id="titleImg">프로필 이미지</p>
       <div class="profileImg" id="pImg">
         <img src="" alt="" class="myImg" id="myImg" name="myImg" />
-        <button class="updateBtn" id="updateImg">수정</button>
+        <form method="post" id="updateImgForm">
+        <input type="file" name="file" id="updateImg"/>
+        </form>
         <button class="updateBtn" id="deleteImg">삭제</button>
       </div>
 
@@ -147,6 +149,7 @@
       $("#hidn3").toggle();
     })
     pwDisNone();
+    $("#updateImg").on("change", readURL);
   })
 
   function delClick(){
@@ -156,6 +159,41 @@
     } else {
       return false;
     }
+  }
+  $("#myImg").click(function (){
+    $("#updateImg").click();
+  })
+  // function readURL(e) {
+  //   if (e.files && e.files[0]) {
+  //     let reader = new FileReader();
+  //     reader.onload = function(e) {
+  //       $("#myImg").attr("src", e.target.result);
+  //     };
+  //     reader.readAsDataURL(e.files[0]);
+  //   } else {
+  //     $("#myImg").attr("src", "static/img/defaultProfileImg.png");
+  //     return;
+  //   }
+  // }
+
+  function readURL(e) {
+    if (e.target.files[0]) {
+      // if(!e.type.match("image/jpg"||"image/png"||"image/jpeg")){
+      //   alert("확장자는 jpg, png, jpeg만 가능합니다.");
+      //   return;
+      // }
+      $("#updateImg").attr("src",e.target.files[0]);
+    } else {
+      $("#myImg").attr("src","/static/img/defaultProfileImg.png");
+      return;
+    }
+    let reader = new FileReader();
+    reader.onload = function(e) {
+      if(reader.readyState === 2){
+        $("#myImg").attr("src", reader.result);
+      }
+    }
+    reader.readAsDataURL(e.target.files[0])
   }
 
 </script>

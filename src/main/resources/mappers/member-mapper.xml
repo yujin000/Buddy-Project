@@ -102,6 +102,20 @@
         update member set member_pw = #{memberPw} where member_seq = #{memberSeq}
     </update>
 
+    <!-- 프로필 이미지 -->
+    <select id="selectProfileImg" resultType="com.fivet.buddy.dto.MemberImgDTO">
+        select * from member_img where member_img_member_seq = #{memberImgMemberSeq}
+    </select>
+    <!-- 프로필 이미지 업로드 -->
+    <insert id="updateProfileImg">
+    insert into member_img values(#{memberImgMemberSeq}, #{memberImgOriName}, #{memberImgSysName})
+    </insert>
+
+    <!-- 회원 탈퇴 -->
+    <delete id="deleteMember">
+        delete member where member_seq=#{value}
+    </delete>
+
     <!-- 회원 목록 출력 -->
     <select id="selectMembers" resultType="com.fivet.buddy.dto.MemberDTO">
         select * from member
@@ -124,7 +138,5 @@
             member_seq = #{value}
     </delete>
 
-    <delete id="deleteMember">
-        delete member where member_seq=#{value}
-    </delete>
+
 </mapper>

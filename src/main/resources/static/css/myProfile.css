@@ -61,10 +61,33 @@ button[class*="Btn"] {
     border: 1px solid #000;
 }
 
-#updateImg {
+input[type=file] {
+    display: none;
+}
+
+#imgLabel{
     position: absolute;
-    margin-top: 35px;
+    margin-top: 15px;
     right: 10px;
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
+    border-radius: 15px;
+    border: 1px solid #000;
+    appearance: auto;
+    writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: buttontext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: buttonface;
 }
 
 #deleteImg {

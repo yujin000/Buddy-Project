@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 
 @Controller
@@ -196,6 +199,32 @@ public class MemberController {
         memberDto.setMemberSeq((Integer) session.getAttribute("memberSeq"));
         memberService.updatePw(memberDto);
         return "redirect:/member/goMyProfile";
+    }
+
+    //프로필 이미지 수정
+//    @RequestMapping("updateImg")
+//    public String updateImg(MultipartFile profile) throws Exception{
+//        String realPath=session.getServletContext().getRealPath("upload");
+//        File filePath = new File(realPath);
+//        if(!filePath.exists()) {
+//            filePath.mkdir();
+//        }// 파일 업로드 폴더가 없다면 생성하는 코드
+//
+//        String oriName = profile.getOriginalFilename();
+//        String sysName = UUID.randomUUID() + "_" + oriName;
+//        //UUID.randomUUID() : 현재 시간과 자체 매커니즘을 통해 겹치지 않는 기다란 문자를 자동으로 생성해줌
+//        profile.transferTo(new File(filePath+"/"+sysName));
+//        dto.setImg(sysName);
+//        memberService.insert(dto);
+//        return "redirect:/member/goMyProfile";
+//    }
+
+    //회원 탈퇴
+    @RequestMapping("deleteMember")
+    public String deleteMember() throws Exception{
+        memberService.deleteMember(String.valueOf(session.getAttribute("memberSeq")));
+        session.invalidate();
+        return "redirect:/";
     }
 
     // 관리자 페이지로 이동

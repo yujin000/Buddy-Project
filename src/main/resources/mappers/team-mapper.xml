@@ -10,6 +10,9 @@
             team
         values
             (team_seq.nextval, #{teamName}, #{teamOwnerSeq}, 1, sysdate)
+        <selectKey order="AFTER" keyProperty="teamSeq" resultType="int">
+            select team_seq.currval from dual
+        </selectKey>
     </insert>
 
 

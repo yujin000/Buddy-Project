@@ -20,5 +20,13 @@
             (#{teamSeq}, #{memberSeq}, #{teamMemberNickname}, 'manager', sysdate)
     </insert>
 
+    <select id="searchByMember" resultType="com.fivet.buddy.dto.TeamDTO">
+        select
+            team_seq
+        from
+            team_member
+        where
+            member_seq = #{value}
+    </select>
 
 </mapper>

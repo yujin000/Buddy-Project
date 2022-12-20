@@ -22,6 +22,7 @@ public class TeamService {
 //    팀 생성
     public void insertTeam (TeamDTO teamDto, Map<String, String> param) throws Exception {
         teamDao.insert(teamDto);
+        param.put("teamSeq",String.valueOf(teamDto.getTeamSeq()));
         teamMemberDao.createTeam(param);
     }
 

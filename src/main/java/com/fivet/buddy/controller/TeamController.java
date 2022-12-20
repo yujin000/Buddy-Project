@@ -32,8 +32,8 @@ public class TeamController {
     public String create(TeamDTO teamDto) throws Exception {
         teamDto.setTeamSeq((Integer) session.getAttribute("memberSeq"));
         Map<String, String> param = new HashMap<>();
-        param.put("teamSeq", String.valueOf(teamDto.getTeamSeq()));
-        param.put("memberSeq", String.valueOf(teamDto.getTeamOwnerSeq()));
+        param.put("memberSeq", session.getAttribute("memberSeq").toString());
+        // session값인 이름만 닉네임에 담아 service에 전송.
         param.put("teamMemberNickname", session.getAttribute("memberName").toString());
         teamService.insertTeam(teamDto, param);
 

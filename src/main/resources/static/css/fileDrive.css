@@ -344,7 +344,7 @@ aside {
     }
 }
 
-/* 파일 라벨 */
+/* 파일 라벨, 새 폴더 */
 .fileLabel{
     background-color:aquamarine;
     border:1px solid black;
@@ -353,7 +353,14 @@ aside {
     cursor: pointer;
     margin-right:6px;
 }
-
-#uploadFile, #newFolder{
+#newFolder{
+    background-color:aquamarine;
+    border:1px solid black;
+    width:70px;
+    height:10px;
+    cursor: pointer;
+    margin-right:6px;
+}
+#uploadFile{
     display:none;
 }

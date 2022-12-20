@@ -92,10 +92,7 @@
                     올리기
                     <input type="file" name="" id="uploadFile">
                 </label>
-                <label for="newFolder" class="fileLabel">
-                    새 폴더
-                    <input type="file" name="" id="newFolder">
-                </label>
+                <button type="button" id="newFolder">새 폴더</button>
                 <button type="button">공유</button>
             </div>
             <!-- 본문 -->
@@ -159,7 +156,11 @@
 <!-- 새 폴더 생성 -->
 <script>
     $("#newFolder").on('click',function (){
-
+        $.ajax({
+            url:"/personalFolder/addFolder"
+        }).done(function (){
+            console.log("완료");
+        })
     });
 </script>
 

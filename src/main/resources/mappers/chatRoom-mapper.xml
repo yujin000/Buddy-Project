@@ -5,10 +5,13 @@
 <mapper namespace="com.fivet.buddy.mapper.ChatRoomMapper">
 
     <!-- 팀 생성시 기본생성되는 채팅방-->
-    <insert id="insertChatRoom">
+    <insert id="createTeam">
         insert into
             chat_room
         values
             (chat_room_seq.nextval, #{teamName}, #{teamOwnerSeq}, 1, sysdate)
+        <selectKey order="AFTER" keyProperty="chatRoomSeq" resultType="String">
+            select chat_room_seq.currval from dual
+        </selectKey>
     </insert>
 </mapper>

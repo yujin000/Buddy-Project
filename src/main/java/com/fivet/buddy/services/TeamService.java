@@ -26,14 +26,15 @@ public class TeamService {
     @Autowired
     private ChatMemberDAO chatMemberDao;
 
-    //팀 생성
+    //팀 생성 및 기본 채팅방 생성
     public void insertTeam (TeamDTO teamDto, Map<String, String> param) throws Exception {
         teamDao.insert(teamDto);
         param.put("teamSeq",String.valueOf(teamDto.getTeamSeq()));
         teamMemberDao.createTeam(param);
-        chatRoomDao.createTeam(teamDto);
-        //param.put("chatRoomSeq", String.valueOf(teamDto.))
-        //chatMemberDao.insertChatMember();
+        param.put("teamOwnerSeq", param.get("memberSeq"));
+        param.put("teamName", teamDto.getTeamName());
+        chatRoomDao.createTeam(param);
+        chatMemberDao.createTeam(param);
     }
 
     //회원 팀 출력

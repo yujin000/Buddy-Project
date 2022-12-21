@@ -41,5 +41,9 @@ public class PersonalFolderService {
         return personalFolderDao.isFolderExists(folderCheck);
     }
 
+    // 회원가입 시 기본폴더 생성
+    public void newPersonalFolder(int memberSeq) throws Exception{
+
+    }
 
 }

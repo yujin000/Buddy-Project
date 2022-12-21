@@ -39,9 +39,9 @@ public class PersonalFolderController {
     // 폴더 생성
     @ResponseBody
     @RequestMapping("addFolder")
-    public boolean addFolder(String fileName) throws Exception {
+    public boolean addFolder(String folderName) throws Exception {
         // 폴더 중복 체크( true : 존재함, false : 존재하지 않음)
-        boolean folderExists = personalFolderService.isFolderExists(fileName);
+        boolean folderExists = personalFolderService.isFolderExists(folderName);
 
         // 폴더가 존재하지 않는 경우( 사용이 가능한 경우 )
         if (!folderExists) {
@@ -50,10 +50,10 @@ public class PersonalFolderController {
             // 세션에 있는 memberSeq값 폴더 dto에 입력
             personalFolderDto.setPersonalFolderMemberSeq(Integer.parseInt(session.getAttribute("memberSeq").toString()));
             // 폴더 생성
-            File file = new File(uploadFilePath + fileName);
+            File file = new File(uploadFilePath + folderName);
             file.mkdir();
 
-            personalFolderDto.setPersonalFolderName(fileName);
+            personalFolderDto.setPersonalFolderName(folderName);
 
             // personal_folder 테이블에 insert
             personalFolderService.insertNewFolder(personalFolderDto);
@@ -63,6 +63,5 @@ public class PersonalFolderController {
             return false;
         }
     }
-
 
 }

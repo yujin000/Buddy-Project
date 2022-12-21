@@ -10,7 +10,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PersonalFolderDTO {
-    private int PersonalFolderSeq;
-    private String PersonalFolderName;
-    private int PersonalFolderMemberSeq;
+    private int personalFolderSeq;
+    private String personalFolderName;
+    private int personalFolderMemberSeq;
+    private int personalFolderParentSeq;
+    private String personalFolderPath;
 }

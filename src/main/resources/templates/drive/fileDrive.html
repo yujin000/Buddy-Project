@@ -42,15 +42,14 @@
                 </div>
                 <div id="folderList" class="asideItem">
                     <ul>
-                        <li>folder</li>
-                        <li>folder</li>
-                        <li>folder</li>
-                        <li>folder</li>
-                        <li>folder</li>
-                        <li>folder</li>
-                        <li>folder</li>
-                        <li>folder</li>
-                        <li>folder</li>
+                        <div th:if="${#strings.isEmpty(myFolders)}">
+                            아직 파일이 없습니다.
+                        </div>
+                        <div th:unless="${#strings.isEmpty(myFolders)}">
+                            <th:block th:each="folder : ${myFolders}">
+                                <li th:text="${folder.getPersonalFolderName()}"></li>
+                            </th:block>
+                        </div>
                     </ul>
                 </div>
             </div>
@@ -80,6 +79,7 @@
                 </div>
             </div>
         </aside>
+
         <section class="fileSection">
             <!-- 헤더 -->
             <div class="fileHeader">
@@ -88,10 +88,12 @@
             <!-- 헤더-버튼 -->
             <div class="attachBtnArea">
                 <input type="checkbox">
-                <label for="uploadFile" class="fileLabel">
-                    올리기
-                    <input type="file" name="" id="uploadFile">
-                </label>
+                <form action="/personalFile/uploadFromBtn" method="post" enctype="multipart/form-data" id="uploadFileForm">
+                    <label for="uploadFile" class="fileLabel">
+                        업로드
+                        <input type="file" name="multipartFile" id="uploadFile" multiple>
+                    </label>
+                </form>
                 <button type="button" id="newFolder">새 폴더</button>
                 <button type="button">공유</button>
             </div>
@@ -99,17 +101,24 @@
             <div class="fileMainPlace">
                 <div id="listArea">
                     <ul class="listThumb">
-                        <li class title="">
-                            리스트
-                        </li>
+                        <div th:if="${#strings.isEmpty(myFolders)}">
+                            아직 파일이 없습니다.
+                        </div>
+                        <div th:unless="${#strings.isEmpty(myFolders)}">
+                            <th:block th:each="folder : ${myFolders}">
+                                <li class="thisFolder">
+                                    <input type="checkbox" name="" id="">
+                                    <img src='/static/img/folderImg.png'>
+                                    <input type='text' class="printFileName" th:value='${folder.getPersonalFolderName()}' th:id="${'folder' + folder.getPersonalFolderSeq()}" disabled>
+                                </li>
+                            </th:block>
+                        </div>
                     </ul>
                 </div>
                 <div id="fileInfo">
                     파일 정보
                 </div>
             </div>
-
-
         </section>
     </div>
 </div>
@@ -155,14 +164,101 @@
 
 <!-- 새 폴더 생성 -->
 <script>
+    // 아이디, 클래스에 부여할 count
+    let count = 1;
+
     $("#newFolder").on('click',function (){
-        $.ajax({
-            url:"/personalFolder/addFolder"
-        }).done(function (){
-            console.log("완료");
+        let folderName = 'folderName'+count;
+
+        let folderArea = $(
+            "<li class='"+folderName+"'>"
+            +
+            "<input type='checkbox'>"
+            +
+            "<img src='/static/img/folderImg.png'>"
+            +
+            "<input type='text' value='새 폴더' id='"+folderName+"' class='printFileName' maxlength='10'>"
+            +
+            "</li>"
+        ).css("background-color","orange");
+
+        count++;
+
+        $(".listThumb").prepend(folderArea);
+
+
+        // 폴더 이름 변경
+        let modifyText = folderArea.find("input:eq(1)");
+        let modifiedName;
+
+        // 폴더 이름에 자동 포커스
+        modifyText.focus();
+
+        // 폴더 이름 함수, 폴더 이름 가져가기
+        modifyText.on("blur",function(){
+            modifiedName = $(this).val();
+            $(this).css("color","white").attr("disabled",true);
+            console.log(modifiedName);
+
+            // 폴더 이름을 사용하고 있는지 조회 하고 결과 반환
+            $.ajax({
+                url:"/personalFolder/addFolder?fileName="+modifiedName
+            }).done(function(rsp){
+                console.log(rsp);
+                // rsp : true(사용할 수 있음), false(사용할 수 없음)
+                if(!rsp) {
+                    alert("이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
+                    modifyText.attr("disabled",false).css("color","red");
+                }
+            })
+
         })
+
+        // 방금 만들어진 리스트 클릭 이벤트(동적 바인딩)
+        folderArea.on("click",function(){
+            $(this).css("background-color","red");
+            //location.href="/drive/detailDrive?contents="+folderName;
+        })
+
+
     });
+
 </script>
+
+<!-- 파일 세부정보 -->
+<script>
+
+    $(".thisFolder").on("click",function(){
+        //$(this).css("background-color","red");
+        let thisVal = $(this).find("input:eq(1)").val();
+
+        console.log(thisVal);
+        console.log("클릭!");
+    })
+
+</script>
+
+<!-- 삭제 버튼 클릭 -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    /*]]>*/
+</script>
+
+<!-- 업로드 버튼 클릭 -->
+<script>
+    $("#uploadFile").on('change',fileCheck);
+
+    function fileCheck(e) {
+        if (e.target.files[0]) {
+            console.log("있음");
+            $("#uploadFileForm").submit();
+        } else {
+            return;
+        }
+    }
+</script>
+
 
 </body>
 </html>

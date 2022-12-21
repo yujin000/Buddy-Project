@@ -3,7 +3,7 @@
         margin-top: 5vh;
         padding: 0 10px;
     }
-    .member_profile > form > .article {
+    .memberProfile > form > .article {
         height: 120px;
         position: relative;
     }
@@ -15,11 +15,11 @@
         justify-content: center;
     }
 
-    .modal_wrap {
+    .modalWrap {
         width: 70vw;
     }
 
-    #team_name {
+    #teamName {
         width: 160px;
         overflow-x: scroll;
     }

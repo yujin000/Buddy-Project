@@ -15,7 +15,7 @@ body {
     text-align: center;
 }
 
-.content_wrap {
+.contentWrap {
     margin: 0 auto;
     width: 100%;
     max-width: 800px;
@@ -23,19 +23,19 @@ body {
     border: 1px dashed red;
 }
 
-div[class*="_profile"] {
+div[class*="Profile"] {
     width: 100%;
     border: 1px solid #000;
 }
-.team_profile {
+.teamProfile {
     height: 110px;
 }
 
-.member_profile {
+.memberProfile {
     margin-top: 20px;
 }
 
-.sub_title {
+.subTitle {
     padding-left: 10px;
     height: 30px;
     line-height: 30px;
@@ -62,14 +62,14 @@ div[class*="_profile"] {
     display: inline-block;
 }
 
-.input_text {
+.inputText {
     font-size: 1.2rem;
     font-weight: bold;
     background: transparent;
     border: 1px solid #000;
 }
 
-.meta_data {
+.metaData {
     height: 100%;
     justify-items: center;
     display: flex;
@@ -84,7 +84,7 @@ div[class*="_profile"] {
     flex-direction: column;
 }
 
-button[class*="_btn"] {
+button[class*="Btn"] {
     width: 70px;
     height: 30px;
     margin-left: 5px;
@@ -92,13 +92,13 @@ button[class*="_btn"] {
     border: 1px solid #000;
 }
 
-#edit_team {
+#editTeam {
     top: 30%;
     right: 85px;
     position: absolute;
 }
 
-#change_team {
+#changeTeam {
     top: 30%;
     right: 10px;
     position: absolute;
@@ -120,7 +120,7 @@ button[class*="_btn"] {
 
 /* modal 창을 띄운 뒤에는 body 의 overflow 속성을 hidden 으로 잡아야함  */
 
-.modal_wrap {
+.modalWrap {
     margin: 0 auto;
     margin-top: 25vh;
     padding: 20px;
@@ -133,13 +133,13 @@ button[class*="_btn"] {
     position: relative;
 }
 
-.modal_wrap h3 {
+.modalWrap h3 {
     margin-top: 15px;
     margin-bottom: 30px;
     font-weight: bold;
 }
 
-.modal_wrap button {
+.modalWrap button {
     width: 100px;
     height: 30px;
     border-radius: 15px;
@@ -150,11 +150,11 @@ button[class*="_btn"] {
     font-weight: normal;
 }
 
-.modal_wrap button:hover {
+.modalWrap button:hover {
     font-weight: bold;
 }
 
-#go_back {
+#goBack {
     position: absolute;
     bottom: 0px;
     right: 0px;

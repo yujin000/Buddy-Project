@@ -38,7 +38,7 @@ public class TeamController {
         param.put("teamMemberNickname", session.getAttribute("memberName").toString());
         teamService.insertTeam(teamDto, param);
 
-        return "redirect:/";
+        return "redirect:/member/loginIndex";
     }
 
     //팀 이동

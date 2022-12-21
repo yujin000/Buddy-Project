@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BuddyDrive</title>
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/fileDrive.css" />
+  <script
+          src="https://code.jquery.com/jquery-3.6.1.min.js"
+          integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+          crossorigin="anonymous"
+  ></script>
+  <script src="/static/js/jQueryCheck.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="logo">
+      <a href="/static">
+        <img src="" alt="" />
+        logo
+      </a>
+    </div>
+    <div class="secondLogo">
+      secondLogo
+    </div>
+
+    <button id="menu" class="iconMenu">menu</button>
+    <button id="asideClose">aside</button>
+  </div>
+  <div class="main">
+    <aside>
+      <div id="profile" class="asideTitle">
+        <img src="" alt="" />
+        <h3><a href="/member/goMyProfile" th:text="${session.memberName}"></a></h3>
+      </div>
+
+      <div id="allFiles" class="asideList">
+        <div class="asideTitle">
+          <h3>모든 파일</h3>
+          <button id="allFilesBtn" class="toggle">v</button>
+        </div>
+        <div id="folderList" class="asideItem">
+          <ul>
+            <th:block>
+
+            </th:block>
+            <li>folder</li>
+            <li>folder</li>
+            <li>folder</li>
+            <li>folder</li>
+            <li>folder</li>
+            <li>folder</li>
+            <li>folder</li>
+            <li>folder</li>
+            <li>folder</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="chat" class="asideList">
+        <div class="asideTitle">
+          <h3>유형별 보기</h3>
+          <input type="search" placeholder="검색" id="searchMsg" />
+          <button id="fileTypeToggle" class="toggle">v</button>
+        </div>
+        <div id="chatList" class="asideItem">
+          <ul>
+            <li>사진</li>
+            <li>문서</li>
+            <li>음악</li>
+            <li>동영상</li>
+            <li>휴지통</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="asideTool">
+        <button id="appToggle" class="appToggle">앱 toggle</button>
+        <div id="appList">
+          <button class="app" id="appDrive"><a href="">드라이브</a></button>
+          <button class="app" id="appCal"><a href="">캘린더</a></button>
+        </div>
+      </div>
+    </aside>
+    <section class="fileSection">
+      <!-- 헤더 -->
+      <div class="fileHeader">
+        <h1>MYBOX</h1>
+      </div>
+      <!-- 헤더-버튼 -->
+      <div class="attachBtnArea">
+        <input type="checkbox">
+        <label for="uploadFile" class="fileLabel">
+          올리기
+          <input type="file" name="" id="uploadFile">
+        </label>
+        <button type="button" id="newFolder">새 폴더</button>
+        <button type="button">공유</button>
+      </div>
+      <!-- 본문 -->
+      <div class="fileMainPlace">
+        <div id="listArea">
+          <ul class="listThumb">
+            파일이 없습니다.
+          </ul>
+        </div>
+        <div id="fileInfo">
+          파일 정보
+        </div>
+      </div>
+
+
+    </section>
+  </div>
+</div>
+<div id="menuList" class="menuList">
+  <ul>
+    <li><a href="">logout</a></li>
+    <li>list</li>
+    <li>list</li>
+    <li>list</li>
+    <li>list</li>
+    <li>list</li>
+    <li>list</li>
+  </ul>
+</div>
+<!-- 토글 -->
+<script>
+  $(document).ready(function () {
+    $("#headerToggle").click(function () {
+      $("#dropdownList").toggle();
+    });
+
+    $("#menu").click(function () {
+      $("#menuList").toggle();
+    });
+
+    $("#allFilesBtn").click(function () {
+      $("#folderList").toggle();
+    });
+
+    $("#fileTypeToggle").click(function () {
+      $("#chatList").toggle();
+    });
+
+    $("#asideClose").click(function () {
+      $("aside").toggle();
+    });
+
+    $("#appToggle").click(function () {
+      $("#appList").toggle();
+    });
+  });
+</script>
+
+<!-- 새 폴더 생성 -->
+<script>
+  let count = 1;
+
+  $("#newFolder").on('click',function (){
+    let folderName = 'folderName'+count;
+
+    let folderArea = $(
+            "<li class='"+folderName+"'>"
+            +
+            "<img src='/static/img/folderImg.png'>"
+            +
+            "<input type='text' value='새 폴더' id='"+folderName+"' readonly>"
+            +
+            "</li>"
+    );
+
+    count++;
+    $(".listThumb").append(folderArea);
+
+    // 만들어진 리스트 클릭 이벤트
+    $("."+folderName).on("click",function(){
+      console.log("test");
+      //location.href="/drive/detailfile?contents="+folderName;
+    })
+
+    $.ajax({
+      url:"/personalFolder/addFolder"
+    }).done(function (){
+      console.log("완료");
+    })
+  });
+</script>
+
+</body>
+</html>

@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 
+
 @Controller
 @RequestMapping("/member/")
 public class MemberController {
@@ -246,38 +247,5 @@ public class MemberController {
         memberService.deleteMember(String.valueOf(session.getAttribute("memberSeq")));
         session.invalidate();
         return "redirect:/";
-    }
-
-    // 관리자 페이지로 이동
-    @RequestMapping("toAdminPage")
-    public String toAdminPage(Model model) throws Exception{
-        List<MemberDTO> list = memberService.selectMembers();
-        model.addAttribute("memberList",list);
-        return "admin/adminMain";
-    }
-
-    // 회원 검색(관리자)
-    @RequestMapping("memberSearch")
-    public String memberSearch(String searchPick, String memberSearchText, Model model) throws Exception{
-        List<MemberDTO> list = memberService.memberSearch(searchPick, memberSearchText);
-        model.addAttribute("memberList",list);
-        return "admin/adminMain";
-    }
-
-    // 회원 강퇴(관리자)
-    @RequestMapping("memberKickOut")
-    public String memberKickOut(int memberSeq, Model model) throws Exception{
-        memberService.memberKickOut(memberSeq);
-        List<MemberDTO> list = memberService.selectMembers();
-        model.addAttribute("memberList",list);
-        return "admin/adminMain";
-    }
-
-    // 회원 인덱스 (팀 출력기능을 추가하기 위해 따로 구현)
-    @RequestMapping("loginIndex")
-    public String loginIndex(Model model) {
-        List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
-        model.addAttribute("teamDtoList", teamDtoList);
-        return "index";
     }
 }

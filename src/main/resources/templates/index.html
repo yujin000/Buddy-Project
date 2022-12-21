@@ -14,7 +14,7 @@
     <script src="/static/js/jQueryCheck.js"></script>
   </head>
   <body>
-  <th:block th:if="${#strings. isEmpty(session.memberSeq)}">
+  <th:block th:if="${#strings.isEmpty(session.memberSeq)}">
     <div class="wrap">
       <div class="logo">
         <img src="" alt="" />
@@ -45,7 +45,7 @@
       <a href="/invite/test">테스트 이메일</a>
     </div>
   </th:block>
-  <th:block th:if="${not #strings. isEmpty(session.memberSeq)}">
+  <th:block th:if="${not #strings.isEmpty(session.memberSeq)}">
     <!-- 마이페이지 -->
     <div class="wrap">
       <div class="logo">
@@ -258,7 +258,7 @@
     <!-- 관리자 페이지로 이동 -->
   <script>
     $("#adminPage").on("click",function(){
-      location.href = "/member/toAdminPage";
+      location.href = "/admin/toAdminPage";
     });
   </script>
 

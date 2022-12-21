@@ -248,4 +248,11 @@ public class MemberController {
         session.invalidate();
         return "redirect:/";
     }
+
+    @RequestMapping("loginIndex")
+    public String loginIndex(Model model) {
+        List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
+        model.addAttribute("teamDtoList", teamDtoList);
+        return "index";
+    }
 }

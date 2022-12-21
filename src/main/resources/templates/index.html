@@ -84,6 +84,9 @@
           </div>
           <form action="/team/goTeam" method="post">
             <input type="hidden" th:value="${teamDtoList.teamSeq}" th:name="teamSeq">
+            <button type="button" id="managementTeam" class="floatBtn" th:if="${teamDtoList.teamOwnerSeq==session.memberSeq}">
+              팀 관리
+            </button>
             <button id="goTeam" class="floatBtn">
               팀으로 가기
             </button>

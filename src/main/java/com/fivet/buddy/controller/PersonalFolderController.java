@@ -26,7 +26,7 @@ public class PersonalFolderController {
     private PersonalFolderService personalFolderService;
 
     // 나중에 AWS 열면 경로 변경할 것(application.properties 에서)
-    @Value("${spring.servlet.multipart.location}")
+    //@Value("${spring.servlet.multipart.location}")
     private String uploadFilePath;
 
     // ExceptionHandler

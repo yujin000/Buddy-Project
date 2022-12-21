@@ -18,7 +18,7 @@
 <!--    회원이 속한 팀 출력-->
     <select id="selectMemberTeam" resultType="com.fivet.buddy.dto.TeamDTO">
         select
-            t.TEAM_SEQ, t.TEAM_NAME
+            t.TEAM_SEQ, t.TEAM_NAME, t.TEAM_OWNER_SEQ
         from
             TEAM t
             join TEAM_MEMBER tm

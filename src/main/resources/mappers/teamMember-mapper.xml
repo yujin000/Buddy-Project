@@ -20,4 +20,8 @@
             (#{teamSeq}, #{memberSeq}, #{teamMemberNickname}, 'manager', sysdate)
     </insert>
 
+    <!-- 팀 관리 팀 불러오기 -->
+<!--    <select id="managementTeamSelectTeam" resultType="com.fivet.buddy.dto.TeamMemberDTO">-->
+<!--        select * from team_member m inner join team t on m.team_seq=t.team_seq where t.team_seq = #{value};-->
+<!--    </select>-->
 </mapper>

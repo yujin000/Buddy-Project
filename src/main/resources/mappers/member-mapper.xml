@@ -138,6 +138,4 @@
         where
             member_seq = #{value}
     </delete>
-
-
 </mapper>

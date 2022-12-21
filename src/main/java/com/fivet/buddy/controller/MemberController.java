@@ -31,6 +31,10 @@ public class MemberController {
 
     private Logger logger = LoggerFactory.getLogger(MemberController.class);
 
+    // 회원 indexPage 경로
+
+    private String memberIndex = "redirect:/member/loginIndex";
+
     // ExceptionHandler
     @ExceptionHandler(Exception.class)
     public String exceptionHandler(Exception e) {
@@ -78,7 +82,7 @@ public class MemberController {
         // 세션확인
         if(session.getAttribute("memberSeq")!=null){
             model.addAttribute("memberSeq",session.getAttribute("memberSeq"));
-            return "member/duplLog여in";
+            return "member/duplLogin";
         }
 
         boolean result = memberService.isAccountExist(memberDto);
@@ -89,13 +93,8 @@ public class MemberController {
             session.setAttribute("memberSeq",dto.getMemberSeq());
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
             session.setAttribute("memberName",dto.getMemberName());
-            model.addAttribute("userInfo",dto);
-            List <TeamDTO> teamDtoList = teamService.selectMemberTeam(dto.getMemberSeq());
-//            for (TeamDTO teamDto : teamDtoList) {
-//                System.out.println(teamDto.getTeamName());
-//            }
-            model.addAttribute("teamDtoList", teamDtoList);
-            return "index";
+            //model.addAttribute("userInfo",dto); model에 넣을 필요 없어보여서 주석처리.
+            return memberIndex;
         }else{
             // 로그인 정보가 없으면 새로고침
             return "redirect:/";
@@ -131,7 +130,7 @@ public class MemberController {
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
             session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
-            return "index";
+            return memberIndex;
         }
     }
 
@@ -161,7 +160,7 @@ public class MemberController {
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
             session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
-            return "index";
+            return memberIndex;
         }
     }
 
@@ -170,7 +169,9 @@ public class MemberController {
     public String selectMyInfo(String memberSeq,Model model) throws Exception{
         MemberDTO dto = memberService.selectMyInfo(memberSeq);
         model.addAttribute("userInfo",dto);
-        return "index";
+        List <TeamDTO> teamDtoList = teamService.selectMemberTeam(dto.getMemberSeq());
+        model.addAttribute("teamDtoList", teamDtoList);
+        return memberIndex;
     }
 
     //계정설정으로 이동
@@ -255,5 +256,13 @@ public class MemberController {
         List<MemberDTO> list = memberService.selectMembers();
         model.addAttribute("memberList",list);
         return "admin/adminMain";
+    }
+
+    // 회원 인덱스 (팀 출력기능을 추가하기 위해 따로 구현)
+    @RequestMapping("loginIndex")
+    public String loginIndex(Model model) {
+        List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
+        model.addAttribute("teamDtoList", teamDtoList);
+        return "index";
     }
 }

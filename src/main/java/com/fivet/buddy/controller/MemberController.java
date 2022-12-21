@@ -91,9 +91,9 @@ public class MemberController {
             session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
             List <TeamDTO> teamDtoList = teamService.selectMemberTeam(dto.getMemberSeq());
-            for (TeamDTO teamDto : teamDtoList) {
-                System.out.println(teamDto.getTeamName());
-            }
+//            for (TeamDTO teamDto : teamDtoList) {
+//                System.out.println(teamDto.getTeamName());
+//            }
             model.addAttribute("teamDtoList", teamDtoList);
             return "index";
         }else{

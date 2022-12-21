@@ -5,6 +5,7 @@ import com.fivet.buddy.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -38,6 +39,15 @@ public class TeamController {
         teamService.insertTeam(teamDto, param);
 
         return "redirect:/";
+    }
+
+    //팀 이동
+    @PostMapping("goTeam")
+    public String goTeam(int teamSeq) {
+        // 팀 번호 session 부여
+        session.setAttribute("teamSeq", teamSeq);
+        System.out.println(teamSeq);
+        return "team/team";
     }
 
     // Exception Handler

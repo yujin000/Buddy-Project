@@ -102,14 +102,15 @@
         update member set member_pw = #{memberPw} where member_seq = #{memberSeq}
     </update>
 
-    <!-- 프로필 이미지 -->
-    <select id="selectProfileImg" resultType="com.fivet.buddy.dto.MemberImgDTO">
-        select * from member_img where member_img_member_seq = #{memberImgMemberSeq}
+    <!-- 프로필 이미지 출력 -->
+    <select id="selectProfileImg" resultType="String">
+        select member_img_sysname from member_img where member_img_member_seq = #{memberImgMemberSeq}
     </select>
+
     <!-- 프로필 이미지 업로드 -->
-    <insert id="updateProfileImg">
-    insert into member_img values(#{memberImgMemberSeq}, #{memberImgOriName}, #{memberImgSysName})
-    </insert>
+    <update id="updateProfileImg">
+    update member_img set member_img_oriname = #{memberImgOriName}, member_img_sysname= #{memberImgSysName} where member_img_member_seq =#{memberImgMemberSeq}
+    </update>
 
     <!-- 회원 탈퇴 -->
     <delete id="deleteMember">

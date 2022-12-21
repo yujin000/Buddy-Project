@@ -18,6 +18,7 @@ public interface MemberMapper {
     MemberDTO selectAccountInfoForNK(MemberDTO memberDto);
     MemberDTO selectMyInfo(String memberSeq);
     MemberDTO selectMyProfile(String memberSeq);
+    String selectProfileImg(String memberImgMemberSeq);
     void updatePhone(MemberDTO memberDto);
     int selectMyProfilePw(MemberDTO memberDto);
     void updatePw(MemberDTO memberDto);

@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -202,22 +199,30 @@ public class MemberController {
         return "redirect:/member/goMyProfile";
     }
 
+    //프로필 이미지 출력
+    @ResponseBody
+    @RequestMapping("selectProfileImg")
+    public String selectProfileImg() throws Exception{
+        String member_img_sysname = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
+        return member_img_sysname;
+    }
+
     //프로필 이미지 수정
     @RequestMapping("updateImg")
-    public String updateImg(MemberImgDTO memberImgDto, MultipartFile profile) throws Exception{
-        String realPath=session.getServletContext().getRealPath("upload");
+    public String updateImg(MemberImgDTO memberImgDto, MultipartFile file) throws Exception{
+        String realPath=session.getServletContext().getRealPath("/");
         File filePath = new File(realPath);
         if(!filePath.exists()) {
             filePath.mkdir();
         }// 파일 업로드 폴더가 없다면 생성하는 코드
 
-        String oriName = profile.getOriginalFilename();
-        String sysName = UUID.randomUUID() + "_" + oriName;
+        String memberImgOriName = file.getOriginalFilename();
+        String memberImgSysName = UUID.randomUUID() + "_" + memberImgOriName;
         //UUID.randomUUID() : 현재 시간과 자체 매커니즘을 통해 겹치지 않는 기다란 문자를 자동으로 생성해줌
-        profile.transferTo(new File(filePath+"/"+sysName));
+        file.transferTo(new File(filePath+"/"+memberImgSysName));
         memberImgDto.setMemberImgMemberSeq((Integer) session.getAttribute("memberSeq"));
-        memberImgDto.setMemberImgOriName(oriName);
-        memberImgDto.setMemberImgSysName(sysName);
+        memberImgDto.setMemberImgOriName(memberImgOriName);
+        memberImgDto.setMemberImgSysName(memberImgSysName);
         memberService.updateProfileImg(memberImgDto);
         return "redirect:/member/goMyProfile";
     }

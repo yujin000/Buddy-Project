@@ -26,7 +26,7 @@
       <p class="title" id="titleImg">프로필 이미지</p>
       <div class="profileImg" id="pImg">
         <img src="" alt="" class="myImg" id="myImg" name="myImg" />
-        <form method="post" id="updateImgForm">
+        <form method="post" id="updateImgForm" enctype="multipart/form-data">
         <input type="file" name="file" id="updateImg"/>
         </form>
         <button class="updateBtn" id="deleteImg">삭제</button>
@@ -139,6 +139,7 @@
     회원탈퇴 하시겠습니까? <a href="#" onclick="delClick();"><strong>탈퇴</strong></a>
   </p>
 </div>
+
 <script>
 
   $(document).ready(function(){
@@ -149,7 +150,20 @@
       $("#hidn3").toggle();
     })
     pwDisNone();
+
     $("#updateImg").on("change", readURL);
+
+    $.ajax({
+      url:"/member/selectProfileImg",
+      success : function (){
+        console.log("성공");
+      },error : function (){
+        console.log("실패");
+      }
+    }).done(function (rsp){
+      console.log("바꼈지롱");
+      $("#myImg").attr("src",rsp);
+    })
   })
 
   function delClick(){
@@ -183,8 +197,10 @@
       //   return;
       // }
       $("#updateImg").attr("src",e.target.files[0]);
+        $("#updateImgForm").attr("action","/member/updateImg").submit();
     } else {
       $("#myImg").attr("src","/static/img/defaultProfileImg.png");
+      $("#updateImgForm").attr("action","/member/updateImg").submit();
       return;
     }
     let reader = new FileReader();
@@ -195,6 +211,11 @@
     }
     reader.readAsDataURL(e.target.files[0])
   }
+
+  $("#deleteImg").click(function (){
+    $("#myImg").attr("src","/static/img/defaultProfileImg.png");
+    $("#updateImgForm").attr("action","/member/updateImg").submit();
+  });
 
 </script>
 

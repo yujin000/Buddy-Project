@@ -73,6 +73,11 @@ public class MemberDAO {
         memberMapper.updatePw(memberDto);
     }
 
+    //프로필 이미지 출력
+    public String selectProfileImg(String memberImgMemberSeq) throws Exception{
+        return memberMapper.selectProfileImg(memberImgMemberSeq);
+    }
+
     //프로필 이미지 업로드
     public void updateProfileImg(MemberImgDTO memberImgDto) throws Exception{
         memberMapper.updateProfileImg(memberImgDto);

@@ -67,6 +67,12 @@ button[class*="Btn"] {
     right: 10px;
 }
 
+#deleteImg {
+    position: absolute;
+    margin-top: 50px;
+    right: 10px;
+}
+
 .update {
     width: 100%;
     display: flex;

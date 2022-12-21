@@ -1,7 +1,9 @@
 package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.MemberDTO;
+import com.fivet.buddy.dto.TeamDTO;
 import com.fivet.buddy.services.MemberService;
+import com.fivet.buddy.services.TeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,16 @@ public class MemberController {
     private MemberService memberService;
 
     @Autowired
+    private TeamService teamService;
+
+    @Autowired
     private HttpSession session;
 
     private Logger logger = LoggerFactory.getLogger(MemberController.class);
+
+    // 회원 indexPage 경로
+
+    private String memberIndex = "redirect:/member/loginIndex";
 
     // ExceptionHandler
     @ExceptionHandler(Exception.class)
@@ -85,13 +94,12 @@ public class MemberController {
             session.setAttribute("memberSeq",dto.getMemberSeq());
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
             session.setAttribute("memberName",dto.getMemberName());
-            model.addAttribute("userInfo",dto);
-            return "index";
+            //model.addAttribute("userInfo",dto); model에 넣을 필요 없어보여서 주석처리.
+            return memberIndex;
         }else{
             // 로그인 정보가 없으면 새로고침
             return "redirect:/";
         }
-
     }
 
     // 로그아웃
@@ -123,7 +131,7 @@ public class MemberController {
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
             session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
-            return "index";
+            return memberIndex;
         }
     }
 
@@ -153,7 +161,7 @@ public class MemberController {
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
             session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
-            return "index";
+            return memberIndex;
         }
     }
 
@@ -162,7 +170,9 @@ public class MemberController {
     public String selectMyInfo(String memberSeq,Model model) throws Exception{
         MemberDTO dto = memberService.selectMyInfo(memberSeq);
         model.addAttribute("userInfo",dto);
-        return "index";
+        List <TeamDTO> teamDtoList = teamService.selectMemberTeam(dto.getMemberSeq());
+        model.addAttribute("teamDtoList", teamDtoList);
+        return memberIndex;
     }
 
     //계정설정으로 이동
@@ -198,4 +208,29 @@ public class MemberController {
         return "redirect:/member/goMyProfile";
     }
 
+    //프로필 이미지 수정
+//    @RequestMapping("updateImg")
+//    public String updateImg(MultipartFile profile) throws Exception{
+//        String realPath=session.getServletContext().getRealPath("upload");
+//        File filePath = new File(realPath);
+//        if(!filePath.exists()) {
+//            filePath.mkdir();
+//        }// 파일 업로드 폴더가 없다면 생성하는 코드
+//
+//        String oriName = profile.getOriginalFilename();
+//        String sysName = UUID.randomUUID() + "_" + oriName;
+//        //UUID.randomUUID() : 현재 시간과 자체 매커니즘을 통해 겹치지 않는 기다란 문자를 자동으로 생성해줌
+//        profile.transferTo(new File(filePath+"/"+sysName));
+//        dto.setImg(sysName);
+//        memberService.insert(dto);
+//        return "redirect:/member/goMyProfile";
+//    }
+
+    //회원 탈퇴
+    @RequestMapping("deleteMember")
+    public String deleteMember() throws Exception{
+        memberService.deleteMember(String.valueOf(session.getAttribute("memberSeq")));
+        session.invalidate();
+        return "redirect:/";
+    }
 }

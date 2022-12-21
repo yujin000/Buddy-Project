@@ -13,7 +13,5 @@ public interface InviteMapper {
 
     void codeDelete(String inviteCode);
 
-    void enterTeam(TeamMemberDTO teamMemberDto);
-
     int selectTeamSeqByCode(String inviteCode);
 }

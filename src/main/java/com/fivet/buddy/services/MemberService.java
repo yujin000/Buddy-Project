@@ -82,7 +82,10 @@ public class MemberService {
         memberDao.updatePw(memberDto);
     }
 
-
+    //회원 탈퇴
+    public void deleteMember(String memberSeq) throws Exception{
+        memberDao.deleteMember(memberSeq);
+    }
     // 회원 목록 출력
     public List<MemberDTO> selectMembers() throws Exception{
         return memberDao.selectMembers();

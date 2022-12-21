@@ -75,47 +75,30 @@
           </button>
         </th:block>
       </div>
-      <div class="temListBox">
-        <p class="title">list</p>
-        <div class="teamProfile">
+      <div class="temListBox" th:if="${teamDtoList!=null}">
+        <p class="title">팀 리스트</p>
+        <div class="teamProfile" th:each="teamDtoList : ${teamDtoList}">
           <img src="" alt="" id="teamImg" class="profileImg" />
           <div class="info">
-            <h1 id="teamName" class="name">teamName</h1>
-            <p id="teamEmail" class="email">teamEmail</p>
+            <h1 id="teamName" class="name" th:text="${teamDtoList.teamName}"></h1>
           </div>
-          <button type="button" id="goTeam" class="floatBtn">
-            <a href="">팀으로 가기</a>
-          </button>
+          <form action="/team/goTeam" method="post">
+            <input type="hidden" th:value="${teamDtoList.teamSeq}" th:name="teamSeq">
+            <button id="goTeam" class="floatBtn">
+              팀으로 가기
+            </button>
+          </form>
         </div>
-        <div class="teamProfile">
-          <img src="" alt="" id="teamImg" class="profileImg" />
-          <div class="info">
-            <h1 id="teamName" class="name">teamName</h1>
-            <p id="teamEmail" class="email">teamEmail</p>
-          </div>
-          <button type="button" id="goTeam" class="floatBtn">
-            <a href="">팀으로 가기</a>
-          </button>
-        </div>
-        <div class="teamProfile">
-          <img src="" alt="" id="teamImg" class="profileImg" />
-          <div class="info">
-            <h1 id="teamName" class="name">teamName</h1>
-            <p id="teamEmail" class="email">teamEmail</p>
-          </div>
-          <button type="button" id="goTeam" class="floatBtn">
-            <a href="">팀으로 가기</a>
-          </button>
-        </div>
-        <div class="teamProfile">
-          <img src="" alt="" id="teamImg" class="profileImg" />
-          <div class="info">
-            <h1 id="teamName" class="name">teamName</h1>
-            <p id="teamEmail" class="email">teamEmail</p>
-          </div>
-          <button type="button" id="goTeam" class="floatBtn">
-            <a href="">팀으로 가기</a>
-          </button>
+<!--        <div class="teamProfile">-->
+<!--          <img src="" alt="" id="teamImg" class="profileImg" />-->
+<!--          <div class="info">-->
+<!--            <h1 id="teamName" class="name">teamName</h1>-->
+<!--            <p id="teamEmail" class="email">teamEmail</p>-->
+<!--          </div>-->
+<!--          <button type="button" id="goTeam" class="floatBtn">-->
+<!--            <a href="">팀으로 가기</a>-->
+<!--          </button>-->
+<!--        </div>-->
         </div>
 
         <div class="addTeam">

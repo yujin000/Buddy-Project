@@ -1,5 +1,6 @@
 package com.fivet.buddy.controller;
 
+import com.fivet.buddy.dto.ChatRoomDTO;
 import com.fivet.buddy.dto.TeamDTO;
 import com.fivet.buddy.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
+
+
     @Autowired
     HttpSession session;
 
@@ -30,13 +33,14 @@ public class TeamController {
 
     //팀 생성
     @RequestMapping("create")
-    public String create(TeamDTO teamDto) throws Exception {
+    public String create(TeamDTO teamDto, ChatRoomDTO chatRoomDto) throws Exception {
         teamDto.setTeamOwnerSeq((Integer) session.getAttribute("memberSeq"));
         Map<String, String> param = new HashMap<>();
         param.put("memberSeq", session.getAttribute("memberSeq").toString());
         // session값인 이름만 닉네임에 담아 service에 전송.
         param.put("teamMemberNickname", session.getAttribute("memberName").toString());
         teamService.insertTeam(teamDto, param);
+
 
         return "redirect:/member/loginIndex";
     }
@@ -46,7 +50,6 @@ public class TeamController {
     public String goTeam(int teamSeq) {
         // 팀 번호 session 부여
         session.setAttribute("teamSeq", teamSeq);
-        System.out.println(teamSeq);
         return "team/team";
     }
 

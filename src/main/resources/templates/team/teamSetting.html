@@ -18,9 +18,9 @@
 <body>
 <div class="wrap">
   <h1 class="title">팀 관리</h1>
-  <div class="content_wrap">
-    <div class="team_profile">
-      <p class="sub_title">팀 프로필</p>
+  <div class="contentWrap">
+    <div class="teamProfile">
+      <p class="subTitle">팀 프로필</p>
       <form action="">
         <div class="article">
           <input
@@ -30,33 +30,33 @@
                   class="input_text"
                   value="팀 이름"
           />
-          <button type="submit" id="change_team" class="edit_btn">
+          <button type="submit" id="changeTeam" class="editBtn">
             변경
           </button>
         </div>
       </form>
     </div>
 
-    <div class="member_profile">
-      <p class="sub_title">멤버 관리</p>
+    <div class="memberProfile">
+      <p class="subTitle">멤버 관리</p>
       <form action="">
         <div class="article">
-          <div class="meta_data">
+          <div class="metaData">
             <img src="" alt="" class="profileImg" />
             <div class="texts">
               <input
                       type="text"
-                      name="member_name"
-                      id="member_name"
-                      class="input_text"
+                      name="memberName"
+                      id="memberName"
+                      class="inputText"
                       value="이름"
                       readonly
               />
               <input
                       type="text"
-                      name="member_email"
-                      id="member_email"
-                      class="input_email"
+                      name="memberEmail"
+                      id="memberEmail"
+                      class="inputEmail"
                       value="이메일"
                       readonly
               />
@@ -67,15 +67,15 @@
                     type="button"
                     name="grade"
                     id="grade"
-                    class="grade_btn"
+                    class="gradeBtn"
                     onclick="opener()"
             >
               등급
             </button>
-            <button type="submit" class="edit_btn" id="eidt_member">
+            <button type="submit" class="editBtn" id="eidtMember">
               변경
             </button>
-            <button type="submit" class="del_btn" id="del_member">
+            <button type="submit" class="delBtn" id="delMember">
               강퇴
             </button>
           </div>
@@ -84,37 +84,37 @@
     </div>
   </div>
   <div class="modal">
-    <div class="modal_wrap">
+    <div class="modalWrap">
       <h1>🤔</h1>
       <h3>
         member 님의 등급을 <br />
         어떻게 변경할까요?
       </h3>
-      <button id="master" class="modal_btn" onclick="changer(this)">
+      <button id="master" class="modalBtn" onclick="changer(this)">
         마스터
       </button>
-      <button id="manager" class="modal_btn" onclick="changer(this)">
+      <button id="manager" class="modalBtn" onclick="changer(this)">
         매니저
       </button>
       <button
               id="staff"
               type="button"
-              class="modal_btn"
+              class="modalBtn"
               onclick="changer(this)"
       >
         팀원
       </button>
-      <button id="go_back" type="button" onclick="closer()">나가기</button>
+      <button id="goBack" type="button" onclick="closer()">나가기</button>
     </div>
   </div>
 
-  <p style="text-align: center; margin-top: 20px;">팀을 삭제하시겠습니까? <a href="" id="del_team"><strong>삭제</strong></a></p>
+  <p style="text-align: center; margin-top: 20px;">팀을 삭제하시겠습니까? <a href="" id="delTeam"><strong>삭제</strong></a></p>
 </div>
 <script>
   var modal = document.querySelector(".modal");
   var grade = document.querySelector("#grade");
-  var gradeBtn = document.querySelector(".grade_btn");
-  var modalBtn = document.querySelectorAll(".modal_btn");
+  var gradeBtn = document.querySelector(".gradeBtn");
+  var modalBtn = document.querySelectorAll(".modalBtn");
   var master = document.querySelector("#master");
   var manager = document.querySelector("#manager");
   var staff = document.querySelector("#staff");

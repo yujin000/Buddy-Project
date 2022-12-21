@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fivet.buddy.mapper.BasicFolderMapper">
+
+    <!-- 회원가입 시 기본 폴더 생성 -->
+    <insert id="newBasicFolder">
+        insert into
+            basic_folder
+        values
+            (basic_folder_seq.nextval, #{value})
+    </insert>
+</mapper>

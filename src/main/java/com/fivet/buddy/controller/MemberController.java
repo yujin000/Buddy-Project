@@ -2,6 +2,7 @@ package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.TeamDTO;
+import com.fivet.buddy.services.BasicFolderService;
 import com.fivet.buddy.services.MemberService;
 import com.fivet.buddy.services.TeamService;
 import org.slf4j.Logger;
@@ -29,6 +30,9 @@ public class MemberController {
 
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private BasicFolderService basicFolderService;
 
     private Logger logger = LoggerFactory.getLogger(MemberController.class);
 
@@ -66,6 +70,10 @@ public class MemberController {
     @RequestMapping("signUp")
     public String signUp(MemberDTO memberDto) throws Exception{
         memberService.signUp(memberDto);
+
+        // 회원 가입시 기본 폴더 생성
+        basicFolderService.newBasicFolder(memberDto.getMemberSeq());
+
         return "redirect:/";
     }
 
@@ -232,5 +240,12 @@ public class MemberController {
         memberService.deleteMember(String.valueOf(session.getAttribute("memberSeq")));
         session.invalidate();
         return "redirect:/";
+    }
+
+    @RequestMapping("loginIndex")
+    public String loginIndex(Model model) {
+        List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
+        model.addAttribute("teamDtoList", teamDtoList);
+        return "index";
     }
 }

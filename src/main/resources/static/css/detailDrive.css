@@ -288,11 +288,10 @@ aside {
 #listArea{
     border:1px solid black;
     width: 80%;
-    height: 90%;
+    height: 100%;
     float: left;
     margin-left:25px;
     padding: 30px 25px 16px 0px;
-    overflow-y: scroll;
 }
 
 @media(max-width: 1300px) {
@@ -369,11 +368,11 @@ aside {
 /* 폴더 및 파일 */
 .listThumb li{
     list-style: none;
-    padding:10px 20px 20px 20px;
+    padding:20px;
     margin:0px 20px 20px 0px;
     border:1px solid black;
-    width:150px;
-    height:180px;
+    width:140px;
+    height:200px;
     float:left;
     cursor: pointer;
 }
@@ -381,7 +380,7 @@ aside {
     width:100px;
     height:100px;
 }
-.listThumb li .printFileName {
+.listThumb li input {
     width:90%;
     text-align: center;
     font-weight: bold;

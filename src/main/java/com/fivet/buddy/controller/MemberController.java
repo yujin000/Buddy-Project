@@ -2,12 +2,18 @@ package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.MemberImgDTO;
+import com.fivet.buddy.dto.TeamDTO;
 import com.fivet.buddy.services.MemberService;
+import com.fivet.buddy.services.TeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,9 +30,16 @@ public class MemberController {
     private MemberService memberService;
 
     @Autowired
+    private TeamService teamService;
+
+    @Autowired
     private HttpSession session;
 
     private Logger logger = LoggerFactory.getLogger(MemberController.class);
+
+    // 회원 indexPage 경로
+
+    private String memberIndex = "redirect:/member/loginIndex";
 
     // ExceptionHandler
     @ExceptionHandler(Exception.class)
@@ -86,13 +99,12 @@ public class MemberController {
             session.setAttribute("memberSeq",dto.getMemberSeq());
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
             session.setAttribute("memberName",dto.getMemberName());
-            model.addAttribute("userInfo",dto);
-            return "index";
+            //model.addAttribute("userInfo",dto); model에 넣을 필요 없어보여서 주석처리.
+            return memberIndex;
         }else{
             // 로그인 정보가 없으면 새로고침
             return "redirect:/";
         }
-
     }
 
     // 로그아웃
@@ -124,7 +136,7 @@ public class MemberController {
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
             session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
-            return "index";
+            return memberIndex;
         }
     }
 
@@ -154,7 +166,7 @@ public class MemberController {
             session.setAttribute("memberLogtype",dto.getMemberLogtype());
             session.setAttribute("memberName",dto.getMemberName());
             model.addAttribute("userInfo",dto);
-            return "index";
+            return memberIndex;
         }
     }
 
@@ -163,7 +175,9 @@ public class MemberController {
     public String selectMyInfo(String memberSeq,Model model) throws Exception{
         MemberDTO dto = memberService.selectMyInfo(memberSeq);
         model.addAttribute("userInfo",dto);
-        return "index";
+        List <TeamDTO> teamDtoList = teamService.selectMemberTeam(dto.getMemberSeq());
+        model.addAttribute("teamDtoList", teamDtoList);
+        return memberIndex;
     }
 
     //계정설정으로 이동
@@ -258,5 +272,13 @@ public class MemberController {
         List<MemberDTO> list = memberService.selectMembers();
         model.addAttribute("memberList",list);
         return "admin/adminMain";
+    }
+
+    // 회원 인덱스 (팀 출력기능을 추가하기 위해 따로 구현)
+    @RequestMapping("loginIndex")
+    public String loginIndex(Model model) {
+        List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
+        model.addAttribute("teamDtoList", teamDtoList);
+        return "index";
     }
 }

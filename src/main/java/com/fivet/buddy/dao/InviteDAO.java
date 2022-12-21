@@ -26,11 +26,6 @@ public class InviteDAO {
         inviteMapper.codeDelete(inviteCode);
     }
 
-    // 초대된 팀으로 입장
-    public void enterTeam(TeamMemberDTO teamMemberDto) throws Exception{
-        inviteMapper.enterTeam(teamMemberDto);
-    }
-
     // 코드에 맞는 팀 seq 검색
     public int selectTeamSeqByCode(String inviteCode) throws Exception{
         return inviteMapper.selectTeamSeqByCode(inviteCode);

@@ -4,9 +4,26 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fivet.buddy.mapper.TeamMapper">
 
-<!--    팀 생성-->
-    <insert id="insert">
-        insert into team values(team_seq.nextval, #{teamName}, #{teamOwnerSeq}, 1, sysdate)
+<!--    팀 생성 후 teamSeq값을 teamDto에 set-->
+    <insert id="insertTeam">
+        insert into
+            team
+        values
+            (team_seq.nextval, #{teamName}, #{teamOwnerSeq}, 1, sysdate)
+        <selectKey order="AFTER" keyProperty="teamSeq" resultType="int">
+            select team_seq.currval from dual
+        </selectKey>
     </insert>
 
+<!--    회원이 속한 팀 출력-->
+    <select id="selectMemberTeam" resultType="com.fivet.buddy.dto.TeamDTO">
+        select
+            t.TEAM_SEQ, t.TEAM_NAME
+        from
+            TEAM t
+            join TEAM_MEMBER tm
+            on t.TEAM_SEQ = tm.team_seq
+        where
+            member_seq = #{memberSeq}
+    </select>
 </mapper>

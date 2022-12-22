@@ -16,11 +16,11 @@ public class PersonalFolderDAO {
 
 
     // (개인)회원 별 폴더 불러오기
-    public List<PersonalFolderDTO> selectMyFolders(String memberSeq) throws Exception{
-        return personalFolderMapper.selectMyFolders(memberSeq);
+    public List<PersonalFolderDTO> selectMyFolders(Map<String,Object> map) throws Exception{
+        return personalFolderMapper.selectMyFolders(map);
     }
 
-    // 새 폴더 추가
+    // 폴더 생성
     public void insertNewFolder(PersonalFolderDTO personalFolderDto) throws Exception{
         personalFolderMapper.insertNewFolder(personalFolderDto);
     }
@@ -30,4 +30,22 @@ public class PersonalFolderDAO {
         return personalFolderMapper.isFolderExists(folderCheck);
     }
 
+    // 회원가입 시 personal foler 테이블에 기본폴더 생성
+    public void newPersonalFolder(Map<String, Object> map) throws Exception{
+        personalFolderMapper.newPersonalFolder(map);
+    }
+
+    // 부모 폴더 경로 찾아오기(폴더 생성)
+    public String searchPath(String parentKey) throws Exception{
+        return personalFolderMapper.searchPath(parentKey);
+    }
+
+    // personal_folder 테이블에서 내 기본 폴더key 추출
+    public String myBasicFolder(int memberSeq) throws Exception{
+        return personalFolderMapper.myBasicFolder(memberSeq);
+    }
+
+    public List<PersonalFolderDTO> selectChildFolders(String resourceKey) {
+        return personalFolderMapper.selectChildFolders(resourceKey);
+    }
 }

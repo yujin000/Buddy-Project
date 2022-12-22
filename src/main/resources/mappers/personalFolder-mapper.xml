@@ -11,9 +11,17 @@
         from
             personal_folder
         where
-            personal_folder_member_seq = #{value}
+            personal_folder_parent_key =
+                (select
+                    personal_folder_key
+                from
+                    personal_folder
+                where
+                    personal_folder_member_seq = #{memberSeq}
+                and
+                    personal_folder_parent_key = #{basicKey})
         order by
-            personal_folder_seq desc
+            personal_folder_date desc
     </select>
 
     <!-- 폴더 생성 -->
@@ -21,7 +29,7 @@
         insert into
             personal_folder
         values
-            (personal_folder_seq.nextval, #{personalFolderName}, #{personalFolderMemberSeq})
+            (#{personalFolderKey}, #{personalFolderName}, #{personalFolderMemberSeq},#{personalFolderParentKey},#{personalFolderPath},sysdate)
     </insert>
 
     <!-- 폴더 존재 유무 체크 -->
@@ -32,5 +40,51 @@
             personal_folder
         where
             personal_folder_member_seq = #{personalFolderMemberSeq} and personal_folder_name = #{personalFolderName}
+    </select>
+
+    <!-- 회원가입시 개인 폴더 생성 -->
+    <insert id="newPersonalFolder">
+        insert into
+            personal_folder
+        values
+            (#{newKey}, #{memberName}, #{memberSeq}, #{basicFolderKey}, #{path}, sysdate)
+    </insert>
+
+    <!-- 부모폴더 경로 찾기-->
+    <select id="searchPath" resultType="String">
+        select
+            personal_folder_path
+        from
+            personal_folder
+        where
+            personal_folder_key = #{value}
+    </select>
+
+    <!-- personal_folder 테이블에서 내 기본 폴더번호 추출 -->
+    <select id="myBasicFolder" resultType="String">
+        select
+            personal_folder_key
+        from
+            personal_folder
+        where
+            personal_folder_parent_key =
+                (select
+                    basic_folder_key
+                from
+                    basic_folder
+                where
+                    basic_folder_member_seq = ${value})
+    </select>
+
+    <!-- 자식 폴더 정보 -->
+    <select id="selectChildFolders" resultType="com.fivet.buddy.dto.PersonalFolderDTO">
+        select
+            *
+        from
+            personal_folder
+        where
+            personal_folder_parent_key = #{value}
+        order by
+            personal_folder_date desc
     </select>
 </mapper>

@@ -21,7 +21,7 @@
 <!--  $(function () {-->
 <!--    // 웹소켓 영역 시작-->
 <!--    // webSocket 인스턴스 생성-->
-<!--    let ws = new WebSocket("ws://192.168.50.50/chat/");-->
+<!--    let ws = new WebSocket("ws://192.168.50.50/chat/" + chatRoomSeq);-->
 
 <!--    ws.onmessage = function (e){-->
 <!--      let data = e.data;-->
@@ -33,13 +33,13 @@
 
 <!--    $(".inputMsg").on("keydown", function(e) {-->
 <!--      if (e.keyCode == 13) {-->
-<!--        -->
+
 <!--        // Json 생성-->
 <!--        let wsJson = {-->
 <!--          "chatSec" : chatSec,-->
 <!--          "chatRoomSec" : chatRoomSec,-->
 <!--          "chatContent" : $(".inputMsg").text(),-->
-<!--          "chatWriterSeq" : chatWriterSeq, -->
+<!--          "chatWriterSeq" : chatWriterSeq,-->
 <!--        };-->
 <!--        //JSON 전송-->
 <!--        $(".inputMsg").text("");-->

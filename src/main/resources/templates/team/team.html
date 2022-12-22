@@ -27,7 +27,7 @@
     <div id="teamList" class="teamList">
       <ul>
         <li>
-          <a href="team.html">teamList1</a
+          <a href="team.html" th:text="${session.teamSeq}"></a
           ><button id="headerToggle">toggle</button>
         </li>
       </ul>
@@ -45,7 +45,7 @@
     <aside>
       <div id="profile" class="asideTitle">
         <img src="" alt="" />
-        <h3><a href="../member/myProfile.html">user</a></h3>
+        <h3><a href="../member/myProfile.html" th:text="${session.memberName}"></a></h3>
         <button id="alarmView" class="toggle">알람</button>
       </div>
       <ul id="alarmList" class="subItem">

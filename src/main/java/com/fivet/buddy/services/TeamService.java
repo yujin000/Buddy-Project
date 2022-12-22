@@ -1,5 +1,7 @@
 package com.fivet.buddy.services;
 
+import com.fivet.buddy.dao.ChatMemberDAO;
+import com.fivet.buddy.dao.ChatRoomDAO;
 import com.fivet.buddy.dao.TeamDAO;
 import com.fivet.buddy.dao.TeamMemberDAO;
 import com.fivet.buddy.dto.TeamDTO;
@@ -13,16 +15,26 @@ import java.util.Map;
 public class TeamService {
 
     @Autowired
-    TeamDAO teamDao;
+    private TeamDAO teamDao;
 
     @Autowired
     private TeamMemberDAO teamMemberDao;
 
-    //팀 생성
+    @Autowired
+    private ChatRoomDAO chatRoomDao;
+
+    @Autowired
+    private ChatMemberDAO chatMemberDao;
+
+    //팀 생성 및 기본 채팅방 생성
     public void insertTeam (TeamDTO teamDto, Map<String, String> param) throws Exception {
         teamDao.insert(teamDto);
         param.put("teamSeq",String.valueOf(teamDto.getTeamSeq()));
         teamMemberDao.createTeam(param);
+        param.put("teamOwnerSeq", param.get("memberSeq"));
+        param.put("teamName", teamDto.getTeamName());
+        chatRoomDao.createTeam(param);
+        chatMemberDao.createTeam(param);
     }
 
     //회원 팀 출력

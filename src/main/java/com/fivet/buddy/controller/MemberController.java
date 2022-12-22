@@ -3,6 +3,7 @@ package com.fivet.buddy.controller;
 import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.MemberImgDTO;
 import com.fivet.buddy.dto.TeamDTO;
+import com.fivet.buddy.services.BasicFolderService;
 import com.fivet.buddy.services.MemberService;
 import com.fivet.buddy.services.TeamService;
 import org.slf4j.Logger;
@@ -34,6 +35,9 @@ public class MemberController {
 
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private BasicFolderService basicFolderService;
 
     private Logger logger = LoggerFactory.getLogger(MemberController.class);
 
@@ -71,6 +75,10 @@ public class MemberController {
     @RequestMapping("signUp")
     public String signUp(MemberDTO memberDto) throws Exception{
         memberService.signUp(memberDto);
+
+        // 회원 가입시 기본 폴더 생성
+        basicFolderService.newBasicFolder(memberDto.getMemberSeq());
+
         return "redirect:/";
     }
 

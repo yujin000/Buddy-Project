@@ -10,6 +10,12 @@
             member
         values
             (member_seq.nextval, #{memberId}, #{memberPw}, #{memberName}, #{memberPhone}, sysdate, #{memberLogtype})
+        <selectKey order="AFTER" keyProperty="memberSeq" resultType="int">
+            select
+                member_seq.currval
+            from
+                dual
+        </selectKey>
     </insert>
 
     <!-- 회원가입 시 아이디 체크 -->

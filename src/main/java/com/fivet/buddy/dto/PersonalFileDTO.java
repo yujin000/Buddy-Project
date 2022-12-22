@@ -10,9 +10,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PersonalFileDTO {
-    private int personalFilesSeq;
+    private String personalFilesKey;
     private String personalFilesOriname;
     private String personalFilesSysname;
     private int personalFilesMemberSeq;
-    private int personalFilesFolderSeq;
+    private String personalFilesFolderKey;
 }

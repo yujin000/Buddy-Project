@@ -1,28 +1,47 @@
 package com.fivet.buddy.services;
 
-import com.fivet.buddy.dao.PersonalFolderDAO;
+import com.fivet.buddy.dao.BasicFolderDAO;
+import com.fivet.buddy.dao.PersonalFileDAO;
 import com.fivet.buddy.dto.PersonalFileDTO;
+import com.fivet.buddy.util.RandomKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class PersonalFileService {
 
     @Autowired
-    private PersonalFolderDAO personalFolderDAO;
+    private PersonalFileDAO personalFileDao;
 
     @Autowired
-    private HttpSession session;
+    private RandomKeyUtil randomKeyUtil;
 
-    public void uploadFromBtn(String oriName, String sysName) throws Exception{
-//        PersonalFileDTO personalFileDto = new PersonalFileDTO();
-//        personalFileDto.setPersonalFilesSeq(Integer.parseInt(session.getAttribute("memberSeq").toString());
-//        personalFileDto.setPersonalFilesOriname(oriName);
-//        personalFileDto.setPersonalFilesSysname(sysName);
-        // 폴더 seq값을 넘겨받아야함(제일 처음이면 첫 폴더)
-        // personalFileDto.setPersonalFilesFolderSeq();
-        // personalFolderDAO.uploadFromBtn(personalFileDto);
+    @Autowired
+    private BasicFolderDAO basicFolderDao;
+
+    // 파일첨부
+    public void uploadFile(String oriName, String sysName,String attachFolder,int memberSeq) throws Exception{
+        PersonalFileDTO personalFileDto = new PersonalFileDTO();
+
+        personalFileDto.setPersonalFilesMemberSeq(memberSeq);
+        personalFileDto.setPersonalFilesOriname(oriName);
+        personalFileDto.setPersonalFilesSysname(sysName);
+        personalFileDto.setPersonalFilesFolderKey(attachFolder);
+        personalFileDto.setPersonalFilesKey(randomKeyUtil.folderKey());
+        personalFileDao.uploadFile(personalFileDto);
+    }
+
+    // 내 파일 찾기
+    public List<PersonalFileDTO> selectMyFiles(int memberSeq) throws Exception{
+        String basicKey = basicFolderDao.myBasicFolder(memberSeq);
+        Map<String, Object> map = new HashMap<>();
+        map.put("memberSeq",memberSeq);
+        map.put("basicKey",basicKey);
+        return personalFileDao.selectMyFiles(map);
     }
 }

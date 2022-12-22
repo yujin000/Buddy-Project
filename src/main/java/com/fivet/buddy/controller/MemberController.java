@@ -5,6 +5,7 @@ import com.fivet.buddy.dto.MemberImgDTO;
 import com.fivet.buddy.dto.TeamDTO;
 import com.fivet.buddy.services.BasicFolderService;
 import com.fivet.buddy.services.MemberService;
+import com.fivet.buddy.services.PersonalFolderService;
 import com.fivet.buddy.services.TeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +38,9 @@ public class MemberController {
 
     @Autowired
     private BasicFolderService basicFolderService;
+
+    @Autowired
+    private PersonalFolderService personalFolderService;
 
     private Logger logger = LoggerFactory.getLogger(MemberController.class);
 
@@ -75,9 +78,12 @@ public class MemberController {
     @RequestMapping("signUp")
     public String signUp(MemberDTO memberDto) throws Exception{
         memberService.signUp(memberDto);
+        // 회원 가입 시 기본 폴더 생성
+        basicFolderService.newBasicFolder(memberDto);
+        // 회원 가입 시 개인 폴더 생성
+        personalFolderService.newPersonalFolder(memberDto);
 
-        // 회원 가입시 기본 폴더 생성
-//        basicFolderService.newBasicFolder(memberDto.getMemberSeq());
+        // 회원 가입시 member_img 테이블에 컬럼 추가
         memberService.insertProfileImg(memberDto.getMemberSeq());
         return "redirect:/";
     }

@@ -29,7 +29,16 @@
     </select>
 
     <!--팀 관리 멤버 출력 -->
-    <select id="managementTeamSelectTeam" resultType="com.fivet.buddy.dto.TeamMemberDTO">
+    <select id="managementTeamSelectTeamMember" resultType="com.fivet.buddy.dto.TeamMemberDTO">
         select * from team_member m inner join team t on m.team_seq=t.team_seq where t.team_seq = #{value}
+        order by case
+        when grade='manager' then 1
+        when grade='subManager' then 2
+        when grade='coworker' then 3
+        end;
+    </select>
+
+    <select id="managementTeamSelectEmail" resultType="String">
+        select m.member_id from member m inner join team_member tm on m.member_seq=tm.member_seq where tm.member_seq=#{value};
     </select>
 </mapper>

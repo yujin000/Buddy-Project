@@ -23,7 +23,7 @@ public class TeamDAO {
     }
 
     //팀 관리 멤버 출력
-    public List<TeamMemberDTO> managementTeamSelectTeam(String teamSeq){
-        return teamMapper.managementTeamSelectTeam(teamSeq);
+    public List<TeamMemberDTO> managementTeamSelectTeamMember(String teamSeq){
+        return teamMapper.managementTeamSelectTeamMember(teamSeq);
     }
 }

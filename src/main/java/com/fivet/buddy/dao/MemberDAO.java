@@ -3,6 +3,7 @@ package com.fivet.buddy.dao;
 import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.MemberImgDTO;
 import com.fivet.buddy.mapper.MemberMapper;
+import com.fivet.buddy.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,9 @@ public class MemberDAO {
 
     @Autowired
     private MemberMapper memberMapper;
+
+    @Autowired
+    private TeamMapper teamMapper;
 
     // 회원가입 (signUp)
     public void signUp(MemberDTO memberDto) throws Exception {
@@ -102,5 +106,10 @@ public class MemberDAO {
     // 회원 강퇴(관리자)
     public void memberKickOut(int memberSeq) throws Exception{
         memberMapper.memberKickOut(memberSeq);
+    }
+
+    //팀 관리 페이지에서 팀원 이메일 출력
+    public List<String> managementTeamSelectEmail(int memberSeq){
+        return teamMapper.managementTeamSelectEmail(memberSeq);
     }
 }

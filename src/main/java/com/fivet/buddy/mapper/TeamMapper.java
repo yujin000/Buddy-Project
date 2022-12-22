@@ -11,5 +11,7 @@ public interface TeamMapper {
     void insertTeam(TeamDTO dto);
     List<TeamDTO> selectMemberTeam(int memberSeq);
 
-    List<TeamMemberDTO> managementTeamSelectTeam(String teamSeq);
+    List<TeamMemberDTO> managementTeamSelectTeamMember(String teamSeq);
+
+    List<String> managementTeamSelectEmail(int memberSeq);
 }

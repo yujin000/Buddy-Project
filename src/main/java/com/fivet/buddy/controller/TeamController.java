@@ -69,8 +69,12 @@ public class TeamController {
 
     //팀 관리 이동
     @RequestMapping("goTeamSetting")
-    public String managementTeamSelectTeam(String teamSeq, Model model) throws Exception{
-        List<TeamMemberDTO> teamMemberDtoList =  teamService.managementTeamSelectTeam(teamSeq);
+    public String managementTeamSelectTeam(int teamSeq, Model model) throws Exception{
+        List<TeamMemberDTO> teamMemberDtoList =  teamService.managementTeamSelectTeamMember(String.valueOf(teamSeq));
+        List<String> teamMemberList = teamService.managementTeamSelectEmail(teamSeq);
+        Map<String, Object> param = new HashMap<>();
+        param.put("teamMemberDtoList",teamMemberDtoList);
+
         model.addAttribute("teamMemberDtoList", teamMemberDtoList);
         return "team/teamSetting";
     }

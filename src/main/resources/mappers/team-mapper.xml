@@ -25,5 +25,6 @@
             on t.TEAM_SEQ = tm.team_seq
         where
             member_seq = #{memberSeq}
+        order by 1
     </select>
 </mapper>

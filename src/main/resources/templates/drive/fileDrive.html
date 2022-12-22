@@ -213,26 +213,29 @@
             $(this).css("color","white").attr("disabled",true);
 
             let array =
-            // 폴더 이름을 사용하고 있는지 조회 하고 결과 반환
-            $.ajax({
-                url:"/personalFolder/addFolder"
-                ,data:({
-                    "folderName":modifiedName,
-                    "parentKey":parentKey
+                // 폴더 이름을 사용하고 있는지 조회 하고 결과 반환
+                $.ajax({
+                    url:"/personalFolder/addFolder"
+                    ,data:({
+                        "folderName":modifiedName,
+                        "parentKey":parentKey
+                    })
+                }).done(function(rsp){
+                    // rsp : true(사용할 수 있음), false(사용할 수 없음)
+                    if(!rsp) {
+                        alert("드라이브 내에 이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
+                        modifyText.attr("disabled",false).css("color","red");
+                    }else{
+                        location.reload();
+                    }
                 })
-            }).done(function(rsp){
-                // rsp : true(사용할 수 있음), false(사용할 수 없음)
-                if(!rsp) {
-                    alert("드라이브 내에 이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
-                    modifyText.attr("disabled",false).css("color","red");
-                }
-            })
 
         })
 
         // 방금 만들어진 리스트 클릭 이벤트(동적 바인딩)
         folderArea.on("click",function(){
-            location.href="/drive/detailDrive?resourceKey="+parentKey;
+            //location.reload();
+            //location.href="/drive/detailDrive?resourceKey="+parentKey;
         })
 
 

@@ -92,17 +92,8 @@
           <button id="chatToggle" class="toggle">v</button>
         </div>
         <div id="chatList" class="asideItem">
-          <ul>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
+          <ul th:if="${chatRoomList!=null}">
+            <li th:each="chatRoomList : ${chatRoomList}" th:text="${chatRoomList.chatTitle}"></li>
           </ul>
         </div>
       </div>

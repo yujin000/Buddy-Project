@@ -1,9 +1,6 @@
 package com.fivet.buddy.services;
 
-import com.fivet.buddy.dao.ChatMemberDAO;
-import com.fivet.buddy.dao.ChatRoomDAO;
-import com.fivet.buddy.dao.TeamDAO;
-import com.fivet.buddy.dao.TeamMemberDAO;
+import com.fivet.buddy.dao.*;
 import com.fivet.buddy.dto.TeamDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +23,9 @@ public class TeamService {
     @Autowired
     private ChatMemberDAO chatMemberDao;
 
+    @Autowired
+    private MemberDAO memberDao;
+
     //팀 생성 및 기본 채팅방 생성
     public void insertTeam (TeamDTO teamDto, Map<String, String> param) throws Exception {
         teamDao.insert(teamDto);
@@ -33,6 +33,7 @@ public class TeamService {
         teamMemberDao.createTeam(param);
         param.put("teamOwnerSeq", param.get("memberSeq"));
         param.put("teamName", teamDto.getTeamName());
+        param.put("memberId", memberDao.selectId(Integer.parseInt(param.get("teamOwnerSeq"))));
         chatRoomDao.createTeam(param);
         chatMemberDao.createTeam(param);
     }

@@ -36,7 +36,7 @@ public class TeamController {
     }
 
     //팀 생성
-    @RequestMapping("create")
+    @PostMapping("createTeam")
     public String create(TeamDTO teamDto, ChatRoomDTO chatRoomDto) throws Exception {
         teamDto.setTeamOwnerSeq((Integer) session.getAttribute("memberSeq"));
         Map<String, String> param = new HashMap<>();

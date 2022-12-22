@@ -1,0 +1,85 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="8664CA90-D3FE-A08B-2934-FF5C76E7D016" schemaObject="2441D5F9-396D-9F30-EEBC-64C424D4A870" name="BASIC_FOLDER">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>BASIC_FOLDER</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:51:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="BASIC_FOLDER_KEY" id="EA0CB107-1316-839A-DB10-9A5781BBF2F7">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BASIC_FOLDER</sourceObjSchema>
+<sourceObjName>BASIC_FOLDER_KEY</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:51:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BASIC_FOLDER_MEMBER_SEQ" id="D0A9EEDA-D7D3-7796-99AB-44C38543968B">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BASIC_FOLDER</sourceObjSchema>
+<sourceObjName>BASIC_FOLDER_MEMBER_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:51:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F9B3F359-44A1-1E95-89DD-B7492FF10B74" referredColumn="DE5AA82C-33D2-3630-F845-E19A41844ED9"/>
+</associations>
+</Column>
+<Column name="BASIC_FOLDER_NAME" id="F24C7FEC-897B-63DE-DCAB-3FC3F7635CD4">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BASIC_FOLDER</sourceObjSchema>
+<sourceObjName>BASIC_FOLDER_NAME</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:51:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="33719297-7D7C-8059-6779-2780FD291597" schemaObject="2441D5F9-396D-9F30-EEBC-64C424D4A870" name="BASIC_FOLDER_PK">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>SYS_C007834</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:51:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EA0CB107-1316-839A-DB10-9A5781BBF2F7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="CD6A8931-D178-51A2-BE0C-AB5692085AE6" name="FK_BASIC_FOLDER_MEMBERv1">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:57:14 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D0A9EEDA-D7D3-7796-99AB-44C38543968B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

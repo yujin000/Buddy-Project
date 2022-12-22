@@ -1,0 +1,66 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="CHAT_MSG" directorySegmentName="seg_0" id="C753AE28-E1AC-2E0C-2252-D0993BC8109E">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<schemaObject>2441D5F9-396D-9F30-EEBC-64C424D4A870</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="CHAT_WRITER_SEQ" id="03BEC683-CF52-32CC-7ACF-16690E74E7A8">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CHAT_SEQ" id="0CB108FD-741D-C35D-32F1-041834AFF1BE">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CHAT_ROOM_SEQ" id="6502A709-3B9C-073B-0375-BE5DFCAA487B">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="READ_COUNT" id="82FA7A4C-81CA-6D3C-750E-85535421648E">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CHAT_CONTENT" id="9DF58869-46E1-B5DD-BDC2-6FE778EF0974">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CHAT_DATE" id="F8E07241-D7E1-5137-FA5A-3898A4056EB6">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<defaultValue>sysdate</defaultValue>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="CHAT_MSG_CHAT_ROOM_FK" id="C5727D50-A897-0F9F-2184-7812BF5223C0">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:47 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_CHAT_MSG_MEMBER" id="E90A86CA-B9A0-1008-0587-0B3E7A0A0774">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="CHAT_MSG_PK" id="6BFEC82F-32EE-7712-8B26-4F3887A6021B">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<schemaObject>2441D5F9-396D-9F30-EEBC-64C424D4A870</schemaObject>
+<indexSort>SORTED</indexSort>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

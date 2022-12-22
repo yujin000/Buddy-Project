@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="D7FC6FA8-62FB-C5F0-26C8-CC44FE5A803C" containerWithKeyObject="50483396-CD45-18A4-41F5-84FB2BF1A6B8" localFKIndex="2B796D28-4857-B87C-8E9B-C8BDC9E03214" name="FK_QNA_BOARD_MEMBER">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>F9DCAACF-B58D-82C6-3501-63E00D545F9F</importedID>
+<referredTableLongName>BUDDY.MEMBER</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>4E8263F4-ADC3-DFB9-6CE0-8813B251BF6A</referredTableID>
+<keyObject>2D44A903-7231-382D-C7FA-740C970F4C38</keyObject>
+<referredKeyID>2D44A903-7231-382D-C7FA-740C970F4C38</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>MEMBER_SEQ</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

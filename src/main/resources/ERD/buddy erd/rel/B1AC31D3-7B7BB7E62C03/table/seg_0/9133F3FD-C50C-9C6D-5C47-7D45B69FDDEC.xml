@@ -1,0 +1,101 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="9133F3FD-C50C-9C6D-5C47-7D45B69FDDEC" schemaObject="2441D5F9-396D-9F30-EEBC-64C424D4A870" name="INVITE">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>INVITE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:41 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>ADB1F36E-4B02-DE6A-4BA9-C85DCE8224EC</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="INVITE_TEAM_SEQ" id="DDA02E51-5E57-01EF-8476-423CB439C8A5">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>INVITE</sourceObjSchema>
+<sourceObjName>INVITE_TEAM_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>5A7B60FB-252D-C365-404A-C2C40206E75E</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="91587685-364A-0D8B-15E8-31E897D8ACD4" referredColumn="DC1277C3-746E-E306-12FE-A80D38758193"/>
+</associations>
+</Column>
+<Column name="INVITE_SEND_MEM_SEQ" id="01E162F1-8B54-85C6-3E9C-C6BA3AF1A30A">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>INVITE</sourceObjSchema>
+<sourceObjName>INVITE_SEND_MEM_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>2D036781-D46C-E93E-1E5F-656C5C569C51</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="77681455-BA73-F2CC-57D6-97C7BE5796BE" referredColumn="DE5AA82C-33D2-3630-F845-E19A41844ED9"/>
+</associations>
+</Column>
+<Column name="INVITE_RECEIVE_MEM_EMAIL" id="C65261AA-91EA-087D-94D6-410C00EDA1A1">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>INVITE</sourceObjSchema>
+<sourceObjName>INVITE_RECEIVE_MEM_EMAIL</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>F86356DF-638F-E834-055A-5771BAFC0F61</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="INVITE_CODE" id="1EC60F68-5A37-662A-2534-6E81FE695E75">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>INVITE</sourceObjSchema>
+<sourceObjName>INVITE_CODE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>B1FA4FA5-F8B1-9264-9200-E3A4EDFF2C36</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="DDF6DB54-3E2C-38B5-BBC0-D9D51386FACC" name="INVITE_TEAM_FK">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DDA02E51-5E57-01EF-8476-423CB439C8A5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F36D0676-78C8-E538-01E2-4419A12E20A4" name="INVITE_MEMBER_FK">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="01E162F1-8B54-85C6-3E9C-C6BA3AF1A30A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

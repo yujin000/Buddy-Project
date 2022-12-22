@@ -1,11 +1,11 @@
 package com.fivet.buddy.controller;
 
+import com.fivet.buddy.services.PersonalFileService;
 import com.fivet.buddy.services.PersonalFolderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -16,30 +16,34 @@ import java.util.UUID;
 @RequestMapping("/personalFile/")
 public class PersonalFileController {
 
+    @ExceptionHandler
+    public String exceptionHandler(Exception e){
+        e.printStackTrace();
+        return "error";
+    }
+
+    @Autowired
+    private PersonalFileService personalFileService;
+
     @Autowired
     private PersonalFolderService personalFolderService;
 
-    // 나중에 AWS 열면 경로 변경할 것(application.properties 에서)
-    //@Value("${spring.servlet.multipart.location}")
-    private String uploadFilePath;
+    @Autowired
+    private HttpSession session;
 
-
-    @RequestMapping("uploadFromBtn")
-    public String uploadFromBtn(MultipartFile multipartFile) throws Exception{
-
-        File filePath = new File(uploadFilePath);
-
-        if(!filePath.exists()) {
-            filePath.mkdir();
-        }
+    // 파일 첨부
+    @RequestMapping("uploadFile")
+    public String uploadFile(MultipartFile multipartFile, String attachFolder) throws Exception{
+        String uploadFilePath = personalFolderService.searchPath(attachFolder);
 
         String oriName = multipartFile.getOriginalFilename();
         String sysName = UUID.randomUUID() + "_" + oriName;
 
-        multipartFile.transferTo(new File(filePath+"/"+sysName));
+        multipartFile.transferTo(new File(uploadFilePath+sysName));
 
+        int memberSeq = Integer.parseInt(session.getAttribute("memberSeq").toString());
         // personal_file 테이블에 insert
-        //personalFolderService.uploadFromBtn(oriName,sysName);
+        personalFileService.uploadFile(oriName,sysName,attachFolder,memberSeq);
 
         return "redirect:/drive/toFileDrive";
     }

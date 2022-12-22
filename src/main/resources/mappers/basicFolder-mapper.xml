@@ -9,6 +9,16 @@
         insert into
             basic_folder
         values
-            (basic_folder_seq.nextval, #{value})
+            (#{basicFolderKey}, #{memberSeq}, #{memberName})
     </insert>
+
+    <!-- basicFolder 테이블에서 멤버 번호로 key값 추출하기 -->
+    <select id="myBasicFolder" resultType="String">
+        select
+            basic_folder_key
+        from
+            basic_folder
+        where
+            basic_folder_member_seq = #{memberSeq}
+    </select>
 </mapper>

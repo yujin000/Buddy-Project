@@ -4,5 +4,29 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.fivet.buddy.mapper.PersonalFileMapper">
+    <!-- 파일 업로드 하기 -->
+    <insert id="uploadFile">
+        insert into
+            personal_files
+        values
+            (#{personalFilesKey}, #{personalFilesOriname}, #{personalFilesSysname}, #{personalFilesMemberSeq}, #{personalFilesFolderKey})
+    </insert>
 
+    <!-- 내 폴더 불러오기 -->
+    <select id="selectMyFiles" resultType="com.fivet.buddy.dto.PersonalFileDTO">
+        select
+            *
+        from
+            personal_files
+        where
+            personal_files_folder_key =
+                (select
+                    personal_folder_key
+                from
+                    personal_folder
+                where
+                    personal_folder_member_seq = #{memberSeq}
+                and
+                    personal_folder_parent_key = #{basicKey})
+    </select>
 </mapper>

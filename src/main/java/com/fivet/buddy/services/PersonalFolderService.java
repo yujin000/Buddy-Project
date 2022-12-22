@@ -51,7 +51,7 @@ public class PersonalFolderService {
         personalFolderDto.setPersonalFolderName(folderName);
         personalFolderDto.setPersonalFolderMemberSeq(memberSeq);
         personalFolderDto.setPersonalFolderParentKey(parentKey);
-        personalFolderDto.setPersonalFolderPath(uploadFilePath+folderName+"\\");
+        personalFolderDto.setPersonalFolderPath(uploadFilePath+folderName+"/");
         personalFolderDto.setPersonalFolderKey(randomKeyUtil.folderKey());
         personalFolderDao.insertNewFolder(personalFolderDto);
     }
@@ -69,9 +69,8 @@ public class PersonalFolderService {
     public void newPersonalFolder(MemberDTO memberDto) throws Exception{
         // 회원가입 시 회원전용 폴더 생성
         // 최초 업로드 경로(서버 열리면 바꾸기)
-        String newFolderPath = "C:\\upload_test\\";
         String newKey = randomKeyUtil.folderKey();
-        File file = new File(newFolderPath + newKey + memberDto.getMemberName());
+        File file = new File(uploadFilePath + newKey + memberDto.getMemberName());
         file.mkdir();
 
         // 넘겨줘야 하는 값 : 유저이름, 유저번호,기본 폴더 번호, path
@@ -80,7 +79,7 @@ public class PersonalFolderService {
         map.put("memberName",memberDto.getMemberName());
         map.put("memberSeq",memberDto.getMemberSeq());
         map.put("basicFolderKey",basicFolderDao.myBasicFolder(memberDto.getMemberSeq()));
-        map.put("path",uploadFilePath + "\\" + newKey + memberDto.getMemberName()+"\\");
+        map.put("path",uploadFilePath + newKey + memberDto.getMemberName()+"/");
 
         personalFolderDao.newPersonalFolder(map);
     }

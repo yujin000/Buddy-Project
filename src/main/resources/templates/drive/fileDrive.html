@@ -88,10 +88,11 @@
             <!-- 헤더-버튼 -->
             <div class="attachBtnArea">
                 <input type="checkbox">
-                <form action="/personalFile/uploadFromBtn" method="post" enctype="multipart/form-data" id="uploadFileForm">
-                    <label for="uploadFile" class="fileLabel">
+                <form action="/personalFile/uploadFile" method="post" enctype="multipart/form-data" id="uploadFileForm">
+                    <label for="uploadFile" class="fileLabel" >
                         업로드
                         <input type="file" name="multipartFile" id="uploadFile" multiple>
+                        <input type="hidden" th:value="${parentKey}" name="attachFolder">
                     </label>
                 </form>
                 <button type="button" id="newFolder">새 폴더</button>
@@ -101,15 +102,25 @@
             <div class="fileMainPlace">
                 <div id="listArea">
                     <ul class="listThumb">
-                        <div th:if="${#strings.isEmpty(myFolders)}">
+                        <div th:if="${#strings.isEmpty(myFolders)} and ${#strings.isEmpty(myFiles)}">
                             아직 파일이 없습니다.
                         </div>
                         <div th:unless="${#strings.isEmpty(myFolders)}">
+                            <input type="hidden" th:value="${parentKey}" id="parentKey">
                             <th:block th:each="folder : ${myFolders}">
-                                <li class="thisFolder">
-                                    <input type="checkbox" name="" id="">
+                                <li class="thisFolder" th:data-folder="${folder.getPersonalFolderKey()}" data-resource-type="folder">
+                                    <input type="checkbox" name="">
                                     <img src='/static/img/folderImg.png'>
-                                    <input type='text' class="printFileName" th:value='${folder.getPersonalFolderName()}' th:id="${'folder' + folder.getPersonalFolderSeq()}" disabled>
+                                    <input type='text' class="printFileName" th:value='${folder.getPersonalFolderName()}' th:id="${'folder' + folder.getPersonalFolderKey()}" disabled>
+                                </li>
+                            </th:block>
+                        </div>
+                        <div th:unless="${#strings.isEmpty(myFiles)}">
+                            <th:block th:each="file : ${myFiles}">
+                                <li class="thisFile" th:data-folder="${file.getPersonalFilesFolderKey()}" data-resource-type="file">
+                                    <input type="checkbox" name="" id="">
+                                    <img src='/static/img/fileImg.png'>
+                                    <input type='text' class="printFileName" th:value='${file.getPersonalFilesOriname()}' th:id="${'file' + file.getPersonalFilesOriname()}" disabled>
                                 </li>
                             </th:block>
                         </div>
@@ -166,6 +177,8 @@
 <script>
     // 아이디, 클래스에 부여할 count
     let count = 1;
+    // 현재 폴더의 key 값( = 생성될 폴더, 파일의 parentKey)
+    let parentKey = $("#parentKey").val();
 
     $("#newFolder").on('click',function (){
         let folderName = 'folderName'+count;
@@ -198,16 +211,19 @@
         modifyText.on("blur",function(){
             modifiedName = $(this).val();
             $(this).css("color","white").attr("disabled",true);
-            console.log(modifiedName);
 
+            let array =
             // 폴더 이름을 사용하고 있는지 조회 하고 결과 반환
             $.ajax({
-                url:"/personalFolder/addFolder?fileName="+modifiedName
+                url:"/personalFolder/addFolder"
+                ,data:({
+                    "folderName":modifiedName,
+                    "parentKey":parentKey
+                })
             }).done(function(rsp){
-                console.log(rsp);
                 // rsp : true(사용할 수 있음), false(사용할 수 없음)
                 if(!rsp) {
-                    alert("이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
+                    alert("드라이브 내에 이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
                     modifyText.attr("disabled",false).css("color","red");
                 }
             })
@@ -216,8 +232,7 @@
 
         // 방금 만들어진 리스트 클릭 이벤트(동적 바인딩)
         folderArea.on("click",function(){
-            $(this).css("background-color","red");
-            //location.href="/drive/detailDrive?contents="+folderName;
+            location.href="/drive/detailDrive?resourceKey="+parentKey;
         })
 
 
@@ -229,11 +244,8 @@
 <script>
 
     $(".thisFolder").on("click",function(){
-        //$(this).css("background-color","red");
-        let thisVal = $(this).find("input:eq(1)").val();
-
-        console.log(thisVal);
-        console.log("클릭!");
+        let thisFolderSeq = $(this).data("folder");
+        location.href = "/drive/detailDrive?resourceKey="+thisFolderSeq;
     })
 
 </script>
@@ -245,13 +257,12 @@
     /*]]>*/
 </script>
 
-<!-- 업로드 버튼 클릭 -->
+<!-- 파일 업로드 버튼 클릭 -->
 <script>
     $("#uploadFile").on('change',fileCheck);
 
     function fileCheck(e) {
         if (e.target.files[0]) {
-            console.log("있음");
             $("#uploadFileForm").submit();
         } else {
             return;

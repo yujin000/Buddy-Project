@@ -17,4 +17,5 @@ public class ChatRoomService {
     public List<ChatRoomDTO> chatRoomList(Map<String, Integer> param) {
         return chatRoomDao.chatRoomList(param);
     }
+
 }

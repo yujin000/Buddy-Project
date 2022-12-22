@@ -151,7 +151,7 @@
     })
     pwDisNone();
 
-    $("#updateImg").on("change", readURL);
+
 
     $.ajax({
       url:"/member/selectProfileImg",
@@ -176,6 +176,7 @@
   }
   $("#myImg").click(function (){
     $("#updateImg").click();
+    $("#updateImg").on("change", readURL);
   })
   // function readURL(e) {
   //   if (e.files && e.files[0]) {
@@ -203,12 +204,8 @@
         return;
       }
 
-      $("#updateImg").attr("src",e.target.files[0]);
+        $("#updateImg").attr("src",e.target.files[0]);
         $("#updateImgForm").attr("action","/member/updateImg").submit();
-    } else {
-      $("#myImg").attr("src","/static/img/defaultProfileImg.png");
-      $("#updateImgForm").attr("action","/member/updateImg").submit();
-      return;
     }
     let reader = new FileReader();
     reader.onload = function(e) {

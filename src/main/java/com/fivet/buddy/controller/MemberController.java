@@ -7,9 +7,11 @@ import com.fivet.buddy.services.BasicFolderService;
 import com.fivet.buddy.services.MemberService;
 import com.fivet.buddy.services.PersonalFolderService;
 import com.fivet.buddy.services.TeamService;
+import com.fivet.buddy.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -227,30 +229,38 @@ public class MemberController {
         return "redirect:/member/goMyProfile";
     }
 
+    @Value("${profile.save.path}")
+    String proFilePath;
+
     //프로필 이미지 출력
     @ResponseBody
     @RequestMapping("selectProfileImg")
     public String selectProfileImg() throws Exception{
-        String member_img_sysname = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
+        String member_img_sysname = "/member/selectProfileImg/"+memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
         return member_img_sysname;
     }
 
+
     //프로필 이미지 수정
     @RequestMapping("updateImg")
-    public String updateImg(MemberImgDTO memberImgDto, MultipartFile file) throws Exception{
-        String realPath=session.getServletContext().getRealPath("/");
-        File filePath = new File(realPath);
-        if(!filePath.exists()) {
-            filePath.mkdir();
-        }// 파일 업로드 폴더가 없다면 생성하는 코드
-
+    public String updateImg(MemberImgDTO memberImgDto, MultipartFile file, FileUtil util) throws Exception{
         String memberImgOriName = file.getOriginalFilename();
         String memberImgSysName = UUID.randomUUID() + "_" + memberImgOriName;
         //UUID.randomUUID() : 현재 시간과 자체 매커니즘을 통해 겹치지 않는 기다란 문자를 자동으로 생성해줌
-        file.transferTo(new File(filePath+"/"+memberImgSysName));
+        util.save(file,proFilePath,memberImgSysName);
+
         memberImgDto.setMemberImgMemberSeq((Integer) session.getAttribute("memberSeq"));
         memberImgDto.setMemberImgOriName(memberImgOriName);
         memberImgDto.setMemberImgSysName(memberImgSysName);
+        memberService.updateProfileImg(memberImgDto);
+        return "redirect:/member/goMyProfile";
+    }
+
+    @RequestMapping("defultImg")
+    public String defultImg(MemberImgDTO memberImgDto) throws Exception{
+        memberImgDto.setMemberImgMemberSeq((Integer) session.getAttribute("memberSeq"));
+        memberImgDto.setMemberImgOriName("/static/img/defaultProfileImg.png");
+        memberImgDto.setMemberImgSysName("/static/img/defaultProfileImg.png");
         memberService.updateProfileImg(memberImgDto);
         return "redirect:/member/goMyProfile";
     }

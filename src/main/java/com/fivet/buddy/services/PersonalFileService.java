@@ -19,19 +19,16 @@ public class PersonalFileService {
     private PersonalFileDAO personalFileDao;
 
     @Autowired
-    private HttpSession session;
-
-    @Autowired
     private RandomKeyUtil randomKeyUtil;
 
     @Autowired
     private BasicFolderDAO basicFolderDao;
 
     // 파일첨부
-    public void uploadFile(String oriName, String sysName,String attachFolder) throws Exception{
+    public void uploadFile(String oriName, String sysName,String attachFolder,int memberSeq) throws Exception{
         PersonalFileDTO personalFileDto = new PersonalFileDTO();
 
-        personalFileDto.setPersonalFilesMemberSeq(Integer.parseInt(session.getAttribute("memberSeq").toString()));
+        personalFileDto.setPersonalFilesMemberSeq(memberSeq);
         personalFileDto.setPersonalFilesOriname(oriName);
         personalFileDto.setPersonalFilesSysname(sysName);
         personalFileDto.setPersonalFilesFolderKey(attachFolder);

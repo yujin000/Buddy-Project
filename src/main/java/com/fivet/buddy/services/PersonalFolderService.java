@@ -29,8 +29,6 @@ public class PersonalFolderService {
     @Autowired
     private BasicFolderDAO basicFolderDao;
 
-    @Autowired
-    private HttpSession session;
     @Value("${spring.servlet.multipart.location}")
     private String uploadFilePath;
 
@@ -46,12 +44,12 @@ public class PersonalFolderService {
     }
 
     // 폴더 생성
-    public void insertNewFolder(String folderName, String parentKey, String uploadFilePath) throws Exception{
+    public void insertNewFolder(String folderName, String parentKey, String uploadFilePath,int memberSeq) throws Exception{
         PersonalFolderDTO personalFolderDto = new PersonalFolderDTO();
 
         // 폴더 이름, 멤버seq값, 부모폴더 key값, 폴더 저장경로 세팅
         personalFolderDto.setPersonalFolderName(folderName);
-        personalFolderDto.setPersonalFolderMemberSeq(Integer.parseInt(session.getAttribute("memberSeq").toString()));
+        personalFolderDto.setPersonalFolderMemberSeq(memberSeq);
         personalFolderDto.setPersonalFolderParentKey(parentKey);
         personalFolderDto.setPersonalFolderPath(uploadFilePath+folderName+"\\");
         personalFolderDto.setPersonalFolderKey(randomKeyUtil.folderKey());
@@ -59,11 +57,11 @@ public class PersonalFolderService {
     }
 
     // 폴더 존재 유무 체크
-    public boolean isFolderExists(String fileName) throws Exception{
+    public boolean isFolderExists(String fileName,int memberSeq) throws Exception{
         // view에서 넘어온 폴더 이름, 소유한 멤버 번호 Map에 setting
         Map<String, Object> folderCheck = new HashMap<>();
         folderCheck.put("personalFolderName",fileName);
-        folderCheck.put("personalFolderMemberSeq",session.getAttribute("memberSeq").toString());
+        folderCheck.put("personalFolderMemberSeq",memberSeq);
         return personalFolderDao.isFolderExists(folderCheck);
     }
 

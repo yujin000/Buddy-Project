@@ -26,4 +26,9 @@
         where
             member_seq = #{memberSeq}
     </select>
+
+    <!--팀 관리 멤버 출력 -->
+    <select id="managementTeamSelectTeam" resultType="com.fivet.buddy.dto.TeamMemberDTO">
+        select * from team_member m inner join team t on m.team_seq=t.team_seq where t.team_seq = #{value}
+    </select>
 </mapper>

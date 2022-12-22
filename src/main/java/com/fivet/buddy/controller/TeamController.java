@@ -1,16 +1,20 @@
 package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.ChatRoomDTO;
+import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.TeamDTO;
+import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -52,6 +56,16 @@ public class TeamController {
         session.setAttribute("teamSeq", teamSeq);
         return "team/team";
     }
+
+    //팀 관리 이동
+    @RequestMapping("goTeamSetting")
+    public String managementTeamSelectTeam(String teamSeq, Model model) throws Exception{
+        List<TeamMemberDTO> teamMemberDtoList =  teamService.managementTeamSelectTeam(teamSeq);
+        model.addAttribute("teamMemberDtoList", teamMemberDtoList);
+        return "team/teamSetting";
+    }
+
+
 
     // Exception Handler
     @ExceptionHandler(Exception.class)

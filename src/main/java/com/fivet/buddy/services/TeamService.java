@@ -5,6 +5,7 @@ import com.fivet.buddy.dao.ChatRoomDAO;
 import com.fivet.buddy.dao.TeamDAO;
 import com.fivet.buddy.dao.TeamMemberDAO;
 import com.fivet.buddy.dto.TeamDTO;
+import com.fivet.buddy.dto.TeamMemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,5 +41,10 @@ public class TeamService {
     //회원 팀 출력
     public List<TeamDTO> selectMemberTeam(int memberSeq) {
         return teamDao.selectMemberTeam(memberSeq);
+    }
+
+    //팀 관리 멤버 출력
+    public List<TeamMemberDTO> managementTeamSelectTeam(String teamSeq){
+        return teamDao.managementTeamSelectTeam(teamSeq);
     }
 }

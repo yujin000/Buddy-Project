@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fivet.buddy.mapper.ChatMemberMapper">
+
+    <!-- 팀 생성 목록   -->
+<!--    <insert id="insertChatMember">-->
+<!--        insert into-->
+<!--            chat_member-->
+<!--        values-->
+<!--            (#{chatRoomSeq}, #{memberSeq}, sysdate, sysdate)-->
+<!--    </insert>-->
+
+    <!-- 팀 생성시 기본생성되는 채팅방 목록   -->
+    <insert id="createTeam">
+        insert into
+            chat_member
+        values
+            (#{chatRoomSeq}, #{memberSeq}, sysdate, sysdate)
+    </insert>
+</mapper>

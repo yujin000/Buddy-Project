@@ -88,6 +88,11 @@ public class MemberService {
         return memberDao.selectProfileImg(memberImgMemberSeq);
     }
 
+    //회원가입 시 프로필 이미지 기본값으로 추가
+    public void insertProfileImg(int memberSeq) throws Exception{
+        memberDao.insertProfileImg(memberSeq);
+    }
+
     //프로필 이미지 업로드
     public void updateProfileImg(MemberImgDTO memberImgDto) throws Exception{
         memberDao.updateProfileImg(memberImgDto);

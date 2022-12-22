@@ -108,6 +108,11 @@
         update member set member_pw = #{memberPw} where member_seq = #{memberSeq}
     </update>
 
+    <!-- 회원가입 시 프로필 이미지 기본값으로 추가 -->
+    <insert id="insertProfileImg">
+        insert into member_img values(#{memberImgMemberSeq},'/static/img/defaultProfileImg.png','/static/img/defaultProfileImg.png')
+    </insert>
+
     <!-- 프로필 이미지 출력 -->
     <select id="selectProfileImg" resultType="String">
         select member_img_sysname from member_img where member_img_member_seq = #{memberImgMemberSeq}

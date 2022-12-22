@@ -48,7 +48,8 @@ public class TeamService {
         return teamDao.managementTeamSelectTeamMember(teamSeq);
     }
 
-    public List<String> managementTeamSelectEmail(int memberSeq){
-        return memberDao.managementTeamSelectEmail(memberSeq);
+    //팀 관리 팀 이름 출력
+    public String managementTeamSelectTeam(String teamSeq){
+        return teamDao.managementTeamSelectTeam(teamSeq);
     }
 }

@@ -77,8 +77,8 @@ public class MemberController {
         memberService.signUp(memberDto);
 
         // 회원 가입시 기본 폴더 생성
-        basicFolderService.newBasicFolder(memberDto.getMemberSeq());
-
+//        basicFolderService.newBasicFolder(memberDto.getMemberSeq());
+        memberService.insertProfileImg(memberDto.getMemberSeq());
         return "redirect:/";
     }
 

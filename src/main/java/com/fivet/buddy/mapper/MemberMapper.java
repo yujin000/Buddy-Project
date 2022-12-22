@@ -22,6 +22,8 @@ public interface MemberMapper {
     void updatePhone(MemberDTO memberDto);
     int selectMyProfilePw(MemberDTO memberDto);
     void updatePw(MemberDTO memberDto);
+
+    void insertProfileImg(int memberSeq);
     void updateProfileImg(MemberImgDTO memberImgDto);
     void deleteMember(String memberSeq);
     List<MemberDTO> selectMembers();

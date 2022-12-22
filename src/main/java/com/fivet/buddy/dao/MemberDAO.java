@@ -82,6 +82,11 @@ public class MemberDAO {
         return memberMapper.selectProfileImg(memberImgMemberSeq);
     }
 
+    //회원가입 시 프로필 이미지 기본값으로 추가
+    public void insertProfileImg(int memberSeq) throws Exception{
+        memberMapper.insertProfileImg(memberSeq);
+    }
+
     //프로필 이미지 업로드
     public void updateProfileImg(MemberImgDTO memberImgDto) throws Exception{
         memberMapper.updateProfileImg(memberImgDto);
@@ -106,10 +111,5 @@ public class MemberDAO {
     // 회원 강퇴(관리자)
     public void memberKickOut(int memberSeq) throws Exception{
         memberMapper.memberKickOut(memberSeq);
-    }
-
-    //팀 관리 페이지에서 팀원 이메일 출력
-    public List<String> managementTeamSelectEmail(int memberSeq){
-        return teamMapper.managementTeamSelectEmail(memberSeq);
     }
 }

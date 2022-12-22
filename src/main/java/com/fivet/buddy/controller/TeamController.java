@@ -1,6 +1,5 @@
 package com.fivet.buddy.controller;
 
-import com.fivet.buddy.dao.ChatRoomDAO;
 import com.fivet.buddy.dto.ChatRoomDTO;
 import com.fivet.buddy.dto.TeamDTO;
 import com.fivet.buddy.services.ChatRoomService;
@@ -45,7 +44,6 @@ public class TeamController {
         // session값인 이름만 닉네임에 담아 service에 전송.
         param.put("teamMemberNickname", session.getAttribute("memberName").toString());
         teamService.insertTeam(teamDto, param);
-
 
         return "redirect:/member/loginIndex";
     }

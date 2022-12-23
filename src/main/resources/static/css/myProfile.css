@@ -61,10 +61,8 @@ button[class*="Btn"] {
     border: 1px solid #000;
 }
 
-#updateImg {
-    position: absolute;
-    margin-top: 35px;
-    right: 10px;
+input[type=file] {
+    display: none;
 }
 
 #deleteImg {

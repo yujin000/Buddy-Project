@@ -28,7 +28,7 @@
                   name="team_name"
                   id="team_name"
                   class="input_text"
-                  value="팀 이름"
+                  th:value="${teamName}"
           />
           <button type="submit" id="changeTeam" class="editBtn">
             변경
@@ -49,7 +49,7 @@
                       name="memberName"
                       id="memberName"
                       class="inputText"
-                      value="이름"
+
                       readonly
               />
               <input
@@ -57,7 +57,7 @@
                       name="memberEmail"
                       id="memberEmail"
                       class="inputEmail"
-                      value="이메일"
+
                       readonly
               />
             </div>

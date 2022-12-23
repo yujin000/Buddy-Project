@@ -108,6 +108,26 @@
         update member set member_pw = #{memberPw} where member_seq = #{memberSeq}
     </update>
 
+    <!-- 회원가입 시 프로필 이미지 기본값으로 추가 -->
+    <insert id="insertProfileImg">
+        insert into member_img values(#{memberImgMemberSeq},'/static/img/defaultProfileImg.png','/static/img/defaultProfileImg.png')
+    </insert>
+
+    <!-- 프로필 이미지 출력 -->
+    <select id="selectProfileImg" resultType="String">
+        select member_img_sysname from member_img where member_img_member_seq = #{memberImgMemberSeq}
+    </select>
+
+    <!-- 프로필 이미지 업로드 -->
+    <update id="updateProfileImg">
+    update member_img set member_img_oriname = #{memberImgOriName}, member_img_sysname= #{memberImgSysName} where member_img_member_seq =#{memberImgMemberSeq}
+    </update>
+
+    <!-- 회원 탈퇴 -->
+    <delete id="deleteMember">
+        delete member where member_seq=#{value}
+    </delete>
+
     <!-- 회원 목록 출력 -->
     <select id="selectMembers" resultType="com.fivet.buddy.dto.MemberDTO">
         select * from member
@@ -130,12 +150,9 @@
             member_seq = #{value}
     </delete>
 
-    <delete id="deleteMember">
-        delete member where member_seq=#{value}
-    </delete>
-
     <!-- TeamMember테이블 insert를 위한 id select -->
     <select id="selectId" resultType="string">
         select member_Id from member where member_Seq=#{memberSeq}
     </select>
+
 </mapper>

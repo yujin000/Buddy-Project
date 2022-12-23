@@ -18,7 +18,7 @@
 <!--    회원이 속한 팀 출력-->
     <select id="selectMemberTeam" resultType="com.fivet.buddy.dto.TeamDTO">
         select
-            t.TEAM_SEQ, t.TEAM_NAME
+            t.TEAM_SEQ, t.TEAM_NAME, t.TEAM_OWNER_SEQ
         from
             TEAM t
             join TEAM_MEMBER tm
@@ -27,4 +27,20 @@
             member_seq = #{memberSeq}
         order by 1
     </select>
+
+    <!--팀 관리 멤버 출력 -->
+    <select id="managementTeamSelectTeamMember" resultType="com.fivet.buddy.dto.TeamMemberDTO">
+        select tm.team_member_nickname,m.member_id from team_member tm inner join member m on tm.member_seq=m.member_seq where tm.team_seq = #{value}
+        order by case
+        when grade='manager' then 1
+        when grade='subManager' then 2
+        when grade='coworker' then 3
+        end
+    </select>
+
+    <!-- 팀 관리 팀 이름 출력-->
+    <select id="managementTeamSelectTeam" resultType="String">
+        select team_name from team where team_seq = #{value}
+    </select>
+
 </mapper>

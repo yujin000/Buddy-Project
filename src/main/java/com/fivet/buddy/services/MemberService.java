@@ -2,6 +2,7 @@ package com.fivet.buddy.services;
 
 import com.fivet.buddy.dao.MemberDAO;
 import com.fivet.buddy.dto.MemberDTO;
+import com.fivet.buddy.dto.MemberImgDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,6 +83,20 @@ public class MemberService {
         memberDao.updatePw(memberDto);
     }
 
+    //프로필 이미지 출력
+    public String selectProfileImg(String memberImgMemberSeq) throws Exception{
+        return memberDao.selectProfileImg(memberImgMemberSeq);
+    }
+
+    //회원가입 시 프로필 이미지 기본값으로 추가
+    public void insertProfileImg(int memberSeq) throws Exception{
+        memberDao.insertProfileImg(memberSeq);
+    }
+
+    //프로필 이미지 업로드
+    public void updateProfileImg(MemberImgDTO memberImgDto) throws Exception{
+        memberDao.updateProfileImg(memberImgDto);
+    }
     //회원 탈퇴
     public void deleteMember(String memberSeq) throws Exception{
         memberDao.deleteMember(memberSeq);

@@ -135,7 +135,7 @@
     </delete>
 
     <!-- TeamMember테이블 insert를 위한 id select -->
-    <select id="selectId" resultType="String">
-        select memberId from member where memberSeq=#{value}
+    <select id="selectId" resultType="string">
+        select member_Id from member where member_Seq=#{memberSeq}
     </select>
 </mapper>

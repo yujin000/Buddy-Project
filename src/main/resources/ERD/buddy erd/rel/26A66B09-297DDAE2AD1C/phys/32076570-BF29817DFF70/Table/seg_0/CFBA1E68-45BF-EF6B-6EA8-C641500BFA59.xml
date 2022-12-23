@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="NOTICE_FILES" directorySegmentName="seg_0" id="CFBA1E68-45BF-EF6B-6EA8-C641500BFA59">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<schemaObject>99A36F75-7117-5A14-D92D-7D94E5AC42E8</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="NOTICE_SEQ" id="2142DC39-18F7-3B5A-8FD0-FD1E48700E6B">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NOTICE_FILES_SEQ" id="5D4C5AAB-16BA-484C-5787-E088E48CDC33">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NOTICE_SYSNAME" id="6813C243-311F-2CBF-D3C5-BD0BE9FA1271">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NOTICE_ORINAME" id="8BCF59ED-4A80-6100-2DA3-F2E70D239EC8">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_NOTICE_FILES_NOTICE_BOARD" id="C5AFCE07-8BD5-E499-E999-A8B7350FCB2E">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="NOTICE_FILES_PK" id="D6B1DD0F-E7F9-25BD-5B3A-D66DDAE4DDB4">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<schemaObject>99A36F75-7117-5A14-D92D-7D94E5AC42E8</schemaObject>
+<indexSort>SORTED</indexSort>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

@@ -36,7 +36,6 @@ public class FileUtil {
         File fileSavePath = new File(realPath);
         file.transferTo(new File(fileSavePath + "/" + sysName));
     }
-
     public void saves(@RequestParam MultipartFile[] uploadfile, String realPath, String sysName) throws Exception {
         File fileSavePath = new File(realPath);
         for (MultipartFile file : uploadfile) {

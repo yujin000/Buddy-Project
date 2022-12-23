@@ -1,0 +1,190 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="54A7640A-5A54-D836-3132-2AFEB70EF863" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="EVENT">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>EVENT</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>C4B3DDB6-80C1-C368-4898-0BBC9A4985D8</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="event_seq" id="3BE61DB3-4AF8-2871-F4D7-AE0134625FFC">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>EVENT</sourceObjSchema>
+<sourceObjName>event_seq</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+<importedID>8CBC3238-64C1-7AE9-7BC0-8EFC0CABC664</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="team_seq" id="11E2DBF0-7777-0CFF-26D1-69B90A58CF5E">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>EVENT</sourceObjSchema>
+<sourceObjName>team_seq</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+<importedID>5212E97D-E398-9F77-E4F4-97CBA9530E11</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F55BB420-188E-EC25-E803-0120EB90AC84" referredColumn="0E09DCC0-E7B5-18A7-2534-06EAC99D8270"/>
+</associations>
+</Column>
+<Column name="event_name" id="3E4BBBE5-0EA2-147B-3781-D19927D43DCF">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>EVENT</sourceObjSchema>
+<sourceObjName>event_name</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+<importedID>3D78068A-A387-6175-9526-4C0B64EF9435</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="event_writer" id="8CF5CB0C-3158-0C8D-8163-0B5E99490F92">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>EVENT</sourceObjSchema>
+<sourceObjName>event_writer</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+<importedID>1EF8DCD9-EABD-FB74-B589-F470E0F77E76</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 BYTE</dataTypeSize>
+<ownDataTypeParameters>200 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="event_type" id="AF39AE6B-8EC0-C8C4-1B7E-EB9F06AB18F5">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>EVENT</sourceObjSchema>
+<sourceObjName>event_type</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+<importedID>DC75FCE6-29FF-2D4C-CE8C-17F34CF58C67</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="event_start" id="9F52824D-7ED6-DC78-311B-85B5EE0CD62B">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>EVENT</sourceObjSchema>
+<sourceObjName>event_start</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+<importedID>F8D1CCBD-57E9-A693-CCBF-03B2F698FB82</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="event_end" id="71125BD5-BD06-4DFB-289A-03503EFA5C55">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>EVENT</sourceObjSchema>
+<sourceObjName>event_end</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+<importedID>FFB71A9F-8C1D-0AB5-1911-97213881BB80</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="event_location" id="E755D58D-B274-A9CA-12F3-18E12584F2AB">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>EVENT</sourceObjSchema>
+<sourceObjName>event_location</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+<importedID>E276CEF7-1FA7-6576-D7CA-82335A7A36F3</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 BYTE</dataTypeSize>
+<ownDataTypeParameters>200 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="event_memo" id="BBC0440A-62CA-A736-AC79-D045028BCB49">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>EVENT</sourceObjSchema>
+<sourceObjName>event_memo</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+<importedID>3FF6D42D-E26F-2814-88A3-07C72532F613</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500 BYTE</dataTypeSize>
+<ownDataTypeParameters>500 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="550606EE-5AA8-42F9-29DC-EA2AB3765F31" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="EVENT_PK">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>SYS_C007688</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>2BDCE494-B392-A198-BE5A-E43E8E95C90A</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3BE61DB3-4AF8-2871-F4D7-AE0134625FFC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="04D036DF-A580-9E1C-8B47-CB76AE9F0D85" name="FK_EVENT_TEAM">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="11E2DBF0-7777-0CFF-26D1-69B90A58CF5E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

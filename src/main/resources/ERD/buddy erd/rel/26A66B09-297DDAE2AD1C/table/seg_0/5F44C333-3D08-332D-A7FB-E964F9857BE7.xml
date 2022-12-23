@@ -1,0 +1,99 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5F44C333-3D08-332D-A7FB-E964F9857BE7" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="CHAT_MEMBER">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>CHAT_MEMBER</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:24:06 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CHAT_ROOM_SEQ" id="B8F0022D-DEBB-FA34-ED5C-8EE48F020F59">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_MEMBER</sourceObjSchema>
+<sourceObjName>CHAT_ROOM_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:24:06 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5A98D9D1-2811-4DC1-30CB-090F808A29F2" referredColumn="D34ACCB6-8436-0C09-9056-64170366BFD7"/>
+</associations>
+</Column>
+<Column name="MEMBER_SEQ" id="08DF8440-E96A-4CE6-847F-5657D1858005">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_MEMBER</sourceObjSchema>
+<sourceObjName>MEMBER_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:24:06 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="45D3FE95-75DD-5DDB-47F2-73D4B8F2D967" referredColumn="D253DB47-6777-FFFE-B650-D004B2F44CF2"/>
+</associations>
+</Column>
+<Column name="CHAT_JOIN_DATE" id="38C1FB4E-198B-7297-29C5-DEA985C57EA2">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_MEMBER</sourceObjSchema>
+<sourceObjName>CHAT_JOIN_DATE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:24:06 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<defaultValue>sysdate</defaultValue>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="RECENT_VIEW_DATE" id="CA926B11-2B5F-8C2C-33DB-94E57A07B3E4">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_MEMBER</sourceObjSchema>
+<sourceObjName>RECENT_VIEW_DATE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:24:06 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<defaultValue>sysdate</defaultValue>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="24069DBD-7E32-7A6B-32E2-407FF0FF5961" name="FK_CHAT_MEMBER_CHAT_ROOM">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:24:44 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B8F0022D-DEBB-FA34-ED5C-8EE48F020F59"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="DAE65344-F84C-23DE-9578-8FCAB7448BAE" name="CHAT_MEMBER_MEMBER_FK">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:24:44 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="08DF8440-E96A-4CE6-847F-5657D1858005"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

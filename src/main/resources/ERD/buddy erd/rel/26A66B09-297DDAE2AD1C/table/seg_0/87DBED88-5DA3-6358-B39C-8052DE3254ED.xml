@@ -1,0 +1,138 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="87DBED88-5DA3-6358-B39C-8052DE3254ED" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="CHAT_MSG">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>CHAT_MSG</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:20:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CHAT_MSG_SEQ" id="75C60147-5960-E91A-80B5-EB4BDE8C919B">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_MSG</sourceObjSchema>
+<sourceObjName>CHAT_MSG_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:20:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CHAT_ROOM_SEQ" id="6581F1EA-44C2-BD6A-41D6-6246E92FB111">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_MSG</sourceObjSchema>
+<sourceObjName>CHAT_ROOM_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:20:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5AC701D0-3D68-4318-3DE9-64DB220C1E5D" referredColumn="D34ACCB6-8436-0C09-9056-64170366BFD7"/>
+</associations>
+</Column>
+<Column name="CHAT_CONTENT" id="088E15F0-2A94-960B-863B-0CA2AD7B654E">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_MSG</sourceObjSchema>
+<sourceObjName>CHAT_CONTENT</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:20:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1000 BYTE</dataTypeSize>
+<ownDataTypeParameters>1000 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CHAT_WRITER_SEQ" id="DD7DDC20-83A0-C7CD-A68D-A877D6469185">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_MSG</sourceObjSchema>
+<sourceObjName>CHAT_WRITER_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:20:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="3136FCD9-0DAD-0AC6-3938-DBB81670DE8E" referredColumn="D253DB47-6777-FFFE-B650-D004B2F44CF2"/>
+</associations>
+</Column>
+<Column name="READ_COUNT" id="1B366220-ED11-B5A3-BC8F-87D5932342A1">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_MSG</sourceObjSchema>
+<sourceObjName>READ_COUNT</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:20:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CHAT_DATE" id="57BFAA4B-7748-D664-C9FF-D91AF8EAEB59">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_MSG</sourceObjSchema>
+<sourceObjName>CHAT_DATE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:20:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<defaultValue>sysdate</defaultValue>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="2BCA8C2F-4EBC-2125-99F0-77EB10191EF8" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="CHAT_MSG_PK">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>SYS_C007866</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:20:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="75C60147-5960-E91A-80B5-EB4BDE8C919B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="AA61943A-DB56-8CFD-5FAB-4360CF38894C" name="FKCHAT_MSG_MEMBER">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:21:08 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DD7DDC20-83A0-C7CD-A68D-A877D6469185"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9F45330F-BFDA-4B7E-1BEE-C214C5EA87EA" name="FKCHAT_MSG_CHAT_ROOM">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:23:20 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6581F1EA-44C2-BD6A-41D6-6246E92FB111"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

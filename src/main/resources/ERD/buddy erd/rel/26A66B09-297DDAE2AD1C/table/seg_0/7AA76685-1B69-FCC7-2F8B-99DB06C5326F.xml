@@ -1,0 +1,118 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="7AA76685-1B69-FCC7-2F8B-99DB06C5326F" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="NOTICE_BOARD">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>NOTICE_BOARD</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>349019C9-7281-36FD-1FEC-94E844E6B1B4</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="NOTICE_SEQ" id="9EE5976F-775E-93EB-7206-8007C44D6DE3">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>NOTICE_BOARD</sourceObjSchema>
+<sourceObjName>NOTICE_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>F41C9686-2B1E-BEA6-C420-A67A4C2C6A66</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOTICE_WRITER" id="ECB03356-90C8-8E2A-389C-50519C9CB2A3">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>NOTICE_BOARD</sourceObjSchema>
+<sourceObjName>NOTICE_WRITER</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>89B98F36-5FAC-A344-D85F-4859BE9A0ED3</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="22B755FE-1AC6-8B8D-F285-5803B8420BCA" referredColumn="D253DB47-6777-FFFE-B650-D004B2F44CF2"/>
+</associations>
+</Column>
+<Column name="NOTICE_TITLE" id="B5885378-C222-9A95-B387-6D747B0B990E">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>NOTICE_BOARD</sourceObjSchema>
+<sourceObjName>NOTICE_TITLE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>D1C19630-0B7B-3315-20FD-C4DA6ECE5B17</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>90 BYTE</dataTypeSize>
+<ownDataTypeParameters>90 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOTICE_CONTENTS" id="7E89652A-8000-63F0-F1C1-54100CA3DDE6">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>NOTICE_BOARD</sourceObjSchema>
+<sourceObjName>NOTICE_CONTENTS</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>180AC8A4-5AE6-50D7-313E-CF2E41D8C01E</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>600 BYTE</dataTypeSize>
+<ownDataTypeParameters>600 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOTICE_WRITE_DATE" id="8F53DC17-3A4E-696F-87D7-50B1ECD341F7">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>NOTICE_BOARD</sourceObjSchema>
+<sourceObjName>NOTICE_WRITE_DATE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>A0BA02B5-A839-613C-C3D8-D08C3BA3F518</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="237FCFA1-A16C-46A3-9258-7B060B27B543" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="NOTICE_BOARD_PK">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>SYS_C007660</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>84F42E50-A5B6-C210-22FC-CF9CDA8D64EC</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9EE5976F-775E-93EB-7206-8007C44D6DE3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8165BCB1-5FD6-8B00-6E50-C73F03CCD09F" name="FK_NOTICE_BOARD_MEMBER">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="ECB03356-90C8-8E2A-389C-50519C9CB2A3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

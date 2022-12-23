@@ -1,0 +1,59 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="MEMBER" directorySegmentName="seg_0" id="D305B62B-60F7-3F36-0E3C-3F11488D3D18">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<schemaObject>99A36F75-7117-5A14-D92D-7D94E5AC42E8</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="MEMBER_PW" id="5AF1AAAC-9B81-6639-16EB-B8BEC58A335A">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MEMBER_NAME" id="6CEB4B4B-2107-1145-4BE2-E5E06299A5CA">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MEMBER_PHONE" id="9EA6B1D5-0543-188C-D42C-7E82BD2745EE">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MEMBER_LOGTYPE" id="A66D7CA2-3D1D-18CF-68CA-20E6388D955B">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MEMBER_SIGNUP_DATE" id="B7F63204-F1B1-7DFF-F19A-00B8C3FA5BA3">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<defaultValue>sysdate</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="MEMBER_SEQ" id="D253DB47-6777-FFFE-B650-D004B2F44CF2">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MEMBER_ID" id="EFEA1B18-6D5C-C2AD-FDB2-7169796A6369">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="MEMBER_PK" id="5E6FE299-75D2-5BCD-EBFF-76BB432DCE51">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:18:59 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<schemaObject>99A36F75-7117-5A14-D92D-7D94E5AC42E8</schemaObject>
+<indexSort>SORTED</indexSort>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

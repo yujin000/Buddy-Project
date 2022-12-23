@@ -1,0 +1,97 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="81A94B43-9FE9-26B3-D670-E3AEBAC5A13E" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="CHAT_FILES">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>CHAT_FILES</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:24:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CHAT_FILES_SEQ" id="E4FA42B3-5AC1-2549-F921-9D82E896FEC8">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_FILES</sourceObjSchema>
+<sourceObjName>CHAT_FILES_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:24:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CHAT_ORINAME" id="C65C56AD-2389-5F2E-84CA-3851D9E5D5A0">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_FILES</sourceObjSchema>
+<sourceObjName>CHAT_ORINAME</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:24:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CHAT_SYSNAME" id="8BFFF5DC-C98A-E49E-B3B2-0513BF1FF5D2">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_FILES</sourceObjSchema>
+<sourceObjName>CHAT_SYSNAME</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:24:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CHAT_ROOM_SEQ" id="108D9A17-39B7-5F89-940C-FCD1C225A998">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>CHAT_FILES</sourceObjSchema>
+<sourceObjName>CHAT_ROOM_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:24:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="52B9BA7B-40EC-1DD1-717B-F71C79384E30" referredColumn="D34ACCB6-8436-0C09-9056-64170366BFD7"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="57B518E9-00F1-7AB8-1C3C-D0199F94DAF8" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="CHAT_FILES_PK">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>SYS_C007796</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:24:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E4FA42B3-5AC1-2549-F921-9D82E896FEC8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="39F361FD-2221-60DA-5143-572ED0780AB0" name="FK_CHAT_FILES_CHAT_ROOM">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:25:15 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="108D9A17-39B7-5F89-940C-FCD1C225A998"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

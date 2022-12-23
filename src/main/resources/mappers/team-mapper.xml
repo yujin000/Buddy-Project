@@ -30,12 +30,12 @@
 
     <!--팀 관리 멤버 출력 -->
     <select id="managementTeamSelectTeamMember" resultType="com.fivet.buddy.dto.TeamMemberDTO">
-        select tm.team_member_nickname,m.member_id from team_member tm inner join member m on tm.member_seq=m.member_seq where tm.team_seq = #{value}
+        select * from team_member where team_seq = #{value}
         order by case
         when grade='manager' then 1
         when grade='subManager' then 2
         when grade='coworker' then 3
-        end
+        end, member_seq asc
     </select>
 
     <!-- 팀 관리 팀 이름 출력-->

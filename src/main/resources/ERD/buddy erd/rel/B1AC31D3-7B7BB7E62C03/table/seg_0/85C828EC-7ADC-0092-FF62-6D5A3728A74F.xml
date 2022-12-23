@@ -1,0 +1,192 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="85C828EC-7ADC-0092-FF62-6D5A3728A74F" schemaObject="2441D5F9-396D-9F30-EEBC-64C424D4A870" name="VOTE">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>VOTE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>ADD64EDA-8412-7A5B-35C3-51565F891D3C</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="VOTE_SEQ" id="C3B0E363-129B-CDE8-03D6-891E0EC6E866">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>F2C93E62-105A-236F-AAC7-31BA4DC2AF1B</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TEAM_SEQ" id="CFD5BED6-8E14-5877-2B04-C704D215209D">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>TEAM_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>FCB74821-12A9-0C3B-BD18-CBAAF797DC73</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B05FC10B-8AC6-715C-A941-DDAEFDDE0D84" referredColumn="DC1277C3-746E-E306-12FE-A80D38758193"/>
+</associations>
+</Column>
+<Column name="CHAT_ROOM_SEQ" id="3295B410-08D7-102C-E958-7F9030522E37">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>CHAT_ROOM_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>64E4E423-89AB-446B-8390-BBB205B70ECE</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5D38F13C-F61C-54E8-86F7-5C3CA1E632CC" referredColumn="2DB659A7-11F5-6A19-16D2-5AF398DC364A"/>
+</associations>
+</Column>
+<Column name="VOTE_TITLE" id="04BFF9BA-1209-A475-F19E-449E904FB2F1">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_TITLE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>13510EA6-9CC0-C391-2F4D-3D8BB630BB95</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="VOTE_CONTENT" id="EEDCB3BC-0C07-8CC1-C97A-9EE80D4E695D">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_CONTENT</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>CC468198-BAA5-8568-FB9C-6C70C11F3E60</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="VOTE_ANONYMOUS" id="CFB6072A-E39C-0DF6-9400-0A9E80724593">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_ANONYMOUS</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>DF8541C7-204D-BC4F-8132-7D0740DBD72C</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<defaultValue>0</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="VOTE_DUPLICATION" id="99ACDBCB-185A-9BF7-785D-F67A6B48020A">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_DUPLICATION</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>45715970-A398-6ABA-6AFC-7B678244A74F</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<defaultValue>0</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="VOTE_MADE_TIME" id="E9FBE885-A666-B6D2-91AC-20A009718851">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_MADE_TIME</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>4F2EE8FE-7404-236F-E8F8-C2C993E9825B</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<defaultValue>sysdate</defaultValue>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="VOTE_END_TIME" id="6A64712D-9F22-A5E3-D68C-E133AB22929C">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_END_TIME</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>9140E177-6461-FF33-8349-B767A5AE3000</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<defaultValue>sysdate</defaultValue>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D6A9E777-FF7E-D53D-465C-64BDD81E4142" schemaObject="2441D5F9-396D-9F30-EEBC-64C424D4A870" name="VOTE_PK">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>SYS_C007696</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>5F77F484-854D-14C5-DA3B-DB3D0B4203B6</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C3B0E363-129B-CDE8-03D6-891E0EC6E866"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="340FD060-4DE2-8A90-B01A-2C659EE1407B" name="FK_VOTE_TEAM">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CFD5BED6-8E14-5877-2B04-C704D215209D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0B4E011F-DCD3-9C66-D0E1-60C964C3DE94" name="FK_VOTE_CHAT_ROOM">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:51:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3295B410-08D7-102C-E958-7F9030522E37"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

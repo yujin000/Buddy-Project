@@ -29,4 +29,5 @@ public interface MemberMapper {
     List<MemberDTO> selectMembers();
     List<MemberDTO> memberSearch(String searchPick, String memberSearchText);
     void memberKickOut(int memberSeq);
+    String selectId(int memberSeq);
 }

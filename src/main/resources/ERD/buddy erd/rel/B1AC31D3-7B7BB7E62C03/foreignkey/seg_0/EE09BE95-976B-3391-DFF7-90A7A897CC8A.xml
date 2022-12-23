@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="EE09BE95-976B-3391-DFF7-90A7A897CC8A" containerWithKeyObject="C261A0A0-E06C-FB55-9292-DAB8626A6D03" localFKIndex="4FAA90E9-68D4-99E8-E347-89153A09D031" name="FK_PERSONAL_FILES_PERSONAL_FOLDER">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:52:47 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<referredTableLongName>BUDDY.PERSONAL_FOLDER</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>55FE0AFB-009E-41F5-7025-6FF6D3E023EB</referredTableID>
+<keyObject>E60F0977-B33D-47B2-89C9-8450197D05D1</keyObject>
+<referredKeyID>E60F0977-B33D-47B2-89C9-8450197D05D1</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>PERSONAL_FOLDER_KEY</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

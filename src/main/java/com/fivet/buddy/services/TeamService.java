@@ -31,9 +31,10 @@ public class TeamService {
     public void insertTeam (TeamDTO teamDto, Map<String, String> param) throws Exception {
         teamDao.insert(teamDto);
         param.put("teamSeq",String.valueOf(teamDto.getTeamSeq()));
-        teamMemberDao.createTeam(param);
         param.put("teamOwnerSeq", param.get("memberSeq"));
         param.put("teamName", teamDto.getTeamName());
+        param.put("memberId", memberDao.selectId(Integer.parseInt(param.get("teamOwnerSeq"))));
+        teamMemberDao.createTeam(param);
         chatRoomDao.createTeam(param);
         chatMemberDao.createTeam(param);
     }

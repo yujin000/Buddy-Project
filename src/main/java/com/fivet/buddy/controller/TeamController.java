@@ -1,6 +1,5 @@
 package com.fivet.buddy.controller;
 
-import com.fivet.buddy.dao.ChatRoomDAO;
 import com.fivet.buddy.dto.ChatRoomDTO;
 import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.TeamDTO;
@@ -39,7 +38,7 @@ public class TeamController {
     }
 
     //팀 생성
-    @RequestMapping("create")
+    @PostMapping("createTeam")
     public String create(TeamDTO teamDto, ChatRoomDTO chatRoomDto) throws Exception {
         teamDto.setTeamOwnerSeq((Integer) session.getAttribute("memberSeq"));
         Map<String, String> param = new HashMap<>();
@@ -47,7 +46,6 @@ public class TeamController {
         // session값인 이름만 닉네임에 담아 service에 전송.
         param.put("teamMemberNickname", session.getAttribute("memberName").toString());
         teamService.insertTeam(teamDto, param);
-
 
         return "redirect:/member/loginIndex";
     }

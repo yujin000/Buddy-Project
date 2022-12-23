@@ -14,7 +14,7 @@ public class TeamDAO {
     private TeamMapper teamMapper;
 
     // 팀 생성
-    public void insert(TeamDTO teamDto) {
+    public void insertTeam(TeamDTO teamDto) {
         teamMapper.insertTeam(teamDto);
     }
     // 회원이 속한 팀 출력

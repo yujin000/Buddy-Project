@@ -112,9 +112,4 @@ public class MemberDAO {
     public void memberKickOut(int memberSeq) throws Exception{
         memberMapper.memberKickOut(memberSeq);
     }
-
-    // TeamMember테이블 insert를 위한 id select
-    public String selectId(int memberSeq) {
-        return memberMapper.selectId(memberSeq);
-    }
 }

@@ -14,7 +14,9 @@ import java.sql.Timestamp;
 public class ChatMsgDTO {
     private int chatSeq;
     private int chatRoomSeq;
+    private String teamMemberNickname;
     private String content;
+    private int memberSeq;
     private int readCount;
     private Timestamp chatDate;
 }

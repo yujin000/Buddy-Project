@@ -23,4 +23,8 @@ public class TeamMemberDAO {
         teamMemberMapper.enterTeam(teamMemberDto);
     }
 
+    public TeamMemberDTO selectOne(TeamMemberDTO teamMemberDto) {
+        return teamMemberMapper.selectOne(teamMemberDto);
+    }
+
 }

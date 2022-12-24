@@ -4,6 +4,7 @@ import com.fivet.buddy.dto.ChatRoomDTO;
 import com.fivet.buddy.dto.TeamDTO;
 import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.services.ChatRoomService;
+import com.fivet.buddy.services.TeamMemberService;
 import com.fivet.buddy.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,10 @@ public class TeamController {
     private ChatRoomService chatRoomService;
 
     @Autowired
-    HttpSession session;
+    private HttpSession session;
+
+    @Autowired
+    private TeamMemberService teamMemberService;
 
     //팀 생성 페이지로 이동
     @RequestMapping("add")
@@ -51,14 +55,20 @@ public class TeamController {
 
     //팀 이동
     @PostMapping("goTeam")
-    public String goTeam(int teamSeq, Model model) {
+    public String goTeam(TeamMemberDTO teamMemberDto, Model model) {
+
+        teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+        teamMemberDto = teamMemberService.selectOne(teamMemberDto);
         // 팀 번호 session 부여
-        session.setAttribute("teamSeq", teamSeq);
+        session.setAttribute("teamSeq", teamMemberDto.getTeamSeq());
+        // 회원의 팀내 닉네임 session 부여
+        session.setAttribute("teamMemberNickname", teamMemberDto.getTeamMemberNickname());
+        // 팀 이름 session 부여
+        session.setAttribute("teamName", teamService.managementTeamSelectTeam(String.valueOf(teamMemberDto.getTeamSeq())));
         //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
-        session.setAttribute("teamNickName",1);
         Map<String, Integer> param = new HashMap<>();
-        param.put("teamSeq", teamSeq);
-        param.put("memberSeq", (int)session.getAttribute("memberSeq"));
+        param.put("teamSeq", teamMemberDto.getTeamSeq());
+        param.put("memberSeq", teamMemberDto.getMemberSeq());
         // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
         List<ChatRoomDTO> chatRoomList = chatRoomService.chatRoomList(param);
         model.addAttribute("chatRoomList", chatRoomList);
@@ -74,8 +84,6 @@ public class TeamController {
         model.addAttribute("teamName",teamName);
         return "team/teamSetting";
     }
-
-
 
     // Exception Handler
     @ExceptionHandler(Exception.class)

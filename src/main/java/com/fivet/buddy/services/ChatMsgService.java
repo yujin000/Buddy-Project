@@ -11,5 +11,7 @@ public class ChatMsgService {
     @Autowired
     private ChatMsgDAO chatMsgDao;
 
-    //public void insertChatMsg(ChatMsgDTO chatMsgDto) {    }
+    public void insertChatMsg(ChatMsgDTO chatMsgDto) {
+        chatMsgDao.insertChatMsg(chatMsgDto);
+    }
 }

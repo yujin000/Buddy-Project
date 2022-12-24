@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 public class ChatMsgDAO {
 
     @Autowired
-    ChatMsgMapper chatMsgMapper;
+    private ChatMsgMapper chatMsgMapper;
 
-    void insertChatMsg(ChatMsgDTO chatMsgDto) {
+    public void insertChatMsg(ChatMsgDTO chatMsgDto) {
         chatMsgMapper.insertChatMsg(chatMsgDto);
     }
 }

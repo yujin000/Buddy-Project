@@ -38,7 +38,7 @@
         end, member_seq asc
     </select>
 
-    <!-- 팀 관리 팀 이름 출력-->
+    <!-- 팀 관리 팀 이름 출력 (팀 번호를 통해 출력하는 과정은 전부 이 SQL문을 쓸 수 있기 때문에, 나중에 이름 변경할것.)-->
     <select id="managementTeamSelectTeam" resultType="String">
         select team_name from team where team_seq = #{value}
     </select>

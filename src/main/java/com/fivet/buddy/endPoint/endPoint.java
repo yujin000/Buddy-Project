@@ -19,12 +19,12 @@ import java.util.*;
 public class endPoint {
 
     // 스프링 컨테이너에서 생성한 bean을 dependency lookup으로 찾아오기
-    private ChatMsgService service = ApplicationContextProvider.getApplicationContext().getBean(ChatMsgService.class);
+    private ChatMsgService chatMsgService = ApplicationContextProvider.getApplicationContext().getBean(ChatMsgService.class);
 
     private static Map<Integer, Set<Session>> sessions = Collections.synchronizedMap(new HashMap<>());
 
     @OnOpen
-    public void onOpen(@PathParam("ChatRoomSeq") int ChatRoomSeq, Session s) {
+    public void onOpen(@PathParam("chatRoomSeq") int ChatRoomSeq, Session s) {
         System.out.println("open session : " + s.toString());
         System.out.println("roomNum : " + ChatRoomSeq);
 
@@ -47,16 +47,16 @@ public class endPoint {
         ChatMsgDTO chatMsgDto = g.fromJson(json, ChatMsgDTO.class);
 
         for(Session s : sessions.get(chatMsgDto.getChatRoomSeq())) {
-            System.out.println("send data : " + chatMsgDto.getContent());
-            s.getBasicRemote().sendText(chatMsgDto.getTeamMemberNickname() + " <br> " + chatMsgDto.getContent());
+            System.out.println("send data : " + chatMsgDto.getChatContent());
+            s.getBasicRemote().sendText(chatMsgDto.getTeamMemberNickname() + " <br> " + chatMsgDto.getChatContent());
         }
 
-        //service.(chatMsgDto);
+        chatMsgService.insertChatMsg(chatMsgDto);
 
     }
 
     @OnClose
-    public void onClose(@PathParam("ChatroomSeq") int chatRoomSeq, Session s) {
+    public void onClose(@PathParam("chatRoomSeq") int chatRoomSeq, Session s) {
         sessions.get(chatRoomSeq).remove(s);
     }
 }

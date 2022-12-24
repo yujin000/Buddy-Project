@@ -65,7 +65,7 @@ public class TeamController {
         // 회원의 팀내 닉네임 session 부여
         session.setAttribute("teamMemberNickname", teamMemberDto.getTeamMemberNickname());
         // 팀 이름 session 부여
-        session.setAttribute("teamName", teamService.managementTeamSelectTeam(String.valueOf(teamMemberDto.getTeamSeq())));
+        session.setAttribute("teamName", teamService.selectTeamName(teamMemberDto.getTeamSeq()));
         //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
         Map<String, Integer> param = new HashMap<>();
         param.put("teamSeq", teamMemberDto.getTeamSeq());

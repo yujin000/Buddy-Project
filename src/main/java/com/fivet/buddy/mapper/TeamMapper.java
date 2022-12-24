@@ -18,4 +18,6 @@ public interface TeamMapper {
     void managementUpdateTeamName(TeamDTO teamDto);
 
     void deleteTeam(int teamSeq);
+
+    String selectTeamName(int teamSeq);
 }

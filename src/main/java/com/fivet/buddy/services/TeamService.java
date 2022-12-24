@@ -52,4 +52,9 @@ public class TeamService {
     public String managementTeamSelectTeam(String teamSeq){
         return teamDao.selectTeamName(teamSeq);
     }
+
+    // 팀 번호로 팀 이름 탐색
+    public String selectTeamName(int teamSeq) {
+        return teamDao.selectTeamName(teamSeq);
+    }
 }

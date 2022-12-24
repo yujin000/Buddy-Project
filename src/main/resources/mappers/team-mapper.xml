@@ -52,4 +52,7 @@
     <delete id="deleteTeam">
         delete from team where team_seq = #{value}
     </delete>
+    <select id="selectTeamName" resultType="String">
+        select team_name from team where team_seq = #{value}
+    </select>
 </mapper>

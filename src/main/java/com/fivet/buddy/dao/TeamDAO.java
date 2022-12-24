@@ -39,7 +39,11 @@ public class TeamDAO {
 
     //팀 삭제
     public void deleteTeam(int teamSeq){
-        System.out.println("dao");
         teamMapper.deleteTeam(teamSeq);
+    }
+
+    // 팀 이름으로 회원 출력
+    public String selectTeamName(int teamSeq) {
+        return teamMapper.selectTeamName(teamSeq);
     }
 }

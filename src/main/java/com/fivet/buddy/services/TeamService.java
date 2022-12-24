@@ -50,6 +50,6 @@ public class TeamService {
 
     //팀 관리 팀 이름 출력
     public String managementTeamSelectTeam(String teamSeq){
-        return teamDao.managementTeamSelectTeam(teamSeq);
+        return teamDao.selectTeamName(teamSeq);
     }
 }

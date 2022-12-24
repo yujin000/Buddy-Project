@@ -37,3 +37,4 @@ out/
 .vscode/
 
 ### application.properties (각종 보안정보 문제로 제외) ###
+application.properties

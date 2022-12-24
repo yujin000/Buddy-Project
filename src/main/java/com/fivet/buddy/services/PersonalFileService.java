@@ -44,4 +44,9 @@ public class PersonalFileService {
         map.put("basicKey",basicKey);
         return personalFileDao.selectMyFiles(map);
     }
+
+    // 하위 폴더 파일 찾기
+    public List<PersonalFileDTO> selectChildFiles(String resourceKey) throws Exception{
+        return personalFileDao.selectChildFiles(resourceKey);
+    }
 }

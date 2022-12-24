@@ -22,4 +22,7 @@ public interface PersonalFolderMapper {
     String myBasicFolder(int memberSeq);
 
     List<PersonalFolderDTO> selectChildFolders(String resourceKey);
+
+    String nowFolder(String resourceKey);
+
 }

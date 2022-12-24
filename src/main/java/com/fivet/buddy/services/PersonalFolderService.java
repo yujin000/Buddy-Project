@@ -98,4 +98,9 @@ public class PersonalFolderService {
     public List<PersonalFolderDTO> selectChildFolders(String resourceKey) {
         return personalFolderDao.selectChildFolders(resourceKey);
     }
+
+    // 현재 폴더 이름
+    public String nowFolder(String resourceKey) {
+        return personalFolderDao.nowFolder(resourceKey);
+    }
 }

@@ -29,4 +29,15 @@
                 and
                     personal_folder_parent_key = #{basicKey})
     </select>
+
+    <!-- 하위 폴더 파일 가져오기 -->
+    <select id="selectChildFiles" resultType="com.fivet.buddy.dto.PersonalFileDTO">
+        select
+            *
+        from
+            personal_files
+        where
+            personal_files_folder_key = #{value}
+    </select>
+
 </mapper>

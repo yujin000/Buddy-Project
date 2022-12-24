@@ -10,6 +10,13 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
             crossorigin="anonymous"
     ></script>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+            integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
     <script src="/static/js/jQueryCheck.js"></script>
 </head>
 <body>
@@ -45,9 +52,11 @@
                         <div th:if="${#strings.isEmpty(myFolders)}">
                             아직 파일이 없습니다.
                         </div>
+                        <div th:text="${session.memberName}" id="main"></div>
                         <div th:unless="${#strings.isEmpty(myFolders)}">
                             <th:block th:each="folder : ${myFolders}">
-                                <li th:text="${folder.getPersonalFolderName()}"></li>
+                                <i class="fa-solid fa-chevron-right arrowBtn" arrowType="right"></i>
+                                <li th:text="${folder.getPersonalFolderName()}" class="sideList" th:data-folder="${folder.getPersonalFolderKey()}" data-resource-type="folder"></li><br>
                             </th:block>
                         </div>
                     </ul>
@@ -83,21 +92,21 @@
         <section class="fileSection">
             <!-- 헤더 -->
             <div class="fileHeader">
-                <h1>MYBOX</h1>
+                <h1 th:text="${nowFolder}"></h1>
             </div>
             <!-- 헤더-버튼 -->
-            <div class="attachBtnArea">
-                <input type="checkbox">
-                <form action="/personalFile/uploadFile" method="post" enctype="multipart/form-data" id="uploadFileForm">
-                    <label for="uploadFile" class="fileLabel" >
-                        업로드
-                        <input type="file" name="multipartFile" id="uploadFile" multiple>
-                        <input type="hidden" th:value="${parentKey}" name="attachFolder">
-                    </label>
-                </form>
-                <button type="button" id="newFolder">새 폴더</button>
-                <button type="button">공유</button>
-            </div>
+            <form action="/personalFile/uploadFile" method="post" enctype="multipart/form-data" id="uploadFileForm">
+                <div class="attachBtnArea">
+                    <input type="checkbox">
+                        <label for="uploadFile" class="fileLabel" >
+                            업로드
+                            <input type="file" name="multipartFile" id="uploadFile" accept=".png,.jpg,.jpeg,.gif,.txt,.zip" multiple>
+                            <input type="hidden" th:value="${parentKey}" name="attachFolder">
+                        </label>
+                    <button type="button" id="newFolder">새 폴더</button>
+                    <button type="button">공유</button>
+                </div>
+            </form>
             <!-- 본문 -->
             <div class="fileMainPlace">
                 <div id="listArea">
@@ -223,7 +232,7 @@
                 }).done(function(rsp){
                     // rsp : true(사용할 수 있음), false(사용할 수 없음)
                     if(!rsp) {
-                        alert("드라이브 내에 이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
+                        alert("개인 드라이브 내에 이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
                         modifyText.attr("disabled",false).css("color","red");
                     }else{
                         location.reload();
@@ -262,7 +271,17 @@
 
 <!-- 파일 업로드 버튼 클릭 -->
 <script>
-    $("#uploadFile").on('change',fileCheck);
+    $("#uploadFile").on('change',function(){
+        let extension = this.value.split(".").pop().toLowerCase();
+        let accept = ["png","jpg","jpeg","gif"];
+        let result = $.inArray(extension,accept);
+
+        if(result == -1){
+            alert("이미지, 텍스트 파일만 업로드 가능합니다.. (.png, .jpg, jpeg, .gif, .txt)");
+            this.value = "";
+        }
+
+    });
 
     function fileCheck(e) {
         if (e.target.files[0]) {
@@ -273,6 +292,39 @@
     }
 </script>
 
+<!-- 사이드 메뉴 arrow 클릭 -->
+<script>
+
+    $(".arrowBtn").on('click',function(){
+
+        let nowArrow = $(this).attr('arrowType');
+
+        if(nowArrow == 'right'){
+            $(this).attr('arrowType','down');
+            $(this).attr('class','fa-solid fa-chevron-down arrowBtn');
+
+        }else{
+            $(this).attr('arrowType','right');
+            $(this).attr('class','fa-solid fa-chevron-right arrowBtn');
+        }
+
+    })
+</script>
+
+<!-- 사이드 메뉴 클릭 -->
+<script>
+    $("#main").on('click',function(){
+        location.reload();
+    })
+
+    $(".sideList").on('click',function(){
+        let thisType = $(this).data('resource-type');
+        if(thisType == 'folder'){
+            let folderData = $(this).data('folder');
+            location.href = "/drive/detailDrive?resourceKey="+folderData;
+        }
+    })
+</script>
 
 </body>
 </html>

@@ -43,15 +43,31 @@ public class DriveController {
         model.addAttribute("parentKey",personalFolderService.myBasicFolder(memberSeq));
         model.addAttribute("myFolders",myFolders);
         model.addAttribute("myFiles",myFiles);
+        // 타이틀(현재 폴더 이름) 뽑기
+        model.addAttribute("nowFolder",personalFolderService.nowFolder(personalFolderService.myBasicFolder(memberSeq)));
         return "drive/fileDrive";
     }
 
     // 폴더 세부내역으로 이동
     @RequestMapping("detailDrive")
     public String detailDrive(String resourceKey, Model model) throws Exception{
-        List<PersonalFolderDTO> myFolders = personalFolderService.selectChildFolders(resourceKey);
-        model.addAttribute("parentKey",resourceKey);
+        int memberSeq = Integer.parseInt(session.getAttribute("memberSeq").toString());
+        // 전체
+        List<PersonalFolderDTO> myFolders = personalFolderService.selectMyFolders(memberSeq);
+        List<PersonalFileDTO> myFiles = personalFileService.selectMyFiles(memberSeq);
         model.addAttribute("myFolders",myFolders);
+        model.addAttribute("myFiles",myFiles);
+
+        // 하위폴더
+        List<PersonalFolderDTO> childFolders = personalFolderService.selectChildFolders(resourceKey);
+        List<PersonalFileDTO> childFiles = personalFileService.selectChildFiles(resourceKey);
+        model.addAttribute("parentKey",resourceKey);
+        model.addAttribute("childFolders",childFolders);
+        model.addAttribute("childFiles",childFiles);
+
+        // 타이틀(현재 폴더 이름) 뽑기
+        model.addAttribute("nowFolder",personalFolderService.nowFolder(resourceKey));
         return "drive/detailDrive";
     }
+
 }

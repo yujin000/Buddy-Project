@@ -48,4 +48,9 @@ public class PersonalFolderDAO {
     public List<PersonalFolderDTO> selectChildFolders(String resourceKey) {
         return personalFolderMapper.selectChildFolders(resourceKey);
     }
+
+    // 현재 폴더 이름
+    public String nowFolder(String resourceKey) {
+        return personalFolderMapper.nowFolder(resourceKey);
+    }
 }

@@ -388,3 +388,18 @@ aside {
     border: none;
     cursor: pointer;
 }
+
+/* 사이드 폴더 */
+.sideList{
+    display: inline;
+    cursor: pointer;
+}
+.fa-solid{
+    margin: 10px 0px 0px 20px;
+    cursor: pointer;
+    width: 20px;
+}
+#main{
+    cursor: pointer;
+    margin: 5px 0px 0px 10px;
+}

@@ -87,4 +87,14 @@
         order by
             personal_folder_date desc
     </select>
+
+    <!-- 현재 폴더 이름 -->
+    <select id="nowFolder" resultType="String">
+        select
+            personal_folder_name
+        from
+            personal_folder
+        where
+            personal_folder_key = #{value}
+    </select>
 </mapper>

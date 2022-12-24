@@ -11,4 +11,6 @@ public interface PersonalFileMapper {
     void uploadFile(PersonalFileDTO personalFileDto);
 
     List<PersonalFileDTO> selectMyFiles(Map<String, Object> map);
+
+    List<PersonalFileDTO> selectChildFiles(String resourceKey);
 }

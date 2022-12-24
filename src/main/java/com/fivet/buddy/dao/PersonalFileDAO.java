@@ -23,4 +23,9 @@ public class PersonalFileDAO {
     public List<PersonalFileDTO> selectMyFiles(Map<String, Object> map) throws Exception{
         return personalFileMapper.selectMyFiles(map);
     }
+
+    // 하위 폴더 파일 찾기
+    public List<PersonalFileDTO> selectChildFiles(String resourceKey) throws Exception{
+        return personalFileMapper.selectChildFiles(resourceKey);
+    }
 }

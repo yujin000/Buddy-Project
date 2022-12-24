@@ -28,7 +28,7 @@
                   name="team_name"
                   id="team_name"
                   class="input_text"
-                  value="팀 이름"
+                  th:value="${teamName}"
           />
           <button type="submit" id="changeTeam" class="editBtn">
             변경
@@ -39,6 +39,8 @@
 
     <div class="memberProfile">
       <p class="subTitle">멤버 관리</p>
+      <div th:if="${teamMemberDtoList!=null}">
+        <th:block th:each="teamMemberDtoList : ${teamMemberDtoList}">
       <form action="">
         <div class="article">
           <div class="metaData">
@@ -49,7 +51,7 @@
                       name="memberName"
                       id="memberName"
                       class="inputText"
-                      value="이름"
+                      th:value="${teamMemberDtoList.teamMemberNickname}"
                       readonly
               />
               <input
@@ -57,7 +59,7 @@
                       name="memberEmail"
                       id="memberEmail"
                       class="inputEmail"
-                      value="이메일"
+                      th:value="${teamMemberDtoList.memberId}"
                       readonly
               />
             </div>
@@ -81,6 +83,8 @@
           </div>
         </div>
       </form>
+        </th:block>
+      </div>
     </div>
   </div>
   <div class="modal">

@@ -1,0 +1,55 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="NOTICE_BOARD" directorySegmentName="seg_0" id="349019C9-7281-36FD-1FEC-94E844E6B1B4">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<schemaObject>2441D5F9-396D-9F30-EEBC-64C424D4A870</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="NOTICE_CONTENTS" id="180AC8A4-5AE6-50D7-313E-CF2E41D8C01E">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NOTICE_WRITER" id="89B98F36-5FAC-A344-D85F-4859BE9A0ED3">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NOTICE_WRITE_DATE" id="A0BA02B5-A839-613C-C3D8-D08C3BA3F518">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NOTICE_TITLE" id="D1C19630-0B7B-3315-20FD-C4DA6ECE5B17">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NOTICE_SEQ" id="F41C9686-2B1E-BEA6-C420-A67A4C2C6A66">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_NOTICE_BOARD_MEMBER" id="9EFD4125-03EB-14ED-2C1F-7125C488533F">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="NOTICE_BOARD_PK" id="84F42E50-A5B6-C210-22FC-CF9CDA8D64EC">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<schemaObject>2441D5F9-396D-9F30-EEBC-64C424D4A870</schemaObject>
+<indexSort>SORTED</indexSort>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

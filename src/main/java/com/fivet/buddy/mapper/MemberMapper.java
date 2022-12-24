@@ -1,6 +1,7 @@
 package com.fivet.buddy.mapper;
 
 import com.fivet.buddy.dto.MemberDTO;
+import com.fivet.buddy.dto.MemberImgDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -17,9 +18,13 @@ public interface MemberMapper {
     MemberDTO selectAccountInfoForNK(MemberDTO memberDto);
     MemberDTO selectMyInfo(String memberSeq);
     MemberDTO selectMyProfile(String memberSeq);
+    String selectProfileImg(String memberImgMemberSeq);
     void updatePhone(MemberDTO memberDto);
     int selectMyProfilePw(MemberDTO memberDto);
     void updatePw(MemberDTO memberDto);
+
+    void insertProfileImg(int memberSeq);
+    void updateProfileImg(MemberImgDTO memberImgDto);
     void deleteMember(String memberSeq);
     List<MemberDTO> selectMembers();
     List<MemberDTO> memberSearch(String searchPick, String memberSearchText);

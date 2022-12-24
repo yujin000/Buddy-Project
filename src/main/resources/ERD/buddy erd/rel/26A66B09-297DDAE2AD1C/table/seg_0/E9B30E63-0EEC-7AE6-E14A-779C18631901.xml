@@ -1,0 +1,118 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E9B30E63-0EEC-7AE6-E14A-779C18631901" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="QNA_FILES">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>QNA_FILES</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>8B846CFD-2508-2A21-B706-2C5C771F5EA3</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="QNA_FILES_SEQ" id="05C8644A-DB01-A2B7-0ED2-33F46033E981">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>QNA_FILES</sourceObjSchema>
+<sourceObjName>QNA_FILES_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>ECDC8E40-503B-7863-1AB8-C6C343B69C94</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="QNA_ORINAME" id="5751645C-DE0E-4679-0E19-7F40057AD0C8">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>QNA_FILES</sourceObjSchema>
+<sourceObjName>QNA_ORINAME</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>2613BFDC-D699-3F27-FA91-26E8375DF2AA</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="QNA_SYSNAME" id="20FF68AC-492A-CB6B-165D-39BD94799599">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>QNA_FILES</sourceObjSchema>
+<sourceObjName>QNA_SYSNAME</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>E69AB3AD-3FB0-A6A0-CA36-364A2B7C9B50</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="QNA_SEQ" id="F71B1B36-B93E-42DF-629A-EB752F166825">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>QNA_FILES</sourceObjSchema>
+<sourceObjName>QNA_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>35D97A01-EF04-0E18-7367-E4CE971C1127</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6281A345-B556-FCDF-FE24-BED5B691B38D" referredColumn="2FB052F6-3D66-90D8-F338-9DDF9BF9B77F"/>
+</associations>
+</Column>
+<Column name="QNA_CATEGORY" id="D094F71B-75EE-FFF4-CD06-D34045498425">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>QNA_FILES</sourceObjSchema>
+<sourceObjName>QNA_CATEGORY</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>0A23FDA8-0D83-AF53-E0C9-0A61AF600351</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="80D0B665-6C9C-2B8C-073E-839A48EA7ACF" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="QNA_FILES_PK">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>SYS_C007791</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>EA9C86B5-A338-47FB-D156-D68994B00D93</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="05C8644A-DB01-A2B7-0ED2-33F46033E981"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7728DBF0-D800-2E67-F5B4-5ADBE06A26D1" name="FK_QNA_FILES_QNA_BOARD">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F71B1B36-B93E-42DF-629A-EB752F166825"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

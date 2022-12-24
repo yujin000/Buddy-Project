@@ -1,0 +1,126 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="BDA43D35-7DCB-1908-310A-182C99FAB5C1" schemaObject="2441D5F9-396D-9F30-EEBC-64C424D4A870" name="TEAM_MEMBER">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>TEAM_MEMBER</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 08:24:50 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="TEAM_SEQ" id="C5AC2D75-983F-50DA-48C9-C5DCF5A012B8">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>TEAM_MEMBER</sourceObjSchema>
+<sourceObjName>TEAM_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 08:24:50 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="94F0D827-5838-6255-FA2A-F8BC9B181BD5" referredColumn="DC1277C3-746E-E306-12FE-A80D38758193"/>
+</associations>
+</Column>
+<Column name="MEMBER_SEQ" id="FAC541E5-411F-539C-481B-0F386CB39FD5">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>TEAM_MEMBER</sourceObjSchema>
+<sourceObjName>MEMBER_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 08:24:50 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D60066AB-5CB8-AC10-4AC6-62D047AA81FB" referredColumn="DE5AA82C-33D2-3630-F845-E19A41844ED9"/>
+</associations>
+</Column>
+<Column name="MEMBER_ID" id="5A4FC66E-EA89-FCDD-A1C7-468671E313DF">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>TEAM_MEMBER</sourceObjSchema>
+<sourceObjName>MEMBER_ID</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 08:24:50 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TEAM_MEMBER_NICKNAME" id="590A02E9-E00B-9E37-27E5-443D06030D2E">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>TEAM_MEMBER</sourceObjSchema>
+<sourceObjName>TEAM_MEMBER_NICKNAME</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 08:24:50 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="GRADE" id="85DE8CC7-5037-C5EB-9F90-35F17821FB3C">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>TEAM_MEMBER</sourceObjSchema>
+<sourceObjName>GRADE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 08:24:50 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TEAM_JOIN_DATE" id="BBF5AE78-0FDE-718A-2F1C-C4495696966D">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>TEAM_MEMBER</sourceObjSchema>
+<sourceObjName>TEAM_JOIN_DATE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 08:24:50 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<defaultValue>sysdate</defaultValue>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="2227AC27-0356-701E-ABF8-8A01F0A3D4B3" name="FK_TEAM_MEMBER_MEMBER">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 08:25:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="FAC541E5-411F-539C-481B-0F386CB39FD5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="593FF983-C192-AA54-6BC3-53FD0A41C31B" name="FK_TEAM_MEMBER_TEAM">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 08:25:40 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C5AC2D75-983F-50DA-48C9-C5DCF5A012B8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

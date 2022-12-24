@@ -1,0 +1,66 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="PERSONAL_FOLDER" directorySegmentName="seg_0" id="55FE0AFB-009E-41F5-7025-6FF6D3E023EB">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:51:53 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<schemaObject>2441D5F9-396D-9F30-EEBC-64C424D4A870</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>CC41804F-B04E-C685-53BE-15227D2C82CA</segment>
+<tableSpace>8C8E4168-4AEB-DDB3-28D0-CE831471E094</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="PERSONAL_FOLDER_NAME" id="0212C2CC-78DA-D50D-9BAF-CC4AFB0069B7">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:51:53 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PERSONAL_FOLDER_DATE" id="25DDA7C3-2C68-58BA-88F6-6F220D4E5EF6">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:51:53 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PERSONAL_FOLDER_MEMBER_SEQ" id="8F59EF9B-0A70-D95E-3D8D-88D469A922C7">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:51:53 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PERSONAL_FOLDER_KEY" id="9B3473B7-F6DF-147A-D1EC-D6F5D46888DD">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:51:53 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PERSONAL_FOLDER_PARENT_KEY" id="CF0FFF0F-1E6E-6F72-68F9-EEA3C51CE504">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:51:53 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PERSONAL_FOLDER_PATH" id="D15E8954-EBC2-3CFB-CE1A-555AF1272D16">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:51:53 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_PERSONAL_FOLDER_MEMBER" id="9F024B0C-0897-605B-A220-9032E9BAE46E">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:54:12 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PERSONAL_FOLDER_PK" id="E60F0977-B33D-47B2-89C9-8450197D05D1">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 05:51:53 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<schemaObject>2441D5F9-396D-9F30-EEBC-64C424D4A870</schemaObject>
+<segment>6535C8A7-9FA8-EF6E-E187-1E279A13DB67</segment>
+<tableSpace>8C8E4168-4AEB-DDB3-28D0-CE831471E094</tableSpace>
+<indexSegment>6535C8A7-9FA8-EF6E-E187-1E279A13DB67</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

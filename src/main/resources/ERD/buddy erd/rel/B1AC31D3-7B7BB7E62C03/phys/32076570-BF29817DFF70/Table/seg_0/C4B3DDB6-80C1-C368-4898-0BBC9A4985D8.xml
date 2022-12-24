@@ -1,0 +1,84 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="EVENT" directorySegmentName="seg_0" id="C4B3DDB6-80C1-C368-4898-0BBC9A4985D8">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<schemaObject>2441D5F9-396D-9F30-EEBC-64C424D4A870</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="event_writer" id="1EF8DCD9-EABD-FB74-B589-F470E0F77E76">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+</ColumnProxy>
+<ColumnProxy name="event_name" id="3D78068A-A387-6175-9526-4C0B64EF9435">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+</ColumnProxy>
+<ColumnProxy name="event_memo" id="3FF6D42D-E26F-2814-88A3-07C72532F613">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+</ColumnProxy>
+<ColumnProxy name="team_seq" id="5212E97D-E398-9F77-E4F4-97CBA9530E11">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+</ColumnProxy>
+<ColumnProxy name="event_seq" id="8CBC3238-64C1-7AE9-7BC0-8EFC0CABC664">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+</ColumnProxy>
+<ColumnProxy name="event_type" id="DC75FCE6-29FF-2D4C-CE8C-17F34CF58C67">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+</ColumnProxy>
+<ColumnProxy name="event_location" id="E276CEF7-1FA7-6576-D7CA-82335A7A36F3">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+</ColumnProxy>
+<ColumnProxy name="event_start" id="F8D1CCBD-57E9-A693-CCBF-03B2F698FB82">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+</ColumnProxy>
+<ColumnProxy name="event_end" id="FFB71A9F-8C1D-0AB5-1911-97213881BB80">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nameHasQuotes>true</nameHasQuotes>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_EVENT_TEAM" id="A66B8F8D-9673-24B5-9E11-11CAE682B692">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="EVENT_PK" id="2BDCE494-B392-A198-BE5A-E43E8E95C90A">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<schemaObject>2441D5F9-396D-9F30-EEBC-64C424D4A870</schemaObject>
+<indexSort>SORTED</indexSort>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

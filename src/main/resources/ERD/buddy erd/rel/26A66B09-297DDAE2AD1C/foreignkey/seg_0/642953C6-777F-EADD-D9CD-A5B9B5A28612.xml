@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="642953C6-777F-EADD-D9CD-A5B9B5A28612" containerWithKeyObject="5B2DBD15-C302-D32C-F30E-7E0942C55BF0" localFKIndex="B74F71E8-DDD5-C804-3AE4-F4E7192CBBC8" name="FK_VOTE_CHAT_ROOM">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:27:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<referredTableLongName>BUDDY.CHAT_ROOM</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>9DFC45B5-1F40-CE1C-A54F-84263FEAA8F2</referredTableID>
+<keyObject>DA7DF21F-EA18-632C-0C99-751220EA0651</keyObject>
+<referredKeyID>DA7DF21F-EA18-632C-0C99-751220EA0651</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>CHAT_ROOM_SEQ</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

@@ -1,0 +1,76 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="DC7C6ADB-174A-FDEA-9585-0D1EF85D8832" schemaObject="2441D5F9-396D-9F30-EEBC-64C424D4A870" name="MEMBER_IMG">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>MEMBER_IMG</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:41 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>1902D732-1770-2D03-95EF-4F64FC2D7B86</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MEMBER_IMG_MEMBER_SEQ" id="A9889911-B922-657A-2C19-AED9F13F1AA9">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>MEMBER_IMG</sourceObjSchema>
+<sourceObjName>MEMBER_IMG_MEMBER_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>22B45FAD-775E-6715-9681-A3B403718F99</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="197E7EEA-FDA4-6261-E325-E290D619788E" referredColumn="DE5AA82C-33D2-3630-F845-E19A41844ED9"/>
+</associations>
+</Column>
+<Column name="MEMBER_IMG_ORINAME" id="C6890223-C2CF-57BB-D4EC-0507ED26AB18">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>MEMBER_IMG</sourceObjSchema>
+<sourceObjName>MEMBER_IMG_ORINAME</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>29640F8E-8E56-77E6-3340-DF92EDAB69BB</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MEMBER_IMG_SYSNAME" id="6EA0EF82-A9A2-856C-4E42-25BA0E3C4D97">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>MEMBER_IMG</sourceObjSchema>
+<sourceObjName>MEMBER_IMG_SYSNAME</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>32EFC137-DD10-E593-9BFB-FBD060DD0280</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="EBA50B40-0144-056D-71F9-7C6F537D3829" name="FK_MEMBER_IMG_MEMBER">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A9889911-B922-657A-2C19-AED9F13F1AA9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

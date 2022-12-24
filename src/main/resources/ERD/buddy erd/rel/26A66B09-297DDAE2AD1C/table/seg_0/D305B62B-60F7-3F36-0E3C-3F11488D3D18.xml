@@ -1,0 +1,139 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="D305B62B-60F7-3F36-0E3C-3F11488D3D18" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="MEMBER">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>MEMBER</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>4E8263F4-ADC3-DFB9-6CE0-8813B251BF6A</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MEMBER_SEQ" id="D253DB47-6777-FFFE-B650-D004B2F44CF2">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>MEMBER</sourceObjSchema>
+<sourceObjName>MEMBER_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>DE5AA82C-33D2-3630-F845-E19A41844ED9</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MEMBER_ID" id="EFEA1B18-6D5C-C2AD-FDB2-7169796A6369">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>MEMBER</sourceObjSchema>
+<sourceObjName>MEMBER_ID</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>B79F1EDC-BDCD-577C-5160-59D4A0CD24D6</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MEMBER_PW" id="5AF1AAAC-9B81-6639-16EB-B8BEC58A335A">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>MEMBER</sourceObjSchema>
+<sourceObjName>MEMBER_PW</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>07A4830D-9896-6443-AF8A-94A3A269F0FC</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 BYTE</dataTypeSize>
+<ownDataTypeParameters>200 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MEMBER_NAME" id="6CEB4B4B-2107-1145-4BE2-E5E06299A5CA">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>MEMBER</sourceObjSchema>
+<sourceObjName>MEMBER_NAME</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>37D549C3-DC60-FEF3-4919-662F54B1D560</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MEMBER_PHONE" id="9EA6B1D5-0543-188C-D42C-7E82BD2745EE">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>MEMBER</sourceObjSchema>
+<sourceObjName>MEMBER_PHONE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>B5DC2F52-102C-82D1-35C2-BC8FE4F43021</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MEMBER_SIGNUP_DATE" id="B7F63204-F1B1-7DFF-F19A-00B8C3FA5BA3">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>MEMBER</sourceObjSchema>
+<sourceObjName>MEMBER_SIGNUP_DATE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>30FB8341-DB88-DC3C-892A-B68A1BC50982</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<defaultValue>sysdate</defaultValue>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MEMBER_LOGTYPE" id="A66D7CA2-3D1D-18CF-68CA-20E6388D955B">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>MEMBER</sourceObjSchema>
+<sourceObjName>MEMBER_LOGTYPE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>0E5CC503-264C-0266-C115-26577F95C9D6</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="5E6FE299-75D2-5BCD-EBFF-76BB432DCE51" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="MEMBER_PK">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>SYS_C007648</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>2D44A903-7231-382D-C7FA-740C970F4C38</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D253DB47-6777-FFFE-B650-D004B2F44CF2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

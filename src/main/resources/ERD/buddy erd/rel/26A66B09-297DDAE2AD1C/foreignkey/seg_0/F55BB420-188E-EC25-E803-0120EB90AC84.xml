@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="F55BB420-188E-EC25-E803-0120EB90AC84" containerWithKeyObject="54A7640A-5A54-D836-3132-2AFEB70EF863" localFKIndex="04D036DF-A580-9E1C-8B47-CB76AE9F0D85" name="FK_EVENT_TEAM">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>7020777D-C8C6-1A36-FAAE-8119157EB2D4</importedID>
+<referredTableLongName>BUDDY.TEAM</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>BB0D1158-B62D-BABF-DAF0-4AC7209E06FE</referredTableID>
+<keyObject>575EF796-C94E-2C58-DF1B-39580DF3DB11</keyObject>
+<referredKeyID>575EF796-C94E-2C58-DF1B-39580DF3DB11</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>TEAM_SEQ</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

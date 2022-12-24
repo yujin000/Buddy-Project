@@ -1,7 +1,9 @@
 package com.fivet.buddy.dao;
 
 import com.fivet.buddy.dto.MemberDTO;
+import com.fivet.buddy.dto.MemberImgDTO;
 import com.fivet.buddy.mapper.MemberMapper;
+import com.fivet.buddy.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +14,9 @@ public class MemberDAO {
 
     @Autowired
     private MemberMapper memberMapper;
+
+    @Autowired
+    private TeamMapper teamMapper;
 
     // 회원가입 (signUp)
     public void signUp(MemberDTO memberDto) throws Exception {
@@ -70,6 +75,21 @@ public class MemberDAO {
     //비밀번호 수정
     public void updatePw(MemberDTO memberDto) throws Exception{
         memberMapper.updatePw(memberDto);
+    }
+
+    //프로필 이미지 출력
+    public String selectProfileImg(String memberImgMemberSeq) throws Exception{
+        return memberMapper.selectProfileImg(memberImgMemberSeq);
+    }
+
+    //회원가입 시 프로필 이미지 기본값으로 추가
+    public void insertProfileImg(int memberSeq) throws Exception{
+        memberMapper.insertProfileImg(memberSeq);
+    }
+
+    //프로필 이미지 업로드
+    public void updateProfileImg(MemberImgDTO memberImgDto) throws Exception{
+        memberMapper.updateProfileImg(memberImgDto);
     }
 
     //회원 탈퇴

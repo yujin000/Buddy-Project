@@ -9,15 +9,21 @@
         insert into
             team_member
         values
-            (#{teamSeq}, #{memberSeq}, #{teamMemberNickname}, 'coworker', sysdate)
+            (#{teamSeq}, #{memberSeq}, #{memberId}, #{teamMemberNickname}, 'coworker', sysdate)
     </insert>
 
-    <!--    팀 생성자가 팀 생성시, 팀 멤버 목록에 추가 -->
+    <!-- 팀 생성자가 팀 생성시, 팀 멤버 목록에 추가 -->
     <insert id="createTeam">
+        <selectKey order="BEFORE" keyProperty="memberId" resultType="string">
+            select
+                member_id
+            from
+                member
+            where member_seq = #{memberSeq}
+        </selectKey>
         insert into
             team_member
         values
-            (#{teamSeq}, #{memberSeq}, #{teamMemberNickname}, 'manager', sysdate)
+            (#{teamSeq}, #{memberSeq}, #{memberId}, #{teamMemberNickname}, 'manager', sysdate)
     </insert>
-
 </mapper>

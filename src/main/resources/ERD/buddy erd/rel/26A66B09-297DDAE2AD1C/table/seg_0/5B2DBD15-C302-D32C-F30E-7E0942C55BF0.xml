@@ -1,0 +1,182 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5B2DBD15-C302-D32C-F30E-7E0942C55BF0" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="VOTE">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>VOTE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:26:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="VOTE_SEQ" id="8AC86315-6791-3C9A-E3F2-11580DDB1169">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:26:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TEAM_SEQ" id="0774D59F-2A38-3FB8-AD74-4B71F7A67AFC">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>TEAM_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:26:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="22597508-2F09-3591-93D9-C1980D35C609" referredColumn="0E09DCC0-E7B5-18A7-2534-06EAC99D8270"/>
+</associations>
+</Column>
+<Column name="CHAT_ROOM_SEQ" id="44DE59BE-CCA6-C493-D1CF-287D14B6D775">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>CHAT_ROOM_SEQ</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:26:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="642953C6-777F-EADD-D9CD-A5B9B5A28612" referredColumn="D34ACCB6-8436-0C09-9056-64170366BFD7"/>
+</associations>
+</Column>
+<Column name="VOTE_TITLE" id="9FEDEE39-E73A-BFF5-21DC-693BCC93F39A">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_TITLE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:26:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="VOTE_CONTENT" id="AF1F74B2-B84D-8598-1B1B-95FD32F66F7C">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_CONTENT</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:26:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="VOTE_ANONYMOUS" id="F05A40BD-E20A-C76F-3D93-D40E1FBE0524">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_ANONYMOUS</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:26:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<defaultValue>0</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="VOTE_DUPLICATION" id="0540A9D3-D618-C5A7-3B05-C529173B9498">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_DUPLICATION</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:26:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<defaultValue>0</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="VOTE_MADE_TIME" id="7521BFDA-5A6F-C26D-750D-72A0E245F94A">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_MADE_TIME</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:26:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<defaultValue>sysdate</defaultValue>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="VOTE_END_TIME" id="9AF4BE06-85F7-F7FE-1716-59437AE1689E">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>VOTE</sourceObjSchema>
+<sourceObjName>VOTE_END_TIME</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:26:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<defaultValue>sysdate</defaultValue>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="5B8B6F1E-F822-D75A-8595-F313C41D0728" schemaObject="99A36F75-7117-5A14-D92D-7D94E5AC42E8" name="VOTE_PK">
+<sourceConnName>buddy</sourceConnName>
+<sourceObjSchema>BUDDY</sourceObjSchema>
+<sourceObjName>SYS_C007696</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:26:58 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8AC86315-6791-3C9A-E3F2-11580DDB1169"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="AD6E1B83-0689-B5D9-CA88-F58D9D2BB9E2" name="FK_VOTE_TEAM">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:27:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0774D59F-2A38-3FB8-AD74-4B71F7A67AFC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B74F71E8-DDD5-C804-3AE4-F4E7192CBBC8" name="FK_VOTE_CHAT_ROOM">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:27:24 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="44DE59BE-CCA6-C493-D1CF-287D14B6D775"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

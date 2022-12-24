@@ -1,6 +1,7 @@
 package com.fivet.buddy.dao;
 
 import com.fivet.buddy.dto.TeamDTO;
+import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,11 +14,22 @@ public class TeamDAO {
     private TeamMapper teamMapper;
 
     // 팀 생성
-    public void insert(TeamDTO teamDto) {
+    public void insertTeam(TeamDTO teamDto) {
         teamMapper.insertTeam(teamDto);
     }
     // 회원이 속한 팀 출력
     public List<TeamDTO> selectMemberTeam(int memberSeq) {
         return teamMapper.selectMemberTeam(memberSeq);
     }
+
+    //팀 관리 멤버 출력
+    public List<TeamMemberDTO> managementTeamSelectTeamMember(String teamSeq){
+        return teamMapper.managementTeamSelectTeamMember(teamSeq);
+    }
+
+    //팀 관리 팀 이름 출력
+    public String managementTeamSelectTeam(String teamSeq){
+        return teamMapper.managementTeamSelectTeam(teamSeq);
+    }
+
 }

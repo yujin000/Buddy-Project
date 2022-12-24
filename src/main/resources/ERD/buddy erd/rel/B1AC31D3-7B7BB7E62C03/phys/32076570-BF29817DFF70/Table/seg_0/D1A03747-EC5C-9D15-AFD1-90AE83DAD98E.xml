@@ -1,0 +1,46 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="VOTE_ITEM_MEMBER" directorySegmentName="seg_0" id="D1A03747-EC5C-9D15-AFD1-90AE83DAD98E">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<schemaObject>2441D5F9-396D-9F30-EEBC-64C424D4A870</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="VOTE_ITEM_SEQ" id="278FF5CA-8CD0-B5F2-FC67-6DF16F2CC04A">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MEMBER_SEQ" id="C5EC7E24-70C8-295D-6B20-F3295BEB5D0A">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="VOTE_SEQ" id="DB9DA9EF-F5D7-C5DD-3BAF-8F66AF9C9077">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_VOTE_ITEM_MEMBER_VOTE" id="17BEC180-9B56-BA7E-406E-B54851BA62CB">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_VOTE_ITEM_MEMBER_MEMBER" id="1D0D701B-3739-2E17-DF30-AAD8D6250BC4">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_VOTE_ITEM_MEMBER_VOTE_ITEM" id="B141CA4A-6681-AF48-648A-2B0205560313">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:50:03 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+</TableProxyOraclev11g>

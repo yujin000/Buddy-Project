@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="66FC758D-17F1-60D8-9E93-D5EB7286887F" containerWithKeyObject="E200E0B1-1D43-9126-05BF-379705D9F80B" localFKIndex="03316BD0-995E-0CD1-0262-35EA03D93D47" name="FK_QNA_COMMENT_QNA_BOARD">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-22 00:49:42 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<importedID>F7808FD7-8AA0-B0A3-B1A2-FE19798050B5</importedID>
+<referredTableLongName>BUDDY.QNA_BOARD</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>50483396-CD45-18A4-41F5-84FB2BF1A6B8</referredTableID>
+<keyObject>06A6CBED-EE88-571D-14AD-EE646784DBE3</keyObject>
+<referredKeyID>06A6CBED-EE88-571D-14AD-EE646784DBE3</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>QNA_SEQ</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

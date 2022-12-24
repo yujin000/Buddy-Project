@@ -1,8 +1,9 @@
 package com.fivet.buddy.controller;
 
-import com.fivet.buddy.dao.ChatRoomDAO;
 import com.fivet.buddy.dto.ChatRoomDTO;
+import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.TeamDTO;
+import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.services.ChatRoomService;
 import com.fivet.buddy.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class TeamController {
     }
 
     //팀 생성
-    @RequestMapping("create")
+    @PostMapping("createTeam")
     public String create(TeamDTO teamDto, ChatRoomDTO chatRoomDto) throws Exception {
         teamDto.setTeamOwnerSeq((Integer) session.getAttribute("memberSeq"));
         Map<String, String> param = new HashMap<>();
@@ -45,7 +46,6 @@ public class TeamController {
         // session값인 이름만 닉네임에 담아 service에 전송.
         param.put("teamMemberNickname", session.getAttribute("memberName").toString());
         teamService.insertTeam(teamDto, param);
-
 
         return "redirect:/member/loginIndex";
     }
@@ -64,6 +64,18 @@ public class TeamController {
         model.addAttribute("chatRoomList", chatRoomList);
         return "team/team";
     }
+
+    //팀 관리 이동
+    @RequestMapping("goTeamSetting")
+    public String managementTeamSelectTeam(int teamSeq, Model model) throws Exception{
+        List<TeamMemberDTO> teamMemberDtoList =  teamService.managementTeamSelectTeamMember(String.valueOf(teamSeq));
+        String teamName=teamService.managementTeamSelectTeam(String.valueOf(teamSeq));
+        model.addAttribute("teamMemberDtoList", teamMemberDtoList);
+        model.addAttribute("teamName",teamName);
+        return "team/teamSetting";
+    }
+
+
 
     // Exception Handler
     @ExceptionHandler(Exception.class)

@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 public class TeamMemberDTO {
     private int teamSeq;
     private int memberSeq;
+    private String memberId;
     private String teamMemberNickname;
     private String grade;
     private Timestamp teamJoinDate;

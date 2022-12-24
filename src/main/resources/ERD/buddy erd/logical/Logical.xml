@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="4BC70E8E-E45D-8EDB-6C5A-00E5600611EA" mainViewID="0D10E6D6-DF9B-2CAE-3D58-FF24D0E075D6">
+<createdBy>user1</createdBy>
+<createdTime>2022-12-23 03:17:01 UTC</createdTime>
+<ownerDesignName>buddy erd</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</LogicalDesign>

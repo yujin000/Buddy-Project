@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -69,13 +70,26 @@ public class TeamController {
     @RequestMapping("goTeamSetting")
     public String managementTeamSelectTeam(int teamSeq, Model model) throws Exception{
         List<TeamMemberDTO> teamMemberDtoList =  teamService.managementTeamSelectTeamMember(String.valueOf(teamSeq));
-        String teamName=teamService.managementTeamSelectTeam(String.valueOf(teamSeq));
+        TeamDTO teamDto =teamService.managementTeamSelectTeam(String.valueOf(teamSeq));
         model.addAttribute("teamMemberDtoList", teamMemberDtoList);
-        model.addAttribute("teamName",teamName);
+        model.addAttribute("teamDto",teamDto);
         return "team/teamSetting";
     }
 
+    //팀 관리 팀 이름 수정
+    @ResponseBody
+    @RequestMapping("updateTeamName")
+    public void managementUpdateTeamName(TeamDTO teamDto) throws Exception{
+        teamService.managementUpdateTeamName(teamDto);
+    }
 
+    @RequestMapping("deleteTeam")
+    //팀 삭제
+    public String deleteTeam(int teamSeq){
+        System.out.println(teamSeq);
+        teamService.deleteTeam(teamSeq);
+        return "redirect:/member/loginIndex";
+    }
 
     // Exception Handler
     @ExceptionHandler(Exception.class)

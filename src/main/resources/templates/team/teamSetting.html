@@ -21,27 +21,28 @@
   <div class="contentWrap">
     <div class="teamProfile">
       <p class="subTitle">팀 프로필</p>
-      <form action="">
         <div class="article">
           <input
                   type="text"
-                  name="team_name"
-                  id="team_name"
+                  name="teamName"
+                  id="teamName"
                   class="input_text"
-                  th:value="${teamName}"
+                  th:value="${teamDto.getTeamName()}"
+                  disabled
           />
-          <button type="submit" id="changeTeam" class="editBtn">
+          <input type="hidden" id="teamSeqHidden" th:value="${teamDto.getTeamSeq()}">
+          <div id="updateDiv">
+          <button type="button" id="changeTeam" class="editBtn">
             변경
           </button>
+          </div>
         </div>
-      </form>
     </div>
 
     <div class="memberProfile">
       <p class="subTitle">멤버 관리</p>
       <div th:if="${teamMemberDtoList!=null}">
         <th:block th:each="teamMemberDtoList : ${teamMemberDtoList}">
-      <form action="">
         <div class="article">
           <div class="metaData">
             <img src="" alt="" class="profileImg" />
@@ -82,37 +83,39 @@
             </button>
           </div>
         </div>
-      </form>
         </th:block>
       </div>
     </div>
   </div>
-  <div class="modal">
-    <div class="modalWrap">
-      <h1>🤔</h1>
-      <h3>
-        member 님의 등급을 <br />
-        어떻게 변경할까요?
-      </h3>
-      <button id="master" class="modalBtn" onclick="changer(this)">
-        마스터
-      </button>
-      <button id="manager" class="modalBtn" onclick="changer(this)">
-        매니저
-      </button>
-      <button
-              id="staff"
-              type="button"
-              class="modalBtn"
-              onclick="changer(this)"
-      >
-        팀원
-      </button>
-      <button id="goBack" type="button" onclick="closer()">나가기</button>
+    <div class="modal">
+      <div class="modalWrap">
+        <h1>🤔</h1>
+        <h3>
+          member 님의 등급을 <br />
+          어떻게 변경할까요?
+        </h3>
+        <button id="master" class="modalBtn" onclick="changer(this)">
+          마스터
+        </button>
+        <button id="manager" class="modalBtn" onclick="changer(this)">
+          매니저
+        </button>
+        <button
+                id="staff"
+                type="button"
+                class="modalBtn"
+                onclick="changer(this)"
+        >
+          팀원
+        </button>
+        <button id="goBack" type="button" onclick="closer()">나가기</button>
+      </div>
     </div>
-  </div>
 
-  <p style="text-align: center; margin-top: 20px;">팀을 삭제하시겠습니까? <a href="" id="delTeam"><strong>삭제</strong></a></p>
+  <form id="deleteTeam" method="post">
+    <input type="hidden" name="teamSeq" id="teamSeq" th:value="${teamDto.getTeamSeq()}">
+  <p style="text-align: center; margin-top: 20px;">팀을 삭제하시겠습니까? <a href="" onclick="delClick()" type="button"><strong>삭제</strong></a></p>
+  </form>
 </div>
 <script>
   var modal = document.querySelector(".modal");
@@ -136,17 +139,59 @@
     grade.innerText = e.innerText;
     modal.style.display = "none";
   }
+
  // 팀 삭제 시 경고메세지
-  $("#del_team").click( function (){
-    var result = confirm("팀을 정말 삭제 하시겠습니까?");
-    if(result) {
-      alert("팀이 삭제 되었습니다")
-    }
-    else {
-      alert("잘 생각하셨어요!")
-    }
-  })
+// function delClick() {
+//   let result = confirm("팀을 정말 삭제 하시겠습니까?");
+//   if (result) {
+//     $("#deleteTeam").attr("action","/team/deleteTeam").submit();
+//     alert("팀이 삭제 되었습니다");
+//     return true;
+//   } else {
+//     alert("잘 생각하셨어요!");
+//     return false;
+//   }
+// }
 
 </script>
+
+<script>
+  //팀 이름 변경
+  let updateTeamNameBtn = $("<button>");
+  updateTeamNameBtn.text("완료");
+  updateTeamNameBtn.attr("type", "button");
+  updateTeamNameBtn.attr("id", "updateTeamNameBtn");
+  updateTeamNameBtn.attr("class","editBtn");
+
+  $("#changeTeam").on("click",function (){
+    $("#teamName").attr("disabled", false);
+    $("#changeTeam").css("display","none");
+    $("#teamName").css("border","2px dashed magenta");
+    $('#updateDiv').append(updateTeamNameBtn);
+  })
+
+  updateTeamNameBtn.on("click",function () {
+    let teamName = $("#teamName").val();
+    let teamSeq = $("#teamSeqHidden").val();
+    $.ajax({
+      url: "/team/updateTeamName",
+      data: {
+        "teamName": teamName,
+        "teamSeq": teamSeq
+      },
+      success: function () {
+      }, error: function () {
+      }
+    }).done(function () {
+      alert("팀 이름이 변경되었습니다.");
+      $("#teamName").val(teamName);
+      $("#teamName").attr("disabled", true);
+      $("#changeTeam").css("display","block");
+      updateTeamNameBtn.css("display","none");
+      $("#teamName").css("border", "none");
+    })
+  })
+</script>
+
 </body>
 </html>

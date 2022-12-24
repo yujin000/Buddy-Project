@@ -13,5 +13,9 @@ public interface TeamMapper {
 
     List<TeamMemberDTO> managementTeamSelectTeamMember(String teamSeq);
 
-    String managementTeamSelectTeam(String teamSeq);
+    TeamDTO managementTeamSelectTeam(String teamSeq);
+
+    void managementUpdateTeamName(TeamDTO teamDto);
+
+    void deleteTeam(int teamSeq);
 }

@@ -38,9 +38,18 @@
         end, member_seq asc
     </select>
 
-    <!-- 팀 관리 팀 이름 출력 (팀 번호를 통해 출력하는 과정은 전부 이 SQL문을 쓸 수 있기 때문에, 나중에 이름 변경할것.)-->
-    <select id="managementTeamSelectTeam" resultType="String">
-        select team_name from team where team_seq = #{value}
+    <!-- 팀 관리 팀 이름 출력-->
+    <select id="managementTeamSelectTeam" resultType="com.fivet.buddy.dto.TeamDTO">
+        select team_name, team_seq from team where team_seq = #{value}
     </select>
 
+    <!-- 팀 관리 팀 이름 수정 -->
+    <update id="managementUpdateTeamName">
+        update team set team_name = #{teamName} where team_seq = #{teamSeq}
+    </update>
+
+    <!-- 팀 삭제 -->
+    <delete id="deleteTeam">
+        delete from team where team_seq = #{value}
+    </delete>
 </mapper>

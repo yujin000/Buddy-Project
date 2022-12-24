@@ -10,5 +10,6 @@ public interface TeamMemberMapper {
 
     void enterTeam(TeamMemberDTO teamMemberDto);
     void createTeam(Map<String, String> param);
+    TeamMemberDTO selectOne(TeamMemberDTO teamMemberDto);
 
 }

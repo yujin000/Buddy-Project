@@ -15,7 +15,7 @@ public class ChatMsgDTO {
     private int chatSeq;
     private int chatRoomSeq;
     private String teamMemberNickname;
-    private String content;
+    private String chatContent;
     private int memberSeq;
     private int readCount;
     private Timestamp chatDate;

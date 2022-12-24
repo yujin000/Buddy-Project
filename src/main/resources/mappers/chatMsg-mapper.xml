@@ -5,8 +5,8 @@
 <mapper namespace="com.fivet.buddy.mapper.ChatMsgMapper">
     <insert id="insertChatMsg">
         insert into
-            Chat_msg
+            chat_msg
         values
-            (chat_seq.nextval, #{chatRoomSeq}, #{teamMemberNickname}, #{content}, #{memberSeq}, 0, sysdate)
+            (chat_msg_seq.nextval, #{chatRoomSeq}, #{teamMemberNickname}, #{chatContent}, #{memberSeq}, 0, sysdate)
     </insert>
 </mapper>

@@ -27,7 +27,7 @@
     <div id="teamList" class="teamList">
       <ul>
         <li>
-          <a href="" th:text="${session.teamSeq}"></a
+          <a href="" th:text="${session.teamName}"></a
           ><button id="headerToggle">toggle</button>
         </li>
       </ul>
@@ -45,7 +45,7 @@
     <aside>
       <div id="profile" class="asideTitle">
         <img src="" alt="" />
-        <h3><a href="../member/myProfile.html" th:text="${session.memberName}"></a></h3>
+        <h3><a href="../member/myProfile.html" th:text="${session.teamMemberNickname}"></a></h3>
         <button id="alarmView" class="toggle">알람</button>
       </div>
       <ul id="alarmList" class="subItem">
@@ -170,7 +170,6 @@
         <div class="msg">Msg</div>
       </div>
       <div class="msgSend">
-        <form action="">
           <input
                   type="text"
                   name="inputMsg"
@@ -178,7 +177,6 @@
                   class="inputMsg"
                   placeholder="input Msg"
           />
-        </form>
         <div class="msgTool">
           <ul>
             <li><button id="test" onclick="clickevnet()">1</button></li>

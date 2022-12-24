@@ -16,33 +16,47 @@
   <script src="/static/js/jQueryCheck.js"></script>
 </head>
 <body>
+
+<script th:inline="javascript">
+  // 타임리프로 서버에서 전달받은 변수를 자바스크립트에서 사용하기 위해 변수로 선언한 공간.
+  /*<![CDATA[*/
+  let chatRoomSeq = [[${chatRoomSeq}]];
+  let teamMemberNickname = [[${session.teamMemberNickname}]];
+  let memberSeq = [[${session.memberSeq}]];
+  console.log([[${session.teamMemberNickname}]]);
+  console.log([[${chatRoomSeq}]]);
+  console.log([[${session.memberSeq}]]);
+  /*]]>*/
+</script>
+
 <script>
 
   $(function () {
     // 웹소켓 영역 시작
     // webSocket 인스턴스 생성
-    let ws = new WebSocket("ws://192.168.50.50/chat/" + chatRoomSeq);
+    let ws = new WebSocket("ws://192.168.219.102/chat/" + chatRoomSeq);
 
     ws.onmessage = function (e){
       let data = e.data;
       let msg = $("<div>");
       msg.addClass("msg");
       msg.append(data);
-      $(".msgSection").append(msg);
+      $(".msgView").append(msg);
     }
 
-    $(".inputMsg").on("keydown", function(e) {
+    $("#inputMsg").on("keydown", function(e) {
       if (e.keyCode == 13) {
 
         // Json 생성
         let wsJson = {
-          "chatSec" : chatSec,
-          "chatRoomSec" : chatRoomSec,
-          "chatContent" : $(".inputMsg").text(),
-          "chatWriterSeq" : chatWriterSeq,
+          "chatRoomSeq" : chatRoomSeq,
+          "teamMemberNickname" : teamMemberNickname,
+          "chatContent" : $(this).val(),
+          "memberSeq" : memberSeq,
         };
         //JSON 전송
-        $(".inputMsg").text("");
+        $(this).val("");
+        console.log(wsJson);
         ws.send(JSON.stringify(wsJson));
         return false;
       }
@@ -62,7 +76,7 @@
     <div id="teamList" class="teamList">
       <ul>
         <li>
-          <a href="team.html" th:text="${session.teamSeq}"></a
+          <a href="team.html" th:text="${session.teamName}"></a
           ><button id="headerToggle">toggle</button>
         </li>
       </ul>
@@ -80,7 +94,7 @@
     <aside>
       <div id="profile" class="asideTitle">
         <img src="" alt="" />
-        <h3><a href="../member/myProfile.html" th:text="${session.memberName}"></a></h3>
+        <h3><a href="../member/myProfile.html" th:text="${session.teamMemberNickName}"></a></h3>
         <button id="alarmView" class="toggle">알람</button>
       </div>
       <ul id="alarmList" class="subItem">
@@ -201,7 +215,6 @@
         <div class="msg">Msg</div>
       </div>
       <div class="msgSend">
-        <form action="">
           <input
                   type="text"
                   name="inputMsg"
@@ -209,7 +222,6 @@
                   class="inputMsg"
                   placeholder="input Msg"
           />
-        </form>
         <div class="msgTool">
           <ul>
             <li><button id="test" onclick="clickevnet()">1</button></li>
@@ -235,13 +247,6 @@
     <li>list</li>
   </ul>
 </div>
-
-<script th:inline="javascript">
-  // 타임리프로 서버에서 전달받은 변수를 자바스크립트에서 사용하기 위해 변수로 선언한 공간.
-  /*<![CDATA[*/
-  let chatRoomSeq = [[${chatRoomSeq}]];
-  /*]]>*/
-</script>
 
 <script>
   $(document).ready(function () {

@@ -13,6 +13,11 @@ public class HomeController {
     private HttpSession session;
     @RequestMapping("/")
     public String home(Model model) {
-        return "index";
+        if (session.getAttribute("memberSeq")==null) {
+            return "index";
+        } else {
+            return "redirect:/member/loginIndex";
+        }
+
     }
 }

@@ -26,4 +26,13 @@
         values
             (#{teamSeq}, #{memberSeq}, #{memberId}, #{teamMemberNickname}, 'manager', sysdate)
     </insert>
+
+    <select id="selectOne" resultType="com.fivet.buddy.dto.TeamMemberDTO">
+        select
+            *
+        from
+            team_member
+        where
+            member_seq = #{memberSeq} and team_seq = #{teamSeq}
+    </select>
 </mapper>

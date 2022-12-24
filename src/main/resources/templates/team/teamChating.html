@@ -23,9 +23,6 @@
   let chatRoomSeq = [[${chatRoomSeq}]];
   let teamMemberNickname = [[${session.teamMemberNickname}]];
   let memberSeq = [[${session.memberSeq}]];
-  console.log([[${session.teamMemberNickname}]]);
-  console.log([[${chatRoomSeq}]]);
-  console.log([[${session.memberSeq}]]);
   /*]]>*/
 </script>
 
@@ -34,7 +31,7 @@
   $(function () {
     // 웹소켓 영역 시작
     // webSocket 인스턴스 생성
-    let ws = new WebSocket("ws://192.168.219.102/chat/" + chatRoomSeq);
+    let ws = new WebSocket("ws://localhost/chat/" + chatRoomSeq);
 
     ws.onmessage = function (e){
       let data = e.data;
@@ -56,7 +53,6 @@
         };
         //JSON 전송
         $(this).val("");
-        console.log(wsJson);
         ws.send(JSON.stringify(wsJson));
         return false;
       }

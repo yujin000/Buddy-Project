@@ -1,7 +1,6 @@
 package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.ChatRoomDTO;
-import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.TeamDTO;
 import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.services.ChatRoomService;
@@ -56,6 +55,7 @@ public class TeamController {
         // 팀 번호 session 부여
         session.setAttribute("teamSeq", teamSeq);
         //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
+        session.setAttribute("teamNickName",1);
         Map<String, Integer> param = new HashMap<>();
         param.put("teamSeq", teamSeq);
         param.put("memberSeq", (int)session.getAttribute("memberSeq"));

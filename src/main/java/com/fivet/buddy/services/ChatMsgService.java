@@ -10,4 +10,6 @@ public class ChatMsgService {
 
     @Autowired
     private ChatMsgDAO chatMsgDao;
+
+    //public void insertChatMsg(ChatMsgDTO chatMsgDto) {    }
 }

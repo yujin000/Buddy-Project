@@ -3,4 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fivet.buddy.mapper.ChatMsgMapper">
+    <insert id="insertChatMsg">
+        insert into
+            Chat_msg
+        values
+            (chat_seq.nextval, #{chatRoomSeq}, #{teamMemberNickname}, #{content}, #{memberSeq}, 0, sysdate)
+    </insert>
 </mapper>

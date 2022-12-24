@@ -98,12 +98,17 @@ button[class*="Btn"] {
     position: absolute;
 }
 
-#changeTeam {
+#updateTeamNameBtn {
     top: 30%;
     right: 10px;
     position: absolute;
 }
 
+#changeTeam {
+    top: 30%;
+    right: 10px;
+    position: absolute;
+}
 
 .modal {
     top: 0%;
@@ -167,4 +172,10 @@ button[class*="Btn"] {
     border: 1px solid #000;
     display: flex;
     align-items: center;
+}
+
+#teamName{
+    background-color: white;
+    border: none;
+    outline: none;
 }

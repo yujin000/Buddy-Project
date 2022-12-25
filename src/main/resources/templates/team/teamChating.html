@@ -33,6 +33,7 @@
     // webSocket 인스턴스 생성
     let ws = new WebSocket("ws://localhost/chat/" + chatRoomSeq);
 
+    //채팅방 목록을 출력해주는 ajax
     $.ajax({
       type:"post",
       url:"/chatRoom/chatRoomList",
@@ -50,13 +51,16 @@
       }
     })
 
-
-
     ws.onmessage = function (e){
-      let data = e.data;
+      console.log(JSON.parse(e.data));
+      let data = JSON.parse(e.data);
       let msg = $("<div>");
       msg.addClass("msg");
-      msg.append(data);
+      msg.append(data.teamMemberNickname);
+      msg.append("<br>");
+      msg.append(data.chatContent);
+      msg.append("<br>");
+      msg.append(data.readCount);
       $(".msgView").append(msg);
     }
 
@@ -209,24 +213,17 @@
             <li>4</li>
           </ul>
         </div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
+        <th:block th:each="chatMsgList : ${chatMsgList}">
+          <div class="msg">
+            [[${chatMsgList.teamMemberNickname}]]
+            <br>
+            [[${chatMsgList.chatContent}]]
+            <br>
+            [[${chatMsgList.readCount}]]
+<!--            <br>-->
+<!--            [[${chatMsgList.chatDate}]]-->
+          </div>
+        </th:block>
       </div>
       <div class="msgSend">
           <input

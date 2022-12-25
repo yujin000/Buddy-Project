@@ -25,29 +25,24 @@ public class endPoint {
 
     @OnOpen
     public void onOpen(@PathParam("chatRoomSeq") int ChatRoomSeq, Session s) {
-        System.out.println("open session : " + s.toString());
-        System.out.println("roomNum : " + ChatRoomSeq);
 
         if(!sessions.containsKey(ChatRoomSeq)) {
             sessions.put(ChatRoomSeq, new HashSet<>());
         }
         if (!sessions.get(ChatRoomSeq).contains(s)) {
             sessions.get(ChatRoomSeq).add(s);
-            System.out.println("session open : " + s);
-        }else {
-            System.out.println("이미 연결된 session 임!!!");
         }
     }
 
     @OnMessage
     public void onMessage(String json, Session session) throws Exception{
         Gson g = new Gson();
-        System.out.println("receive json : " + json);
+        //System.out.println("receive json : " + json);
 
         ChatMsgDTO chatMsgDto = g.fromJson(json, ChatMsgDTO.class);
 
         for(Session s : sessions.get(chatMsgDto.getChatRoomSeq())) {
-            System.out.println("send data : " + chatMsgDto.getChatContent());
+            //System.out.println("send data : " + chatMsgDto.getChatContent());
             s.getBasicRemote().sendText(chatMsgDto.getTeamMemberNickname() + " <br> " + chatMsgDto.getChatContent());
         }
 

@@ -33,6 +33,25 @@
     // webSocket 인스턴스 생성
     let ws = new WebSocket("ws://localhost/chat/" + chatRoomSeq);
 
+    $.ajax({
+      type:"post",
+      url:"/chatRoom/chatRoomList",
+    }).done(function (resp) {
+      //let charRoomList = JSON.parse(resp);
+      //console.log(chatRoomList);
+
+      for (let i=0; i<JSON.parse(resp).length; i++) {
+        let chatRoomListLi = $("<li>");
+        let chatRoomListA = $("<a>");
+        chatRoomListA.attr("href","/chatRoom/join/?chatRoomSeq=" + JSON.parse(resp)[i].chatRoomSeq);
+        chatRoomListA.text(JSON.parse(resp)[i].chatTitle);
+        chatRoomListLi.prepend(chatRoomListA);
+        $("#chatListUl").prepend(chatRoomListLi);
+      }
+    })
+
+
+
     ws.onmessage = function (e){
       let data = e.data;
       let msg = $("<div>");
@@ -137,8 +156,7 @@
           <button id="chatToggle" class="toggle">v</button>
         </div>
         <div id="chatList" class="asideItem">
-          <ul th:if="${chatRoomList!=null}">
-            <li th:each="chatRoomList : ${chatRoomList}" th:text="${chatRoomList.chatTitle}"></li>
+          <ul id="chatListUl">
           </ul>
         </div>
       </div>

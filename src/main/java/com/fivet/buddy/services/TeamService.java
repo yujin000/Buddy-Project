@@ -49,8 +49,19 @@ public class TeamService {
     }
 
     //팀 관리 팀 이름 출력
-    public String managementTeamSelectTeam(String teamSeq){
-        return teamDao.selectTeamName(teamSeq);
+    public TeamDTO managementTeamSelectTeam(String teamSeq){
+        return teamDao.managementTeamSelectTeam(teamSeq);
+    }
+
+    //팀 관리 팀 이름 수정
+    public void managementUpdateTeamName(TeamDTO teamDto){
+        teamDao.managementUpdateTeamName(teamDto);
+    }
+
+    //팀 삭제
+    public void deleteTeam(int teamSeq){
+        System.out.println("서비스");
+        teamDao.deleteTeam(teamSeq);
     }
 
     // 팀 번호로 팀 이름 탐색

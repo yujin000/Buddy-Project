@@ -27,6 +27,7 @@
             (#{teamSeq}, #{memberSeq}, #{memberId}, #{teamMemberNickname}, 'manager', sysdate)
     </insert>
 
+    <!-- 참가한 팀의 회원 목록을 출력   -->
     <select id="selectOne" resultType="com.fivet.buddy.dto.TeamMemberDTO">
         select
             *

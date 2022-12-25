@@ -101,6 +101,16 @@ public class TeamController {
         return "redirect:/member/loginIndex";
     }
 
+    @RequestMapping("teamOut")
+
+    public String teamOut() {
+        // 팀 관련 session값 제거.
+        session.removeAttribute("teamSeq");
+        session.removeAttribute("teamMemberNickname");
+        session.removeAttribute("teamName");
+        return "redirect:/member/loginIndex";
+    }
+
     // Exception Handler
     @ExceptionHandler(Exception.class)
     public String exceptionHandler(Exception e){

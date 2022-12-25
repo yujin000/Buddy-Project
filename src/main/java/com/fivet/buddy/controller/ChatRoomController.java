@@ -2,6 +2,7 @@ package com.fivet.buddy.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fivet.buddy.dao.ChatMsgDAO;
+import com.fivet.buddy.dao.TeamMemberDAO;
 import com.fivet.buddy.dto.ChatRoomDTO;
 import com.fivet.buddy.services.ChatMsgService;
 import com.fivet.buddy.services.ChatRoomService;
@@ -31,11 +32,15 @@ public class ChatRoomController {
     @Autowired
     private HttpSession session;
 
+    @Autowired
+    private TeamMemberDAO teamMemberDao;
+
     //채팅방 입장
     @RequestMapping("join")
     public String insertChatMsg(int chatRoomSeq, Model model) {
         model.addAttribute("chatRoomSeq",chatRoomSeq);
         model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));
+        model.addAttribute("chatMemberList",teamMemberDao.selectChatMember(chatRoomSeq));
         return ("/team/teamChating");
     }
 

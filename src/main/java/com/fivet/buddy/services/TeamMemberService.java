@@ -15,4 +15,8 @@ public class TeamMemberService {
         return teamMemberDao.selectOne(teamMemberDto);
     }
 
+    public TeamMemberDTO selectChatMember(int chatRoomSeq) {
+        return teamMemberDao.selectChatMember(chatRoomSeq);
+    }
+
 }

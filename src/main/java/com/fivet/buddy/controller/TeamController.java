@@ -59,6 +59,7 @@ public class TeamController {
     public String goTeam(TeamMemberDTO teamMemberDto, Model model) {
 
         teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+        // 회원 번호를 이용하여 팀 DTO값을 불러옴.
         teamMemberDto = teamMemberService.selectOne(teamMemberDto);
         // 팀 번호 session 부여
         session.setAttribute("teamSeq", teamMemberDto.getTeamSeq());

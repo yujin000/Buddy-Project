@@ -27,7 +27,7 @@
             (#{teamSeq}, #{memberSeq}, #{memberId}, #{teamMemberNickname}, 'manager', sysdate)
     </insert>
 
-    <!-- 참가한 팀의 회원 목록을 출력   -->
+    <!--    회원 번호를 이용하여 팀 DTO값을 불러옴.-->
     <select id="selectOne" resultType="com.fivet.buddy.dto.TeamMemberDTO">
         select
             *
@@ -36,4 +36,20 @@
         where
             member_seq = #{memberSeq} and team_seq = #{teamSeq}
     </select>
+
+    <!--    채팅방 참여자 목록을 출력 -->
+    <select id="selectChatMember" resultType="com.fivet.buddy.dto.TeamMemberDTO">
+        select
+            tm.member_seq, team_member_nickname, grade
+        from
+            team_member tm
+        inner join
+            chat_member cm
+        on
+            tm.member_seq = cm.member_seq
+        where
+            chat_room_seq = #{chatRoomSeq}
+    </select>
+
+
 </mapper>

@@ -28,6 +28,11 @@
 
 <script>
 
+  function updateScroll(){
+    var element = $(".msgView")[0];
+    element.scrollTop = element.scrollHeight;
+  }
+
   $(function () {
     // 웹소켓 영역 시작
     // webSocket 인스턴스 생성
@@ -62,6 +67,7 @@
       msg.append("<br>");
       msg.append(data.readCount);
       $(".msgView").append(msg);
+      updateScroll();
     }
 
     $("#inputMsg").on("keydown", function(e) {
@@ -183,26 +189,13 @@
         <div id="subSection">
           <ul id="memberList" class="subItem">
             <h1>member</h1>
+            <th:block th:each="chatMemberList: ${chatMemberList}">
             <li>
               <img src="" alt="" />
-              <span>이름</span>
-              <span>직책</span>
+              <span th:text="${chatMemberList.teamMemberNickname}"></span>
+              <span th:text="${chatMemberList.grade}"></span>
             </li>
-            <li>
-              <img src="" alt="" />
-              <span>이름</span>
-              <span>직책</span>
-            </li>
-            <li>
-              <img src="" alt="" />
-              <span>이름</span>
-              <span>직책</span>
-            </li>
-            <li>
-              <img src="" alt="" />
-              <span>이름</span>
-              <span>직책</span>
-            </li>
+            </th:block>
           </ul>
 
           <ul id="resultList" class="subItem">

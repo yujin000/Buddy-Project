@@ -1,210 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+        crossorigin="anonymous"></script>
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Title</title>
-  <script
-          src="https://code.jquery.com/jquery-3.6.1.min.js"
-          integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-          crossorigin="anonymous"
-  ></script>
-  <script src="/static/js/jQueryCheck.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"
+    ></script>
+    <script src="/static/js/jQueryCheck.js"></script>
     <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/customer.css">
     <link rel="stylesheet" href="/static/css/m-customer.css">
 
 </head>
 <body>
-    <div class="wrap">
-        <div class="header">
-         <h1>buddy 고객센터</h1>
-            <input type="search" name="" id="searchBar" placeholder="검색" >
-        </div>
-        <div class="main">
-            <nav class="nav">
-                <ul>
-                    <li class="thead" id="qna"><a >1:1 문의</a></li>
-                    <li class="thead" id="news"><a >공지사항</a></li>
-                    <li class="thead"><a >업데이트</a></li>
-                    <a onclick="popup()" class="writeBtn">글쓰기</a>
-                </ul>
-            </nav>
-            <div class="board">
-                <ul>
+<div class="wrap">
+    <div class="header">
+        <h1>buddy 고객센터</h1>
+        <input type="search" name="" id="searchBar" placeholder="검색">
+    </div>
+    <div class="main">
+        <nav class="nav">
+            <ul>
+                <li class="thead" id="qna"><a>1:1 문의</a></li>
+                <li class="thead" id="news"><a>공지사항</a></li>
+                <li class="thead"><a>업데이트</a></li>
+                <a href="/qna/write" class="writeBtn">글쓰기</a>
+            </ul>
+        </nav>
+
+            <div class="boardQna" th:if="${qna != null}">
+                <ul th:each="qna : ${qna}">
                     <li class="article" onclick="toggle(this)">
-                        <span class="tag">공지</span>
-                        <a class="title" onclick="toggle(this)">게시판 목록의 제목1입니다.</a>
-                        <span class="date">날짜 : 2022-12-12</span>
+                        <span class="tag">문의</span>
+                        <a class="title" onclick="toggle(this)">
+                            <span th:text="${qna.qnaTitle}"></span>
+                        </a>
+                        <span class="date">날짜 : [[${qna.qnaWriteDate}]]</span>
                         <div class="hidden">
                             <textarea name="" id="" cols="30" rows="10">
-
                             </textarea>
                             <p>답글 : </p>
                         </div>
                     </li>
-
-                    <li class="article" onclick="toggle(this)">
-                        <span class="tag">공지</span>
-                        <a class="title" onclick="toggle(this)">게시판 목록의 제목1입니다.</a>
-                        <span class="date">날짜 : 2022-12-12</span>
-                        <div class="hidden">
-                            <textarea name="" id="" cols="30" rows="10">
-
-                            </textarea>
-                            <p>답글 : </p>
-                        </div>
-                    </li>  <li class="article" onclick="toggle(this)">
-                    <span class="tag">공지</span>
-                    <a class="title" onclick="toggle(this)">게시판 목록의 제목1입니다.</a>
-                    <span class="date">날짜 : 2022-12-12</span>
-                    <div class="hidden">
-                            <textarea name="" id="" cols="30" rows="10">
-
-                            </textarea>
-                        <p>답글 : </p>
-                    </div>
-                </li>  <li class="article" onclick="toggle(this)">
-                    <span class="tag">공지</span>
-                    <a class="title" onclick="toggle(this)">게시판 목록의 제목1입니다.</a>
-                    <span class="date">날짜 : 2022-12-12</span>
-                    <div class="hidden">
-                            <textarea name="" id="" cols="30" rows="10">
-
-                            </textarea>
-                        <p>답글 : </p>
-                    </div>
-                </li>  <li class="article" onclick="toggle(this)">
-                    <span class="tag">공지</span>
-                    <a class="title" onclick="toggle(this)">게시판 목록의 제목1입니다.</a>
-                    <span class="date">날짜 : 2022-12-12</span>
-                    <div class="hidden">
-                            <textarea name="" id="" cols="30" rows="10">
-
-                            </textarea>
-                        <p>답글 : </p>
-                    </div>
-                </li>  <li class="article" onclick="toggle(this)">
-                    <span class="tag">공지</span>
-                    <a class="title" onclick="toggle(this)">게시판 목록의 제목1입니다.</a>
-                    <span class="date">날짜 : 2022-12-12</span>
-                    <div class="hidden">
-                            <textarea name="" id="" cols="30" rows="10">
-
-                            </textarea>
-                        <p>답글 : </p>
-                    </div>
-                </li>  <li class="article" onclick="toggle(this)">
-                    <span class="tag">공지</span>
-                    <a class="title" onclick="toggle(this)">게시판 목록의 제목1입니다.</a>
-                    <span class="date">날짜 : 2022-12-12</span>
-                    <div class="hidden">
-                            <textarea name="" id="" cols="30" rows="10">
-
-                            </textarea>
-                        <p>답글 : </p>
-                    </div>
-                </li>  <li class="article" onclick="toggle(this)">
-                    <span class="tag">공지</span>
-                    <a class="title" onclick="toggle(this)">게시판 목록의 제목1입니다.</a>
-                    <span class="date">날짜 : 2022-12-12</span>
-                    <div class="hidden">
-                            <textarea name="" id="" cols="30" rows="10">
-
-                            </textarea>
-                        <p>답글 : </p>
-                    </div>
-                </li>  <li class="article" onclick="toggle(this)">
-                    <span class="tag">공지</span>
-                    <a class="title" onclick="toggle(this)">게시판 목록의 제목1입니다.</a>
-                    <span class="date">날짜 : 2022-12-12</span>
-                    <div class="hidden">
-                            <textarea name="" id="" cols="30" rows="10">
-
-                            </textarea>
-                        <p>답글 : </p>
-                    </div>
-                </li>
-                    </li>  <li class="article" onclick="toggle(this)">
-                    <span class="tag">공지</span>
-                    <a class="title" onclick="toggle(this)">게시판 목록의 제목1입니다.</a>
-                    <span class="date">날짜 : 2022-12-12</span>
-                    <div class="hidden">
-                            <textarea name="" id="" cols="30" rows="10">
-
-                            </textarea>
-                        <p>답글 : </p>
-                    </div>
-                </li>
-                    </li>  <li class="article" onclick="toggle(this)">
-                    <span class="tag">공지</span>
-                    <a class="title" onclick="toggle(this)">게시판 목록의 제목1입니다.</a>
-                    <span class="date">날짜 : 2022-12-12</span>
-                    <div class="hidden">
-                            <textarea name="" id="" cols="30" rows="10">
-
-                            </textarea>
-                        <p>답글 : </p>
-                    </div>
-                </li>
-                    </li>  <li class="article" onclick="toggle(this)">
-                    <span class="tag">공지</span>
-                    <a class="title" onclick="toggle(this)">게시판 목록의 제목1입니다.</a>
-                    <span class="date">날짜 : 2022-12-12</span>
-                    <div class="hidden">
-                            <textarea name="" id="" cols="30" rows="10">
-
-                            </textarea>
-                        <p>답글 : </p>
-                    </div>
-                </li>
-
                 </ul>
             </div>
+
+        <div class="boardNews" th:each="notice : ${notice}">
+            <ul>
+                <li class="article" onclick="toggle(this)">
+                    <span class="tag">공지</span>
+                    <a class="title" onclick="toggle(this)">
+                                <span th:text="${notice.noticeTitle}">
+                                </span>
+                    </a>
+                    <span class="date">날짜 : 2022-12-12</span>
+                    <div class="hidden">
+                            <textarea name="" id="" cols="30" rows="10">
+
+                            </textarea>
+                        <p>답글 : </p>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
-    <script>
+</div>
+<script>
 
-       $("#qna").click(function (){
-           this.style.borderBottom = "4px solid purple";
-           $(this).hover().css("opacity","100%");
-           $("#news").css("border","none");
-           $("#searchNews").css("display","none");
-           $(".writeBtn").css("display","block");
+    $("#qna").click(function () {
+        this.style.borderBottom = "4px solid purple";
+        $(this).hover().css("opacity", "100%");
+        $("#news").css("border", "none");
+        $(".writeBtn").css("display", "block");
+        $(".boardQna").css("display", "block");
+        $(".boardNews").css("display", "none");
+    })
 
-       })
+    $("#news").click(function () {
+        this.style.borderBottom = "4px solid purple";
+        $(this).hover().css("opacity", "100%");
+        $("#qna").css("border", "none");
+        $(".writeBtn").css("display", "none");
+        $(".boardQna").css("display", "none")
+        $(".boardNews").css("display", "block");
+    })
 
-       $("#news").click(function (){
-           this.style.borderBottom = "4px solid purple";
-           $(this).hover().css("opacity","100%");
-           $("#qna").css("border","none");
-           $("#searchNews").css("display","block");
-           $(".writeBtn").css("display","none");
-       })
-       // when you move thead > please print another list
+    // when you move thead > please print another list
 
-       function popup(){
-           const url = "customerPopup.html";
-           const name = "popup";
-           const option = "width = 800, height = 800, top = 100, left = 465, location = no"
-           const mOption = "width = 370px, height = 600px, top = 0, left = 0, location = no"
-
-           if($("body").css("max-width","600")){
-           window.open(url, name, mOption);
-           }else{
-               window.open(url, name, option);
-           }
-       }
-
-
-       function toggle(arg) {
-           $(arg).children(".hidden").toggle();
-       }
+    // function popup() {
+    //     const url = "/qna/popup";
+    //     const name = "popup";
+    //     const option = "width = 800, height = 800, top = 100, left = 465, location = no"
+    //     const mOption = "width = 370px, height = 600px, top = 0, left = 0, location = no"
+    //
+    //     if ($("body").css("max-width", "600")) {
+    //         window.open(url, name, mOption);
+    //     } else {
+    //         window.open(url, name, option);
+    //     }
+    // }
 
 
-
-
-    </script>
+    function toggle(arg) {
+        $(arg).children(".hidden").toggle();
+    }
+</script>
 </body>
 </html>

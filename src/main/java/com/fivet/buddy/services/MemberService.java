@@ -97,6 +97,11 @@ public class MemberService {
     public void updateProfileImg(MemberImgDTO memberImgDto) throws Exception{
         memberDao.updateProfileImg(memberImgDto);
     }
+
+    //프로필 이미지 삭제
+    public void updateDefaultProfileImg(String memberSeq) throws Exception{
+        memberDao.updateDefaultProfileImg(memberSeq);
+    }
     //회원 탈퇴
     public void deleteMember(String memberSeq) throws Exception{
         memberDao.deleteMember(memberSeq);

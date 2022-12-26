@@ -26,9 +26,8 @@
       <p class="title" id="titleImg">프로필 이미지</p>
       <div class="profileImg" id="pImg">
         <img src="" alt="" class="myImg" id="myImg" name="myImg" />
-        <form method="post" id="updateImgForm" enctype="multipart/form-data">
         <input type="file" name="file" id="updateImg"/>
-        </form>
+        <input type="hidden" name="memberSeq" id="memberSeq" th:value="${myProfile.memberSeq}">
         <button class="updateBtn" id="deleteImg">삭제</button>
       </div>
 
@@ -156,12 +155,9 @@
     $.ajax({
       url:"/member/selectProfileImg",
       success : function (){
-        console.log("성공");
       },error : function (){
-        console.log("실패");
       }
     }).done(function (rsp){
-      console.log("바꼈지롱");
       $("#myImg").attr("src",rsp);
     })
   })
@@ -178,18 +174,6 @@
     $("#updateImg").click();
     $("#updateImg").on("change", readURL);
   })
-  // function readURL(e) {
-  //   if (e.files && e.files[0]) {
-  //     let reader = new FileReader();
-  //     reader.onload = function(e) {
-  //       $("#myImg").attr("src", e.target.result);
-  //     };
-  //     reader.readAsDataURL(e.files[0]);
-  //   } else {
-  //     $("#myImg").attr("src", "static/img/defaultProfileImg.png");
-  //     return;
-  //   }
-  // }
 
   function readURL(e) {
     if (e.target.files[0]) {
@@ -205,7 +189,19 @@
       }
 
         $("#updateImg").attr("src",e.target.files[0]);
-        $("#updateImgForm").attr("action","/member/updateImg").submit();
+      const formData = new FormData();
+      formData.append("file",  e.target.files[0]);
+      $.ajax({
+        url:"/member/updateProfileImg",
+        processData: false,
+        contentType: false,
+        data: formData,
+        type:"post",
+        success : function (){
+        },error : function (){
+        }
+      }).done(function (){
+      })
     }
     let reader = new FileReader();
     reader.onload = function(e) {
@@ -213,12 +209,27 @@
         $("#myImg").attr("src", reader.result);
       }
     }
-    reader.readAsDataURL(e.target.files[0])
+    console.log(e.target.files[0]);
+    reader.readAsDataURL(e.target.files[0]);
+    $("#updateImg").val("");
   }
 
   $("#deleteImg").click(function (){
-    $("#myImg").attr("src","/static/img/defaultProfileImg.png");
-    $("#updateImgForm").attr("action","/member/updateImg").submit();
+    const formData = new FormData();
+    let memberSeq =$("#memberSeq").val();
+    formData.append("memberSeq", memberSeq);
+    $.ajax({
+      url:"/member/defaultProfileImg",
+      type: 'post',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success : function (){
+      },error : function (){
+      }
+    }).done(function (){
+      $("#myImg").attr("src", "/static/img/defaultProfileImg.png");
+    })
   });
 
 </script>

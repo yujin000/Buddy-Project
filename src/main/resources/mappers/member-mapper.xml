@@ -123,6 +123,11 @@
     update member_img set member_img_oriname = #{memberImgOriName}, member_img_sysname= #{memberImgSysName} where member_img_member_seq =#{memberImgMemberSeq}
     </update>
 
+    <!-- 프로필 이미지 삭제 -->
+    <update id="updateDefaultProfileImg">
+        update member_img set member_img_oriname = '/static/img/defaultProfileImg.png', member_img_sysname= '/static/img/defaultProfileImg.png' where member_img_member_seq =#{value}
+    </update>
+
     <!-- 회원 탈퇴 -->
     <delete id="deleteMember">
         delete member where member_seq=#{value}

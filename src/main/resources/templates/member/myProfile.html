@@ -150,8 +150,7 @@
     })
     pwDisNone();
 
-
-
+    //프로필 이미지 출력 ajax
     $.ajax({
       url:"/member/selectProfileImg",
       success : function (){
@@ -170,10 +169,13 @@
       return false;
     }
   }
+
+  //프로필 이미지 수정
   $("#myImg").click(function (){
     $("#updateImg").click();
-    $("#updateImg").on("change", readURL);
   })
+
+  $("#updateImg").on("change", readURL);
 
   function readURL(e) {
     if (e.target.files[0]) {
@@ -187,13 +189,16 @@
         alert("확장자는 jpg, png, jpeg만 가능합니다.");
         return;
       }
-
         $("#updateImg").attr("src",e.target.files[0]);
+
+      //FormData는 폼을 쉽게 보내도록 도와주는 객체
       const formData = new FormData();
       formData.append("file",  e.target.files[0]);
       $.ajax({
         url:"/member/updateProfileImg",
+        //processData : false로 선언 시 formData를 string으로 변환하지 않음
         processData: false,
+        //contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게 함
         contentType: false,
         data: formData,
         type:"post",
@@ -202,6 +207,23 @@
         }
       }).done(function (){
       })
+    }else{
+      const formData = new FormData();
+      let memberSeq =$("#memberSeq").val();
+      formData.append("memberSeq", memberSeq);
+      $.ajax({
+        url:"/member/defaultProfileImg",
+        type: 'post',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success : function (){
+        },error : function (){
+        }
+      }).done(function (rsp){
+        $("#myImg").attr("src", "/static/img/defaultProfileImg.png");
+        return;
+      })
     }
     let reader = new FileReader();
     reader.onload = function(e) {
@@ -209,9 +231,10 @@
         $("#myImg").attr("src", reader.result);
       }
     }
-    console.log(e.target.files[0]);
-    reader.readAsDataURL(e.target.files[0]);
-    $("#updateImg").val("");
+    if(e.target.files[0]) {
+      //프로필 이미지 미리보기
+      reader.readAsDataURL(e.target.files[0]);
+    }
   }
 
   $("#deleteImg").click(function (){

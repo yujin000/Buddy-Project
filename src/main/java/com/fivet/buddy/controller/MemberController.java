@@ -236,15 +236,10 @@ public class MemberController {
     @ResponseBody
     @RequestMapping("selectProfileImg")
     public String selectProfileImg() throws Exception{
-        System.out.println("select컨트롤러");
-        System.out.println("select문 : "+memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq"))));
         String ifSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
-        System.out.println("ifSysName : "+ifSysName);
         if(ifSysName.equals("/static/img/defaultProfileImg.png")){
-            System.out.println("if문");
             return ifSysName;
         }else{
-            System.out.println("else문");
             String imgSysName = "/member/selectProfileImg/"+ifSysName;
             return imgSysName;
         }
@@ -255,11 +250,8 @@ public class MemberController {
     @ResponseBody
     @RequestMapping("updateProfileImg")
     public void updateProfileImg(MemberImgDTO memberImgDto, MultipartFile file, FileUtil util) throws Exception{
-        System.out.println("도착도착");
         if(!memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq"))).equals("/static/img/defaultProfileImg.png")){
-            System.out.println("1번째 sout "+memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq"))));
             memberImgDto.setMemberImgSysName(memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq"))));
-            System.out.println(memberImgDto.getMemberImgSysName());
             util.delete(proFilePath,memberImgDto.getMemberImgSysName());
 
             String memberImgOriName = file.getOriginalFilename();

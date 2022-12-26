@@ -60,7 +60,6 @@ public class TeamService {
 
     //팀 삭제
     public void deleteTeam(int teamSeq){
-        System.out.println("서비스");
         teamDao.deleteTeam(teamSeq);
     }
 

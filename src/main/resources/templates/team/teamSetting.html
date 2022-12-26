@@ -50,16 +50,14 @@
               <input
                       type="text"
                       name="memberName"
-                      id="memberName"
-                      class="inputText"
+                      class="inputText memberName"
                       th:value="${teamMemberDtoList.teamMemberNickname}"
                       readonly
               />
               <input
                       type="text"
                       name="memberEmail"
-                      id="memberEmail"
-                      class="inputEmail"
+                      class="inputEmail memberEmail"
                       th:value="${teamMemberDtoList.memberId}"
                       readonly
               />
@@ -69,9 +67,7 @@
             <button
                     type="button"
                     name="grade"
-                    id="grade"
-                    class="gradeBtn"
-                    onclick="opener(this)"
+                    class="gradeBtn grade"
                     th:seq="${teamMemberDtoList.memberSeq}"
             >
               등급
@@ -95,17 +91,16 @@
           member 님의 등급을 <br />
           어떻게 변경할까요?
         </h3>
-        <button id="master" class="modalBtn" onclick="changer(this)">
+        <button id="master" class="modalBtn">
           마스터
         </button>
-        <button id="manager" class="modalBtn" onclick="changer(this)">
+        <button id="manager" class="modalBtn">
           매니저
         </button>
         <button
                 id="staff"
                 type="button"
                 class="modalBtn"
-                onclick="changer(this)"
         >
           팀원
         </button>
@@ -119,26 +114,27 @@
   </form>
 </div>
 <script>
-  var modal = document.querySelector(".modal");
-  var grade = document.querySelector("#grade");
-  var gradeBtn = document.querySelector(".gradeBtn");
-  var modalBtn = document.querySelectorAll(".modalBtn");
-  var master = document.querySelector("#master");
-  var manager = document.querySelector("#manager");
-  var staff = document.querySelector("#staff");
-  var choice = $(".staff").html();
+
+  //팀원 등급 버튼 누르면 마스터,매니저,팀원 으로 변경
+  let modal = document.querySelector(".modal");
+
+  let newThis;
+
   // modal 열림 함수
-  function closer() {
-    modal.style.display = "none";
-  }
+  $(".gradeBtn").on("click",function (){
+    newThis = $(this);
+    $(".modal").css("display","block");
+  })
+
+  // modal에서 등급 선택
+  $(".modalBtn").on("click",function (){
+    newThis.html($(this).html());
+    $(".modal").css("display","none");
+  })
+
   // modal 닫힘 함수
-  function opener() {
-    modal.style.display = "block";
-  }
-  // 등급 선택시 이벤트 행동
-  function changer(e) {
-    grade.innerText = e.innerText;
-    modal.style.display = "none";
+  function closer() {
+    $(".modal").css("display","none");
   }
 
  // 팀 삭제 시 경고메세지

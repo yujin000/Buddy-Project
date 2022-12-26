@@ -236,33 +236,53 @@ public class MemberController {
     @ResponseBody
     @RequestMapping("selectProfileImg")
     public String selectProfileImg() throws Exception{
-        String member_img_sysname = "/member/selectProfileImg/"+memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
-        return member_img_sysname;
+        String ifSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
+        if(ifSysName.equals("/static/img/defaultProfileImg.png")){
+            return ifSysName;
+        }else{
+            String imgSysName = "/member/selectProfileImg/"+ifSysName;
+            return imgSysName;
+        }
     }
 
 
     //프로필 이미지 수정
-    @RequestMapping("updateImg")
-    public String updateImg(MemberImgDTO memberImgDto, MultipartFile file, FileUtil util) throws Exception{
-        String memberImgOriName = file.getOriginalFilename();
-        String memberImgSysName = UUID.randomUUID() + "_" + memberImgOriName;
-        //UUID.randomUUID() : 현재 시간과 자체 매커니즘을 통해 겹치지 않는 기다란 문자를 자동으로 생성해줌
-        util.save(file,proFilePath,memberImgSysName);
+    @ResponseBody
+    @RequestMapping("updateProfileImg")
+    public void updateProfileImg(MemberImgDTO memberImgDto, MultipartFile file, FileUtil util) throws Exception{
+        if(!memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq"))).equals("/static/img/defaultProfileImg.png")){
+            memberImgDto.setMemberImgSysName(memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq"))));
+            util.delete(proFilePath,memberImgDto.getMemberImgSysName());
 
-        memberImgDto.setMemberImgMemberSeq((Integer) session.getAttribute("memberSeq"));
-        memberImgDto.setMemberImgOriName(memberImgOriName);
-        memberImgDto.setMemberImgSysName(memberImgSysName);
-        memberService.updateProfileImg(memberImgDto);
-        return "redirect:/member/goMyProfile";
+            String memberImgOriName = file.getOriginalFilename();
+            String memberImgSysName = UUID.randomUUID() + "_" + memberImgOriName;
+            //UUID.randomUUID() : 현재 시간과 자체 매커니즘을 통해 겹치지 않는 기다란 문자를 자동으로 생성해줌
+            util.save(file,proFilePath,memberImgSysName);
+
+            memberImgDto.setMemberImgMemberSeq((Integer) session.getAttribute("memberSeq"));
+            memberImgDto.setMemberImgOriName(memberImgOriName);
+            memberImgDto.setMemberImgSysName(memberImgSysName);
+            memberService.updateProfileImg(memberImgDto);
+        }else{
+            String memberImgOriName = file.getOriginalFilename();
+            String memberImgSysName = UUID.randomUUID() + "_" + memberImgOriName;
+            //UUID.randomUUID() : 현재 시간과 자체 매커니즘을 통해 겹치지 않는 기다란 문자를 자동으로 생성해줌
+            util.save(file,proFilePath,memberImgSysName);
+
+            memberImgDto.setMemberImgMemberSeq((Integer) session.getAttribute("memberSeq"));
+            memberImgDto.setMemberImgOriName(memberImgOriName);
+            memberImgDto.setMemberImgSysName(memberImgSysName);
+            memberService.updateProfileImg(memberImgDto);
+        }
     }
 
-    @RequestMapping("defultImg")
-    public String defultImg(MemberImgDTO memberImgDto) throws Exception{
-        memberImgDto.setMemberImgMemberSeq((Integer) session.getAttribute("memberSeq"));
-        memberImgDto.setMemberImgOriName("/static/img/defaultProfileImg.png");
-        memberImgDto.setMemberImgSysName("/static/img/defaultProfileImg.png");
-        memberService.updateProfileImg(memberImgDto);
-        return "redirect:/member/goMyProfile";
+    //프로필 이미지 삭제
+    @ResponseBody
+    @RequestMapping("defaultProfileImg")
+    public void updateDefaultProfileImg(MemberImgDTO memberImgDto, FileUtil util) throws Exception{
+        memberImgDto.setMemberImgSysName(memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq"))));
+        util.delete(proFilePath,memberImgDto.getMemberImgSysName());
+        memberService.updateDefaultProfileImg(String.valueOf(session.getAttribute("memberSeq")));
     }
 
     //회원 탈퇴

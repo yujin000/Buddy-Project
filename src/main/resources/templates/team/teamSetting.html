@@ -71,7 +71,8 @@
                     name="grade"
                     id="grade"
                     class="gradeBtn"
-                    onclick="opener()"
+                    onclick="opener(this)"
+                    th:seq="${teamMemberDtoList.memberSeq}"
             >
               등급
             </button>

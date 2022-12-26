@@ -26,9 +26,8 @@
       <p class="title" id="titleImg">프로필 이미지</p>
       <div class="profileImg" id="pImg">
         <img src="" alt="" class="myImg" id="myImg" name="myImg" />
-        <form method="post" id="updateImgForm" enctype="multipart/form-data">
         <input type="file" name="file" id="updateImg"/>
-        </form>
+        <input type="hidden" name="memberSeq" id="memberSeq" th:value="${myProfile.memberSeq}">
         <button class="updateBtn" id="deleteImg">삭제</button>
       </div>
 
@@ -151,17 +150,13 @@
     })
     pwDisNone();
 
-
-
+    //프로필 이미지 출력 ajax
     $.ajax({
       url:"/member/selectProfileImg",
       success : function (){
-        console.log("성공");
       },error : function (){
-        console.log("실패");
       }
     }).done(function (rsp){
-      console.log("바꼈지롱");
       $("#myImg").attr("src",rsp);
     })
   })
@@ -174,22 +169,13 @@
       return false;
     }
   }
+
+  //프로필 이미지 수정
   $("#myImg").click(function (){
     $("#updateImg").click();
-    $("#updateImg").on("change", readURL);
   })
-  // function readURL(e) {
-  //   if (e.files && e.files[0]) {
-  //     let reader = new FileReader();
-  //     reader.onload = function(e) {
-  //       $("#myImg").attr("src", e.target.result);
-  //     };
-  //     reader.readAsDataURL(e.files[0]);
-  //   } else {
-  //     $("#myImg").attr("src", "static/img/defaultProfileImg.png");
-  //     return;
-  //   }
-  // }
+
+  $("#updateImg").on("change", readURL);
 
   function readURL(e) {
     if (e.target.files[0]) {
@@ -203,9 +189,41 @@
         alert("확장자는 jpg, png, jpeg만 가능합니다.");
         return;
       }
-
         $("#updateImg").attr("src",e.target.files[0]);
-        $("#updateImgForm").attr("action","/member/updateImg").submit();
+
+      //FormData는 폼을 쉽게 보내도록 도와주는 객체
+      const formData = new FormData();
+      formData.append("file",  e.target.files[0]);
+      $.ajax({
+        url:"/member/updateProfileImg",
+        //processData : false로 선언 시 formData를 string으로 변환하지 않음
+        processData: false,
+        //contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게 함
+        contentType: false,
+        data: formData,
+        type:"post",
+        success : function (){
+        },error : function (){
+        }
+      }).done(function (){
+      })
+    }else{
+      const formData = new FormData();
+      let memberSeq =$("#memberSeq").val();
+      formData.append("memberSeq", memberSeq);
+      $.ajax({
+        url:"/member/defaultProfileImg",
+        type: 'post',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success : function (){
+        },error : function (){
+        }
+      }).done(function (rsp){
+        $("#myImg").attr("src", "/static/img/defaultProfileImg.png");
+        return;
+      })
     }
     let reader = new FileReader();
     reader.onload = function(e) {
@@ -213,12 +231,28 @@
         $("#myImg").attr("src", reader.result);
       }
     }
-    reader.readAsDataURL(e.target.files[0])
+    if(e.target.files[0]) {
+      //프로필 이미지 미리보기
+      reader.readAsDataURL(e.target.files[0]);
+    }
   }
 
   $("#deleteImg").click(function (){
-    $("#myImg").attr("src","/static/img/defaultProfileImg.png");
-    $("#updateImgForm").attr("action","/member/updateImg").submit();
+    const formData = new FormData();
+    let memberSeq =$("#memberSeq").val();
+    formData.append("memberSeq", memberSeq);
+    $.ajax({
+      url:"/member/defaultProfileImg",
+      type: 'post',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success : function (){
+      },error : function (){
+      }
+    }).done(function (){
+      $("#myImg").attr("src", "/static/img/defaultProfileImg.png");
+    })
   });
 
 </script>

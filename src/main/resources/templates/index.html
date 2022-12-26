@@ -108,20 +108,32 @@
 
     <!-- 로그인 폼 -->
     <script>
-      let form = $("#loginForm");
-      let loginBtn = $("#loginBtn");
 
-      // 로그인 시 아이디와 비밀번호 비어있는지 확인
-      loginBtn.on("click",function(){
+      function getLogin(){
         let id = $('#id').val();
         let pw = $('#pw').val();
 
         if(id == "" || pw == ""){
           alert("아이디, 비밀번호를 모두 입력해야 합니다.");
         }else{
-          form.submit();
+          $("#loginForm").submit();
         }
-      });
+      }
+
+      $(function(){
+        let loginBtn = $("#loginBtn");
+
+        loginBtn.on("click",function(){
+          getLogin();
+        });
+
+        $("#pw").on("keydown",function(e){
+            if (e.keyCode == 13) {
+              getLogin();
+            }
+        });
+      })
+
     </script>
 
     <!-- 카카오 로그인 script -->

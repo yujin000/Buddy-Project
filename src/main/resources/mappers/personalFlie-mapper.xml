@@ -29,4 +29,49 @@
                 and
                     personal_folder_parent_key = #{basicKey})
     </select>
+
+    <!-- 하위 폴더 파일 가져오기 -->
+    <select id="selectChildFiles" resultType="com.fivet.buddy.dto.PersonalFileDTO">
+        select
+            *
+        from
+            personal_files
+        where
+            personal_files_folder_key = #{value}
+    </select>
+
+    <!-- 파일 삭제하기 -->
+    <delete id="deleteFile" parameterType="java.util.List">
+        delete
+            from personal_files
+        where
+            personal_files_key in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item.key}
+        </foreach>
+    </delete>
+
+    <!-- 파일 경로 불러오기 -->
+    <select id="myPath" resultType="String">
+        select
+            personal_folder_path
+        from
+            personal_folder
+        where
+            personal_folder_key = #{value}
+    </select>
+
+    <!-- 선택한 폴더의 하위 파일들 선택 -->
+    <select id="folderChildFiles" resultMap="selectMapFile">
+        select
+            personal_files_key
+        from
+            personal_files
+        where
+            personal_files_folder_key = #{value}
+    </select>
+    <resultMap id="selectMapFile" type="map">
+        <result column="personal_files_key" property="key" />
+    </resultMap>
+
 </mapper>

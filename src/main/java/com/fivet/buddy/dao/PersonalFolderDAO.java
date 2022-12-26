@@ -48,4 +48,24 @@ public class PersonalFolderDAO {
     public List<PersonalFolderDTO> selectChildFolders(String resourceKey) {
         return personalFolderMapper.selectChildFolders(resourceKey);
     }
+
+    // 현재 폴더 이름
+    public String nowFolder(String resourceKey) {
+        return personalFolderMapper.nowFolder(resourceKey);
+    }
+
+    // 폴더 삭제
+    public void deleteFolder(List<Map<String, String>> folders) {
+        personalFolderMapper.deleteFolder(folders);
+    }
+
+    // 현재 폴더 경로
+    public String myPath(String key) {
+        return personalFolderMapper.myPath(key);
+    }
+
+    // 삭제하려는 하위폴더들 찾기
+    public List<Map<String, String>> folderChildFolders(String key) {
+        return personalFolderMapper.folderChildFolders(key);
+    }
 }

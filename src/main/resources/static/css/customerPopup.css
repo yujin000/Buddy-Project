@@ -1,0 +1,72 @@
+.wrap {
+    width: 100%;
+    height: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+
+}
+
+.header {
+    height: 100px;
+    background: purple;
+    text-align: center;
+    line-height: 100px;
+}
+
+.header * {
+    color: white;
+}
+
+form {
+    width: 100%;
+    padding: 20px;
+    min-width: 300px;
+    margin:  0 auto;
+}
+
+p {
+    width: 100%;
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+textarea {
+    width: 100%;
+    height: 300px;
+}
+
+.inputTitle {
+    width: 100%;
+    height: 40px;
+}
+
+button {
+    width: 100px;
+    height: 35px;
+    border-radius: 20px;
+}
+
+.btn {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .header {
+        height: 10vh;
+    }
+
+    .header h1 {
+        font-size: 1rem;
+        line-height: 10vh;
+    }
+
+    textarea
+    {
+        height: 40vh;
+    }
+
+
+}

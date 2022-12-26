@@ -5,6 +5,7 @@ import com.fivet.buddy.mapper.TeamMemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -29,7 +30,7 @@ public class TeamMemberDAO {
     }
 
     // 채팅방 참여자 목록을 출력.
-    public TeamMemberDTO selectChatMember(int chatRooMSeq) {
+    public List<TeamMemberDTO> selectChatMember(int chatRooMSeq) {
         return teamMemberMapper.selectChatMember(chatRooMSeq);
     }
 

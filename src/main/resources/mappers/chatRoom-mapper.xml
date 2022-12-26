@@ -22,6 +22,6 @@
         from
             chat_room cr inner join chat_member cm on cr.chat_room_seq = cm.chat_room_seq
         where
-            member_seq = #{memberSeq} and team_seq = #{teamSeq}
+            cm.member_seq = #{memberSeq} and cm.team_seq = #{teamSeq}
     </select>
 </mapper>

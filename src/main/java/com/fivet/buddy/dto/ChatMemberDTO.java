@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 public class ChatMemberDTO {
     private int chatRoomSeq;
     private int memberSeq;
+    private int teamSeq;
     private Timestamp chatJoinDate;
     private Timestamp recentViewDate;
 }

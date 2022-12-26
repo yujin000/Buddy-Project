@@ -1,10 +1,10 @@
 package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.ChatRoomDTO;
-import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.TeamDTO;
 import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.services.ChatRoomService;
+import com.fivet.buddy.services.TeamMemberService;
 import com.fivet.buddy.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -29,7 +30,10 @@ public class TeamController {
     private ChatRoomService chatRoomService;
 
     @Autowired
-    HttpSession session;
+    private HttpSession session;
+
+    @Autowired
+    private TeamMemberService teamMemberService;
 
     //팀 생성 페이지로 이동
     @RequestMapping("add")
@@ -52,13 +56,21 @@ public class TeamController {
 
     //팀 이동
     @PostMapping("goTeam")
-    public String goTeam(int teamSeq, Model model) {
+    public String goTeam(TeamMemberDTO teamMemberDto, Model model) {
+
+        teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+        // 회원 번호를 이용하여 팀 DTO값을 불러옴.
+        teamMemberDto = teamMemberService.selectOne(teamMemberDto);
         // 팀 번호 session 부여
-        session.setAttribute("teamSeq", teamSeq);
+        session.setAttribute("teamSeq", teamMemberDto.getTeamSeq());
+        // 회원의 팀내 닉네임 session 부여
+        session.setAttribute("teamMemberNickname", teamMemberDto.getTeamMemberNickname());
+        // 팀 이름 session 부여
+        session.setAttribute("teamName", teamService.selectTeamName(teamMemberDto.getTeamSeq()));
         //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
         Map<String, Integer> param = new HashMap<>();
-        param.put("teamSeq", teamSeq);
-        param.put("memberSeq", (int)session.getAttribute("memberSeq"));
+        param.put("teamSeq", teamMemberDto.getTeamSeq());
+        param.put("memberSeq", teamMemberDto.getMemberSeq());
         // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
         List<ChatRoomDTO> chatRoomList = chatRoomService.chatRoomList(param);
         model.addAttribute("chatRoomList", chatRoomList);
@@ -69,13 +81,36 @@ public class TeamController {
     @RequestMapping("goTeamSetting")
     public String managementTeamSelectTeam(int teamSeq, Model model) throws Exception{
         List<TeamMemberDTO> teamMemberDtoList =  teamService.managementTeamSelectTeamMember(String.valueOf(teamSeq));
-        String teamName=teamService.managementTeamSelectTeam(String.valueOf(teamSeq));
+        TeamDTO teamDto =teamService.managementTeamSelectTeam(String.valueOf(teamSeq));
         model.addAttribute("teamMemberDtoList", teamMemberDtoList);
-        model.addAttribute("teamName",teamName);
+        model.addAttribute("teamDto",teamDto);
         return "team/teamSetting";
     }
 
+    //팀 관리 팀 이름 수정
+    @ResponseBody
+    @RequestMapping("updateTeamName")
+    public void managementUpdateTeamName(TeamDTO teamDto) throws Exception{
+        teamService.managementUpdateTeamName(teamDto);
+    }
 
+    @RequestMapping("deleteTeam")
+    //팀 삭제
+    public String deleteTeam(int teamSeq){
+        System.out.println(teamSeq);
+        teamService.deleteTeam(teamSeq);
+        return "redirect:/member/loginIndex";
+    }
+
+    @RequestMapping("teamOut")
+
+    public String teamOut() {
+        // 팀 관련 session값 제거.
+        session.removeAttribute("teamSeq");
+        session.removeAttribute("teamMemberNickname");
+        session.removeAttribute("teamName");
+        return "redirect:/member/loginIndex";
+    }
 
     // Exception Handler
     @ExceptionHandler(Exception.class)

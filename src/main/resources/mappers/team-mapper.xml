@@ -39,8 +39,20 @@
     </select>
 
     <!-- 팀 관리 팀 이름 출력-->
-    <select id="managementTeamSelectTeam" resultType="String">
-        select team_name from team where team_seq = #{value}
+    <select id="managementTeamSelectTeam" resultType="com.fivet.buddy.dto.TeamDTO">
+        select team_name, team_seq from team where team_seq = #{value}
     </select>
 
+    <!-- 팀 관리 팀 이름 수정 -->
+    <update id="managementUpdateTeamName">
+        update team set team_name = #{teamName} where team_seq = #{teamSeq}
+    </update>
+
+    <!-- 팀 삭제 -->
+    <delete id="deleteTeam">
+        delete from team where team_seq = #{value}
+    </delete>
+    <select id="selectTeamName" resultType="String">
+        select team_name from team where team_seq = #{value}
+    </select>
 </mapper>

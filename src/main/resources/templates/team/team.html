@@ -27,7 +27,7 @@
     <div id="teamList" class="teamList">
       <ul>
         <li>
-          <a href="team.html" th:text="${session.teamSeq}"></a
+          <a href="" th:text="${session.teamName}"></a
           ><button id="headerToggle">toggle</button>
         </li>
       </ul>
@@ -45,7 +45,7 @@
     <aside>
       <div id="profile" class="asideTitle">
         <img src="" alt="" />
-        <h3><a href="../member/myProfile.html" th:text="${session.memberName}"></a></h3>
+        <h3><a href="../member/myProfile.html" th:text="${session.teamMemberNickname}"></a></h3>
         <button id="alarmView" class="toggle">알람</button>
       </div>
       <ul id="alarmList" class="subItem">
@@ -93,7 +93,11 @@
         </div>
         <div id="chatList" class="asideItem">
           <ul th:if="${chatRoomList!=null}">
-            <li th:each="chatRoomList : ${chatRoomList}" th:text="${chatRoomList.chatTitle}"></li>
+            <th:block th:each="chatRoomList : ${chatRoomList}">
+            <li>
+              <a th:href="@{/chatRoom/join/(chatRoomSeq=${chatRoomList.chatRoomSeq})}" th:text="${chatRoomList.chatTitle}"></a>
+            </li>
+            </th:block>
           </ul>
         </div>
       </div>
@@ -166,7 +170,6 @@
         <div class="msg">Msg</div>
       </div>
       <div class="msgSend">
-        <form action="">
           <input
                   type="text"
                   name="inputMsg"
@@ -174,7 +177,6 @@
                   class="inputMsg"
                   placeholder="input Msg"
           />
-        </form>
         <div class="msgTool">
           <ul>
             <li><button id="test" onclick="clickevnet()">1</button></li>
@@ -191,8 +193,8 @@
 </div>
 <div id="menuList" class="menuList">
   <ul>
-    <li><a href="">logout</a></li>
-    <li>list</li>
+    <li><a href="/member/logout">logout</a></li>
+    <li><a href="/team/teamOut">버디 메인으로</a></li>
     <li>list</li>
     <li>list</li>
     <li>list</li>
@@ -200,6 +202,26 @@
     <li>list</li>
   </ul>
 </div>
+
+<script>
+  // 채팅방 목록에서 채팅방 클릭시 해당 채팅방으로 이동
+  // $(".chatRoomList").on("click", function() {
+  //     console.log($(this).text());
+  //     let chatForm = $("<form>");
+  //     chatForm.attr("method","post");
+  //     chatForm.attr("action","/chatRoom/join");
+  //     let inputJoin = $("<input>");
+  //     inputJoin.attr("type","hidden");
+  //     inputJoin.attr("name","chatRoomSeq");
+  //     inputJoin.attr("value", $(this).text());
+  //     chatForm.append(inputJoin);
+  //     console.log(chatForm);
+  //     chatForm.submit();
+  // })
+  $(".chatRoomList").on("click", function() {
+    $(this).find(".chatForm").submit();
+  })
+</script>
 
 <script>
   $(document).ready(function () {

@@ -28,8 +28,22 @@ public class TeamDAO {
     }
 
     //팀 관리 팀 이름 출력
-    public String managementTeamSelectTeam(String teamSeq){
+    public TeamDTO managementTeamSelectTeam(String teamSeq){
         return teamMapper.managementTeamSelectTeam(teamSeq);
     }
 
+    //팀 관리 팀 이름 수정
+    public void managementUpdateTeamName(TeamDTO teamDto){
+        teamMapper.managementUpdateTeamName(teamDto);
+    }
+
+    //팀 삭제
+    public void deleteTeam(int teamSeq){
+        teamMapper.deleteTeam(teamSeq);
+    }
+
+    // 팀 이름으로 회원 출력
+    public String selectTeamName(int teamSeq) {
+        return teamMapper.selectTeamName(teamSeq);
+    }
 }

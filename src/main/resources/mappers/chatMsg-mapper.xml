@@ -3,4 +3,33 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fivet.buddy.mapper.ChatMsgMapper">
+
+    <!-- 새로 올라온 채팅메세지를 DB에 입력   -->
+    <insert id="insertChatMsg">
+        insert into
+            chat_msg
+        values
+            (chat_msg_seq.nextval, #{chatRoomSeq}, #{teamMemberNickname}, #{chatContent}, #{memberSeq}, 1, sysdate)
+        <selectKey order="AFTER" keyProperty="chatDate" resultType="com.fivet.buddy.dto.ChatMsgDTO">
+            select
+                Max(chat_date)
+            from
+                chat_msg
+            where
+                chat_room_seq = #{chatRoomSeq}
+        </selectKey>
+    </insert>
+
+    <!-- 이전 메세지 불러오기   -->
+    <select id="selectChatMsg" resultType="com.fivet.buddy.dto.ChatMsgDTO">
+        select
+            *
+        from
+            chat_msg
+        where
+            chat_room_seq = #{chatRoomSeq}
+        order by
+            1
+    </select>
+
 </mapper>

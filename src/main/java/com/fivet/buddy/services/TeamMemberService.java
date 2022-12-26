@@ -5,6 +5,8 @@ import com.fivet.buddy.dto.TeamMemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class TeamMemberService {
 
@@ -15,7 +17,7 @@ public class TeamMemberService {
         return teamMemberDao.selectOne(teamMemberDto);
     }
 
-    public TeamMemberDTO selectChatMember(int chatRoomSeq) {
+    public List<TeamMemberDTO> selectChatMember(int chatRoomSeq) {
         return teamMemberDao.selectChatMember(chatRoomSeq);
     }
 

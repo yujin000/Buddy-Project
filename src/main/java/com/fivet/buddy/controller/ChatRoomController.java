@@ -1,13 +1,9 @@
 package com.fivet.buddy.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fivet.buddy.dao.ChatMsgDAO;
-import com.fivet.buddy.dao.TeamMemberDAO;
-import com.fivet.buddy.dto.ChatRoomDTO;
 import com.fivet.buddy.services.ChatMsgService;
 import com.fivet.buddy.services.ChatRoomService;
+import com.fivet.buddy.services.TeamMemberService;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -33,14 +28,14 @@ public class ChatRoomController {
     private HttpSession session;
 
     @Autowired
-    private TeamMemberDAO teamMemberDao;
+    private TeamMemberService teamMemberService;
 
     //채팅방 입장
     @RequestMapping("join")
     public String insertChatMsg(int chatRoomSeq, Model model) {
         model.addAttribute("chatRoomSeq",chatRoomSeq);
         model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));
-        model.addAttribute("chatMemberList",teamMemberDao.selectChatMember(chatRoomSeq));
+        model.addAttribute("chatMemberList",teamMemberService.selectChatMember(chatRoomSeq));
         return ("/team/teamChating");
     }
 

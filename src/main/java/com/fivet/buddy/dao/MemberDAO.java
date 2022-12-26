@@ -92,6 +92,11 @@ public class MemberDAO {
         memberMapper.updateProfileImg(memberImgDto);
     }
 
+    //프로필 이미지 삭제
+    public void updateDefaultProfileImg(String memberSeq) throws Exception{
+        memberMapper.updateDefaultProfileImg(memberSeq);
+    }
+
     //회원 탈퇴
     public void deleteMember(String memberSeq) throws Exception{
         memberMapper.deleteMember(memberSeq);

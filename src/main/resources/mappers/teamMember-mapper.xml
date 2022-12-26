@@ -46,7 +46,7 @@
         inner join
             chat_member cm
         on
-            tm.member_seq = cm.member_seq
+            tm.member_seq = cm.member_seq and tm.team_seq = cm.team_seq
         where
             chat_room_seq = #{chatRoomSeq}
     </select>

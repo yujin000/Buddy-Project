@@ -97,7 +97,6 @@ public class TeamController {
     @RequestMapping("deleteTeam")
     //팀 삭제
     public String deleteTeam(int teamSeq){
-        System.out.println(teamSeq);
         teamService.deleteTeam(teamSeq);
         return "redirect:/member/loginIndex";
     }

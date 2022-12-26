@@ -65,7 +65,7 @@
       msg.append("<br>");
       msg.append(data.chatContent);
       msg.append("<br>");
-      msg.append(data.readCount);
+      msg.append(data.chatDate);
       $(".msgView").append(msg);
       updateScroll();
     }
@@ -212,9 +212,7 @@
             <br>
             [[${chatMsgList.chatContent}]]
             <br>
-            [[${chatMsgList.readCount}]]
-<!--            <br>-->
-<!--            [[${chatMsgList.chatDate}]]-->
+            [[${chatMsgList.chatDate}]]
           </div>
         </th:block>
       </div>

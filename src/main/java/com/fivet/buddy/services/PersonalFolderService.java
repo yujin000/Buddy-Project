@@ -1,20 +1,18 @@
 package com.fivet.buddy.services;
 
 import com.fivet.buddy.dao.BasicFolderDAO;
+import com.fivet.buddy.dao.PersonalFileDAO;
 import com.fivet.buddy.dao.PersonalFolderDAO;
 import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.PersonalFolderDTO;
+import com.fivet.buddy.util.FileUtil;
 import com.fivet.buddy.util.RandomKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 
 @Service
@@ -25,6 +23,9 @@ public class PersonalFolderService {
 
     @Autowired
     private PersonalFolderDAO personalFolderDao;
+
+    @Autowired
+    private PersonalFileDAO personalFileDao;
 
     @Autowired
     private BasicFolderDAO basicFolderDao;
@@ -103,4 +104,32 @@ public class PersonalFolderService {
     public String nowFolder(String resourceKey) {
         return personalFolderDao.nowFolder(resourceKey);
     }
+
+    // 폴더 삭제
+    public void deleteFolder(List<Map<String, String>> folders) throws Exception{
+        FileUtil fileUtil = new FileUtil();
+
+        // 실제 경로에서 폴더 삭제
+        for(Map<String, String> map : folders){
+            String key = map.get("key");
+            String path = personalFolderDao.myPath(key);
+            //fileUtil.deleteFolder(path);
+
+            // 하위 파일 DB에서 제거
+            //personalFileDao.deleteFile(personalFileDao.folderChildFiles(key));
+
+            // 하위 폴더 찾기
+            List<Map<String,String >> findFolder = personalFolderDao.folderChildFolders(key);
+            for(Map<String, String> map2 : findFolder){
+                String key2 = map2.get("key");
+
+            }
+
+        }
+
+        //personalFolderDao.deleteFolder(folders);
+    }
+
 }
+
+

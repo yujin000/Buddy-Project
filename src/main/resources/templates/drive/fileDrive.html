@@ -97,14 +97,15 @@
             <!-- 헤더-버튼 -->
             <form action="/personalFile/uploadFile" method="post" enctype="multipart/form-data" id="uploadFileForm">
                 <div class="attachBtnArea">
-                    <input type="checkbox">
-                        <label for="uploadFile" class="fileLabel" >
-                            업로드
-                            <input type="file" name="multipartFile" id="uploadFile" accept=".png,.jpg,.jpeg,.gif,.txt,.zip" multiple>
-                            <input type="hidden" th:value="${parentKey}" name="attachFolder">
-                        </label>
-                    <button type="button" id="newFolder">새 폴더</button>
-                    <button type="button">공유</button>
+                    <label for="uploadFile" class="fileLabel mainButton">
+                        업로드
+                        <input type="file" name="multipartFile" id="uploadFile" accept=".png,.jpg,.jpeg,.gif,.txt" multiple>
+                        <input type="hidden" th:value="${parentKey}" name="attachFolder">
+                    </label>
+                    <button type="button" id="newFolder" class="mainButton">새 폴더</button>
+                    <button type="button" id="shareBtn" class="mainButton">공유</button>
+                    <button type="button" id="downloadBtn" class="mainButton">내려받기</button>
+                    <button type="button" id="deleteBtn" class="mainButton">삭제</button>
                 </div>
             </form>
             <!-- 본문 -->
@@ -117,18 +118,18 @@
                         <div th:unless="${#strings.isEmpty(myFolders)}">
                             <input type="hidden" th:value="${parentKey}" id="parentKey">
                             <th:block th:each="folder : ${myFolders}">
-                                <li class="thisFolder" th:data-folder="${folder.getPersonalFolderKey()}" data-resource-type="folder">
-                                    <input type="checkbox" name="">
-                                    <img src='/static/img/folderImg.png'>
-                                    <input type='text' class="printFileName" th:value='${folder.getPersonalFolderName()}' th:id="${'folder' + folder.getPersonalFolderKey()}" disabled>
+                                <li data-resource-type="folder">
+                                    <input type="checkbox" class='check' th:data-key="${folder.getPersonalFolderKey()}" data-resource-type="folder" th:data-name="${folder.getPersonalFolderName()}">
+                                    <img src='/static/img/folderImg.png' class="thisFolder" th:data-folder="${folder.getPersonalFolderKey()}">
+                                    <input type='text' class="printFolderName" th:value='${folder.getPersonalFolderName()}' th:id="${'folder' + folder.getPersonalFolderKey()}" disabled>
                                 </li>
                             </th:block>
                         </div>
                         <div th:unless="${#strings.isEmpty(myFiles)}">
                             <th:block th:each="file : ${myFiles}">
-                                <li class="thisFile" th:data-folder="${file.getPersonalFilesFolderKey()}" data-resource-type="file">
-                                    <input type="checkbox" name="" id="">
-                                    <img src='/static/img/fileImg.png'>
+                                <li th:data-folder="${file.getPersonalFilesFolderKey()}" data-resource-type="file">
+                                    <input type="checkbox" class='check' th:data-key="${file.getPersonalFilesKey()}" data-resource-type="file" th:data-name="${file.getPersonalFilesSysname()}">
+                                    <img src='/static/img/fileImg.png' class="thisFile">
                                     <input type='text' class="printFileName" th:value='${file.getPersonalFilesOriname()}' th:id="${'file' + file.getPersonalFilesOriname()}" disabled>
                                 </li>
                             </th:block>
@@ -262,16 +263,69 @@
 
 </script>
 
-<!-- 삭제 버튼 클릭 -->
-<script th:inline="javascript">
-    /*<![CDATA[*/
+<!-- 체크박스 클릭 -->
+<script>
 
-    /*]]>*/
+    // 체크 박스
+    $(".check").on('change',function(){
+        if($(".check").is(":checked")){
+            $("#deleteBtn").css("display","inline");
+            $("#shareBtn").css("display","inline");
+            $("#downloadBtn").css("display","inline");
+        }else{
+            $("#deleteBtn").css("display","none");
+            $("#shareBtn").css("display","none");
+            $("#downloadBtn").css("display","none");
+        }
+    })
+
+    // 삭제
+    $("#deleteBtn").on("click",function (){
+        let checked = $("input:checkbox[class='check']:checked");
+
+        if(confirm("선택하신 폴더 또는 파일을 삭제하시겠습니까?")){
+            let list = [];
+
+            checked.each(function (){
+                let type = $(this).data("resource-type");
+                let key = $(this).data("key");
+                let name = $(this).data("name");
+
+                list.push({
+                    type : type
+                    ,key : key
+                    ,name : name
+                })
+
+            })
+            console.log(list);
+
+            $.ajax({
+                url : "/drive/delete?parentKey="+parentKey,
+                type : "post",
+                contentType: 'application/json',
+                data : JSON.stringify(list),
+                encoding : "UTF-8"
+            }).done(function(){
+                location.reload();
+            })
+        }
+
+    })
+
+
+    // 공유
+
+    // 다운로드
+
 </script>
 
 <!-- 파일 업로드 버튼 클릭 -->
 <script>
-    $("#uploadFile").on('change',function(){
+
+    $("#uploadFile").on('change',attachType);
+
+    function attachType(e){
         let extension = this.value.split(".").pop().toLowerCase();
         let accept = ["png","jpg","jpeg","gif"];
         let result = $.inArray(extension,accept);
@@ -279,33 +333,33 @@
         if(result == -1){
             alert("이미지, 텍스트 파일만 업로드 가능합니다.. (.png, .jpg, jpeg, .gif, .txt)");
             this.value = "";
-        }
-
-    });
-
-    function fileCheck(e) {
-        if (e.target.files[0]) {
+        }else if(result != -1 && e.target.files[0]){
             $("#uploadFileForm").submit();
-        } else {
-            return;
+            // $("#uploadFileForm").submit(function(e) {
+            //     e.preventDefault();
+            //     $.post("/personalFile/uploadFile", $(this).serialize(), function(response) {
+            //         location.reload();
+            //     });
+            // });
         }
     }
+
 </script>
 
 <!-- 사이드 메뉴 arrow 클릭 -->
 <script>
 
-    $(".arrowBtn").on('click',function(){
+    $(".arrowBtn").on("click",function(){
+        console.log(this);
+        let nowArrow = $(this).attr("arrowType");
 
-        let nowArrow = $(this).attr('arrowType');
-
-        if(nowArrow == 'right'){
-            $(this).attr('arrowType','down');
-            $(this).attr('class','fa-solid fa-chevron-down arrowBtn');
+        if(nowArrow == "right"){
+            $(this).attr("arrowType","down");
+            $(this).attr("class","fa-solid fa-chevron-down arrowBtn");
 
         }else{
-            $(this).attr('arrowType','right');
-            $(this).attr('class','fa-solid fa-chevron-right arrowBtn');
+            $(this).attr("arrowType","right");
+            $(this).attr("class","fa-solid fa-chevron-right arrowBtn");
         }
 
     })
@@ -313,14 +367,14 @@
 
 <!-- 사이드 메뉴 클릭 -->
 <script>
-    $("#main").on('click',function(){
+    $("#main").on("click",function(){
         location.reload();
     })
 
-    $(".sideList").on('click',function(){
-        let thisType = $(this).data('resource-type');
-        if(thisType == 'folder'){
-            let folderData = $(this).data('folder');
+    $(".sideList").on("click",function(){
+        let thisType = $(this).data("resource-type");
+        if(thisType == "folder"){
+            let folderData = $(this).data("folder");
             location.href = "/drive/detailDrive?resourceKey="+folderData;
         }
     })

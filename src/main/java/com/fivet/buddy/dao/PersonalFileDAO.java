@@ -28,4 +28,19 @@ public class PersonalFileDAO {
     public List<PersonalFileDTO> selectChildFiles(String resourceKey) throws Exception{
         return personalFileMapper.selectChildFiles(resourceKey);
     }
+
+    // 파일 삭제
+    public void deleteFile(List<Map<String, String>> fileList) throws Exception{
+        personalFileMapper.deleteFile(fileList);
+    }
+
+    // 파일 경로 불러오기
+    public String myPath(String parentKey) {
+        return personalFileMapper.myPath(parentKey);
+    }
+
+    // 폴더 하위 파일들 선택
+    public List<Map<String,String>> folderChildFiles(String key) {
+        return personalFileMapper.folderChildFiles(key);
+    }
 }

@@ -97,4 +97,39 @@
         where
             personal_folder_key = #{value}
     </select>
+
+    <!-- 폴더 변경 -->
+    <delete id="deleteFolder" parameterType="java.util.List">
+        delete
+            from personal_folder
+        where
+            personal_folder_key in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item.key}
+        </foreach>
+    </delete>
+
+    <!-- 선택된 폴더 경로 -->
+    <select id="myPath" resultType="String">
+        select
+            personal_folder_path
+        from
+            personal_folder
+        where
+            personal_folder_key = #{value}
+    </select>
+
+    <!-- 하위 폴더들 찾기 -->
+    <select id="folderChildFolders" resultMap="selectMapFolder">
+        select
+            personal_folder_key
+        from
+            personal_folder
+        where
+            personal_folder_parent_key = #{value}
+    </select>
+    <resultMap id="selectMapFolder" type="map">
+        <result column="personal_folder_key" property="key" />
+    </resultMap>
+
 </mapper>

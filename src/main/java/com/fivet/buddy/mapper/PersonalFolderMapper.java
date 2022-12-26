@@ -25,4 +25,9 @@ public interface PersonalFolderMapper {
 
     String nowFolder(String resourceKey);
 
+    void deleteFolder(List<Map<String, String>> folders);
+
+    String myPath(String key);
+
+    List<Map<String, String>> folderChildFolders(String key);
 }

@@ -158,6 +158,15 @@ aside {
 #alarmView {
   width: 60px;
 }
+
+.createBtn {
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+  right: 45px;
+  position: absolute;
+}
+
 .toggle {
   width: 30px;
   height: 30px;
@@ -416,4 +425,77 @@ aside {
 
 .menuList ul li:hover {
   font-weight: bold;
+}
+
+.createView {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.3);
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: none;
+}
+
+.createView > .wrap{
+  max-width: 600px;
+  width: 90vw;
+  height: auto;
+  border-radius: 10px;
+  background: #fff;
+  margin: 0 auto;
+  margin-top: 20vh;
+  text-align: center;
+  border: 1px solid red;
+}
+
+.createView > .wrap ul {
+  height: 100%;
+}
+.createView > .wrap h1 {
+  font-size: 1.5rem;
+  height: 60px;
+  line-height: 60px;
+}
+.createView .list {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid black;
+}
+.createView .list > li{
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+  border: 1px solid magenta;
+  display: flex;
+  position: relative;
+}
+
+.createView .list > li > img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.createView .list > li > span {
+  font-size: 1rem;
+  line-height: 40px;
+  border: 1px dashed black;
+  display: inline-flex;
+  margin-left: 10px;
+}
+
+.createView .list > li > span.tag {
+  display: inline-block;
+  font-size: 12px;
+  width: 80px;
+  height: 20px;
+  line-height: 20px;
+  position: absolute;
+  top: 33%;
+  right: 10px;
+  border: 1px solid red;
+  border-radius: 10px;
 }

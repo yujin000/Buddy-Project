@@ -29,9 +29,17 @@
     for (let i=0; i<chatRoomList.length; i++) {
       let chatRoomListLi = $("<li>");
       let chatRoomListA = $("<a>");
+      let chatRoomListForm = $("<form>");
+      let chatRoomInput = $("<input>");
       chatRoomListA.attr("href","/chatRoom/join/?chatRoomSeq=" + chatRoomList[i].chatRoomSeq);
-      chatRoomListA.text(chatRoomList[i].chatTitle);
-      chatRoomListLi.append(chatRoomListA);
+      //chatRoomListA.text(chatRoomList[i].chatTitle);
+      chatRoomInput.attr("type","hidden");
+      chatRoomInput.val(chatRoomList[i].chatRoomSeq);
+      chatRoomInput.attr("name","chatRoomSeq");
+      chatRoomListForm.append(chatRoomInput);
+      chatRoomListLi.text(chatRoomList[i].chatTitle);
+      //chatRoomListLi.append(chatRoomListA);
+      chatRoomListLi.append(chatRoomListForm);
       $("#chatListUl").append(chatRoomListLi);
     }
   });

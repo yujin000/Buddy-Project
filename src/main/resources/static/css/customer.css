@@ -99,7 +99,7 @@ body {
     /*display: none;*/
 }
 
-.board {
+.boardQna {
     width: 100%;
     height: calc(100vh - 260px);
     overflow: scroll;
@@ -107,9 +107,22 @@ body {
     clear: both;
 }
 
-.board::-webkit-scrollbar{
+.boardQna::-webkit-scrollbar{
     display:none;
 }
+
+.boardNews {
+    width: 100%;
+    height: calc(100vh - 260px);
+    overflow: scroll;
+    overflow-x: hidden;
+    clear: both;
+}
+
+.boardNews::-webkit-scrollbar{
+    display:none;
+}
+
 
 .article{
     line-height: 60px;

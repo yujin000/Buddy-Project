@@ -40,6 +40,34 @@
 
     <button id="menu" class="iconMenu">menu</button>
     <button id="asideClose">aside</button>
+    <button id="teamMember">team</button>
+    <ul id="teamMemberList" class="teamMemberList">
+      <h1>teamMemberList</h1>
+      <li>
+        <img src="" alt="">
+        <span>이름</span>
+        <span>직책</span>
+      </li>
+      <li>
+        <img src="" alt="">
+        <span>이름</span>
+        <span>직책</span>
+      </li>    <li>
+      <img src="" alt="">
+      <span>이름</span>
+      <span>직책</span>
+    </li>    <li>
+      <img src="" alt="">
+      <span>이름</span>
+      <span>직책</span>
+    </li>
+      <li>
+        <img src="" alt="">
+        <span>이름</span>
+        <span>직책</span>
+      </li>
+
+    </ul>
   </div>
   <div class="main">
     <aside>
@@ -262,6 +290,10 @@
     $("#alarmView").click(function () {
       $("#alarmList").toggle();
     });
+
+    $("#teamMember").click(function (){
+      $("#teamMemberList").toggle();
+    })
   });
 </script>
 

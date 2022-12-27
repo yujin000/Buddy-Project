@@ -15,11 +15,11 @@ public interface QnaMapper {
 
      List<QnaDTO> select();
 
-     List<QnaCommentDTO> selectComment(QnaCommentDTO qnaCommentDto);
+     List<QnaCommentDTO> selectComment(int qnaSeq);
 
      QnaDTO selectDetail(QnaDTO qnaDto);
 
-     QnaFileDTO selectFile(QnaFileDTO qnaFileDto);
+     List<QnaFileDTO> selectFile(int qnaSeq);
 
      int delete(int qnaSeq);
 

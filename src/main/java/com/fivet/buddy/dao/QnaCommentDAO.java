@@ -13,8 +13,8 @@ public class QnaCommentDAO {
     @Autowired
     private QnaMapper qnaMapper;
 
-    public List<QnaCommentDTO> selectComment(QnaCommentDTO qnaCommentDto) throws Exception{
-        return qnaMapper.selectComment(qnaCommentDto);
+    public List<QnaCommentDTO> selectComment(int qnaSeq) throws Exception{
+        return qnaMapper.selectComment(qnaSeq);
     }
 
     public int deleteComment(int qnaSeq,int qnaCommentSeq) throws Exception{

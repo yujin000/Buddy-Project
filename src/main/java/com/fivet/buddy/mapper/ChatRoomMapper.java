@@ -14,4 +14,6 @@ public interface ChatRoomMapper {
 
     List<ChatRoomDTO> chatRoomList(Map<String, Integer> param);
 
+    void insertSelfChat(Map<String, String> param);
+
 }

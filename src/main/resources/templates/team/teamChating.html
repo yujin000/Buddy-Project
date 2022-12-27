@@ -51,8 +51,8 @@
         let chatRoomListA = $("<a>");
         chatRoomListA.attr("href","/chatRoom/join/?chatRoomSeq=" + JSON.parse(resp)[i].chatRoomSeq);
         chatRoomListA.text(JSON.parse(resp)[i].chatTitle);
-        chatRoomListLi.prepend(chatRoomListA);
-        $("#chatListUl").prepend(chatRoomListLi);
+        chatRoomListLi.append(chatRoomListA);
+        $("#chatListUl").append(chatRoomListLi);
       }
     })
 

@@ -48,9 +48,8 @@ public class TeamController {
         Map<String, String> param = new HashMap<>();
         param.put("memberSeq", session.getAttribute("memberSeq").toString());
         // session값인 이름만 닉네임에 담아 service에 전송.
-        param.put("teamMemberNickname", session.getAttribute("memberName").toString());
+        param.put("teamMemberNickname", String.valueOf(session.getAttribute("memberName")));
         teamService.insertTeam(teamDto, param);
-
         return "redirect:/member/loginIndex";
     }
 

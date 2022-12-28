@@ -101,6 +101,7 @@ public class TeamController {
         return "redirect:/member/loginIndex";
     }
 
+    //팀 화면에서 나가기
     @RequestMapping("teamOut")
 
     public String teamOut() {
@@ -111,6 +112,7 @@ public class TeamController {
         return "redirect:/member/loginIndex";
     }
 
+    //회원이 가입한 팀 리스트 출력
     @ResponseBody
     @PostMapping("teamList")
     public String selectTeamList() {

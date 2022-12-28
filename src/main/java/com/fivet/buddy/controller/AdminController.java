@@ -40,4 +40,16 @@ public class AdminController {
         model.addAttribute("memberList",list);
         return "admin/adminMain";
     }
+
+    //뉴스관리페이지로 이동
+    @RequestMapping("toAdminNews")
+    public String toAdminNews() {
+        return "admin/adminNews";
+    }
+
+    //문의내역페이지로 이동
+    @RequestMapping("toAdminQna")
+    public String toAdminQna() {
+        return "admin/adminQna";
+    }
 }

@@ -8,6 +8,7 @@ import com.fivet.buddy.util.RandomKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class PersonalFileService {
     private BasicFolderDAO basicFolderDao;
 
     // 파일첨부
-    public void uploadFile(String oriName, String sysName,String attachFolder,int memberSeq) throws Exception{
+    public void uploadFile(String oriName, String sysName, String attachFolder, int memberSeq, String filePath) throws Exception{
         PersonalFileDTO personalFileDto = new PersonalFileDTO();
 
         personalFileDto.setPersonalFilesMemberSeq(memberSeq);
@@ -33,6 +34,7 @@ public class PersonalFileService {
         personalFileDto.setPersonalFilesSysname(sysName);
         personalFileDto.setPersonalFilesFolderKey(attachFolder);
         personalFileDto.setPersonalFilesKey(randomKeyUtil.folderKey());
+        personalFileDto.setPersonalFilesPath(filePath);
         personalFileDao.uploadFile(personalFileDto);
     }
 
@@ -63,5 +65,19 @@ public class PersonalFileService {
         }
 
         personalFileDao.deleteFile(files);
+    }
+
+    public List<Map<String, String>> getFilePath(List<Map<String, String>> files) {
+        return personalFileDao.getFilePath(files);
+    }
+
+    // oriName
+    public String thisOriName(String key) {
+        return personalFileDao.thisOriName(key);
+    }
+
+    // 폴더 경로 찾기
+    public String searchPath(String key) {
+        return personalFileDao.searchPath(key);
     }
 }

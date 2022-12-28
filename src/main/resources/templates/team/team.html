@@ -40,6 +40,34 @@
 
     <button id="menu" class="iconMenu">menu</button>
     <button id="asideClose">aside</button>
+    <button id="teamMember">team</button>
+    <ul id="teamMemberList" class="teamMemberList">
+      <h1>teamMemberList</h1>
+      <li>
+        <img src="" alt="">
+        <span>이름</span>
+        <span>직책</span>
+      </li>
+      <li>
+        <img src="" alt="">
+        <span>이름</span>
+        <span>직책</span>
+      </li>    <li>
+      <img src="" alt="">
+      <span>이름</span>
+      <span>직책</span>
+    </li>    <li>
+      <img src="" alt="">
+      <span>이름</span>
+      <span>직책</span>
+    </li>
+      <li>
+        <img src="" alt="">
+        <span>이름</span>
+        <span>직책</span>
+      </li>
+
+    </ul>
   </div>
   <div class="main">
     <aside>
@@ -70,6 +98,7 @@
         <div class="asideTitle">
           <h3>토픽</h3>
           <button id="topicToggle" class="toggle">v</button>
+          <button id="topicCreate" class="createBtn">+</button>
         </div>
         <div id="topicList" class="asideItem">
           <ul>
@@ -89,6 +118,7 @@
       <div id="chat" class="asideList">
         <div class="asideTitle">
           <h3>채팅</h3>
+          <button id="chatCreate" class="createBtn">+</button>
           <button id="chatToggle" class="toggle">v</button>
         </div>
         <div id="chatList" class="asideItem">
@@ -203,21 +233,65 @@
   </ul>
 </div>
 
+
+<div class="createView">
+  <div class="wrap">
+    <form action="" class="chatForm">
+      <h1>😀채팅 시작하기</h1>
+    <ul class="list">
+      <li><input type="text" placeholder="채팅방 이름"></li>
+    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
+    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
+    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
+    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
+    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
+    </ul>
+    <button type="submit" >대화 시작하기</button>
+    <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
+    </form>
+
+    <form action="" class="topicForm">
+        <h1>✨토픽 생성하기</h1>
+      <ul class="list">
+        <li><input type="text" placeholder="토픽 이름" ></li>
+      </ul>
+      <button type="submit" >토픽 생성하기</button>
+      <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
+
+    </form>
+  </div>
+</div>
+
 <script>
-  // 채팅방 목록에서 채팅방 클릭시 해당 채팅방으로 이동
-  // $(".chatRoomList").on("click", function() {
-  //     console.log($(this).text());
-  //     let chatForm = $("<form>");
-  //     chatForm.attr("method","post");
-  //     chatForm.attr("action","/chatRoom/join");
-  //     let inputJoin = $("<input>");
-  //     inputJoin.attr("type","hidden");
-  //     inputJoin.attr("name","chatRoomSeq");
-  //     inputJoin.attr("value", $(this).text());
-  //     chatForm.append(inputJoin);
-  //     console.log(chatForm);
-  //     chatForm.submit();
-  // })
+  //팀목록을 출력해주는 ajax호출
+  $.ajax({
+    type:"post",
+    url:"/team/teamList"
+  }).done(function (resp){
+    let teamList = JSON.parse(resp);
+    for (let i=0; i<teamList.length; i++) {
+      let teamListLi = $("<li>");
+      let teamListForm = $("<form>");
+      let teamListInput = $("<input>");
+      teamListInput.attr("type","hidden");
+      teamListInput.val(teamList[i].teamSeq);
+      teamListInput.attr("name", "teamSeq");
+      teamListForm.attr("action", "/team/goTeam");
+      teamListForm.attr("method", "post");
+      teamListForm.append(teamListInput);
+      teamListLi.text(teamList[i].teamName);
+      teamListLi.append(teamListForm);
+      teamListLi.addClass("goTeam");
+      $("#dropdownList").append(teamListLi);
+    }
+  });
+
+  //팀 이동 클릭이벤트
+  $(document).on("click", ".goTeam", function (){
+    //console.log();
+    $(this).children("form").submit();
+  })
+
   $(".chatRoomList").on("click", function() {
     $(this).find(".chatForm").submit();
   })
@@ -262,6 +336,24 @@
     $("#alarmView").click(function () {
       $("#alarmList").toggle();
     });
+
+    $("#teamMember").click(function (){
+      $("#teamMemberList").toggle();
+    })
+
+    $("#chatCreate").click(function (){
+      $(".createView").css("display","block");
+      $(".chatForm").css("display","block");
+      $(".topicForm").css("display","none");
+    })
+
+    $("#topicCreate").click(function (){
+      $(".createView").css("display","block");
+      $(".chatForm").css("display","none");
+      $(".topicForm").css("display","block");
+    })
+
+
   });
 </script>
 
@@ -270,6 +362,11 @@
   $("#appDrive").on("click",function(){
     location.href="/drive/toFileDrive";
   });
+
+
+  function closer(arg) {
+    $(arg).parent().parent().parent().css("display","none");
+  }
 </script>
 
 </body>

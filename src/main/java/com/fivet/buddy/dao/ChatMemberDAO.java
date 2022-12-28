@@ -13,7 +13,7 @@ public class ChatMemberDAO {
     private ChatMemberMapper chatMemberMapper;
 
     // 채팅방 멤버 추가
-    public void createTeam(Map<String, String> param) {
-        chatMemberMapper.createTeam(param);
+    public void insertChatMember(Map<String, String> param) {
+        chatMemberMapper.insertChatMember(param);
     }
 }

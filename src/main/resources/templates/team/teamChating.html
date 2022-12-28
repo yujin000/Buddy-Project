@@ -39,24 +39,6 @@
     let ws = new WebSocket("ws://localhost/chat/" + chatRoomSeq);
 
     //채팅방 목록을 출력해주는 ajax
-    // $.ajax({
-    //   type:"post",
-    //   url:"/chatRoom/chatRoomList",
-    // }).done(function (resp) {
-    //
-    //   let chatRoomList = JSON.parse(resp);
-    //
-    //   for (let i=0; i<chatRoomList.length; i++) {
-    //     let chatRoomListLi = $("<li>");
-    //     let chatRoomListA = $("<a>");
-    //     chatRoomListA.attr("href","/chatRoom/join/?chatRoomSeq=" + chatRoomList[i].chatRoomSeq);
-    //     chatRoomListA.text(chatRoomList[i].chatTitle);
-    //     chatRoomListLi.append(chatRoomListA);
-    //     $("#chatListUl").append(chatRoomListLi);
-    //   }
-    // });
-
-    //채팅방 목록을 출력해주는 ajax
     $.ajax({
       type:"post",
       url:"/chatRoom/chatRoomList",
@@ -109,7 +91,6 @@
 
 
     ws.onmessage = function (e){
-      console.log(JSON.parse(e.data));
       let data = JSON.parse(e.data);
       let msg = $("<div>");
       msg.addClass("msg");
@@ -158,9 +139,6 @@
         </li>
       </ul>
       <ul id="dropdownList">
-        <li><a href="team.html">teamList2</a></li>
-        <li><a href="team.html">teamList2</a></li>
-        <li><a href="../admin/adminMain.html">admin</a></li>
       </ul>
     </div>
 

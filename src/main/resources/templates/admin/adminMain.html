@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>관리자페이지</title>
+    <title>관리자 페이지-회원 관리</title>
     <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/admin.css" />
     <link rel="stylesheet" href="/static/css/m-admin.css" />
@@ -24,18 +24,18 @@
     </div>
     <h1>
         죄송합니다. <br />
-        어드민 모드는 모바일 환경을 지원하지 않습니다.
+        관리자 페이지는 모바일 환경을 지원하지 않습니다.
     </h1>
     <button><a href="../index.html">뒤로가기</a></button>
 </div>
 <div class="wrap">
     <div class="header">
         <div class="logo">
-            <a href="../index.html">
+            <a href="/member/loginIndex">
                 <img src="" alt="" />
             </a>
         </div>
-        <p>어드민</p>
+        <p>관리자 페이지</p>
         <button id="menu" class="iconMenu">menu</button>
         <button id="asideClose">aside</button>
     </div>
@@ -56,20 +56,20 @@
         <aside>
             <div id="checked" class="asideTitle">
                 <img src="" alt="" />
-                <p><a href="/admin/toAdminPage">회원관리</a></p>
+                <p><a href="/admin/toAdminPage">회원 관리</a></p>
             </div>
             <div class="asideTitle">
                 <img src="" alt="" />
-                <p><a href="/admin/toAdminNews">뉴스관리</a></p>
+                <p><a href="/admin/toAdminNotice">공지 관리</a></p>
             </div>
             <div class="asideTitle">
                 <img src="" alt="" />
-                <p><a href="/admin/toAdminQna">문의내역</a></p>
+                <p><a href="/admin/toAdminQna">문의내역 관리</a></p>
             </div>
         </aside>
         <div class="content">
             <div class="contentHeader">
-                <h1 class="contentTitle">회원관리</h1>
+                <h1 class="contentTitle">회원 관리</h1>
                 <form action="/member/memberSearch">
                     <select name="searchPick" id="selectPick">
                         <option value="member_seq">회원번호</option>

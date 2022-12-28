@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fivet.buddy.mapper.CalMapper">
+    <insert id="insertEvent" >
+        insert into EVENT values (
+        event_seq.nextval,
+        0,
+        #{eventName},
+        #{eventWriter},
+        #{eventType},
+        #{eventStart},
+        #{eventEnd},
+        #{eventLocation},
+        #{eventMemo},
+        #{eventColor}
+        )
+    </insert>
+
+    <select id="selectAll" resultType="com.fivet.buddy.dto.CalDTO">
+        select * from event where "team_seq" = #{teamSeq}
+    </select>
+
+    <delete id="deleteEvent">
+        delete event where "event_seq" = #{eventSeq}
+
+    </delete>
+
+    <update id="">
+        update event set "event_type" = #{eventType}, "event_title" =#{eventTitle} ,"event_writer" =#{eventWriter},
+        "event_start"=#{eventStart}, "event_end" =#{eventEnd}, "event_location" =#{eventLocation}, "event_memo" =#{eventMemo},
+        "event_color"=#{eventColor}
+
+    </update>
+
+</mapper>

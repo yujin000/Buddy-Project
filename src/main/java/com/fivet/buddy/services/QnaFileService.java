@@ -5,6 +5,8 @@ import com.fivet.buddy.dto.QnaFileDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class QnaFileService {
 
@@ -15,8 +17,8 @@ public class QnaFileService {
         return qnaFileDao.insertFile(qnaFileDto);
     }
 
-    public QnaFileDTO selectFile(QnaFileDTO qnaFileDto) throws Exception{
-        return qnaFileDao.selectFile(qnaFileDto);
+    public List<QnaFileDTO> selectFile(int qnaSeq) throws Exception{
+        return qnaFileDao.selectFile(qnaSeq);
     }
     public int deleteFile(int qnaSeq) throws Exception{
         return qnaFileDao.deleteFile(qnaSeq);

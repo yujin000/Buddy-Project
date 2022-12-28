@@ -9,10 +9,7 @@ import com.fivet.buddy.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -79,28 +76,55 @@ public class TeamController {
 
     //팀 관리 이동
     @RequestMapping("goTeamSetting")
-    public String managementTeamSelectTeam(int teamSeq, Model model) throws Exception{
-        List<TeamMemberDTO> teamMemberDtoList =  teamService.managementTeamSelectTeamMember(String.valueOf(teamSeq));
-        TeamDTO teamDto =teamService.managementTeamSelectTeam(String.valueOf(teamSeq));
+    public String goTeamSetting(int teamSeq, Model model) throws Exception{
+        List<TeamMemberDTO> teamMemberDtoList =  teamService.selectTeamMemberOne(String.valueOf(teamSeq));
+        TeamDTO teamDto =teamService.selectTeamOne(String.valueOf(teamSeq));
         model.addAttribute("teamMemberDtoList", teamMemberDtoList);
         model.addAttribute("teamDto",teamDto);
+        model.addAttribute("sessionMemberSeq",session.getAttribute("memberSeq"));
         return "team/teamSetting";
     }
 
     //팀 관리 팀 이름 수정
-    @ResponseBody
     @RequestMapping("updateTeamName")
-    public void managementUpdateTeamName(TeamDTO teamDto) throws Exception{
-        teamService.managementUpdateTeamName(teamDto);
+    public void updateManagementTeamName(TeamDTO teamDto) throws Exception{
+        teamService.updateManagementTeamName(teamDto);
     }
 
-    @RequestMapping("deleteTeam")
     //팀 삭제
+    @RequestMapping("deleteTeam")
     public String deleteTeam(int teamSeq){
         teamService.deleteTeam(teamSeq);
         return "redirect:/member/loginIndex";
     }
 
+    //멤버 등급 변경
+    @ResponseBody
+    @PostMapping("updateTeamMemberGrade")
+    public void updateTeamMemberGrade(TeamMemberDTO teamMemberDto) {
+        teamMemberService.updateTeamMemberGrade(teamMemberDto);
+
+        //만약에 매니저가 다른 팀원에게 매니저를 이양한다면
+        if(teamMemberDto.getGrade().equals("manager")){
+            // 이전 dto값은 변경되는 회원의 memberSeq값이 들어있음
+            Map<String, Integer> param = new HashMap<>();
+            param.put("memberSeq",teamMemberDto.getMemberSeq());
+            param.put("teamSeq", teamMemberDto.getTeamSeq());
+            param.put("newManagerSeq", teamMemberDto.getMemberSeq());
+            param.put("manageSeq", (Integer) session.getAttribute("memberSeq"));
+            //원래 매니저를 팀원으로 등급 변경
+            teamMemberService.updateTeamMemberManager(param);
+            //team 테이블의 team_owner_seq 컬럼 값을 새로 변경된 매니저 member_seq로 변경
+            teamService.updateTeamOwnerSeq(param);
+        }
+    }
+
+    //팀 관리 페이지에서 팀원 강퇴
+    @ResponseBody
+    @RequestMapping("deleteTeamMember")
+    public void deleteTeamMember(TeamMemberDTO teamMemberDto){
+        teamMemberService.deleteTeamMember(teamMemberDto);
+    }
     @RequestMapping("teamOut")
 
     public String teamOut() {

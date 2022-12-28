@@ -5,19 +5,22 @@ import com.fivet.buddy.dto.TeamMemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface TeamMapper {
     void insertTeam(TeamDTO dto);
     List<TeamDTO> selectMemberTeam(int memberSeq);
 
-    List<TeamMemberDTO> managementTeamSelectTeamMember(String teamSeq);
+    List<TeamMemberDTO> selectTeamMemberOne(String teamSeq);
 
-    TeamDTO managementTeamSelectTeam(String teamSeq);
+    TeamDTO selectTeamOne(String teamSeq);
 
-    void managementUpdateTeamName(TeamDTO teamDto);
+    void updateManagementTeamName(TeamDTO teamDto);
 
     void deleteTeam(int teamSeq);
 
     String selectTeamName(int teamSeq);
+
+    void updateTeamOwnerSeq(Map<String,Integer> param);
 }

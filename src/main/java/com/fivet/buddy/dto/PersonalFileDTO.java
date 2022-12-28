@@ -15,4 +15,5 @@ public class PersonalFileDTO {
     private String personalFilesSysname;
     private int personalFilesMemberSeq;
     private String personalFilesFolderKey;
+    private String personalFilesPath;
 }

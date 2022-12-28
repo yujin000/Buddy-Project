@@ -119,17 +119,21 @@
             personal_folder_key = #{value}
     </select>
 
-    <!-- 하위 폴더들 찾기 -->
-    <select id="folderChildFolders" resultMap="selectMapFolder">
+    <!-- 폴더 경로로 폴더들 삭제 -->
+    <delete id="deleteFolderByPath">
+        delete
+            from personal_folder
+        where
+            personal_folder_path like '%'||#{value}||'%'
+    </delete>
+
+    <!-- 하위 폴더들이 있는지 확인 -->
+    <select id="subIsExist" resultType="boolean">
         select
-            personal_folder_key
+            case when count(*) >= 1 then 1 else 0 end
         from
             personal_folder
         where
             personal_folder_parent_key = #{value}
     </select>
-    <resultMap id="selectMapFolder" type="map">
-        <result column="personal_folder_key" property="key" />
-    </resultMap>
-
 </mapper>

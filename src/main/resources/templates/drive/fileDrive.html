@@ -18,6 +18,7 @@
             referrerpolicy="no-referrer"
     />
     <script src="/static/js/jQueryCheck.js"></script>
+    <script src="/static/js/download.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -43,20 +44,19 @@
             </div>
 
             <div id="allFiles" class="asideList">
-                <div class="asideTitle">
-                    <h3>모든 파일</h3>
-                    <button id="allFilesBtn" class="toggle">v</button>
-                </div>
                 <div id="folderList" class="asideItem">
                     <ul>
                         <div th:if="${#strings.isEmpty(myFolders)}">
                             아직 파일이 없습니다.
                         </div>
-                        <div th:text="${session.memberName}" id="main"></div>
+                        <div id="main">모든 파일</div>
                         <div th:unless="${#strings.isEmpty(myFolders)}">
                             <th:block th:each="folder : ${myFolders}">
-                                <i class="fa-solid fa-chevron-right arrowBtn" arrowType="right"></i>
-                                <li th:text="${folder.getPersonalFolderName()}" class="sideList" th:data-folder="${folder.getPersonalFolderKey()}" data-resource-type="folder"></li><br>
+                                <div>
+                                    <i class="fa-solid fa-chevron-right arrowBtn" arrowType="right"></i>
+                                    <li th:text="${folder.getPersonalFolderName()}" class="sideList" th:data-folder="${folder.getPersonalFolderKey()}" data-resource-type="folder"></li><br>
+                                    <ul class="sub"></ul>
+                                </div>
                             </th:block>
                         </div>
                     </ul>
@@ -99,13 +99,14 @@
                 <div class="attachBtnArea">
                     <label for="uploadFile" class="fileLabel mainButton">
                         업로드
-                        <input type="file" name="multipartFile" id="uploadFile" accept=".png,.jpg,.jpeg,.gif,.txt" multiple>
+                        <input type="file" name="multipartFile" id="uploadFile" multiple>
                         <input type="hidden" th:value="${parentKey}" name="attachFolder">
                     </label>
                     <button type="button" id="newFolder" class="mainButton">새 폴더</button>
                     <button type="button" id="shareBtn" class="mainButton">공유</button>
                     <button type="button" id="downloadBtn" class="mainButton">내려받기</button>
                     <button type="button" id="deleteBtn" class="mainButton">삭제</button>
+                    <button type="button" id="testFolder">폴더테스트</button>
                 </div>
             </form>
             <!-- 본문 -->
@@ -165,10 +166,6 @@
             $("#menuList").toggle();
         });
 
-        $("#allFilesBtn").click(function () {
-            $("#folderList").toggle();
-        });
-
         $("#fileTypeToggle").click(function () {
             $("#chatList").toggle();
         });
@@ -222,7 +219,6 @@
             modifiedName = $(this).val();
             $(this).css("color","white").attr("disabled",true);
 
-            let array =
                 // 폴더 이름을 사용하고 있는지 조회 하고 결과 반환
                 $.ajax({
                     url:"/personalFolder/addFolder"
@@ -242,12 +238,6 @@
 
         })
 
-        // 방금 만들어진 리스트 클릭 이벤트(동적 바인딩)
-        folderArea.on("click",function(){
-            //location.reload();
-            //location.href="/drive/detailDrive?resourceKey="+parentKey;
-        })
-
 
     });
 
@@ -265,6 +255,7 @@
 
 <!-- 체크박스 클릭 -->
 <script>
+
 
     // 체크 박스
     $(".check").on('change',function(){
@@ -296,28 +287,117 @@
                     ,key : key
                     ,name : name
                 })
-
-            })
-            console.log(list);
+            });
 
             $.ajax({
-                url : "/drive/delete?parentKey="+parentKey,
-                type : "post",
-                contentType: 'application/json',
-                data : JSON.stringify(list),
-                encoding : "UTF-8"
+                url : "/drive/delete?parentKey="+parentKey
+                ,type : "post"
+                ,contentType: 'application/json'
+                ,data : JSON.stringify(list)
+                ,encoding : "UTF-8"
             }).done(function(){
                 location.reload();
-            })
-        }
+            });
+        };
 
-    })
+    });
 
 
     // 공유
 
+
+
     // 다운로드
 
+    // AJAX binary 설정(AJAX로 다운로드를 하기 위함)
+    $.ajaxTransport("+binary", function(options, originalOptions, jqXHR){
+        if (window.FormData && ((options.dataType && (options.dataType == 'binary')) || (options.data && ((window.ArrayBuffer && options.data instanceof ArrayBuffer) || (window.Blob && options.data instanceof Blob)))))
+        {
+            return {
+                send: function(headers, callback){
+                    var xhr = new XMLHttpRequest(),
+                        url = options.url,
+                        type = options.type,
+                        async = options.async || true,
+                        dataType = options.responseType || "blob",
+                        data = options.data || null,
+                        username = options.username || null,
+                        password = options.password || null;
+
+                    xhr.addEventListener('load', function(){
+                        var data = {};
+                        data[options.dataType] = xhr.response;
+                        callback(xhr.status, xhr.statusText, data, xhr.getAllResponseHeaders());
+                    });
+
+                    xhr.open(type, url, async, username, password);
+
+                    for (var i in headers ) {
+                        xhr.setRequestHeader(i, headers[i] );
+                    }
+
+                    xhr.responseType = dataType;
+                    xhr.send(data);
+                },
+                abort: function(){
+                    jqXHR.abort();
+                }
+            };
+        }
+    });
+
+    const dispositionRegex = /(?<=\'\')(.+?)$/gm;
+
+    $("#downloadBtn").on("click",function () {
+        let checked = $("input:checkbox[class='check']:checked");
+            checked.each(function () {
+                let type = $(this).data("resource-type");
+                let key = $(this).data("key");
+                let name = $(this).data("name");
+
+                let list = [];
+
+                list.push({
+                    type: type
+                    , key: key
+                    , name: name
+                })
+
+                if(type === "file"){
+                    $.ajax({
+                        url: "/drive/download"
+                        , type: "post"
+                        , contentType: 'application/json'
+                        , data: JSON.stringify(list)
+                        , encoding: "UTF-8"
+                        , processData: false
+                        , headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                        , xhrFields: {
+                            responseType : "blob"
+                        }
+                    }).done(function (blob,status,info){
+                        let contentDisposition = decodeURI(info.getResponseHeader("content-disposition").match(dispositionRegex)[0]);
+                        let contentType = info.getResponseHeader("content-type");
+                        download(blob,contentDisposition,contentType);
+                    })
+                }else{
+                    $.ajax({
+                        url: "/drive/download"
+                        , type: "post"
+                        , contentType: 'application/json'
+                        , data: JSON.stringify(list)
+                        , encoding: "UTF-8"
+                        , processData: false
+                        , headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                        ,xhrFields: {
+                            responseType : "blob"
+                        }
+                    }).done(function (blob,status,info){
+                        download(blob,name+".zip","application/octet-stream");
+                    })
+                }
+        });
+    });
 </script>
 
 <!-- 파일 업로드 버튼 클릭 -->
@@ -330,10 +410,10 @@
         let accept = ["png","jpg","jpeg","gif"];
         let result = $.inArray(extension,accept);
 
-        if(result == -1){
-            alert("이미지, 텍스트 파일만 업로드 가능합니다.. (.png, .jpg, jpeg, .gif, .txt)");
-            this.value = "";
-        }else if(result != -1 && e.target.files[0]){
+        // if(result == -1){
+        //     alert("이미지, 텍스트 파일만 업로드 가능합니다.. (.png, .jpg, jpeg, .gif, .txt)");
+        //     this.value = "";
+        // }else if(result != -1 && e.target.files[0]){
             $("#uploadFileForm").submit();
             // $("#uploadFileForm").submit(function(e) {
             //     e.preventDefault();
@@ -341,7 +421,7 @@
             //         location.reload();
             //     });
             // });
-        }
+        // }
     }
 
 </script>
@@ -349,20 +429,59 @@
 <!-- 사이드 메뉴 arrow 클릭 -->
 <script>
 
-    $(".arrowBtn").on("click",function(){
-        console.log(this);
-        let nowArrow = $(this).attr("arrowType");
+    let nowArrow;
+
+    $(document).on("click",".arrowBtn",function(){
+        nowArrow = $(this).attr("arrowType");
 
         if(nowArrow == "right"){
+            let arrowThis = $(this);
+
             $(this).attr("arrowType","down");
             $(this).attr("class","fa-solid fa-chevron-down arrowBtn");
 
+            let container = $("<div>");
+
+            let parentFolderKey = $(this).next("li").data("folder");
+
+            $.ajax({
+                url : "/drive/getKey?parentFolderKey="+parentFolderKey
+                ,type : "json"
+                ,success:function (rsp){
+                    $.each(rsp, function(index, value){
+                        let div = $("<div>");
+                        let li = $("<li>");
+                        let i = $("<i>").addClass("fa-solid fa-chevron-right arrowBtn newer").attr("arrowType","right");
+                        let list = $("<li>").addClass("sideList").attr("data-folder",value.personalFolderKey).attr("data-resource-type","folder").html(value.personalFolderName);
+                        let ul = $("<ul>").addClass("sub");
+
+                        $.ajax({
+                            url : "/drive/subIsExist?folderKey="+value.personalFolderKey
+                            ,type : "get"
+                        }).done(function (rsp){
+                            console.log(rsp);
+                            if(rsp == true){
+                                div.append(li).append(i).append(list).append(ul);
+                                container.append(div);
+                            }else{
+                                div.append(li).append(list).append(ul);
+                                container.append(div).css("margin-left","20px");
+                            }
+                        })
+
+                    })
+                    arrowThis.siblings("ul").append(container).css("margin-left","20px");
+                }
+            })
+
         }else{
             $(this).attr("arrowType","right");
-            $(this).attr("class","fa-solid fa-chevron-right arrowBtn");
+            $(this).attr("class","fa-solid fa-chevron-right arrowBtn newer");
+            $(this).siblings("ul").children().remove();
         }
 
     })
+
 </script>
 
 <!-- 사이드 메뉴 클릭 -->
@@ -371,7 +490,7 @@
         location.reload();
     })
 
-    $(".sideList").on("click",function(){
+    $(document).on("click",".sideList",function(){
         let thisType = $(this).data("resource-type");
         if(thisType == "folder"){
             let folderData = $(this).data("folder");

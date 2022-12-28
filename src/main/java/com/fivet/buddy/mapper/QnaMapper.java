@@ -13,7 +13,7 @@ public interface QnaMapper {
 
      int insertFile(QnaFileDTO qnaFileDto);
 
-     List<QnaDTO> select();
+     List<QnaDTO> select(int qnaWriter);
 
      List<QnaCommentDTO> selectComment(int qnaSeq);
 

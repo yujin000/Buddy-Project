@@ -18,12 +18,7 @@
     </insert>
 
     <select id="select" resultType="com.fivet.buddy.dto.QnaDTO">
-        select
-        *
-        from
-        qna_board
-        order by
-        qna_seq desc
+        select * from qna_board where qna_writer = #{qnaWriter} order by qna_seq desc
     </select>
 
     <select id="selectDetail" resultType="com.fivet.buddy.dto.QnaDTO">

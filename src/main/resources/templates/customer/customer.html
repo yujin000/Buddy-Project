@@ -22,6 +22,7 @@
         .qnaContent {
             border: 1px solid;
         }
+
         .noticeContent {
             border: 1px solid;
         }
@@ -68,8 +69,8 @@
             </ul>
         </div>
 
-        <div class="boardNews" th:each="notice : ${notice}">
-            <ul>
+        <div class="boardNews" th:if="${notice != null}">
+            <ul th:each="notice : ${notice}">
                 <li class="articleNotice" onclick="toggle(this)">
                     <span class="tag">공지</span>
                     <a class="title" onclick="toggle(this)">
@@ -132,6 +133,12 @@
             }, error: function () {
             }
         }).done(function (rsp) {
+            if (rsp.length == 0) {
+                deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq);
+                deleteBtn.on("click", function () {
+                    confirm("정말 삭제 하시겠습니까?");
+                })
+            }
             if (rsp[0].qnaCommentContents != null && rsp[0].qnaSysName == null) {
                 qnaCmt.text("답변 : " + rsp[0].qnaCommentContents);
                 deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq);
@@ -183,6 +190,7 @@
             deleteBtn.on("click", function () {
                 confirm("정말 삭제 하시겠습니까?");
             })
+
         })
     });
 
@@ -199,7 +207,7 @@
             }, error: function () {
             }
         }).done(function (rsp) {
-                noticeSysName.attr("src", "/noticeImg/"+rsp[0].noticeSysName);
+            noticeSysName.attr("src", "/noticeImg/" + rsp[0].noticeSysName);
         })
     });
 </script>

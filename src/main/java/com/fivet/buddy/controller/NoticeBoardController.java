@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/notice/")
-public class NoticeController {
+public class NoticeBoardController {
 
     @Autowired
     private NoticeFileService noticeFileService;
@@ -29,7 +29,7 @@ public class NoticeController {
             Map<String, String> map = new HashMap<>();
             map.put("noticeOriName" , noticeFileDto.get(i).getNoticeOriname());
             map.put("noticeSysName", noticeFileDto.get(i).getNoticeSysname());
-            System.out.println(map.get("noticeSysName"));
+            //System.out.println(map.get("noticeSysName"));
             list.add(map);
         }
         return list;

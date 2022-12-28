@@ -22,8 +22,11 @@
         .qnaContent {
             border: 1px solid;
         }
+        .noticeContent {
+            border: 1px solid;
+        }
 
-        #btnDelete {
+        .btnDelete {
             float: right;
         }
     </style>
@@ -57,7 +60,7 @@
                         <img src="" class="qnaSysName" style="width: 500px">
                         <div class="qnaContent" contenteditable="false" th:text="${qna.qnaContents}">
                         </div>
-                        <a href="" class="downloadFiles"></a>
+                        <a href="" class="downloadFiles" style="color: blue"></a>
                         <p class="qnaCmt">답변 : </p>
                         <a href="" class="deleteBtn">삭제</a>
                     </div>
@@ -73,7 +76,7 @@
                         <input type="hidden" th:value="${notice.noticeSeq}" class="noticeSeq">
                         <span th:text="${notice.noticeTitle}"></span>
                     </a>
-                    <span class="date">날짜 : [[${notice.noticeWriteDate}]]</span>s
+                    <span class="date">날짜 : [[${notice.noticeWriteDate}]]</span>
                     <div class="hidden">
                         <img src="" class="noticeSysName" style="width: 500px">
                         <div class="noticeContent" contenteditable="false" th:text="${notice.noticeContents}">
@@ -137,17 +140,21 @@
                 downloadFiles.attr("href", "/qna/download?sysName=" + rsp[0].qnaSysName + "&oriName=" + rsp[0].qnaOriName);
                 downloadFiles.text(rsp[0].qnaOriName);
                 deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq + "&qnaSysName=" + rsp[0].qnaSysName);
+
             } else if (rsp[1].qnaCommentContents != null && rsp[1].qnaSysName == null) {
                 qnaCmt.text("답변 : " + rsp[1].qnaCommentContents);
                 deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq);
+
             } else if (rsp[1].qnaCommentContents == null) {
                 qnaSysName.attr("src", "/qnaImg/" + rsp[1].qnaSysName);
                 downloadFiles.attr("href", "/qna/download?sysName=" + rsp[1].qnaSysName + "&oriName=" + rsp[1].qnaOriName);
                 downloadFiles.text(rsp[1].qnaOriName);
                 deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq + "&qnaSysName=" + rsp[1].qnaSysName);
+
             } else if (rsp[2].qnaCommentContents != null && rsp[2].qnaSysName == null) {
                 qnaCmt.text("답변 : " + rsp[2].qnaCommentContents);
                 deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq);
+
             } else if (rsp[2].qnaCommentContents == null) {
                 qnaSysName.attr("src", "/qnaImg/" + rsp[2].qnaSysName);
                 downloadFiles.attr("href", "/qna/download?sysName=" + rsp[2].qnaSysName + "&oriName=" + rsp[2].qnaOriName);
@@ -159,11 +166,13 @@
                 downloadFiles.attr("href", "/qna/download?sysName=" + rsp[0].qnaSysName + "&oriName=" + rsp[0].qnaOriName);
                 downloadFiles.text(rsp[0].qnaOriName);
                 deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq + "&qnaSysName=" + rsp[0].qnaSysName);
+
             } else if (rsp[1].qnaSysName != null && rsp[1].qnaCommentContents == null) {
                 qnaSysName.attr("src", "/qnaImg/" + rsp[1].qnaSysName);
                 downloadFiles.attr("href", "/qna/download?sysName=" + rsp[1].qnaSysName + "&oriName=" + rsp[1].qnaOriName);
                 downloadFiles.text(rsp[1].qnaOriName);
                 deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq + "&qnaSysName=" + rsp[1].qnaSysName);
+
             } else if (rsp[2].qnaSysName != null && rsp[2].qnaCommentContents == null) {
                 qnaSysName.attr("src", "/qnaImg/" + rsp[2].qnaSysName);
                 downloadFiles.attr("href", "/qna/download?sysName=" + rsp[2].qnaSysName + "&oriName=" + rsp[2].qnaOriName);
@@ -171,36 +180,26 @@
                 deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq + "&qnaSysName=" + rsp[2].qnaSysName);
             }
 
-            deleteBtn.on("click", function (){
-                alert("정말 삭제 하시겠습니까?")
+            deleteBtn.on("click", function () {
+                confirm("정말 삭제 하시겠습니까?");
             })
         })
     });
-    // let btnDelete = $("#btnDelete");
-    // let qnaSeq = $(".qnaSeq").val();
-    // let qnaSys = $(".downloadFiles").text();
-    // console.log(qnaSeq+"밥주세요");
-    // console.log(qnaSys+"밥주세요");
 
     $(".articleNotice").on("click", function () {
         let noticeSeq = $(this).children("a").find($(".noticeSeq")).val();
         let noticeSysName = $(this).children($(".hidden")).find($(".noticeSysName"));
-
+        console.log(noticeSeq);
+        console.log(noticeSysName);
         $.ajax({
             url: "/notice/detail",
             type: "post",
-            data: {"noticeSeq": noticeSeq },
+            data: {"noticeSeq": noticeSeq},
             success: function () {
             }, error: function () {
             }
         }).done(function (rsp) {
-            if(rsp[0].noticeSysName != null){
-                noticeSysName.attr("src", "/noticeImg/" + rsp[0].noticeSysName);
-            }else if(rsp[1].noticeSysName != null){
-                noticeSysName.attr("src", "/noticeImg/" + rsp[1].noticeSysName);
-            }else if(rsp[2].noticeSysName != null){
-                noticeSysName.attr("src", "/noticeImg/" + rsp[2].noticeSysName);
-            }
+                noticeSysName.attr("src", "/noticeImg/"+rsp[0].noticeSysName);
         })
     });
 </script>

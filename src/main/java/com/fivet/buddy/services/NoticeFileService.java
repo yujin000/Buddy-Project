@@ -13,8 +13,8 @@ public class NoticeFileService {
     @Autowired
     private NoticeFileDAO noticeFileDao;
 
-    public List<NoticeFileDTO> selectFile() throws Exception {
-        return noticeFileDao.selectFile();
+    public List<NoticeFileDTO> selectFile(int noticeSeq) throws Exception {
+        return noticeFileDao.selectFile(noticeSeq);
     }
 
     public NoticeFileDTO selectFileDetail(NoticeFileDTO noticeFileDto) throws Exception {

@@ -13,7 +13,7 @@
     </select>
 
     <select id="selectFile" resultType="com.fivet.buddy.dto.NoticeFileDTO">
-        select * from notice_files;
+        select * from notice_files where notice_seq = #{noticeSeq}
     </select>
 
     <select id="selectFileDetail" resultType="com.fivet.buddy.dto.NoticeFileDTO">

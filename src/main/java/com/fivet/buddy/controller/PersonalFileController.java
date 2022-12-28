@@ -38,12 +38,13 @@ public class PersonalFileController {
 
         String oriName = multipartFile.getOriginalFilename();
         String sysName = UUID.randomUUID() + "_" + oriName;
+        String filePath = uploadFilePath+sysName;
 
-        multipartFile.transferTo(new File(uploadFilePath+sysName));
+        multipartFile.transferTo(new File(filePath));
 
         int memberSeq = Integer.parseInt(session.getAttribute("memberSeq").toString());
         // personal_file 테이블에 insert
-        personalFileService.uploadFile(oriName,sysName,attachFolder,memberSeq);
+        personalFileService.uploadFile(oriName,sysName,attachFolder,memberSeq,filePath);
 
         return "redirect:/drive/toFileDrive";
     }

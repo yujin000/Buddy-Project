@@ -24,4 +24,7 @@ public class ChatRoomDAO {
         return chatRoomMapper.chatRoomList(param);
     }
 
+    //팀 합류시(생성 포함) 기본적으로 추가되는 나와의 대화
+    public void insertSelfChat(Map<String, String> param) { chatRoomMapper.insertSelfChat(param);}
+
 }

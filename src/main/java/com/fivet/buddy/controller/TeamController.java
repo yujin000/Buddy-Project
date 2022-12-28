@@ -6,6 +6,7 @@ import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.services.ChatRoomService;
 import com.fivet.buddy.services.TeamMemberService;
 import com.fivet.buddy.services.TeamService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,9 +49,8 @@ public class TeamController {
         Map<String, String> param = new HashMap<>();
         param.put("memberSeq", session.getAttribute("memberSeq").toString());
         // session값인 이름만 닉네임에 담아 service에 전송.
-        param.put("teamMemberNickname", session.getAttribute("memberName").toString());
+        param.put("teamMemberNickname", String.valueOf(session.getAttribute("memberName")));
         teamService.insertTeam(teamDto, param);
-
         return "redirect:/member/loginIndex";
     }
 
@@ -97,7 +97,6 @@ public class TeamController {
     @RequestMapping("deleteTeam")
     //팀 삭제
     public String deleteTeam(int teamSeq){
-        System.out.println(teamSeq);
         teamService.deleteTeam(teamSeq);
         return "redirect:/member/loginIndex";
     }
@@ -110,6 +109,14 @@ public class TeamController {
         session.removeAttribute("teamMemberNickname");
         session.removeAttribute("teamName");
         return "redirect:/member/loginIndex";
+    }
+
+    @ResponseBody
+    @PostMapping("teamList")
+    public String selectTeamList() {
+        Gson g = new Gson();
+        List<TeamDTO> teamList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
+        return  g.toJson(teamService.selectMemberTeam((int)session.getAttribute("memberSeq")));
     }
 
     // Exception Handler

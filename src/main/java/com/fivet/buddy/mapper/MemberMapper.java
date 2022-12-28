@@ -25,6 +25,8 @@ public interface MemberMapper {
 
     void insertProfileImg(int memberSeq);
     void updateProfileImg(MemberImgDTO memberImgDto);
+
+    void updateDefaultProfileImg(String memberSeq);
     void deleteMember(String memberSeq);
     List<MemberDTO> selectMembers();
     List<MemberDTO> memberSearch(String searchPick, String memberSearchText);

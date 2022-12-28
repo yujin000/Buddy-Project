@@ -1,15 +1,15 @@
--- È¸¿øÅ×ÀÌºí
+-- È¸ï¿½ï¿½ï¿½ï¿½ï¿½Ìºï¿½
 create table member(
    member_seq number not null primary key,
-   member_id varchar2(50) not null, -- ÀÌ¸ÞÀÏ·Î ¹ÞÀ½
+   member_id varchar2(50) not null, -- ï¿½Ì¸ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½
    member_pw varchar2(200),
    member_name varchar2(50) not null,
    member_phone varchar2(30),
    member_signup_date timestamp default sysdate not null,
-   member_logtype varchar(20) not null /* normal, kakao, naver·Î ·Î±×ÀÎ ±¸ºÐ */
+   member_logtype varchar(20) not null /* normal, kakao, naverï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 );
 
--- È¸¿ø sequence
+-- È¸ï¿½ï¿½ sequence
 create sequence member_seq
 start with 1
 increment by 1
@@ -17,42 +17,42 @@ nocache
 nomaxvalue;
                                                                               
 
--- ÇÁ·ÎÇÊ ÀÌ¹ÌÁö ÆÄÀÏ
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 create table member_img(
-   member_img_member_seq number, -- memberÅ×ÀÌºíÀÇ member_seq °ª (¿Ü·¡Å°)
+   member_img_member_seq number, -- memberï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ member_seq ï¿½ï¿½ (ï¿½Ü·ï¿½Å°)
    member_img_oriname varchar2(100),
    member_img_sysname varchar2(100)
    /*, CONSTRAINT fk_member_img_member_id foreign key(member_img_member_id) references member (member_id) ON DELETE CASCADE*/
 );
 
--- °³ÀÎ ÆÄÀÏ Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 create table personal_files(
    personal_files_key varchar(20)  not null primary key,
    personal_files_oriname varchar2(200),
    personal_files_sysname varchar2(200),
-   personal_files_member_seq number not null, -- memberÅ×ÀÌºíÀÇ member_seq °ª (¿Ü·¡Å°)
-   personal_files_folder_key varchar2(20) -- personal_folderÅ×ÀÌºíÀÇ personal_folder_seq °ª (¿Ü·¡Å°) -- key·Î º¯°æ
+   personal_files_member_seq number not null, -- memberï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ member_seq ï¿½ï¿½ (ï¿½Ü·ï¿½Å°)
+   personal_files_folder_key varchar2(20) -- personal_folderï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ personal_folder_seq ï¿½ï¿½ (ï¿½Ü·ï¿½Å°) -- keyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 );
 
--- °³ÀÎ Æú´õ Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 create table personal_folder(
-   personal_folder_key varchar2(20) not null primary key, -- key·Î º¯°æ(È¸¿ø°¡ÀÔÇÒ ¶§ »õ·Î¿î ³­¼ö ÁöÁ¤, parent_key¿¡ basic°ª ÀÔ·Â)
+   personal_folder_key varchar2(20) not null primary key, -- keyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, parent_keyï¿½ï¿½ basicï¿½ï¿½ ï¿½Ô·ï¿½)
    personal_folder_name varchar(100) not null,
-   personal_folder_member_seq number not null, -- memberÅ×ÀÌºíÀÇ member_seq °ª (¿Ü·¡Å°)
-   personal_folder_parent_key varchar(20), -- personal_folderÅ×ÀÌºíÀÇ folder_seq°ª(¿Ü·¡Å°X), ÃÊ±â °ªÀº basic_folderÅ×ÀÌºíÀÇ basic_folder_seq°ªÀ¸·Î ¾µ ¿¹Á¤(default ¾Æ´Ô), -- key·Î º¯°æ
-   personal_folder_path varchar(200), -- ½ÇÁ¦ ÀúÀåµÉ °æ·Î
+   personal_folder_member_seq number not null, -- memberï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ member_seq ï¿½ï¿½ (ï¿½Ü·ï¿½Å°)
+   personal_folder_parent_key varchar(20), -- personal_folderï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ folder_seqï¿½ï¿½(ï¿½Ü·ï¿½Å°X), ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ basic_folderï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ basic_folder_seqï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(default ï¿½Æ´ï¿½), -- keyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+   personal_folder_path varchar(200), -- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
    personal_folder_date Timestamp
 );
 
--- ±âº» »ý¼º Æú´õ
+-- ï¿½âº» ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 create table basic_folder(
     basic_folder_key varchar2(20) not null primary key, -- key
-    basic_folder_member_seq number,  -- memberÅ×ÀÌºíÀÇ member_seq°ª (¿Ü·¡Å°)
-    basic_folder_name varchar2(20)-- ±âº» »ý¼ºµÈ Å×ÀÌºíÀÇ ÀÌ¸§(memberÅ×ÀÌºí name)
+    basic_folder_member_seq number,  -- memberï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ member_seqï¿½ï¿½ (ï¿½Ü·ï¿½Å°)
+    basic_folder_name varchar2(20)-- ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½(memberï¿½ï¿½ï¿½Ìºï¿½ name)
 );
 
 
--- ´ÜÃ¼ Æú´õ Å×ÀÌºí(³ªÁß¿¡ Ãß°¡)
+-- ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½(ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ß°ï¿½)
 /*
 create table team_folder(
    team_folder_seq number primary key,
@@ -60,7 +60,7 @@ create table team_folder(
    team_folder_team_seq number
 );
 
--- ´ÜÃ¼ Æú´õ sequence
+-- ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ sequence
 create sequence team_file_seq
 start with 1
 increment by 1
@@ -68,20 +68,20 @@ nocache
 nomaxvalue;
 */
 
--- È¸¿ø ÃÊ´ë Å×ÀÌºí
+-- È¸ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 create table invite(
-   invite_team_seq number not null, /*teamÅ×ÀÌºíÀÇ team_seq°ª (¿Ü·¡Å°) */
-   invite_send_mem_seq number not null, /* memberÅ×ÀÌºíÀÇ member_seq°ª (¿Ü·¡Å°) */
+   invite_team_seq number not null, /*teamï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ team_seqï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
+   invite_send_mem_seq number not null, /* memberï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ member_seqï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
    invite_receive_mem_email varchar(50) not null,
-   invite_code varchar(50) not null /* ÀÏÈ¸¼º ÄÚµå */
+   invite_code varchar(50) not null /* ï¿½ï¿½È¸ï¿½ï¿½ ï¿½Úµï¿½ */
 );
 
------------------------- ÆÀ Å×ÀÌºí
+------------------------ ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 
 create table team (
     team_seq number primary key not null,
     team_name varchar2(50) not null,
-    team_owner_seq number not null, -- È¸¿ø¹øÈ£ foreign key
+    team_owner_seq number not null, -- È¸ï¿½ï¿½ï¿½ï¿½È£ foreign key
     team_count number not null,
     team_made_time timestamp default sysdate not null
 );
@@ -93,20 +93,20 @@ nomaxvalue
 nocache;
 
 create table team_member(
-team_seq number not null, /* teamÅ×ÀÌºíÀÇ team_seq °¡Á®¿À±â (¿Ü·¡Å°) */
+team_seq number not null, /* teamï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ team_seq ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
 /*CONSTRAINT fk_team_seq foreign key(team_seq) references team (team_seq) */
-member_seq number not null, /* member Å×ÀÌºíÀÇ seq °ª °¡Á®¿À±â (¿Ü·¡Å°) */
-member_id varchar2(50) not null, /* member Å×ÀÌºíÀÇ member_id °ªÀÌ¶û °°À½*/
-team_member_nickname varchar(50), /* ÆÀ ³»¿¡¼­ÀÇ ´Ð³×ÀÓ */
-grade varchar2(50) not null, /* µî±Þ ÄÃ·³ */
-team_join_date timestamp default sysdate not null /* ÆÀ µé¾î¿ÔÀ» ¶§ ½Ã±â */
+member_seq number not null, /* member ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ seq ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
+member_id varchar2(50) not null, /* member ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ member_id ï¿½ï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ï¿½*/
+team_member_nickname varchar(50), /* ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ï¿½ */
+grade varchar2(50) not null, /* ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ */
+team_join_date timestamp default sysdate not null /* ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã±ï¿½ */
 );
 
------------------------ Ã¤ÆÃ Å×ÀÌºí
+----------------------- Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 
 create table chat_room (
     chat_room_seq number PRIMARY KEY,
-    team_seq number not null, -- teamÅ×ÀÌºíÀÇ team_seq °¡Á®¿À±â (¿Ü·¡Å°)(ÇØ´ç Ã¤ÆÃ¹æÀÌ ¾î´ÀÆÀÀÇ Ã¤ÆÃ¹æÀÎÁö ÆÄ¾ÇÇÏ±âÀ§ÇÑ ¿Ü·¡Å°)
+    team_seq number not null, -- teamï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ team_seq ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ü·ï¿½Å°)(ï¿½Ø´ï¿½ Ã¤ï¿½Ã¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¾ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ü·ï¿½Å°)
     chat_title varchar2(50) not null,
     room_owner_seq number not null,
     member_count number not null,
@@ -120,27 +120,27 @@ nomaxvalue
 nocache;
 
 create table chat_member (
-    chat_room_seq number not null, -- chat_room_seq ¿Ü·¡Å°
-    member_seq number not null, -- È¸¿øÁ¤º¸ ¿Ü·¡Å°
+    chat_room_seq number not null, -- chat_room_seq ï¿½Ü·ï¿½Å°
+    member_seq number not null, -- È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ü·ï¿½Å°
     chat_join_date timestamp default sysdate not null,
     recent_view_date timestamp default sysdate
 );
 
 create table chat_msg (
     chat_msg_seq number primary Key,
-    chat_room_seq number not null, -- chat_room_seq ¿Ü·¡Å°
+    chat_room_seq number not null, -- chat_room_seq ï¿½Ü·ï¿½Å°
     chat_content varchar2(1000) not null,
-    chat_writer_seq number not null, --È¸¿ø¹øÈ£ ¿Ü·¡Å°
+    chat_writer_seq number not null, --È¸ï¿½ï¿½ï¿½ï¿½È£ ï¿½Ü·ï¿½Å°
     read_count number,
     chat_date timestamp default sysdate not null    
 );
 
------------Ã¤ÆÃ ÆÄÀÏ Å×ÀÌºí
+-----------Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 create table chat_files(
     chat_files_seq number NOT NULL PRIMARY KEY,
     chat_oriname varchar2(100) not null,
     chat_sysname varchar2(100) not null,
-    chat_room_seq number not null /* chat_roomÅ×ÀÌºíÀÇ chat_room_seq °ª °¡Á®¿À±â (¿Ü·¡Å°) */
+    chat_room_seq number not null /* chat_roomï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ chat_room_seq ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
 );
 
 create sequence chat_files_seq
@@ -149,15 +149,15 @@ increment by 1
 nomaxvalue 
 nocache;
 
---------------- QNA Å×ÀÌºí
+--------------- QNA ï¿½ï¿½ï¿½Ìºï¿½
 
 create table qna_board(
     qna_seq number NOT NULL PRIMARY KEY,
-    qna_writer number NOT NULL, /* member Å×ÀÌºíÀÇ seq °ª °¡Á®¿À±â (¿Ü·¡Å°) */
+    qna_writer number NOT NULL, /* member ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ seq ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
     qna_title varchar2(90) NOT NULL,
     qna_contents varchar2(600) NOT NULL,
     qna_write_date timestamp NOT NULL,
-    qna_type varchar2(100) NOT NULL -- ¹®ÀÇÀ¯Çü±¸ºÐ (°èÁ¤, ¹ö±×¸®Æ÷Æ® µîµî)
+    qna_type varchar2(100) NOT NULL -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½×¸ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½)
 );
 
 create sequence qna_seq
@@ -168,10 +168,10 @@ nocache;
 
 create table qna_comment (
     qna_comment_seq number NOT NULL primary key,
-    qna_comment_writer number NOT NULL, /* member Å×ÀÌºíÀÇ seq °ª °¡Á®¿À±â (¿Ü·¡Å°) */
+    qna_comment_writer number NOT NULL, /* member ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ seq ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
     qna_comment_contents varchar2 (600) NOT NULL,
     qna_comment_write_date Timestamp NOT NULL,
-    qna_seq number NOT NULL /* qna_boardÅ×ÀÌºíÀÇ qna_seq °ª °¡Á®¿À±â (¿Ü·¡Å°) */
+    qna_seq number NOT NULL /* qna_boardï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ qna_seq ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
 );
 
 create sequence qna_comment_seq
@@ -184,8 +184,8 @@ create table qna_files(
     qna_files_seq number NOT NULL PRIMARY KEY,
     qna_oriname varchar2(100) not null,
     qna_sysname varchar2(100) not null,
-    qna_seq number not null, /* qna_boardÅ×ÀÌºíÀÇ qna_seq °ª °¡Á®¿À±â (¿Ü·¡Å°) */
-    qna_category varchar2(100) not null -- ¹®ÀÇ±Û¿¡ Ã·ºÎµÈ ³»¿ëÀÎÁö, ¹®ÀÇ ´ñ±Û¿¡ Ã·ºÎµÈ ³»¿ëÀÎÁö ºÐ·ù
+    qna_seq number not null, /* qna_boardï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ qna_seq ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
+    qna_category varchar2(100) not null -- ï¿½ï¿½ï¿½Ç±Û¿ï¿½ Ã·ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Û¿ï¿½ Ã·ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð·ï¿½
 );
 
 create sequence qna_files_seq
@@ -194,11 +194,11 @@ increment by 1
 nomaxvalue 
 nocache;
 
---------------------------- ´º½º(°øÁö) Å×ÀÌºí
+--------------------------- ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½Ìºï¿½
 
 create table notice_board(
     notice_seq number NOT NULL PRIMARY KEY,
-    notice_writer number NOT NULL, /* member Å×ÀÌºíÀÇ seq °ª °¡Á®¿À±â (¿Ü·¡Å°) */
+    notice_writer number NOT NULL, /* member ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ seq ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
     notice_title varchar2(90) NOT NULL,
     notice_contents varchar2(600) NOT NULL,
     notice_write_date timestamp NOT NULL
@@ -214,7 +214,7 @@ create table notice_files(
     notice_files_seq number NOT NULL PRIMARY KEY,
     notice_oriname varchar2(100) not null,
     notice_sysname varchar2(100) not null,
-    notice_seq number not null /*notice_board Å×ÀÌºíÀÇ notice_seq°ª °¡Á®¿À±â (¿Ü·¡Å°) */
+    notice_seq number not null /*notice_board ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ notice_seqï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
 );
 
 create sequence notice_files_seq
@@ -223,26 +223,26 @@ increment by 1
 nomaxvalue 
 nocache;
 
----------------------ÀÏÁ¤ Å×ÀÌºí
+---------------------ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 create table event(
     "event_seq" number primary key not null,
-    -- ±âº»Å° ÀÏÁ¤ ½ÃÄö½º
+    -- ï¿½âº»Å° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     "team_seq" number not null,
-    -- ÆÀ seq [¿Ü·¡Å°]
+    -- ï¿½ï¿½ seq [ï¿½Ü·ï¿½Å°]
     "event_name" varchar2(50) not null,
-    -- ÀÏÁ¤ Á¦¸ñ
+    -- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     "event_writer" varchar(200) not null,
-    -- ÀÛ¼ºÀÚ
+    -- ï¿½Û¼ï¿½ï¿½ï¿½
     "event_type" int not null,
-    -- °³ÀÎ / ÆÀ ¿ëµµ ±¸ºÐ
+    -- ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½ ï¿½ëµµ ï¿½ï¿½ï¿½ï¿½
     "event_start" date not null,
-    -- ÀÏÁ¤ÀÇ ½ÃÀÛ ½ÃÁ¡
+    -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     "event_end" date not null,
-    -- ÀÏÁ¤ÀÇ Á¾·á ½ÃÁ¡
+    -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     "event_location" varchar2(200) ,
-    -- ÀÏÁ¤ Àå¼Ò
+    -- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     "event_memo" varchar2(500)
-    -- ÀÏÁ¤ ³»¿ë
+    -- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 );
 
 create sequence event_seq
@@ -252,17 +252,17 @@ nomaxvalue
 nocache;
 
 ---------------------
-/* ÅõÇ¥ Å×ÀÌºí */
+/* ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½Ìºï¿½ */
 create table vote(
 vote_seq number primary key,
-team_seq number not null, /* team Å×ÀÌºíÀÇ seq °ª °¡Á®¿À±â (¿Ü·¡Å°) */
-chat_room_seq number not null, /* chat_room Å×ÀÌºíÀÇ seq°ª °¡Á®¿À±â (¿Ü·¡Å°) */
-vote_title varchar2(100) not null, /* ÅõÇ¥ Á¦¸ñ */
-vote_content varchar(100), /* ÅõÇ¥ ¼³¸í */
-vote_anonymous number default 0 not null, /* ÀÍ¸íÅõÇ¥ ±â´É 0,1·Î ±¸ºÐ */
-vote_duplication number default 0 not null, /* Áßº¹¼±ÅÃ ±â´É 0,1·Î ±¸ºÐ */
-vote_made_time timestamp default sysdate not null, /* ÅõÇ¥ ¸¸µç ½Ã°£ */
-vote_end_time timestamp default sysdate not null /* ÅõÇ¥ ¸¶°¨ ½Ã°£ */
+team_seq number not null, /* team ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ seq ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
+chat_room_seq number not null, /* chat_room ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ seqï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
+vote_title varchar2(100) not null, /* ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ */
+vote_content varchar(100), /* ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ */
+vote_anonymous number default 0 not null, /* ï¿½Í¸ï¿½ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ 0,1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+vote_duplication number default 0 not null, /* ï¿½ßºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 0,1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+vote_made_time timestamp default sysdate not null, /* ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ */
+vote_end_time timestamp default sysdate not null /* ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ */
 );
 
 create sequence vote_seq
@@ -271,12 +271,12 @@ increment by 1
 nomaxvalue 
 nocache;
 
-/*ÅõÇ¥ Ç×¸ñ Å×ÀÌºí */
+/*ï¿½ï¿½Ç¥ ï¿½×¸ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ */
 create table vote_item(
-    vote_seq number not null, /* vote Å×ÀÌºíÀÇ seq°ª °¡Á®¿À±â(¿Ü·¡Å°) */
-    vote_item_seq number not null PRIMARY KEY, /* Ç×¸ñ ¹øÈ£ */
-    vote_item_title varchar(50) not null, /* Ç×¸ñ ÀÌ¸§*/
-    vote_item_count number default 0 not null /* Ç×¸ñ¿¡ ÅõÇ¥ÇÑ »ç¶÷ ¼ö */
+    vote_seq number not null, /* vote ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ seqï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Ü·ï¿½Å°) */
+    vote_item_seq number not null PRIMARY KEY, /* ï¿½×¸ï¿½ ï¿½ï¿½È£ */
+    vote_item_title varchar(50) not null, /* ï¿½×¸ï¿½ ï¿½Ì¸ï¿½*/
+    vote_item_count number default 0 not null /* ï¿½×¸ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ */
 );
 
 create sequence vote_item_seq
@@ -285,11 +285,11 @@ increment by 1
 nomaxvalue 
 nocache;
 
-/* ÅõÇ¥ Ç×¸ñ¿¡ ÅõÇ¥ÇÑ member Å×ÀÌºí */
+/* ï¿½ï¿½Ç¥ ï¿½×¸ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ member ï¿½ï¿½ï¿½Ìºï¿½ */
 create table vote_item_member(
-    vote_seq number not null, /* vote Å×ÀÌºíÀÇ seq°ª °¡Á®¿À±â(¿Ü·¡Å°) */ 
-    vote_item_seq number not null, /* vote_item Å×ÀÌºíÀÇ vote_item_seq°ª °¡Á®¿À±â(¿Ü·¡Å°) */
-    member_seq number not null /* member Å×ÀÌºíÀÇ seq °ª °¡Á®¿À±â (¿Ü·¡Å°) */
+    vote_seq number not null, /* vote ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ seqï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Ü·ï¿½Å°) */ 
+    vote_item_seq number not null, /* vote_item ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ vote_item_seqï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Ü·ï¿½Å°) */
+    member_seq number not null /* member ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ seq ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ü·ï¿½Å°) */
 );
 
 create sequence vote_item_member_seq

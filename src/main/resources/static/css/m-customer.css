@@ -1,0 +1,26 @@
+@media (max-width: 600px) {
+
+    .header {
+        height: 14vh;
+    }
+
+    .header h1 {
+        font-size: 1.2rem;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+    #searchBar {
+        width: 200px;
+        height: 30px;
+    }
+
+    .main{
+        padding-top: 0;
+    }
+
+    .board{
+        height: calc(100vh - 24vh);
+        overflow: scroll;
+    }
+
+}

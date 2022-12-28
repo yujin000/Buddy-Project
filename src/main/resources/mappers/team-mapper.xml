@@ -15,7 +15,7 @@
         </selectKey>
     </insert>
 
-<!--    회원이 속한 팀 출력-->
+    <!--    회원이 속한 팀 출력-->
     <select id="selectMemberTeam" resultType="com.fivet.buddy.dto.TeamDTO">
         select
             t.TEAM_SEQ, t.TEAM_NAME, t.TEAM_OWNER_SEQ
@@ -52,6 +52,8 @@
     <delete id="deleteTeam">
         delete from team where team_seq = #{value}
     </delete>
+
+    <!--    팀 번호로 팀 이름 검색-->
     <select id="selectTeamName" resultType="String">
         select team_name from team where team_seq = #{value}
     </select>

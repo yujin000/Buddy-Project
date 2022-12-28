@@ -71,7 +71,8 @@
                     name="grade"
                     id="grade"
                     class="gradeBtn"
-                    onclick="opener()"
+                    onclick="opener(this)"
+                    th:seq="${teamMemberDtoList.memberSeq}"
             >
               등급
             </button>
@@ -112,9 +113,9 @@
       </div>
     </div>
 
-  <form id="deleteTeam" method="post">
+  <form action="/team/deleteTeam" id="deleteTeam" method="post">
     <input type="hidden" name="teamSeq" id="teamSeq" th:value="${teamDto.getTeamSeq()}">
-  <p style="text-align: center; margin-top: 20px;">팀을 삭제하시겠습니까? <a href="" onclick="delClick()" type="button"><strong>삭제</strong></a></p>
+  <p style="text-align: center; margin-top: 20px;">팀을 삭제하시겠습니까? <a href="#" onclick="delClick()"><strong>삭제</strong></a></p>
   </form>
 </div>
 <script>
@@ -141,17 +142,16 @@
   }
 
  // 팀 삭제 시 경고메세지
-// function delClick() {
-//   let result = confirm("팀을 정말 삭제 하시겠습니까?");
-//   if (result) {
-//     $("#deleteTeam").attr("action","/team/deleteTeam").submit();
-//     alert("팀이 삭제 되었습니다");
-//     return true;
-//   } else {
-//     alert("잘 생각하셨어요!");
-//     return false;
-//   }
-// }
+function delClick() {
+  if (confirm("팀을 정말 삭제 하시겠습니까?")) {
+    $("#deleteTeam").submit();
+    alert("팀이 삭제 되었습니다");
+    return true;
+  } else {
+    alert("잘 생각하셨어요!");
+    return false;
+  }
+}
 
 </script>
 

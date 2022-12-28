@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fivet.buddy.mapper.QnaMapper">
+
+    <insert id="insert">
+        insert into qna_board values(qna_seq.nextval,#{qnaWriter},#{qnaTitle},#{qnaContents},sysdate,#{qnaType})
+
+        <selectKey order="AFTER" keyProperty="qnaSeq" resultType="int">
+            select qna_seq.currval from dual
+        </selectKey>
+
+    </insert>
+
+    <insert id="insertFile">
+        insert into qna_files values(qna_files_seq.nextval,#{qnaOriName},#{qnaSysName},#{qnaSeq})
+    </insert>
+
+    <select id="select" resultType="com.fivet.buddy.dto.QnaDTO">
+        select * from qna_board where qna_writer = #{qnaWriter} order by qna_seq desc
+    </select>
+
+    <select id="selectDetail" resultType="com.fivet.buddy.dto.QnaDTO">
+        select * from qna_board where qna_seq = #{qnaSeq}
+    </select>
+
+
+    <select id="selectFile" resultType="com.fivet.buddy.dto.QnaFileDTO">
+        select * from qna_files where qna_seq = #{qnaSeq}
+    </select>
+
+    <select id="selectComment" resultType="com.fivet.buddy.dto.QnaCommentDTO">
+        select * from qna_comment where qna_seq = #{qnaSeq}
+    </select>
+
+    <delete id="delete">
+        delete from qna_board where qna_seq = #{qnaSeq}
+    </delete>
+
+    <delete id="deleteFile">
+        delete from qna_files where qna_seq = #{qnaSeq}
+    </delete>
+
+    <delete id="deleteComment">
+        delete from qna_comment where qna_seq = #{qnaSeq} and qna_comment_seq = #{qna_comment_seq}
+    </delete>
+</mapper>

@@ -37,11 +37,11 @@ public class endPoint {
     @OnMessage
     public void onMessage(String json, Session session) throws Exception{
         Gson g = new Gson();
-        //System.out.println("receive json : " + json);
 
         ChatMsgDTO chatMsgDto = g.fromJson(json, ChatMsgDTO.class);
+        //스크립트 어택 방지
+        chatMsgDto.setChatContent(chatMsgDto.getChatContent().replace("<", "&lt;"));
         chatMsgService.insertChatMsg(chatMsgDto);
-        System.out.println(chatMsgDto.getChatDate());
 
         for(Session s : sessions.get(chatMsgDto.getChatRoomSeq())) {
             s.getBasicRemote().sendText(g.toJson(chatMsgDto));

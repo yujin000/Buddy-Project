@@ -1,13 +1,7 @@
 package com.fivet.buddy.controller;
 
-import com.fivet.buddy.dto.NoticeDTO;
-import com.fivet.buddy.dto.QnaCommentDTO;
-import com.fivet.buddy.dto.QnaDTO;
-import com.fivet.buddy.dto.QnaFileDTO;
-import com.fivet.buddy.services.NoticeService;
-import com.fivet.buddy.services.QnaCommentService;
-import com.fivet.buddy.services.QnaFileService;
-import com.fivet.buddy.services.QnaService;
+import com.fivet.buddy.dto.*;
+import com.fivet.buddy.services.*;
 import com.fivet.buddy.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,10 +32,8 @@ public class QnaController {
     @Autowired
     private NoticeService noticeService;
 
-    @RequestMapping("write")
-    public String write() {
-        return "customer/customerPopup";
-    }
+    @Autowired
+    private NoticeFileService noticeFileService;
 
 
     @Autowired
@@ -49,6 +41,11 @@ public class QnaController {
 
     @Value("${qna.save.path}")
     String qnaPath;
+
+    @RequestMapping("write")
+    public String write() {
+        return "customer/customerPopup";
+    }
 
     @RequestMapping("main")
     public String select(Model model) throws Exception {
@@ -92,19 +89,16 @@ public class QnaController {
         System.out.println(qnaSeq);
         List<QnaFileDTO> qnaFileDto = qnaFileService.selectFile(qnaSeq);
         List<QnaCommentDTO> qnaCommentDto = qnaCommentService.selectComment(qnaSeq);
-
         List<Map<String,String>> list = new ArrayList<>();
         for(int i = 0; i<qnaCommentDto.size();i++){
             Map<String, String> map = new HashMap<>();
             map.put("qnaCommentContents" , qnaCommentDto.get(i).getQnaCommentContents());
-            System.out.println(map.get("qnaCommentContents"));
             list.add(map);
         }
         for(int i = 0; i<qnaFileDto.size();i++){
             Map<String, String> map = new HashMap<>();
             map.put("qnaOriName" , qnaFileDto.get(i).getQnaOriName());
             map.put("qnaSysName", qnaFileDto.get(i).getQnaSysName());
-            System.out.println(map.get("qnaOriName"));
             list.add(map);
         }
         return list;

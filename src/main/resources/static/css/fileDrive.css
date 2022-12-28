@@ -395,6 +395,7 @@ aside {
 .sideList{
     display: inline;
     cursor: pointer;
+    font-size: 15px;
 }
 .fa-solid{
     margin: 10px 0px 0px 20px;
@@ -404,4 +405,12 @@ aside {
 #main{
     cursor: pointer;
     margin: 5px 0px 0px 10px;
+}
+
+/* 서브 폴더 */
+.sub{
+    display: block;
+}
+.newer{
+    margin-left:20px;
 }

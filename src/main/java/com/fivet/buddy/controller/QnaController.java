@@ -49,20 +49,21 @@ public class QnaController {
 
     @RequestMapping("main")
     public String select(Model model) throws Exception {
+        int qnaWriter = (int) session.getAttribute("memberSeq");
         List<NoticeDTO> noticeDto = noticeService.select();
-        List<QnaDTO> qnaDto = qnaService.select();
+        List<QnaDTO> qnaDto = qnaService.select(qnaWriter);
         model.addAttribute("qna", qnaDto);
         model.addAttribute("notice", noticeDto);
         return "customer/customer";
     }
 
     @RequestMapping("insert")
-    public String insert(@RequestParam MultipartFile[] uploadfile , Model model , QnaDTO qnaDto, QnaFileDTO qnaFileDto, FileUtil util) throws Exception {
-        qnaDto.setQnaWriter((int)session.getAttribute("memberSeq"));
+    public String insert(@RequestParam MultipartFile[] uploadfile, Model model, QnaDTO qnaDto, QnaFileDTO qnaFileDto, FileUtil util) throws Exception {
+        qnaDto.setQnaWriter((int) session.getAttribute("memberSeq"));
         System.out.println(uploadfile[0]);
-        if(uploadfile[0].isEmpty()) {
+        if (uploadfile[0].isEmpty()) {
             qnaService.insert(qnaDto);
-        }else {
+        } else {
             qnaService.insert(qnaDto);
             List<QnaFileDTO> list = new ArrayList<>();
             for (MultipartFile file : uploadfile) {
@@ -85,19 +86,19 @@ public class QnaController {
 
     @ResponseBody
     @PostMapping(value = "detail")
-    public List<Map<String,String>> selectDetail(int qnaSeq) throws Exception {
+    public List<Map<String, String>> selectDetail(int qnaSeq) throws Exception {
         System.out.println(qnaSeq);
         List<QnaFileDTO> qnaFileDto = qnaFileService.selectFile(qnaSeq);
         List<QnaCommentDTO> qnaCommentDto = qnaCommentService.selectComment(qnaSeq);
-        List<Map<String,String>> list = new ArrayList<>();
-        for(int i = 0; i<qnaCommentDto.size();i++){
+        List<Map<String, String>> list = new ArrayList<>();
+        for (int i = 0; i < qnaCommentDto.size(); i++) {
             Map<String, String> map = new HashMap<>();
-            map.put("qnaCommentContents" , qnaCommentDto.get(i).getQnaCommentContents());
+            map.put("qnaCommentContents", qnaCommentDto.get(i).getQnaCommentContents());
             list.add(map);
         }
-        for(int i = 0; i<qnaFileDto.size();i++){
+        for (int i = 0; i < qnaFileDto.size(); i++) {
             Map<String, String> map = new HashMap<>();
-            map.put("qnaOriName" , qnaFileDto.get(i).getQnaOriName());
+            map.put("qnaOriName", qnaFileDto.get(i).getQnaOriName());
             map.put("qnaSysName", qnaFileDto.get(i).getQnaSysName());
             list.add(map);
         }
@@ -106,10 +107,10 @@ public class QnaController {
 // ajax
 
     @RequestMapping("delete")
-    public String delete(int qnaSeq, FileUtil util,String qnaSysName) throws Exception{
-        if(qnaSysName == null) {
+    public String delete(int qnaSeq, FileUtil util, String qnaSysName) throws Exception {
+        if (qnaSysName == null) {
             qnaService.delete(qnaSeq);
-        }else {
+        } else {
             qnaService.delete(qnaSeq);
             qnaFileService.deleteFile(qnaSeq);
             util.delete(qnaPath, qnaSysName);
@@ -118,12 +119,13 @@ public class QnaController {
     }
 
     @RequestMapping("deleteComment")
-    public String delete(int qnaSeq,int qnaCommentSeq) throws Exception{
-        qnaCommentService.deleteComment(qnaSeq,qnaCommentSeq);
+    public String delete(int qnaSeq, int qnaCommentSeq) throws Exception {
+        qnaCommentService.deleteComment(qnaSeq, qnaCommentSeq);
         return "redirect:/";
     }
+
     @RequestMapping("download")
     public ResponseEntity<Resource> download(FileUtil util, String sysName, String oriName) throws Exception {
-        return util.download(qnaPath,sysName,oriName);
+        return util.download(qnaPath, sysName, oriName);
     }
 }

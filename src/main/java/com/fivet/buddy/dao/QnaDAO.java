@@ -15,8 +15,8 @@ public class QnaDAO {
     public int insert(QnaDTO qnaDto) throws Exception{
         return qnaMapper.insert(qnaDto);
     }
-    public List<QnaDTO> select() throws Exception{
-        return qnaMapper.select();
+    public List<QnaDTO> select(int qnaWriter) throws Exception{
+        return qnaMapper.select(qnaWriter);
     }
 
     public QnaDTO selectDetail(QnaDTO qnaDto) throws Exception{

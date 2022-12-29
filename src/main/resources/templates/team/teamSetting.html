@@ -73,18 +73,9 @@
                       th:data-teamSeq="${teamDto.getTeamSeq}"
                       th:data-session="${sessionMemberSeq}"
                       th:data-owner="${teamDto.getTeamOwnerSeq}"
+                      th:text="${teamMemberDtoList.getGrade}"
               >
-                <th:block th:text="${teamMemberDtoList.getGrade=='manager' ? '매니저' :
-                                (teamMemberDtoList.getGrade=='subManager' ? '부매니저' : '팀원')}">
-                </th:block>
               </button>
-<!--              <th:block th:if="${teamDto.getTeamOwnerSeq==sessionMemberSeq}">-->
-<!--                <th:block th:if="${teamMemberDtoList.getGrade!='manager'}">-->
-<!--                <button type="submit" class="editBtn" id="eidtMember">-->
-<!--                  변경-->
-<!--                </button>-->
-<!--                </th:block>-->
-<!--              </th:block>-->
               <button type="submit" class="delBtn" id="delMember"
                       th:data-nick-name="${teamMemberDtoList.getTeamMemberNickname}"
                       th:data-memberSeq="${teamMemberDtoList.getMemberSeq}"
@@ -146,8 +137,9 @@
   let teamSeq;
 
   $(function (){
-    let managetBtn = document.getElementsByClassName("gradeBtn");
-    managetBtn[0].setAttribute("disabled",true);
+    // let managetBtn = document.getElementsByClassName("gradeBtn");
+    // managetBtn[0].setAttribute("disabled",true);
+    $(".gradeBtn").eq(0).attr("disabled",true);
   })
   // modal 열림 함수
   $(".gradeBtn").on("click",function (){
@@ -170,7 +162,7 @@
   $(".yesNoBtn").on("click",function () {
     yesNo = $(this).text();
 
-    let enGrade = changeGrade == '매니저' ? 'manager' : changeGrade == '부매니저' ? 'subManager' : 'coworker';
+    let enGrade = changeGrade;
     if (yesNo == "예") {
       $.ajax({
         url: "/team/updateTeamMemberGrade",

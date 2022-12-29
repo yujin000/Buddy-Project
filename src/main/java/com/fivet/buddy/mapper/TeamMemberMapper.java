@@ -13,5 +13,7 @@ public interface TeamMemberMapper {
     void createTeam(Map<String, String> param);
     TeamMemberDTO selectOne(TeamMemberDTO teamMemberDto);
     List<TeamMemberDTO> selectChatMember(int chatRoomSeq);
-
+    void updateTeamMemberGrade(TeamMemberDTO teamMemberDto);
+    void updateTeamMemberManager(Map<String,Integer> param);
+    void deleteTeamMember(TeamMemberDTO teamMemberDto);
 }

@@ -18,24 +18,24 @@
 <body>
 <div class="moblieView">
     <div class="logo">
-        <a href="">
+        <a href="/member/loginIndex">
             <img src="" alt="" />
         </a>
     </div>
     <h1>
         죄송합니다. <br />
-        어드민 모드는 모바일 환경을 지원하지 않습니다.
+        관리자 페이지는 모바일 환경을 지원하지 않습니다.
     </h1>
-    <button><a href="../index.html">뒤로가기</a></button>
+    <button><a href="/member/loginIndex">뒤로가기</a></button>
 </div>
 <div class="wrap">
     <div class="header">
         <div class="logo">
-            <a href="../index.html">
+            <a href="/member/loginIndex">
                 <img src="" alt="" />
             </a>
         </div>
-        <p>어드민</p>
+        <p>관리자 페이지</p>
         <button id="menu" class="iconMenu">menu</button>
         <button id="asideClose">aside</button>
     </div>
@@ -56,20 +56,20 @@
         <aside>
             <div class="asideTitle">
                 <img src="" alt="" />
-                <p><a href="/admin/toAdminPage">회원관리</a></p>
+                <p><a href="/member/toAdminMember">회원 관리</a></p>
             </div>
             <div class="asideTitle">
                 <img src="" alt="" />
-                <p><a href="/admin/toAdminNews">뉴스관리</a></p>
+                <p><a href="/notice/toAdminNotice">공지 관리</a></p>
             </div>
             <div id="checked" class="asideTitle">
                 <img src="" alt="" />
-                <p><a href="/admin/toAdminQna">문의내역</a></p>
+                <p><a href="/admin/toAdminQna">문의내역 관리</a></p>
             </div>
         </aside>
         <div class="content">
             <div class="contentHeader">
-                <h1 class="contentTitle">문의내역</h1>
+                <h1 class="contentTitle">문의내역 관리</h1>
                 <input
                         type="search"
                         id="searchBar"
@@ -90,38 +90,20 @@
                 <div class="table">
                     <ul>
                         <li class="thead">
-                            <span>번호</span><span>이름</span><span>이메일</span
-                        ><span>전화번호</span><span>삭제</span>
+                            <span>번호</span>
+                            <span>문의유형</span><span>작성자(회원번호)</span>
+                            <span>제목</span>
+                            <span>작성날짜</span>
                         </li>
-                        <li class="tdata">
-                            <span>1</span><span>company</span><span>kh@gmail.com</span
-                        ><span>010-1234-1234</span>
-                            <span><button class="delData">del</button></span>
-                        </li>
-                        <li class="tdata">
-                            <span>1</span><span>company</span><span>kh@gmail.com</span
-                        ><span>010-1234-1234</span>
-                            <span><button class="delData">del</button></span>
-                        </li>
-                        <li class="tdata">
-                            <span>1</span><span>company</span><span>kh@gmail.com</span
-                        ><span>010-1234-1234</span>
-                            <span><button class="delData">del</button></span>
-                        </li>
-                        <li class="tdata">
-                            <span>1</span><span>company</span><span>kh@gmail.com</span
-                        ><span>010-1234-1234</span>
-                            <span><button class="delData">del</button></span>
-                        </li>
-                        <li class="tdata">
-                            <span>1</span><span>company</span><span>kh@gmail.com</span
-                        ><span>010-1234-1234</span>
-                            <span><button class="delData">del</button></span>
-                        </li>
-                        <li class="tdata">
-                            <span>1</span><span>company</span><span>kh@gmail.com</span
-                        ><span>010-1234-1234</span>
-                            <span><button class="delData">del</button></span>
+                        <li class="tdata" th:if="${qnaList!=null}">
+                            <th:block th:each="qnaList : ${qnaList}">
+                            <span th:text="${qnaList.qnaSeq}"></span>
+                            <span th:text="${qnaList.qnaType}"></span>
+                            <span th:text="${qnaList.qnaWriter}"></span>
+                            <span th:text="${qnaList.qnaTitle}"></span>
+                            <span th:text="${qnaList.qnaWriteDate}"></span>
+
+                            </th:block>
                         </li>
                     </ul>
                     <hr />

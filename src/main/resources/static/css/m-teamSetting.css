@@ -19,6 +19,14 @@
         width: 70vw;
     }
 
+    .modalWrap1 {
+        width: 70vw;
+    }
+
+    .modalWrap2 {
+        width: 70vw;
+    }
+
     #teamName {
         width: 160px;
         overflow-x: scroll;

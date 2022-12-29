@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -21,137 +21,238 @@
   <div class="contentWrap">
     <div class="teamProfile">
       <p class="subTitle">팀 프로필</p>
-        <div class="article">
-          <input
-                  type="text"
-                  name="teamName"
-                  id="teamName"
-                  class="input_text"
-                  th:value="${teamDto.getTeamName()}"
-                  disabled
-          />
-          <input type="hidden" id="teamSeqHidden" th:value="${teamDto.getTeamSeq()}">
-          <div id="updateDiv">
+      <div class="article">
+        <input
+                type="text"
+                name="teamName"
+                id="teamName"
+                class="input_text"
+                th:value="${teamDto.getTeamName()}"
+                disabled
+        />
+        <input type="hidden" id="teamSeqHidden" th:value="${teamDto.getTeamSeq()}">
+        <div id="updateDiv">
           <button type="button" id="changeTeam" class="editBtn">
             변경
           </button>
-          </div>
         </div>
+      </div>
     </div>
 
     <div class="memberProfile">
       <p class="subTitle">멤버 관리</p>
       <div th:if="${teamMemberDtoList!=null}">
         <th:block th:each="teamMemberDtoList : ${teamMemberDtoList}">
-        <div class="article">
-          <div class="metaData">
-            <img src="" alt="" class="profileImg" />
-            <div class="texts">
-              <input
-                      type="text"
-                      name="memberName"
-                      id="memberName"
-                      class="inputText"
-                      th:value="${teamMemberDtoList.teamMemberNickname}"
-                      readonly
-              />
-              <input
-                      type="text"
-                      name="memberEmail"
-                      id="memberEmail"
-                      class="inputEmail"
-                      th:value="${teamMemberDtoList.memberId}"
-                      readonly
-              />
+          <div class="article">
+            <div class="metaData">
+              <img src="" alt="" class="profileImg" />
+              <div class="texts">
+                <input
+                        type="text"
+                        name="memberName"
+                        class="inputText"
+                        th:value="${teamMemberDtoList.getTeamMemberNickname}"
+                        readonly
+                />
+                <input
+                        type="text"
+                        name="memberEmail"
+                        class="inputEmail"
+                        th:value="${teamMemberDtoList.getMemberId}"
+                        readonly
+                />
+              </div>
+            </div>
+            <div class="btns">
+              <button
+                      type="button"
+                      name="grade"
+                      class="gradeBtn"
+                      th:data-nick-name="${teamMemberDtoList.getTeamMemberNickname}"
+                      th:data-memberSeq="${teamMemberDtoList.getMemberSeq}"
+                      th:data-teamSeq="${teamDto.getTeamSeq}"
+                      th:data-session="${sessionMemberSeq}"
+                      th:data-owner="${teamDto.getTeamOwnerSeq}"
+              >
+                <th:block th:text="${teamMemberDtoList.getGrade=='manager' ? '매니저' :
+                                (teamMemberDtoList.getGrade=='subManager' ? '부매니저' : '팀원')}">
+                </th:block>
+              </button>
+<!--              <th:block th:if="${teamDto.getTeamOwnerSeq==sessionMemberSeq}">-->
+<!--                <th:block th:if="${teamMemberDtoList.getGrade!='manager'}">-->
+<!--                <button type="submit" class="editBtn" id="eidtMember">-->
+<!--                  변경-->
+<!--                </button>-->
+<!--                </th:block>-->
+<!--              </th:block>-->
+              <button type="submit" class="delBtn" id="delMember"
+                      th:data-nick-name="${teamMemberDtoList.getTeamMemberNickname}"
+                      th:data-memberSeq="${teamMemberDtoList.getMemberSeq}"
+                      th:data-teamSeq="${teamDto.getTeamSeq}">
+                강퇴
+              </button>
             </div>
           </div>
-          <div class="btns">
-            <button
-                    type="button"
-                    name="grade"
-                    id="grade"
-                    class="gradeBtn"
-                    onclick="opener(this)"
-                    th:seq="${teamMemberDtoList.memberSeq}"
-            >
-              등급
-            </button>
-            <button type="submit" class="editBtn" id="eidtMember">
-              변경
-            </button>
-            <button type="submit" class="delBtn" id="delMember">
-              강퇴
-            </button>
-          </div>
-        </div>
         </th:block>
       </div>
     </div>
   </div>
-    <div class="modal">
-      <div class="modalWrap">
-        <h1>🤔</h1>
-        <h3>
-          member 님의 등급을 <br />
-          어떻게 변경할까요?
-        </h3>
-        <button id="master" class="modalBtn" onclick="changer(this)">
-          마스터
-        </button>
-        <button id="manager" class="modalBtn" onclick="changer(this)">
-          매니저
-        </button>
-        <button
-                id="staff"
-                type="button"
-                class="modalBtn"
-                onclick="changer(this)"
-        >
-          팀원
-        </button>
-        <button id="goBack" type="button" onclick="closer()">나가기</button>
-      </div>
+  <div class="modal">
+    <div class="modalWrap">
+      <h1>🤔</h1>
+      <h3 id="h3"></h3>
+      <button id="master" class="modalBtn">매니저</button>
+      <button id="manager" class="modalBtn">부매니저</button>
+      <button id="staff" class="modalBtn">팀원</button>
+      <button id="goBack" type="button" onclick="closer()">나가기</button>
     </div>
+  </div>
+
+  <div class="modal1">
+    <div class="modalWrap1">
+      <h1>🤔</h1>
+      <h3 id="h3_1"></h3>
+      <button class="yesNoBtn">예</button>
+      <button class="yesNoBtn">아니요</button>
+      <button id="goBack1" type="button" onclick="closer1()">나가기</button>
+    </div>
+  </div>
+
+  <div class="modal2">
+    <div class="modalWrap2">
+      <h1>🤔</h1>
+      <h3 id="h3_2"></h3>
+      <button class="okNoBtn">예</button>
+      <button class="okNoBtn">아니요</button>
+      <button id="goBack2" type="button" onclick="closer2()">나가기</button>
+    </div>
+  </div>
+
 
   <form action="/team/deleteTeam" id="deleteTeam" method="post">
     <input type="hidden" name="teamSeq" id="teamSeq" th:value="${teamDto.getTeamSeq()}">
-  <p style="text-align: center; margin-top: 20px;">팀을 삭제하시겠습니까? <a href="#" onclick="delClick()"><strong>삭제</strong></a></p>
+    <p style="text-align: center; margin-top: 20px;">팀을 삭제하시겠습니까? <a href="#" onclick="delClick()"><strong>삭제</strong></a></p>
   </form>
 </div>
 <script>
-  var modal = document.querySelector(".modal");
-  var grade = document.querySelector("#grade");
-  var gradeBtn = document.querySelector(".gradeBtn");
-  var modalBtn = document.querySelectorAll(".modalBtn");
-  var master = document.querySelector("#master");
-  var manager = document.querySelector("#manager");
-  var staff = document.querySelector("#staff");
-  var choice = $(".staff").html();
+
+  //팀원 등급 버튼 누르면 마스터,매니저,팀원 으로 변경
+  let oriGrade;
+  let thisNickName;
+  let changeGrade;
+  let yesNo;
+  let okNo;
+  let memberSeq;
+  let teamSeq;
+
+  $(function (){
+    let managetBtn = document.getElementsByClassName("gradeBtn");
+    managetBtn[0].setAttribute("disabled",true);
+  })
   // modal 열림 함수
-  function closer() {
-    modal.style.display = "none";
-  }
+  $(".gradeBtn").on("click",function (){
+    $(".modal").css("display","block");
+    memberSeq=$(this).data("memberseq");
+    teamSeq=$(this).data("teamseq");
+    thisNickName=$(this).data("nick-name");
+    oriGrade = $(this).text();
+    $("#h3").html(thisNickName +"님의 등급을 <br/> 어떻게 변경할까요?");
+  })
+
+  // modal에서 등급 선택
+  $(".modalBtn").on("click",function (){
+    $(".modal").css("display","none");
+    $(".modal1").css("display","block");
+    changeGrade=$(this).text();
+    $("#h3_1").html(thisNickName +"님의 등급을 <br/>"+oriGrade+" 에서 "+changeGrade+" (으)로 변경할까요?");
+  })
+
+  $(".yesNoBtn").on("click",function () {
+    yesNo = $(this).text();
+
+    let enGrade = changeGrade == '매니저' ? 'manager' : changeGrade == '부매니저' ? 'subManager' : 'coworker';
+    if (yesNo == "예") {
+      $.ajax({
+        url: "/team/updateTeamMemberGrade",
+        data: {
+          "grade": enGrade,
+          "memberSeq": memberSeq,
+          "teamSeq":teamSeq
+        },
+        type:"post",
+        success: function () {
+        }, error: function () {
+        }
+      }).done(function () {
+        location.reload();
+        if(changeGrade=="매니저"){
+          location.href="/member/loginIndex"
+        }else {
+          $(".modal1").css("display", "none");
+        }
+      })
+    }  else {
+      $(".modal1").css("display", "none");
+    }
+  })
+
+  // modal2 열림 함수
+  $(".delBtn").on("click",function (){
+    $(".modal2").css("display","block");
+    memberSeq=$(this).data("memberseq");
+    thisNickName=$(this).data("nick-name");
+    teamSeq=$(this).data("teamseq");
+    $("#h3_2").html(thisNickName +"님을 강퇴 시키겠습니까?");
+  })
+
+  $(".okNoBtn").on("click",function () {
+    okNo = $(this).text();
+
+    if (okNo == "예") {
+      $.ajax({
+        url: "/team/deleteTeamMember",
+        data: {
+          "memberSeq": memberSeq,
+          "teamSeq":teamSeq
+        },
+        type:"post",
+        success: function () {
+        }, error: function () {
+        }
+      }).done(function () {
+        location.reload();
+      })
+    }  else {
+      $(".modal2").css("display", "none");
+    }
+  })
+
   // modal 닫힘 함수
-  function opener() {
-    modal.style.display = "block";
-  }
-  // 등급 선택시 이벤트 행동
-  function changer(e) {
-    grade.innerText = e.innerText;
-    modal.style.display = "none";
+  function closer() {
+    $(".modal").css("display","none");
   }
 
- // 팀 삭제 시 경고메세지
-function delClick() {
-  if (confirm("팀을 정말 삭제 하시겠습니까?")) {
-    $("#deleteTeam").submit();
-    alert("팀이 삭제 되었습니다");
-    return true;
-  } else {
-    alert("잘 생각하셨어요!");
-    return false;
+  // modal1 닫힘 함수
+  function closer1() {
+    $(".modal1").css("display","none");
   }
-}
+
+  // modal2 닫힘 함수
+  function closer2() {
+    $(".modal2").css("display","none");
+  }
+
+  // 팀 삭제 시 경고메세지
+  function delClick() {
+    if (confirm("팀을 정말 삭제 하시겠습니까?")) {
+      $("#deleteTeam").submit();
+      alert("팀이 삭제 되었습니다");
+      return true;
+    } else {
+      alert("잘 생각하셨어요!");
+      return false;
+    }
+  }
 
 </script>
 

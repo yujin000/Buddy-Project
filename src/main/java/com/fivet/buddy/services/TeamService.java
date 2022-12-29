@@ -52,18 +52,18 @@ public class TeamService {
     }
 
     //팀 관리 멤버 출력
-    public List<TeamMemberDTO> managementTeamSelectTeamMember(String teamSeq){
-        return teamDao.managementTeamSelectTeamMember(teamSeq);
+    public List<TeamMemberDTO> selectTeamMemberOne(String teamSeq){
+        return teamDao.selectTeamMemberOne(teamSeq);
     }
 
     //팀 관리 팀 이름 출력
-    public TeamDTO managementTeamSelectTeam(String teamSeq){
-        return teamDao.managementTeamSelectTeam(teamSeq);
+    public TeamDTO selectTeamOne(String teamSeq){
+        return teamDao.selectTeamOne(teamSeq);
     }
 
     //팀 관리 팀 이름 수정
-    public void managementUpdateTeamName(TeamDTO teamDto){
-        teamDao.managementUpdateTeamName(teamDto);
+    public void updateManagementTeamName(TeamDTO teamDto){
+        teamDao.updateManagementTeamName(teamDto);
     }
 
     //팀 삭제
@@ -74,5 +74,10 @@ public class TeamService {
     // 팀 번호로 팀 이름 탐색
     public String selectTeamName(int teamSeq) {
         return teamDao.selectTeamName(teamSeq);
+    }
+
+    //팀 관리에서 매니저가 바뀌면 team_owner_seq 변경
+    public void updateTeamOwnerSeq(Map<String,Integer> param){
+        teamDao.updateTeamOwnerSeq(param);
     }
 }

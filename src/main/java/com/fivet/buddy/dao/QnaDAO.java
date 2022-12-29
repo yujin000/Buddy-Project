@@ -22,4 +22,8 @@ public class QnaDAO {
     public void delete(int qnaSeq) throws Exception{
          qnaMapper.delete(qnaSeq);
     }
+
+    public List<QnaDTO> selectQnaBoardAll() {
+        return qnaMapper.selectQnaBoardAll();
+    }
 }

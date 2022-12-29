@@ -54,8 +54,11 @@
         chatRoomInput.val(chatRoomList[i].chatRoomSeq);
         chatRoomInput.attr("name","chatRoomSeq");
         chatRoomListForm.append(chatRoomInput);
+        chatRoomListForm.attr("action","/chatRoom/join");
+        chatRoomListForm.attr("method","get");
         chatRoomListLi.text(chatRoomList[i].chatTitle);
         chatRoomListLi.append(chatRoomListForm);
+        chatRoomListLi.addClass("chatRoom");
         $("#chatListUl").append(chatRoomListLi);
       }
     });
@@ -89,7 +92,12 @@
       $(this).children("form").submit();
     })
 
+    //채팅방 이동 클릭이벤트
+    $(document).on("click",".chatRoom", function (){
+      $(this).children("form").submit();
+    })
 
+    // 메세지 수신시 메세지 출력
     ws.onmessage = function (e){
       let data = JSON.parse(e.data);
       let msg = $("<div>");

@@ -3,10 +3,7 @@ package com.fivet.buddy.controller;
 import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.MemberImgDTO;
 import com.fivet.buddy.dto.TeamDTO;
-import com.fivet.buddy.services.BasicFolderService;
-import com.fivet.buddy.services.MemberService;
-import com.fivet.buddy.services.PersonalFolderService;
-import com.fivet.buddy.services.TeamService;
+import com.fivet.buddy.services.*;
 import com.fivet.buddy.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -34,6 +33,9 @@ public class MemberController {
 
     @Autowired
     private TeamService teamService;
+
+    @Autowired
+    private TeamMemberService teamMemberService;
 
     @Autowired
     private HttpSession session;
@@ -192,7 +194,9 @@ public class MemberController {
         MemberDTO dto = memberService.selectMyInfo(memberSeq);
         model.addAttribute("userInfo",dto);
         List <TeamDTO> teamDtoList = teamService.selectMemberTeam(dto.getMemberSeq());
+        String SubManagerMember = teamMemberService.selectSubManagerMember((int) session.getAttribute("memberSeq"));
         model.addAttribute("teamDtoList", teamDtoList);
+        model.addAttribute("SubManagerMember",SubManagerMember);
         return memberIndex;
     }
 
@@ -298,6 +302,9 @@ public class MemberController {
     public String loginIndex(Model model) {
         if (session.getAttribute("memberSeq")!=null) {
             List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
+            //부매니저인 멤버 출력 (부매니저일때도 팀 관리 들어갈 수 있게)
+            String SubManagerMember = teamMemberService.selectSubManagerMember((int) session.getAttribute("memberSeq"));
+            model.addAttribute("SubManagerMember",SubManagerMember);
             model.addAttribute("teamDtoList", teamDtoList);
         }
         return "index";

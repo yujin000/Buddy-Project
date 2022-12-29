@@ -45,4 +45,9 @@
     <delete id="deleteComment">
         delete from qna_comment where qna_seq = #{qnaSeq} and qna_comment_seq = #{qna_comment_seq}
     </delete>
+
+    <!--    1:1문의내역보기(관리자)-->
+    <select id="selectQnaBoardAll" resultType="com.fivet.buddy.dto.QnaDTO">
+        select * from qna_board order by 1 desc
+    </select>
 </mapper>

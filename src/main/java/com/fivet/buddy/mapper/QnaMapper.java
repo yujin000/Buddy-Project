@@ -26,4 +26,6 @@ public interface QnaMapper {
      int deleteFile(int qnaSeq);
 
      int deleteComment(int qnaSeq,int qnaCommentSeq);
+
+     List<QnaDTO> selectQnaBoardAll();
 }

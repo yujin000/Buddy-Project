@@ -27,4 +27,7 @@ public class QnaService {
     public int delete(int qnaSeq) throws Exception {
         return qnaDao.delete(qnaSeq);
     }
+    public List<QnaDTO> selectQnaBoardAll() {
+        return qnaDao.selectQnaBoardAll();
+    }
 }

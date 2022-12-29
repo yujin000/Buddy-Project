@@ -133,10 +133,15 @@
             }, error: function () {
             }
         }).done(function (rsp) {
+
             if (rsp.length == 0) {
                 deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq);
                 deleteBtn.on("click", function () {
-                    confirm("정말 삭제 하시겠습니까?");
+                    if(confirm("정말 삭제 하시겠습니까?")){
+                        return true;
+                    } else {
+                        return false;
+                    }
                 })
             }
             if (rsp[0].qnaCommentContents != null && rsp[0].qnaSysName == null) {
@@ -188,7 +193,11 @@
             }
 
             deleteBtn.on("click", function () {
-                confirm("정말 삭제 하시겠습니까?");
+                if(confirm("정말 삭제 하시겠습니까?")){
+                    return true;
+                } else {
+                    return false;
+                }
             })
 
         })

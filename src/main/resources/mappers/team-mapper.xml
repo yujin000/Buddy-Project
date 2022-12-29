@@ -28,16 +28,6 @@
         order by 1
     </select>
 
-    <!--팀 관리 멤버 출력 -->
-    <select id="selectTeamMemberOne" resultType="com.fivet.buddy.dto.TeamMemberDTO">
-        select * from team_member where team_seq = #{value}
-        order by case
-        when grade='manager' then 1
-        when grade='subManager' then 2
-        when grade='coworker' then 3
-        end, member_seq asc
-    </select>
-
     <!-- 팀 관리 팀 이름 출력-->
     <select id="selectTeamOne" resultType="com.fivet.buddy.dto.TeamDTO">
         select * from team where team_seq = #{value}

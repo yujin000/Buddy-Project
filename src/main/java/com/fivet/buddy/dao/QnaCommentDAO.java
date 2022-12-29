@@ -17,7 +17,7 @@ public class QnaCommentDAO {
         return qnaMapper.selectComment(qnaSeq);
     }
 
-    public int deleteComment(int qnaSeq,int qnaCommentSeq) throws Exception{
-        return qnaMapper.deleteComment(qnaSeq,qnaCommentSeq);
+    public void deleteComment(int qnaSeq,int qnaCommentSeq) throws Exception{
+         qnaMapper.deleteComment(qnaSeq,qnaCommentSeq);
     }
 }

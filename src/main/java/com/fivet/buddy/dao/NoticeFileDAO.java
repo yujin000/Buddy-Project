@@ -17,7 +17,4 @@ public class NoticeFileDAO {
     public List<NoticeFileDTO> selectFile(int noticeSeq) throws Exception{
         return noticeMapper.selectFile(noticeSeq);
     }
-    public NoticeFileDTO selectFileDetail(NoticeFileDTO noticeFileDto) throws Exception{
-        return noticeMapper.selectFileDetail(noticeFileDto);
-    }
 }

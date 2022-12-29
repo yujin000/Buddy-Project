@@ -10,9 +10,7 @@ import java.util.List;
 @Mapper
 public interface NoticeMapper {
     List<NoticeDTO> select();
-    NoticeDTO selectDetail(NoticeDTO dto);
 
     List<NoticeFileDTO> selectFile(int noticeSeq);
 
-    NoticeFileDTO selectFileDetail(NoticeFileDTO noticeFileDto);
 }

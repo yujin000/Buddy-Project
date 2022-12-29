@@ -16,7 +16,4 @@ public class NoticeService {
         return noticeDao.select();
     }
 
-    public NoticeDTO selectDetail(NoticeDTO noticeDto) throws Exception{
-        return noticeDao.selectDetail(noticeDto);
-    }
 }

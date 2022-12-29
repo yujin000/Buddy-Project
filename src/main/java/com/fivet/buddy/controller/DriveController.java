@@ -2,10 +2,11 @@ package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.PersonalFileDTO;
 import com.fivet.buddy.dto.PersonalFolderDTO;
+import com.fivet.buddy.services.BasicFolderService;
+import com.fivet.buddy.services.MemberService;
 import com.fivet.buddy.services.PersonalFileService;
 import com.fivet.buddy.services.PersonalFolderService;
 import com.fivet.buddy.util.FileUtil;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -16,17 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.Folder;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.nio.file.Files;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 
@@ -41,6 +37,9 @@ public class DriveController {
     private PersonalFileService personalFileService;
 
     @Autowired
+    private MemberService memberService;
+
+    @Autowired
     private HttpSession session;
 
     // Exception Handler
@@ -52,7 +51,14 @@ public class DriveController {
 
     // fileDrive.html로 이동
     @RequestMapping("toFileDrive")
-    public String toFileDrive(Model model) throws Exception {
+    public String toFileDrive(Model model, String accessRights) throws Exception {
+        // 접근 제한
+        if(accessRights == null){
+            model.addAttribute("access",0);
+        }else{
+            model.addAttribute("access",1);
+        }
+
         int memberSeq = Integer.parseInt(session.getAttribute("memberSeq").toString());
 
         List<PersonalFolderDTO> myFolders = personalFolderService.selectMyFolders(memberSeq);
@@ -62,13 +68,33 @@ public class DriveController {
         model.addAttribute("myFiles", myFiles);
         // 타이틀(현재 폴더 이름) 뽑기
         model.addAttribute("nowFolder", personalFolderService.nowFolder(personalFolderService.myBasicFolder(memberSeq)));
+        // 공유폴더 정보
+
         return "drive/fileDrive";
     }
 
     // 폴더 세부내역으로 이동
     @RequestMapping("detailDrive")
-    public String detailDrive(String resourceKey, Model model) throws Exception {
-        int memberSeq = Integer.parseInt(session.getAttribute("memberSeq").toString());
+    public String detailDrive(String resourceKey, String accessRights, Model model) throws Exception {
+        int memberSeq = (Integer)session.getAttribute("memberSeq");
+
+        // 공유받은 폴더인지 확인
+        PersonalFolderDTO checkOwner = personalFolderService.getFolderOwner(resourceKey);
+        String ownerName = memberService.getOwnerName(checkOwner.getPersonalFolderMemberSeq());
+
+        if(checkOwner.getPersonalFolderShared().equals("N") && memberSeq != checkOwner.getPersonalFolderMemberSeq()) {
+            return "redirect:/drive/toFileDrive?accessRights="+"false";
+        }else{
+            System.out.println("dd");
+        }
+
+        if(memberSeq != checkOwner.getPersonalFolderMemberSeq()){
+            model.addAttribute("ownerName",ownerName);
+            model.addAttribute("shared",1);
+        }else{
+            model.addAttribute("shared",0);
+        }
+
         // 전체
         List<PersonalFolderDTO> myFolders = personalFolderService.selectMyFolders(memberSeq);
         List<PersonalFileDTO> myFiles = personalFileService.selectMyFiles(memberSeq);
@@ -178,4 +204,11 @@ public class DriveController {
         return null;
     }
 
+    // 파일 공유 (실행 / 중단)
+    @ResponseBody
+    @RequestMapping("access")
+    public String accessStatus(String access,String key) throws Exception{
+        personalFolderService.accessStatus(access,key);
+        return null;
+    }
 }

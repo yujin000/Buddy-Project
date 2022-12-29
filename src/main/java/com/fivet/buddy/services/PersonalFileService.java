@@ -26,7 +26,7 @@ public class PersonalFileService {
     private BasicFolderDAO basicFolderDao;
 
     // 파일첨부
-    public void uploadFile(String oriName, String sysName, String attachFolder, int memberSeq, String filePath) throws Exception{
+    public void uploadFile(String oriName, String sysName, String attachFolder, int memberSeq, String filePath, int fileSize) throws Exception{
         PersonalFileDTO personalFileDto = new PersonalFileDTO();
 
         personalFileDto.setPersonalFilesMemberSeq(memberSeq);
@@ -35,6 +35,7 @@ public class PersonalFileService {
         personalFileDto.setPersonalFilesFolderKey(attachFolder);
         personalFileDto.setPersonalFilesKey(randomKeyUtil.folderKey());
         personalFileDto.setPersonalFilesPath(filePath);
+        personalFileDto.setPersonalFilesByte(fileSize);
         personalFileDao.uploadFile(personalFileDto);
     }
 

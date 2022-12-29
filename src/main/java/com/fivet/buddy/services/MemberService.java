@@ -130,5 +130,8 @@ public class MemberService {
         toReturn = String.format("%0128x", new BigInteger(1, digest.digest()));
         return toReturn;
     }
-
+    // 폴더 소유자 이름
+    public String getOwnerName(int checkOwner) {
+        return memberDao.getOwnerName(checkOwner);
+    }
 }

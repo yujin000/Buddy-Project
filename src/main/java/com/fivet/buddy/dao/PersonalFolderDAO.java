@@ -74,4 +74,14 @@ public class PersonalFolderDAO {
     public boolean subIsExist(String folderKey) {
         return personalFolderMapper.subIsExist(folderKey);
     }
+
+    // 폴더 주인 시퀀스
+    public PersonalFolderDTO getFolderOwner(String resourceKey) {
+        return personalFolderMapper.getFolderOwner(resourceKey);
+    }
+
+    // 권한 수정
+    public void accessStatus(Map<String,String> map) {
+        personalFolderMapper.accessStatus(map);
+    }
 }

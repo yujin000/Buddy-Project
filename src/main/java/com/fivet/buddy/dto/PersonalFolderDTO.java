@@ -18,4 +18,5 @@ public class PersonalFolderDTO {
     private String personalFolderParentKey;
     private String personalFolderPath;
     private Timestamp personalFolderDate;
+    private String personalFolderShared;
 }

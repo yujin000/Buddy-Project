@@ -33,4 +33,8 @@ public interface PersonalFolderMapper {
     void deleteFolderByPath(String path);
 
     boolean subIsExist(String folderKey);
+
+    PersonalFolderDTO getFolderOwner(String resourceKey);
+
+    void accessStatus(Map<String,String> map);
 }

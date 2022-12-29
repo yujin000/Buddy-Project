@@ -155,4 +155,13 @@
             member_seq = #{value}
     </delete>
 
+    <!-- 폴더 소유자 -->
+    <select id="getOwnerName" resultType="String">
+        select
+            member_name
+        from
+            member
+        where
+            member_seq = #{value}
+    </select>
 </mapper>

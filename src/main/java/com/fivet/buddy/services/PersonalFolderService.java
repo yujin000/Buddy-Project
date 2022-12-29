@@ -132,6 +132,19 @@ public class PersonalFolderService {
     public String myPath(String key) throws Exception{
         return personalFolderDao.myPath(key);
     }
+
+    // 폴더 주인 시퀀스
+    public PersonalFolderDTO getFolderOwner(String resourceKey) {
+        return personalFolderDao.getFolderOwner(resourceKey);
+    }
+
+    // 사용 권한
+    public void accessStatus(String access, String key) {
+        Map<String,String> map = new HashMap<>();
+        map.put("access",access);
+        map.put("key",key);
+        personalFolderDao.accessStatus(map);
+    }
 }
 
 

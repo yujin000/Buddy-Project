@@ -9,7 +9,7 @@
         insert into
             personal_files
         values
-            (#{personalFilesKey}, #{personalFilesOriname}, #{personalFilesSysname}, #{personalFilesMemberSeq}, #{personalFilesFolderKey}, #{personalFilesPath})
+            (#{personalFilesKey}, #{personalFilesOriname}, #{personalFilesSysname}, #{personalFilesMemberSeq}, #{personalFilesFolderKey}, #{personalFilesPath}, #{personalFilesByte})
     </insert>
 
     <!-- 내 폴더 불러오기 -->

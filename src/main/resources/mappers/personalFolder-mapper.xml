@@ -29,7 +29,7 @@
         insert into
             personal_folder
         values
-            (#{personalFolderKey}, #{personalFolderName}, #{personalFolderMemberSeq},#{personalFolderParentKey},#{personalFolderPath},sysdate)
+            (#{personalFolderKey}, #{personalFolderName}, #{personalFolderMemberSeq},#{personalFolderParentKey},#{personalFolderPath},sysdate,'N')
     </insert>
 
     <!-- 폴더 존재 유무 체크 -->
@@ -47,7 +47,7 @@
         insert into
             personal_folder
         values
-            (#{newKey}, #{memberName}, #{memberSeq}, #{basicFolderKey}, #{path}, sysdate)
+            (#{newKey}, #{memberName}, #{memberSeq}, #{basicFolderKey}, #{path}, sysdate,'N')
     </insert>
 
     <!-- 부모폴더 경로 찾기-->
@@ -127,6 +127,10 @@
             personal_folder_path like '%'||#{value}||'%'
     </delete>
 
+    <!-- 파일 공유 Y -->
+
+    <!-- 파일 공유 N -->
+
     <!-- 하위 폴더들이 있는지 확인 -->
     <select id="subIsExist" resultType="boolean">
         select
@@ -136,4 +140,24 @@
         where
             personal_folder_parent_key = #{value}
     </select>
+
+    <!-- 폴더 소유자/공유 여부 확인 -->
+    <select id="getFolderOwner" resultType="com.fivet.buddy.dto.PersonalFolderDTO">
+        select
+            *
+        from
+            personal_folder
+        where
+            personal_folder_key = #{value}
+    </select>
+
+    <!-- 접근 권한 -->
+    <update id="accessStatus">
+        update
+            personal_folder
+        set
+            personal_folder_shared = #{access}
+        where
+            personal_folder_key = #{key}
+    </update>
 </mapper>

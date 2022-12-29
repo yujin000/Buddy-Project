@@ -1,5 +1,6 @@
 package com.fivet.buddy.controller;
 
+import com.fivet.buddy.services.BasicFolderService;
 import com.fivet.buddy.services.PersonalFileService;
 import com.fivet.buddy.services.PersonalFolderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,14 @@ public class PersonalFileController {
     private PersonalFolderService personalFolderService;
 
     @Autowired
+    private BasicFolderService basicFolderService;
+    @Autowired
     private HttpSession session;
 
     // 파일 첨부
     @RequestMapping("uploadFile")
     public String uploadFile(MultipartFile multipartFile, String attachFolder) throws Exception{
+        int fileSize = (int)multipartFile.getSize();
         String uploadFilePath = personalFolderService.searchPath(attachFolder);
 
         String oriName = multipartFile.getOriginalFilename();
@@ -44,7 +48,9 @@ public class PersonalFileController {
 
         int memberSeq = Integer.parseInt(session.getAttribute("memberSeq").toString());
         // personal_file 테이블에 insert
-        personalFileService.uploadFile(oriName,sysName,attachFolder,memberSeq,filePath);
+        personalFileService.uploadFile(oriName,sysName,attachFolder,memberSeq,filePath,fileSize);
+        // basic_folder 테이블에 update
+        basicFolderService.uploadByte(memberSeq,fileSize);
 
         return "redirect:/drive/toFileDrive";
     }

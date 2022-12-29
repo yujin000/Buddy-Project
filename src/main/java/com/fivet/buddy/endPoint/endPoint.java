@@ -4,6 +4,7 @@ import com.fivet.buddy.config.ApplicationContextProvider;
 import com.fivet.buddy.dto.ChatMsgDTO;
 import com.fivet.buddy.services.ChatMsgService;
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.websocket.OnClose;
@@ -12,11 +13,16 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.io.BufferedOutputStream;
 import java.util.*;
 
 @Service
 @ServerEndpoint("/chat/{chatRoomSeq}")
 public class endPoint {
+
+    private BufferedOutputStream bos;
+    @Value("${chat.save.path}")
+    String chatPath;
 
     // 스프링 컨테이너에서 생성한 bean을 dependency lookup으로 찾아오기
     private ChatMsgService chatMsgService = ApplicationContextProvider.getApplicationContext().getBean(ChatMsgService.class);
@@ -46,7 +52,6 @@ public class endPoint {
         for(Session s : sessions.get(chatMsgDto.getChatRoomSeq())) {
             s.getBasicRemote().sendText(g.toJson(chatMsgDto));
         }
-
 
 
     }

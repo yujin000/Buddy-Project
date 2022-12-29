@@ -16,10 +16,13 @@ public class FileHandler implements WebMvcConfigurer{
     @Value("${notice.root.path}")
     String noticePath;
 
+    @Value("${chat.root.path}")
+    String chatPath;
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/qnaImg/**").addResourceLocations(qnaPath);
         registry.addResourceHandler("/noticeImg/**").addResourceLocations(noticePath);
         registry.addResourceHandler("/member/selectProfileImg/**").addResourceLocations(profilePath);
+        registry.addResourceHandler("/chatImg/**").addResourceLocations(chatPath);
     }
 }

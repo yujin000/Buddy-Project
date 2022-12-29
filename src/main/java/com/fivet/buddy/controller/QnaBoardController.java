@@ -17,10 +17,10 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/qna/")
-public class QnaController {
+public class QnaBoardController {
 
     @Autowired
-    private QnaService qnaService;
+    private QnaBoardService qnaBoardService;
 
     @Autowired
     private QnaFileService qnaFileService;
@@ -32,38 +32,37 @@ public class QnaController {
     private NoticeService noticeService;
 
     @Autowired
-    private NoticeFileService noticeFileService;
-
-
-    @Autowired
     private HttpSession session;
 
     @Value("${qna.save.path}")
     String qnaPath;
 
+    //Qna 글쓰기 화면 이동
     @RequestMapping("write")
     public String write() {
         return "customer/customerPopup";
     }
 
+    //고객센터 메인으로
     @RequestMapping("main")
     public String select(Model model) throws Exception {
         int qnaWriter = (int) session.getAttribute("memberSeq");
         List<NoticeDTO> noticeDto = noticeService.select();
-        List<QnaDTO> qnaDto = qnaService.select(qnaWriter);
+        List<QnaDTO> qnaDto = qnaBoardService.select(qnaWriter);
         model.addAttribute("qna", qnaDto);
         model.addAttribute("notice", noticeDto);
         return "customer/customer";
     }
 
+    //Qna글쓰기
     @RequestMapping("insert")
     public String insert(@RequestParam MultipartFile[] uploadfile, Model model, QnaDTO qnaDto, QnaFileDTO qnaFileDto, FileUtil util) throws Exception {
         qnaDto.setQnaWriter((int) session.getAttribute("memberSeq"));
         System.out.println(uploadfile[0]);
         if (uploadfile[0].isEmpty()) {
-            qnaService.insert(qnaDto);
+            qnaBoardService.insert(qnaDto);
         } else {
-            qnaService.insert(qnaDto);
+            qnaBoardService.insert(qnaDto);
             List<QnaFileDTO> list = new ArrayList<>();
             for (MultipartFile file : uploadfile) {
                 if (!file.isEmpty()) {
@@ -83,6 +82,7 @@ public class QnaController {
         return "redirect:main";
     }
 
+    //Qna본문글 보기(ajax)
     @ResponseBody
     @PostMapping(value = "detail")
     public List<Map<String, String>> selectDetail(int qnaSeq) throws Exception {
@@ -103,20 +103,21 @@ public class QnaController {
         }
         return list;
     }
-// ajax
 
+    //Qna삭제
     @RequestMapping("delete")
     public String delete(int qnaSeq, FileUtil util, String qnaSysName) throws Exception {
         if (qnaSysName == null) {
-            qnaService.delete(qnaSeq);
+            qnaBoardService.delete(qnaSeq);
         } else {
-            qnaService.delete(qnaSeq);
+            qnaBoardService.delete(qnaSeq);
             qnaFileService.deleteFile(qnaSeq);
             util.delete(qnaPath, qnaSysName);
         }
         return "redirect:main";
     }
 
+    //Qna댓글 삭제
     @RequestMapping("deleteComment")
     public String delete(int qnaSeq, int qnaCommentSeq) throws Exception {
         qnaCommentService.deleteComment(qnaSeq, qnaCommentSeq);
@@ -132,7 +133,7 @@ public class QnaController {
     @RequestMapping("toAdminQna")
     public String toAdminQna(Model model) {
         if (session.getAttribute("memberLogtype").equals("admin")) {
-            List<QnaDTO> QnaList = qnaService.selectQnaBoardAll();
+            List<QnaDTO> QnaList = qnaBoardService.selectQnaBoardAll();
             model.addAttribute("qnaList", QnaList);
             return "/admin/adminQna";
         } else {

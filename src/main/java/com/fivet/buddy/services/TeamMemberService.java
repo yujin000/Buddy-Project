@@ -2,6 +2,7 @@ package com.fivet.buddy.services;
 
 import com.fivet.buddy.dao.TeamMemberDAO;
 import com.fivet.buddy.dto.TeamMemberDTO;
+import com.fivet.buddy.dto.TeamMemberListDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +25,11 @@ public class TeamMemberService {
         return teamMemberDao.selectChatMember(chatRoomSeq);
     }
 
+    //팀 관리 멤버 출력
+    public List<TeamMemberListDTO> selectTeamMember(String teamSeq){
+        return teamMemberDao.selectTeamMember(teamSeq);
+    }
+
     //멤버 등급 변경
     public void updateTeamMemberGrade(TeamMemberDTO teamMemberDto){
         teamMemberDao.updateTeamMemberGrade(teamMemberDto);
@@ -42,5 +48,10 @@ public class TeamMemberService {
     // 초대된 팀으로 입장
     public void enterTeam(TeamMemberDTO teamMemberDto) throws Exception{
         teamMemberDao.enterTeam(teamMemberDto);
+    }
+
+    //부매니저인 멤버 출력 (부매니저일때도 팀 관리 들어갈 수 있게)
+    public String selectSubManagerMember(int memberSeq){
+        return teamMemberDao.selectSubManagerMember(memberSeq);
     }
 }

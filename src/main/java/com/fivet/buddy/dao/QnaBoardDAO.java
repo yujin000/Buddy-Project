@@ -1,29 +1,29 @@
 package com.fivet.buddy.dao;
 
 import com.fivet.buddy.dto.QnaDTO;
-import com.fivet.buddy.mapper.QnaMapper;
+import com.fivet.buddy.mapper.QnaBoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class QnaDAO {
+public class QnaBoardDAO {
     @Autowired
-    private QnaMapper qnaMapper;
+    private QnaBoardMapper qnaBoardMapper;
 
     public void insert(QnaDTO qnaDto) throws Exception{
-         qnaMapper.insert(qnaDto);
+        qnaBoardMapper.insert(qnaDto);
     }
     public List<QnaDTO> select(int qnaWriter) throws Exception{
-        return qnaMapper.select(qnaWriter);
+        return qnaBoardMapper.select(qnaWriter);
     }
 
     public void delete(int qnaSeq) throws Exception{
-         qnaMapper.delete(qnaSeq);
+        qnaBoardMapper.delete(qnaSeq);
     }
 
     public List<QnaDTO> selectQnaBoardAll() {
-        return qnaMapper.selectQnaBoardAll();
+        return qnaBoardMapper.selectQnaBoardAll();
     }
 }

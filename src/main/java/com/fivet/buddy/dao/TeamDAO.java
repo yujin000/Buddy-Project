@@ -23,11 +23,6 @@ public class TeamDAO {
         return teamMapper.selectMemberTeam(memberSeq);
     }
 
-    //팀 관리 멤버 출력
-    public List<TeamMemberDTO> selectTeamMemberOne(String teamSeq){
-        return teamMapper.selectTeamMemberOne(teamSeq);
-    }
-
     //팀 관리 팀 이름 출력
     public TeamDTO selectTeamOne(String teamSeq){
         return teamMapper.selectTeamOne(teamSeq);

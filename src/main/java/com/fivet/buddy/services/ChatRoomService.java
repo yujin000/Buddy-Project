@@ -40,5 +40,4 @@ public class ChatRoomService {
         chatRoomDao.insertSelfChat(param);
         chatMemberDao.insertChatMember(param);
     }
-
 }

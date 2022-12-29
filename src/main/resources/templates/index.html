@@ -55,7 +55,7 @@
       <div id="profileBox" class="profileBox">
         <p class="title">profile</p>
         <div class="myProfile">
-          <img src="" alt="" id="myImg" class="profileImg" />
+          <img th:src="${memberImg}" alt="" id="myImg" class="profileImg" />
           <div class="info">
             <!-- 세션에 뿌려진 값으로 해결하기 -->
             <a href="/invite/test">초대테스트 페이지로</a>
@@ -89,8 +89,8 @@
             </button>
           </form>
           <form action="/team/goTeamSetting" method="post">
-          <input type="hidden" th:value="${teamDtoList.teamSeq}" name="teamSeq">
-          <button id="managementTeam" class="floatBtn" th:if="${teamDtoList.teamOwnerSeq==session.memberSeq}">
+            <input type="hidden" th:value="${teamDtoList.teamSeq}" name="teamSeq">
+          <button id="managementTeam" class="floatBtn" th:if="${teamDtoList.teamOwnerSeq==session.memberSeq || SubManagerMember=='부매니저'}">
             팀 관리
           </button>
           </form>

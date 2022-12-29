@@ -39,30 +39,6 @@
     <button id="teamMember">team</button>
     <ul id="teamMemberList" class="teamMemberList">
       <h1>팀원 목록</h1>
-      <li>
-        <img src="" alt="">
-        <span>이름</span>
-        <span>직책</span>
-      </li>
-      <li>
-        <img src="" alt="">
-        <span>이름</span>
-        <span>직책</span>
-      </li>    <li>
-      <img src="" alt="">
-      <span>이름</span>
-      <span>직책</span>
-    </li>    <li>
-      <img src="" alt="">
-      <span>이름</span>
-      <span>직책</span>
-    </li>
-      <li>
-        <img src="" alt="">
-        <span>이름</span>
-        <span>직책</span>
-      </li>
-
     </ul>
   </div>
   <div class="main">
@@ -258,6 +234,33 @@
   </div>
 </div>
 
+<!-- 팀원 목록 출력 ajax -->
+<script th:inline="javascript">
+  $(function (){
+    $.ajax({
+      url:"/team/teamMemberList",
+      success : function (){
+      },error : function (){
+      }
+    }).done(function (rsp){
+      let JsonTeamMemberList = JSON.parse(rsp);
+      for (let i=0; i<JsonTeamMemberList.length; i++) {
+        let teamMemberListLi = $("<li>");
+        let teamMemberListImg = $("<img>");
+        let teamMemberListSpan1 = $("<span>");
+        let teamMemberListSpan2 = $("<span>");
+        teamMemberListImg.attr("src",JsonTeamMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonTeamMemberList[i].memberImgSysName);
+        teamMemberListLi.append(teamMemberListImg);
+        teamMemberListSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
+        teamMemberListLi.append(teamMemberListSpan1);
+        teamMemberListSpan2.text(JsonTeamMemberList[i].grade);
+        teamMemberListLi.append(teamMemberListSpan2);
+        $("#teamMemberList").append(teamMemberListLi);
+      }
+    })
+  })
+</script>
+
 <script>
   //팀목록을 출력해주는 ajax호출
   $.ajax({
@@ -370,6 +373,5 @@
     $(arg).parent().parent().parent().css("display","none");
   }
 </script>
-
 </body>
 </html>

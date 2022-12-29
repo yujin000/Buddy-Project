@@ -9,7 +9,7 @@
         insert into
         team_member
         values
-        (#{teamSeq}, #{memberSeq}, #{memberId}, #{teamMemberNickname}, 'coworker', sysdate)
+        (#{teamSeq}, #{memberSeq}, #{memberId}, #{teamMemberNickname}, '팀원', sysdate)
     </insert>
 
     <!-- 팀 생성자가 팀 생성시, 팀 멤버 목록에 추가 -->
@@ -24,7 +24,7 @@
         insert into
         team_member
         values
-        (#{teamSeq}, #{memberSeq}, #{memberId}, #{teamMemberNickname}, 'manager', sysdate)
+        (#{teamSeq}, #{memberSeq}, #{memberId}, #{teamMemberNickname}, '매니저', sysdate)
     </insert>
 
     <!--    회원 번호를 이용하여 해당 팀 관련 회원정보 출력.-->
@@ -37,7 +37,7 @@
         member_seq = #{memberSeq} and team_seq = #{teamSeq}
     </select>
 
-    <!--    채팅방 참여자 목록을 출력. -->
+    <!--  기본채팅방 참여자 목록을 출력 -->
     <select id="selectChatMember" resultType="com.fivet.buddy.dto.TeamMemberDTO">
         select
         tm.member_seq, team_member_nickname, grade
@@ -58,7 +58,7 @@
 
     <!-- 멤버 등급 변경 ( 매니저가 다른 사람한테 매니저 이양할 때 ) -->
     <update id="updateTeamMemberManager">
-        update team_member set grade = 'coworker' where member_seq = #{manageSeq} and team_seq = #{teamSeq}
+        update team_member set grade = '팀원' where member_seq = #{manageSeq} and team_seq = #{teamSeq}
     </update>
 
     <!-- 팀 관리 페이지에서 팀원 강퇴 -->

@@ -19,12 +19,13 @@
     />
     <script src="/static/js/jQueryCheck.js"></script>
     <script src="/static/js/download.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div class="wrap">
     <div class="header">
         <div class="logo">
-            <a href="/static">
+            <a href="">
                 <img src="" alt="" />
                 logo
             </a>
@@ -65,17 +66,12 @@
 
             <div id="chat" class="asideList">
                 <div class="asideTitle">
-                    <h3>유형별 보기</h3>
-                    <input type="search" placeholder="검색" id="searchMsg" />
+                    <h3>My Team</h3>
                     <button id="fileTypeToggle" class="toggle">v</button>
                 </div>
                 <div id="chatList" class="asideItem">
                     <ul>
-                        <li>사진</li>
-                        <li>문서</li>
-                        <li>음악</li>
-                        <li>동영상</li>
-                        <li>휴지통</li>
+                        <li>팀 공유 리스트 </li>
                     </ul>
                 </div>
             </div>
@@ -99,43 +95,60 @@
                 <div class="attachBtnArea">
                     <label for="uploadFile" class="fileLabel mainButton">
                         업로드
-                        <input type="file" name="multipartFile" id="uploadFile" multiple>
+                        <input type="file" name="multipartFile" id="uploadFile" accept=".txt,.xls,.ppt,.hwp,.jpg,.png,.gif,.mp4,.mp3,.zip">
                         <input type="hidden" th:value="${parentKey}" name="attachFolder">
                     </label>
                     <button type="button" id="newFolder" class="mainButton">새 폴더</button>
                     <button type="button" id="shareBtn" class="mainButton">공유</button>
                     <button type="button" id="downloadBtn" class="mainButton">내려받기</button>
                     <button type="button" id="deleteBtn" class="mainButton">삭제</button>
-                    <button type="button" id="testFolder">폴더테스트</button>
+                    <button type="button" class="copyUrl" th:data-share-url="${'localhost/drive/detailDrive?resourceKey='+parentKey}">현재 폴더 공유</button>
                 </div>
             </form>
             <!-- 본문 -->
             <div class="fileMainPlace">
                 <div id="listArea">
-                    <ul class="listThumb">
-                        <div th:if="${#strings.isEmpty(myFolders)} and ${#strings.isEmpty(myFiles)}">
-                            아직 파일이 없습니다.
+                    <th:block th:if="${#strings.equals(access,1)}">
+                        <div>
+                            해당 폴더에 접근 권한이 없습니다.
+                            <br>폴더 소유자가 공유를 중단했을 수도 있습니다.
+                            <br>
+                            <a href="/drive/toFileDrive">돌아가기</a>
                         </div>
-                        <div th:unless="${#strings.isEmpty(myFolders)}">
-                            <input type="hidden" th:value="${parentKey}" id="parentKey">
-                            <th:block th:each="folder : ${myFolders}">
-                                <li data-resource-type="folder">
-                                    <input type="checkbox" class='check' th:data-key="${folder.getPersonalFolderKey()}" data-resource-type="folder" th:data-name="${folder.getPersonalFolderName()}">
-                                    <img src='/static/img/folderImg.png' class="thisFolder" th:data-folder="${folder.getPersonalFolderKey()}">
-                                    <input type='text' class="printFolderName" th:value='${folder.getPersonalFolderName()}' th:id="${'folder' + folder.getPersonalFolderKey()}" disabled>
-                                </li>
-                            </th:block>
-                        </div>
-                        <div th:unless="${#strings.isEmpty(myFiles)}">
-                            <th:block th:each="file : ${myFiles}">
-                                <li th:data-folder="${file.getPersonalFilesFolderKey()}" data-resource-type="file">
-                                    <input type="checkbox" class='check' th:data-key="${file.getPersonalFilesKey()}" data-resource-type="file" th:data-name="${file.getPersonalFilesSysname()}">
-                                    <img src='/static/img/fileImg.png' class="thisFile">
-                                    <input type='text' class="printFileName" th:value='${file.getPersonalFilesOriname()}' th:id="${'file' + file.getPersonalFilesOriname()}" disabled>
-                                </li>
-                            </th:block>
-                        </div>
-                    </ul>
+                    </th:block>
+                    <th:block th:if="${#strings.equals(access,0)}">
+                        <ul class="listThumb">
+                            <div th:if="${#strings.isEmpty(myFolders)} and ${#strings.isEmpty(myFiles)}">
+                                아직 파일이 없습니다.
+                            </div>
+                            <div th:unless="${#strings.isEmpty(myFolders)}">
+                                <input type="hidden" th:value="${parentKey}" id="parentKey">
+                                <th:block th:each="folder : ${myFolders}">
+                                    <li data-resource-type="folder">
+                                        <input type="checkbox" class='check' th:data-key="${folder.getPersonalFolderKey()}" data-resource-type="folder" th:data-name="${folder.getPersonalFolderName()}">
+                                        <img src='/static/img/folderImg.png' class="thisFolder" th:data-folder="${folder.getPersonalFolderKey()}">
+                                        <input type='text' class="printFolderName" th:value='${folder.getPersonalFolderName()}' th:id="${'folder' + folder.getPersonalFolderKey()}" disabled>
+                                        <th:block th:if="${#strings.equals(folder.getPersonalFolderShared(),'Y')}">
+                                            <button type="button" class="shareUrl" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유 중단</button>
+                                            <button type="button" class="copyUrl" th:data-share-url="${'localhost/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}">URL복사</button>
+                                        </th:block>
+                                        <th:block th:if="${#strings.equals(folder.getPersonalFolderShared(),'N')}">
+                                            <button type="button" class="shareUrl" th:data-share-url="${'localhost/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유</button>
+                                        </th:block>
+                                    </li>
+                                </th:block>
+                            </div>
+                            <div th:unless="${#strings.isEmpty(myFiles)}">
+                                <th:block th:each="file : ${myFiles}">
+                                    <li th:data-folder="${file.getPersonalFilesFolderKey()}" data-resource-type="file">
+                                        <input type="checkbox" class='check' th:data-key="${file.getPersonalFilesKey()}" data-resource-type="file" th:data-name="${file.getPersonalFilesSysname()}">
+                                        <img src='/static/img/fileImg.png' class="thisFile">
+                                        <input type='text' class="printFileName" th:value='${file.getPersonalFilesOriname()}' th:id="${'file' + file.getPersonalFilesOriname()}" disabled>
+                                    </li>
+                                </th:block>
+                            </div>
+                        </ul>
+                    </th:block>
                 </div>
                 <div id="fileInfo">
                     파일 정보
@@ -143,6 +156,8 @@
             </div>
         </section>
     </div>
+    <!-- 모달 -->
+
 </div>
 <div id="menuList" class="menuList">
     <ul>
@@ -302,11 +317,6 @@
 
     });
 
-
-    // 공유
-
-
-
     // 다운로드
 
     // AJAX binary 설정(AJAX로 다운로드를 하기 위함)
@@ -403,25 +413,39 @@
 <!-- 파일 업로드 버튼 클릭 -->
 <script>
 
-    $("#uploadFile").on('change',attachType);
+    $("#uploadFile").on('change', attachType);
 
-    function attachType(e){
+    function attachType(e) {
+        let file = $("#uploadFile")[0].files[0];
+        let fileSize = file.size;
+        let maxFileSize = 10 * 1024 * 1024;
+
         let extension = this.value.split(".").pop().toLowerCase();
-        let accept = ["png","jpg","jpeg","gif"];
-        let result = $.inArray(extension,accept);
+        let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip"];
+        let result = $.inArray(extension, accept);
 
-        // if(result == -1){
-        //     alert("이미지, 텍스트 파일만 업로드 가능합니다.. (.png, .jpg, jpeg, .gif, .txt)");
-        //     this.value = "";
-        // }else if(result != -1 && e.target.files[0]){
-            $("#uploadFileForm").submit();
-            // $("#uploadFileForm").submit(function(e) {
-            //     e.preventDefault();
-            //     $.post("/personalFile/uploadFile", $(this).serialize(), function(response) {
-            //         location.reload();
-            //     });
-            // });
-        // }
+        if (fileSize > maxFileSize) {
+            alert("첨부하려는 '" + file.name + "' 파일은 용량이 너무 큽니다. \n 업로드 할 수 있는 최대 용량은 '10 MB' 입니다.");
+            this.value = "";
+        }
+
+        if (result == -1) {
+            alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .xls, .ppt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip)");
+            this.value = "";
+        }
+
+        if (this.value) {
+            $.ajax({
+                type: "POST",
+                url: "/personalFile/uploadFile",
+                data: new FormData($("#uploadFileForm")[0]),
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    location.reload();
+                }
+            });
+        }
     }
 
 </script>
@@ -458,19 +482,19 @@
                         $.ajax({
                             url : "/drive/subIsExist?folderKey="+value.personalFolderKey
                             ,type : "get"
+                            ,async: false
                         }).done(function (rsp){
-                            console.log(rsp);
                             if(rsp == true){
                                 div.append(li).append(i).append(list).append(ul);
                                 container.append(div);
                             }else{
-                                div.append(li).append(list).append(ul);
-                                container.append(div).css("margin-left","20px");
+                                div.append(li).append(list).append(ul).css("margin-left","20px");
+                                container.append(div);
                             }
                         })
 
                     })
-                    arrowThis.siblings("ul").append(container).css("margin-left","20px");
+                    arrowThis.siblings("ul").append(container).css("margin","0px 0px 5px 20px");
                 }
             })
 
@@ -497,6 +521,72 @@
             location.href = "/drive/detailDrive?resourceKey="+folderData;
         }
     })
+</script>
+
+<!-- 개인 폴더 공유 -->
+
+<script>
+    $(document).on('click','.shareUrl', function() {
+        const thisStatus = $(this).data('status');
+        const thisKey = $(this).data('key');
+
+        if (thisStatus === 'N') {
+            if (confirm('이 폴더를 공유하시겠습니까?')) {
+                $.ajax({
+                    url: '/drive/access?access=Y&key=' + thisKey,
+                    method: 'POST',
+                    success: function() {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'URL복사 버튼을 클릭해서 이 폴더를 공유할 수 있습니다.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    }
+                });
+            }
+        } else if (thisStatus === 'Y') {
+            if (confirm('이 폴더의 공유를 중단하시겠습니까?')) {
+                $.ajax({
+                    url: '/drive/access?access=N&key=' + thisKey,
+                    method: 'POST',
+                    success: function() {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: '폴더 공유가 중단되었습니다.',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1100);
+                    }
+                });
+            }
+        }
+    });
+
+    // Url 복사
+
+    $(document).on('click','.copyUrl',function (){
+        const inputValue = $(this).data('share-url');
+
+        navigator.clipboard.writeText(inputValue).then(function() {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '클립보드에 복사되었습니다.',
+                showConfirmButton: false,
+                timer: 1000
+            })
+        });
+    })
+
 </script>
 
 </body>

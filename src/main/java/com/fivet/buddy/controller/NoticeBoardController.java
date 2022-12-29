@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.Map;
 @RequestMapping("/notice/")
 public class NoticeBoardController {
 
+    @Autowired
+    private HttpSession session;
     @Autowired
     private NoticeFileService noticeFileService;
 
@@ -33,5 +36,25 @@ public class NoticeBoardController {
             list.add(map);
         }
         return list;
+    }
+
+    //공지 관리 페이지로 이동.
+    @RequestMapping("toAdminNotice")
+    public String toAdminNotice() {
+        if (session.getAttribute("memberLogtype").equals("admin")) {
+            return "admin/adminNotice";
+        } else {
+            return "error";
+        }
+    }
+
+    //공지사항 글쓰기 페이지로 이동.
+    @RequestMapping("toAdminNoticeWrite")
+    public String toAdminNoticeWrite() {
+        if (session.getAttribute("memberLogtype").equals("admin")) {
+            return "admin/adminNoticeWrite";
+        } else {
+            return "error";
+        }
     }
 }

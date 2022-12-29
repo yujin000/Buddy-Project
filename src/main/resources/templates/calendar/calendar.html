@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
     <meta charset='utf-8'/>
     <script src='/static/fullcalendar/dist/index.global.js'></script>
@@ -61,24 +61,27 @@
                         const eventEnd = arg.event._instance.range.end;
                         const memo = arg.event.extendedProps.memo;
                         const location = arg.event.extendedProps.location;
-                        const color = arg.color;
+                        const color = arg.event._def.ui.backgroundColor;
 
 
                         $("#form").css("display","block");
                         $("#eventSeq").removeAttr("disabled");
+                        $("#eventWriter").removeAttr("disabled");
                         //수정 및 삭제 버튼 생성
                         $("#updateBtn").css("display","block");
                         $("#delBtn").css("display","block");
                         $("#submitBtn").css("display","none");
+                        $("#eventWriter").attr("type","text");
 
-
-                        if (type === "team"){
-                            $("#eventType").val("team");
-                        }else {
-                            $("#eventType").val("private");
-                        }
-
-                        $("#eventColor").val(color);
+                        //
+                        // if (type === "team"){
+                        //     $("#eventColor").val("purple");
+                        //     $("#eventColor").css("background-color","purple");
+                        // }else {
+                        //     $("#eventColor").val(color);
+                        //     $("#eventColor").css("background-color",color);
+                        // }
+                        $("#eventType").val(type);
                         $("#eventSeq").val(seq);
                         $("#eventName").val(title);
                         $("#eventWriter").val(writer);
@@ -86,6 +89,11 @@
                         $("#eventLocation").val(location);
                         $("#eventStart").attr("data-placeholder",eventStart.toLocaleDateString());
                         $("#eventEnd").attr("data-placeholder",eventEnd.toLocaleDateString());
+                        $("#eventColor").val(color);
+                        $("#eventColor").css("background-color",color);
+                        console.log(type);
+                        console.log(color);
+
                     },
                     // date click event 날짜 클릭 이벤트
                     dateClick: function (arg) {
@@ -123,12 +131,20 @@
                         let endFormat = dateFormat(end);
 
                         $("#form").css("display","block");
+                        $("#updateBtn").css("display","none");
+                        $("#delBtn").css("display","none");
+                        $("#submitBtn").css("display","block");
+
+                        $("#eventSeq").val("");
                         $("#eventType").val("team");
                         $("#eventName").val("");
                         $("#eventWriter").val("");
+                        $("#eventColor").attr("type","hidden");
                         $("#eventLocation").val("");
                         $("#eventMemo").val("");
                         $("#eventColor").val("purple");
+                        $("#eventColor").css("background-color","purple");
+
 
                         // month view 가 true 일 때만, date 값을 조정
                         // day view 나 week view 에서는 date 값을 조정하지 않음,
@@ -152,17 +168,19 @@
 
                     },
 
+                    unselect : function (){
+                        $("#form").css("display","none");
+                    },
+
                     // events object 이벤트 객체 [일정의 데이터가 담기는 공간 json 타입]
-                    events: function (info, successCallback, failureCallback){
+                    events: function (info, successCallback){
+
                         $.ajax({
-                            type:"post",
-                            url:"/calendar/selectAll?method=data",
-                            dataType: "json",
-                            data: {"teamSeq": 0},
+                            url:"/calendar/selectAll",
                             success: function (resp){
                                 const events = [];
-
-                                $.each(resp, function(index, element){
+                                let jsonParse = JSON.parse(resp);
+                                $.each(jsonParse, function(index, element){
                                     events.push({
                                         seq : element.eventSeq,
                                         type : element.eventType,
@@ -175,7 +193,6 @@
                                         color : element.eventColor
                                     });
 
-                                    console.log(events);
                                 })
 
                                 successCallback(events);
@@ -227,19 +244,19 @@
                 </button>
                 <form action="/calendar/insertEvent" id="form" method="post">
                     <select name="eventColor" id="eventColor" class="eventSelect" onchange="selectColor(value)" data-placeholder="색상">
-                        <option value="purple" >기본색상</option>
-                        <option value="blue" >파랑</option>
-                        <option value="red">빨강</option>
-                        <option value="green">초록</option>
-                        <option value="black">검정</option>
+                        <option value="purple" style="background: purple" >기본색상</option>
+                        <option value="blue" style="background: blue"></option>
+                        <option value="red" style="background: red"></option>
+                        <option value="green" style="background: green"></option>
+                        <option value="black" style="background: black"></option>
                     </select>
                     <select name="eventType" id="eventType" class="eventSelect">
                         <option value="team">팀 캘린더</option>
                         <option value="private">개인 캘린더</option>
                     </select>
-                    <input type="hidden" name="eventSeq" id="eventSeq" placeholder="seq" disabled >
+                    <input type="hidden"  id="eventSeq" placeholder="seq" readonly disabled >
                     <input type="text" name="eventName" id="eventName" placeholder="제목">
-                    <input type="text" name="eventWriter" id="eventWriter" placeholder="작성자">
+                    <input type="hidden"  id="eventWriter" placeholder="작성자" readonly disabled>
                     <input type="datetime-local" name="eventStart" id="eventStart"  data-placeholder="시작날짜"  required aria-required="true">
                     <input type="datetime-local" name="eventEnd" id="eventEnd"  data-placeholder="마감날짜" placeholder=""  required aria-required="true">
                     <input type="text" name="eventLocation" id="eventLocation" placeholder="장소">
@@ -247,7 +264,7 @@
                     <button type="submit" id="submitBtn" class="modalBtn">
                         완료
                     </button>
-                    <button type="submit" id="updateBtn" class="modalBtn" style="display: none">수정</button>
+                    <button type="submit" id="updateBtn" class="modalBtn" onclick="update()" style="display: none">수정</button>
                     <button type="submit" id="delBtn" class="modalBtn" onclick="del()" style="display: none">삭제</button>
                     <button type="button" id="closeBtn" class="modalBtn" onclick="window.location.reload()">취소</button>
                 </form>
@@ -290,20 +307,24 @@
     }
     // 업데이트 기능
     function update() {
+        let event = [];
+
+
         const seq = $("#eventSeq").val();
         const type =$("#eventType").val();
         const title =$("#eventName").val();
-        const writer =$("#eventWriter").val();
         const eventStart =$("#eventStart").val();
         const eventEnd =$("#eventEnd").val();
         const eventLocation =$("#eventLocation").val();
         const eventMemo =$("#eventMemo").val();
         const eventColor =$("#eventColor").val();
-        location.href ="/calendar/update?eventSeq="+seq
-            +"&eventType"+type+"&eventTitle"+title+
-            "&eventWriter"+writer+"&eventStart"+eventStart+
-            "&eventEnd"+eventEnd+"&eventLocation"+eventLocation+
-            "&eventMemo"+eventMemo+"&eventColor"+eventColor;
+        event.push(seq+type+title+eventStart+eventEnd+eventLocation+eventMemo+eventColor);
+        console.log(event);
+        // location.href ="/calendar/updateEvent?eventSeq="+seq
+        //     +"&eventType"+type+"&eventTitle"+title+
+        //     +"&eventStart"+eventStart+
+        //     "&eventEnd"+eventEnd+"&eventLocation"+eventLocation+
+        //     "&eventMemo"+eventMemo+"&eventColor"+eventColor;
     }
 
     function selectColor(arg) {

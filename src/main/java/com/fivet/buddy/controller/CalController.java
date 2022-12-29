@@ -37,13 +37,23 @@ public class CalController {
 
     @RequestMapping("insertEvent")
     public String insertEvent(CalDTO calDto) throws Exception{
+        calDto.setTeamSeq((Integer)session.getAttribute("teamSeq"));
+        calDto.setEventWriter(session.getAttribute("teamMemberNickname").toString());
         calService.insertEvent(calDto);
-        return "redirect:/";
+        return "redirect:/calendar/moveCalendar";
+    }
+
+    @RequestMapping(value = "moveCalendar")
+    public String moveCalendar()throws Exception {
+        if ((Integer) session.getAttribute("teamSeq") != null ){
+        return "calendar/calendar";
+        }
+        return "index";
     }
     @ResponseBody
-    @RequestMapping (value = "selectAll" , produces = "text/html;charset=utf8", method = {RequestMethod.POST})
-    public String selectAll(int teamSeq, Model model) throws Exception{
-            List<CalDTO> calList = calService.selectAll(teamSeq);
+    @RequestMapping (value = "selectAll" , produces = "text/html;charset=utf8")
+    public String selectAll(Model model) throws Exception{
+            List<CalDTO> calList = calService.selectAll((Integer) session.getAttribute("teamSeq"));
             model.addAttribute("list",calList);
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
             String list = gson.toJson(calList);
@@ -53,14 +63,16 @@ public class CalController {
     @RequestMapping("deleteEvent")
     public String deleteEvent(int eventSeq) throws Exception{
         calService.deleteEvent(eventSeq);
-        return "redirect:/";
+        return "redirect:/calendar/moveCalendar";
     }
 
 
-    @RequestMapping("updateEvent")
+    @RequestMapping(value="updateEvent")
     public String updateEvent(CalDTO calDto) throws Exception {
+        calDto.setEventWriter(session.getAttribute("teamMemberNickname").toString());
         calService.updateEvent(calDto);
-        return "redirect:/";
+        System.out.println(calDto.getEventWriter());
+        return "redirect:/calendar/moveCalendar";
     }
 
 }

@@ -6,9 +6,9 @@
     <insert id="insertEvent" >
         insert into EVENT values (
         event_seq.nextval,
-        0,
+        #{teamSeq},
         #{eventName},
-        #{eventWriter},
+        #{eventWriter} ,
         #{eventType},
         #{eventStart},
         #{eventEnd},
@@ -19,6 +19,7 @@
     </insert>
 
     <select id="selectAll" resultType="com.fivet.buddy.dto.CalDTO">
+<!--        이름 상관없이 값이 1개만 넘어오면 value 로 처리가능-->
         select * from event where "team_seq" = #{teamSeq}
     </select>
 
@@ -27,10 +28,10 @@
 
     </delete>
 
-    <update id="">
-        update event set "event_type" = #{eventType}, "event_title" =#{eventTitle} ,"event_writer" =#{eventWriter},
+    <update id="updateEvent">
+        update event set "event_type" = #{eventType}, "event_title" =#{eventTitle} ,
         "event_start"=#{eventStart}, "event_end" =#{eventEnd}, "event_location" =#{eventLocation}, "event_memo" =#{eventMemo},
-        "event_color"=#{eventColor}
+        "event_color"=#{eventColor} where "event_writer" = "#{eventWriter}
 
     </update>
 

@@ -1,9 +1,8 @@
 package com.fivet.buddy.controller;
 
-import com.fivet.buddy.dto.ChatRoomDTO;
-import com.fivet.buddy.dto.TeamDTO;
-import com.fivet.buddy.dto.TeamMemberDTO;
+import com.fivet.buddy.dto.*;
 import com.fivet.buddy.services.ChatRoomService;
+import com.fivet.buddy.services.MemberService;
 import com.fivet.buddy.services.TeamMemberService;
 import com.fivet.buddy.services.TeamService;
 import com.google.gson.Gson;
@@ -35,6 +34,9 @@ public class TeamController {
 
     @Autowired
     private TeamMemberService teamMemberService;
+
+    @Autowired
+    private MemberService memberService;
 
     //팀 생성 페이지로 이동
     @RequestMapping("add")
@@ -80,7 +82,7 @@ public class TeamController {
     //팀 관리 이동
     @RequestMapping("goTeamSetting")
     public String goTeamSetting(int teamSeq, Model model) throws Exception{
-        List<TeamMemberDTO> teamMemberDtoList =  teamService.selectTeamMemberOne(String.valueOf(teamSeq));
+        List<TeamMemberListDTO> teamMemberDtoList =  teamMemberService.selectTeamMember(String.valueOf(teamSeq));
         TeamDTO teamDto =teamService.selectTeamOne(String.valueOf(teamSeq));
         model.addAttribute("teamMemberDtoList", teamMemberDtoList);
         model.addAttribute("teamDto",teamDto);

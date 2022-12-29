@@ -45,7 +45,8 @@
         <th:block th:each="teamMemberDtoList : ${teamMemberDtoList}">
           <div class="article">
             <div class="metaData">
-              <img src="" alt="" class="profileImg" />
+              <img th:src="${teamMemberDtoList.getMemberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' :
+              '/member/selectProfileImg/' + teamMemberDtoList.getMemberImgSysName }" alt="" class="profileImg" />
               <div class="texts">
                 <input
                         type="text"
@@ -53,6 +54,7 @@
                         class="inputText"
                         th:value="${teamMemberDtoList.getTeamMemberNickname}"
                         readonly
+                        disabled
                 />
                 <input
                         type="text"
@@ -60,6 +62,7 @@
                         class="inputEmail"
                         th:value="${teamMemberDtoList.getMemberId}"
                         readonly
+                        disabled
                 />
               </div>
             </div>
@@ -88,6 +91,8 @@
       </div>
     </div>
   </div>
+
+  <!-- 등급 변경 창 -->
   <div class="modal">
     <div class="modalWrap">
       <h1>🤔</h1>
@@ -99,6 +104,7 @@
     </div>
   </div>
 
+  <!-- 등급 바꿀건지 묻는 창 -->
   <div class="modal1">
     <div class="modalWrap1">
       <h1>🤔</h1>
@@ -109,6 +115,7 @@
     </div>
   </div>
 
+  <!-- 팀 강퇴 창 -->
   <div class="modal2">
     <div class="modalWrap2">
       <h1>🤔</h1>
@@ -126,8 +133,6 @@
   </form>
 </div>
 <script>
-
-  //팀원 등급 버튼 누르면 마스터,매니저,팀원 으로 변경
   let oriGrade;
   let thisNickName;
   let changeGrade;
@@ -136,12 +141,12 @@
   let memberSeq;
   let teamSeq;
 
+  //매니저는 자기 등급 변경 불가능
   $(function (){
-    // let managetBtn = document.getElementsByClassName("gradeBtn");
-    // managetBtn[0].setAttribute("disabled",true);
     $(".gradeBtn").eq(0).attr("disabled",true);
   })
-  // modal 열림 함수
+
+  // modal 열림 함수 ( 등급 변경 창 )
   $(".gradeBtn").on("click",function (){
     $(".modal").css("display","block");
     memberSeq=$(this).data("memberseq");
@@ -151,7 +156,7 @@
     $("#h3").html(thisNickName +"님의 등급을 <br/> 어떻게 변경할까요?");
   })
 
-  // modal에서 등급 선택
+  // modal1 ( 등급 바꿀건지 묻는 창)
   $(".modalBtn").on("click",function (){
     $(".modal").css("display","none");
     $(".modal1").css("display","block");
@@ -159,9 +164,9 @@
     $("#h3_1").html(thisNickName +"님의 등급을 <br/>"+oriGrade+" 에서 "+changeGrade+" (으)로 변경할까요?");
   })
 
+  //'예' 누르면 등급 변경 되는 ajax
   $(".yesNoBtn").on("click",function () {
     yesNo = $(this).text();
-
     let enGrade = changeGrade;
     if (yesNo == "예") {
       $.ajax({
@@ -188,7 +193,7 @@
     }
   })
 
-  // modal2 열림 함수
+  // modal2 열림 함수 ( 팀원 강퇴 )
   $(".delBtn").on("click",function (){
     $(".modal2").css("display","block");
     memberSeq=$(this).data("memberseq");
@@ -197,6 +202,7 @@
     $("#h3_2").html(thisNickName +"님을 강퇴 시키겠습니까?");
   })
 
+  //'예' 누르면 팀원 강퇴되는 ajax
   $(".okNoBtn").on("click",function () {
     okNo = $(this).text();
 
@@ -219,17 +225,17 @@
     }
   })
 
-  // modal 닫힘 함수
+  // modal 닫힘 함수 ( 등급 변경 창 )
   function closer() {
     $(".modal").css("display","none");
   }
 
-  // modal1 닫힘 함수
+  // modal1 닫힘 함수 ( 등급 바꿀건지 묻는 창 )
   function closer1() {
     $(".modal1").css("display","none");
   }
 
-  // modal2 닫힘 함수
+  // modal2 닫힘 함수 ( 팀원 강퇴 창 )
   function closer2() {
     $(".modal2").css("display","none");
   }

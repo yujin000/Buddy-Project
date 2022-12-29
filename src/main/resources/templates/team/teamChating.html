@@ -128,6 +128,8 @@
       }
     });
 
+
+
   })
 
 </script>
@@ -269,8 +271,22 @@
             <li><button>3</button></li>
             <li><button>4</button></li>
             <li><button>5</button></li>
-            <li><button>6</button></li>
+            <li><button type="button" id="fileSelect" class="aside">@</button></li>
           </ul>
+          <div class="fileView">
+            <ul>
+              <h3>파일첨부</h3>
+            </ul>
+            <div class="fileContents">
+              <input
+                      type="file"
+                      name="inputFile"
+                      id="inputFile"
+                      class="inputFile"
+              />
+              <button type="button" class="fileSubmitBtn" style="height: 30px">보내기</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -326,6 +342,9 @@
 
     $("#alarmView").click(function () {
       $("#alarmList").toggle();
+    });
+    $("#fileSelect").click(function () {
+      $(".fileView").toggle();
     });
   });
 </script>

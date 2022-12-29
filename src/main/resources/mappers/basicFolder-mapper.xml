@@ -9,7 +9,7 @@
         insert into
             basic_folder
         values
-            (#{basicFolderKey}, #{memberSeq}, #{memberName})
+            (#{basicFolderKey}, #{memberSeq}, #{memberName},0)
     </insert>
 
     <!-- basicFolder 테이블에서 멤버 번호로 key값 추출하기 -->
@@ -21,4 +21,14 @@
         where
             basic_folder_member_seq = #{memberSeq}
     </select>
+
+    <!-- 파일 업로드 -->
+    <update id="uploadByte">
+        update
+            basic_folder
+        set
+            basic_folder_byte = basic_folder_byte + #{fileSize}
+        where
+            basic_folder_member_seq = #{memberSeq}
+    </update>
 </mapper>

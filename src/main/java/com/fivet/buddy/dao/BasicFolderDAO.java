@@ -5,6 +5,7 @@ import com.fivet.buddy.mapper.BasicFolderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -21,5 +22,10 @@ public class BasicFolderDAO {
     // 기본 폴더에 있는 폴더 key값 가져오기
     public String myBasicFolder(int memberSeq) throws Exception{
         return basicFolderMapper.myBasicFolder(memberSeq);
+    }
+
+    // 파일 업로드
+    public void uploadByte(Map<String,Integer> map) {
+        basicFolderMapper.uploadByte(map);
     }
 }

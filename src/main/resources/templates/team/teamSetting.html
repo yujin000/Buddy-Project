@@ -79,12 +79,14 @@
                       th:text="${teamMemberDtoList.getGrade}"
               >
               </button>
+              <th:block th:if="${teamMemberDtoList.getGrade!='매니저'}">
               <button type="submit" class="delBtn" id="delMember"
                       th:data-nick-name="${teamMemberDtoList.getTeamMemberNickname}"
                       th:data-memberSeq="${teamMemberDtoList.getMemberSeq}"
                       th:data-teamSeq="${teamDto.getTeamSeq}">
                 강퇴
               </button>
+              </th:block>
             </div>
           </div>
         </th:block>
@@ -126,11 +128,13 @@
     </div>
   </div>
 
-
+  <strong><a href="/member/loginIndex" id="loginIndex">뒤로가기</a></strong>
+  <th:block th:if="${teamDto.getTeamOwnerSeq==sessionMemberSeq}">
   <form action="/team/deleteTeam" id="deleteTeam" method="post">
     <input type="hidden" name="teamSeq" id="teamSeq" th:value="${teamDto.getTeamSeq()}">
     <p style="text-align: center; margin-top: 20px;">팀을 삭제하시겠습니까? <a href="#" onclick="delClick()"><strong>삭제</strong></a></p>
   </form>
+  </th:block>
 </div>
 <script>
   let oriGrade;

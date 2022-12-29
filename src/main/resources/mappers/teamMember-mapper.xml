@@ -75,4 +75,9 @@
     <delete id="deleteTeamMember">
         delete from team_member where member_seq = #{memberSeq} and team_seq = #{teamSeq}
     </delete>
+
+    <!--부매니저인 멤버 출력 (부매니저일때도 팀 관리 들어갈 수 있게) -->
+    <select id="selectSubManagerMember" resultType="String">
+        select t.grade from team_member t inner join member m on m.member_seq=t.member_seq where t.member_seq= #{value}
+    </select>
 </mapper>

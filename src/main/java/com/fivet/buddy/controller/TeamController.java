@@ -1,9 +1,8 @@
 package com.fivet.buddy.controller;
 
-import com.fivet.buddy.dto.ChatRoomDTO;
-import com.fivet.buddy.dto.TeamDTO;
-import com.fivet.buddy.dto.TeamMemberDTO;
+import com.fivet.buddy.dto.*;
 import com.fivet.buddy.services.ChatRoomService;
+import com.fivet.buddy.services.MemberService;
 import com.fivet.buddy.services.TeamMemberService;
 import com.fivet.buddy.services.TeamService;
 import com.google.gson.Gson;
@@ -36,6 +35,9 @@ public class TeamController {
     @Autowired
     private TeamMemberService teamMemberService;
 
+    @Autowired
+    private MemberService memberService;
+
     //팀 생성 페이지로 이동
     @RequestMapping("add")
     public String add() {
@@ -54,33 +56,36 @@ public class TeamController {
         return "redirect:/member/loginIndex";
     }
 
-    //팀 이동
-    @PostMapping("goTeam")
-    public String goTeam(TeamMemberDTO teamMemberDto, Model model) {
+        //팀 이동
+        @PostMapping("goTeam")
+        public String goTeam(TeamMemberDTO teamMemberDto,int teamSeq, Model model) {
 
-        teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
-        // 회원 번호를 이용하여 팀 DTO값을 불러옴.
-        teamMemberDto = teamMemberService.selectOne(teamMemberDto);
-        // 팀 번호 session 부여
-        session.setAttribute("teamSeq", teamMemberDto.getTeamSeq());
-        // 회원의 팀내 닉네임 session 부여
-        session.setAttribute("teamMemberNickname", teamMemberDto.getTeamMemberNickname());
-        // 팀 이름 session 부여
-        session.setAttribute("teamName", teamService.selectTeamName(teamMemberDto.getTeamSeq()));
-        //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
-        Map<String, Integer> param = new HashMap<>();
-        param.put("teamSeq", teamMemberDto.getTeamSeq());
-        param.put("memberSeq", teamMemberDto.getMemberSeq());
-        // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
-        List<ChatRoomDTO> chatRoomList = chatRoomService.chatRoomList(param);
-        model.addAttribute("chatRoomList", chatRoomList);
-        return "team/team";
-    }
+            teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+            // 회원 번호를 이용하여 팀 DTO값을 불러옴.
+            teamMemberDto = teamMemberService.selectOne(teamMemberDto);
+            // 팀 번호 session 부여
+            session.setAttribute("teamSeq", teamMemberDto.getTeamSeq());
+            // 회원의 팀내 닉네임 session 부여
+            session.setAttribute("teamMemberNickname", teamMemberDto.getTeamMemberNickname());
+            // 팀 이름 session 부여
+            session.setAttribute("teamName", teamService.selectTeamName(teamMemberDto.getTeamSeq()));
+            //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
+            Map<String, Integer> param = new HashMap<>();
+            param.put("teamSeq", teamMemberDto.getTeamSeq());
+            param.put("memberSeq", teamMemberDto.getMemberSeq());
+            // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
+            List<ChatRoomDTO> chatRoomList = chatRoomService.chatRoomList(param);
+            //팀 입장 시, 팀 멤버 출력
+            List<TeamMemberListDTO> teamMemberDtoList =  teamMemberService.selectTeamMember(String.valueOf(teamSeq));
+            model.addAttribute("teamMemberDtoList", teamMemberDtoList);
+            model.addAttribute("chatRoomList", chatRoomList);
+            return "team/team";
+        }
 
     //팀 관리 이동
     @RequestMapping("goTeamSetting")
     public String goTeamSetting(int teamSeq, Model model) throws Exception{
-        List<TeamMemberDTO> teamMemberDtoList =  teamService.selectTeamMemberOne(String.valueOf(teamSeq));
+        List<TeamMemberListDTO> teamMemberDtoList =  teamMemberService.selectTeamMember(String.valueOf(teamSeq));
         TeamDTO teamDto =teamService.selectTeamOne(String.valueOf(teamSeq));
         model.addAttribute("teamMemberDtoList", teamMemberDtoList);
         model.addAttribute("teamDto",teamDto);
@@ -147,6 +152,15 @@ public class TeamController {
         Gson g = new Gson();
         List<TeamDTO> teamList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
         return  g.toJson(teamService.selectMemberTeam((int)session.getAttribute("memberSeq")));
+    }
+
+    //팀원 목록 출력
+    @ResponseBody
+    @RequestMapping("teamMemberList")
+    public String teamMemberList (){
+        List<TeamMemberListDTO> teamMemberDtoList =  teamMemberService.selectTeamMember(String.valueOf(session.getAttribute("teamSeq")));
+        Gson g = new Gson();
+        return g.toJson(teamMemberDtoList);
     }
 
     // Exception Handler

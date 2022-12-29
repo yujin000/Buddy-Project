@@ -1,6 +1,7 @@
 package com.fivet.buddy.dao;
 
 import com.fivet.buddy.dto.ChatRoomDTO;
+import com.fivet.buddy.mapper.ChatMemberMapper;
 import com.fivet.buddy.mapper.ChatRoomMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,5 +27,12 @@ public class ChatRoomDAO {
 
     //팀 합류시(생성 포함) 기본적으로 추가되는 나와의 대화
     public void insertSelfChat(Map<String, String> param) { chatRoomMapper.insertSelfChat(param);}
+
+    //팀 합류시 기본채팅방 및 나만의 대화 채팅방 번호를 출력
+    public String selectChatRoomSeq(Map<String, String> param) {
+        return chatRoomMapper.selectChatRoomSeq(param);
+    }
+
+    public void updatePlusMemberCount(Map<String, String> param) { chatRoomMapper.updatePlusMemberCount(param); }
 
 }

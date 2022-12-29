@@ -23,11 +23,6 @@ public class TeamDAO {
         return teamMapper.selectMemberTeam(memberSeq);
     }
 
-    //팀 관리 멤버 출력
-    public List<TeamMemberDTO> selectTeamMemberOne(String teamSeq){
-        return teamMapper.selectTeamMemberOne(teamSeq);
-    }
-
     //팀 관리 팀 이름 출력
     public TeamDTO selectTeamOne(String teamSeq){
         return teamMapper.selectTeamOne(teamSeq);
@@ -52,4 +47,7 @@ public class TeamDAO {
     public void updateTeamOwnerSeq(Map<String,Integer> param){
         teamMapper.updateTeamOwnerSeq(param);
     }
+
+    //새로운 팀원 추가시, 팀 인원을 +1 증가
+    public void updatePlusTeamCount(int teamSeq) { teamMapper.updatePlusTeamCount(teamSeq);}
 }

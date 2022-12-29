@@ -12,8 +12,6 @@ public interface TeamMapper {
     void insertTeam(TeamDTO dto);
     List<TeamDTO> selectMemberTeam(int memberSeq);
 
-    List<TeamMemberDTO> selectTeamMemberOne(String teamSeq);
-
     TeamDTO selectTeamOne(String teamSeq);
 
     void updateManagementTeamName(TeamDTO teamDto);
@@ -23,4 +21,5 @@ public interface TeamMapper {
     String selectTeamName(int teamSeq);
 
     void updateTeamOwnerSeq(Map<String,Integer> param);
+    void updatePlusTeamCount(int teamSeq);
 }

@@ -51,11 +51,6 @@ public class TeamService {
         return teamDao.selectMemberTeam(memberSeq);
     }
 
-    //팀 관리 멤버 출력
-    public List<TeamMemberDTO> selectTeamMemberOne(String teamSeq){
-        return teamDao.selectTeamMemberOne(teamSeq);
-    }
-
     //팀 관리 팀 이름 출력
     public TeamDTO selectTeamOne(String teamSeq){
         return teamDao.selectTeamOne(teamSeq);
@@ -80,4 +75,5 @@ public class TeamService {
     public void updateTeamOwnerSeq(Map<String,Integer> param){
         teamDao.updateTeamOwnerSeq(param);
     }
+    public void updatePlusTeamCount(int teamSeq) { teamDao.updatePlusTeamCount(teamSeq); }
 }

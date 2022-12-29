@@ -36,4 +36,14 @@
             cm.member_seq = #{memberSeq} and cm.team_seq = #{teamSeq}
         order by 1
     </select>
+
+    <!--    팀 합류시, 필요한 채팅방 번호를 출력-->
+    <select id="selectChatRoomSeq" resultType="string">
+         select chat_room_seq from chat_room where team_seq = #{teamSeq} and chat_type = #{chatType}
+    </select>
+
+    <!--    채팅방 인원 추가시, 채팅방 인원수 +1-->
+    <update id="updatePlusMemberCount">
+        update team set member_count = member_count+1 where chat_room_seq = #{chatRoomSeq}
+    </update>
 </mapper>

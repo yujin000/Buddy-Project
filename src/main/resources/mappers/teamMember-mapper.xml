@@ -51,6 +51,16 @@
         chat_room_seq = #{chatRoomSeq}
     </select>
 
+    <!--팀 멤버 출력 -->
+    <select id="selectTeamMember" resultType="com.fivet.buddy.dto.TeamMemberListDTO">
+        select * from team_member t inner join member_img i on t.member_seq=i.member_img_member_seq where team_seq = #{value}
+        order by case
+        when grade='매니저' then 1
+        when grade='부매니저' then 2
+        when grade='팀원' then 3
+        end, member_seq asc
+    </select>
+
     <!-- 멤버 등급 변경 -->
     <update id="updateTeamMemberGrade">
         update team_member set grade = #{grade} where member_seq = #{memberSeq} and team_seq = #{teamSeq}

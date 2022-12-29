@@ -28,16 +28,6 @@
         order by 1
     </select>
 
-    <!--팀 관리 멤버 출력 -->
-    <select id="selectTeamMemberOne" resultType="com.fivet.buddy.dto.TeamMemberDTO">
-        select * from team_member where team_seq = #{value}
-        order by case
-        when grade='manager' then 1
-        when grade='subManager' then 2
-        when grade='coworker' then 3
-        end, member_seq asc
-    </select>
-
     <!-- 팀 관리 팀 이름 출력-->
     <select id="selectTeamOne" resultType="com.fivet.buddy.dto.TeamDTO">
         select * from team where team_seq = #{value}
@@ -61,5 +51,10 @@
     <!-- 팀 관리에서 매니저가 바뀌면 team_owner_seq 변경 -->
     <update id="updateTeamOwnerSeq">
         update team set team_owner_seq=#{newManagerSeq} where team_owner_seq = #{manageSeq} and team_seq= #{teamSeq}
+    </update>
+
+    <!--    새로운 팀원 추가시, 팀 인원수가 1 증가-->
+    <update id="updatePlusTeamCount">
+        update team set team_count = team_count+1 where team_seq = #{teamSeq}
     </update>
 </mapper>

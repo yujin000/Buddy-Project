@@ -88,11 +88,13 @@
                         $("#eventMemo").val(memo);
                         $("#eventLocation").val(location);
                         $("#eventStart").attr("data-placeholder",eventStart.toLocaleDateString());
+                        $("#eventStart").val(eventStart);
                         $("#eventEnd").attr("data-placeholder",eventEnd.toLocaleDateString());
+                        $("#eventEnd").val(eventEnd);
                         $("#eventColor").val(color);
                         $("#eventColor").css("background-color",color);
-                        console.log(type);
-                        console.log(color);
+                        console.log(eventStart);
+                        console.log(eventEnd);
 
                     },
                     // date click event 날짜 클릭 이벤트
@@ -139,7 +141,7 @@
                         $("#eventType").val("team");
                         $("#eventName").val("");
                         $("#eventWriter").val("");
-                        $("#eventColor").attr("type","hidden");
+                        $("#eventWriter").attr("type","hidden");
                         $("#eventLocation").val("");
                         $("#eventMemo").val("");
                         $("#eventColor").val("purple");
@@ -169,7 +171,20 @@
                     },
 
                     unselect : function (){
-                        $("#form").css("display","none");
+                        $("#form").css("display","block");
+                        $("#updateBtn").css("display","none");
+                        $("#delBtn").css("display","none");
+                        $("#submitBtn").css("display","block");
+
+                        $("#eventSeq").val("");
+                        $("#eventType").val("team");
+                        $("#eventName").val("");
+                        $("#eventWriter").val("");
+                        $("#eventWriter").attr("type","hidden");
+                        $("#eventLocation").val("");
+                        $("#eventMemo").val("");
+                        $("#eventColor").val("purple");
+                        $("#eventColor").css("background-color","purple");
                     },
 
                     // events object 이벤트 객체 [일정의 데이터가 담기는 공간 json 타입]
@@ -244,11 +259,11 @@
                 </button>
                 <form action="/calendar/insertEvent" id="form" method="post">
                     <select name="eventColor" id="eventColor" class="eventSelect" onchange="selectColor(value)" data-placeholder="색상">
-                        <option value="purple" style="background: purple" >기본색상</option>
-                        <option value="blue" style="background: blue"></option>
-                        <option value="red" style="background: red"></option>
-                        <option value="green" style="background: green"></option>
-                        <option value="black" style="background: black"></option>
+                        <option value="purple" style="background: purple" >team</option>
+                        <option value="blue" style="background: blue">blue</option>
+                        <option value="red" style="background: red">red</option>
+                        <option value="green" style="background: green">green</option>
+                        <option value="black" style="background: black">black</option>
                     </select>
                     <select name="eventType" id="eventType" class="eventSelect">
                         <option value="team">팀 캘린더</option>
@@ -308,8 +323,6 @@
     // 업데이트 기능
     function update() {
         let event = [];
-
-
         const seq = $("#eventSeq").val();
         const type =$("#eventType").val();
         const title =$("#eventName").val();
@@ -318,8 +331,18 @@
         const eventLocation =$("#eventLocation").val();
         const eventMemo =$("#eventMemo").val();
         const eventColor =$("#eventColor").val();
-        event.push(seq+type+title+eventStart+eventEnd+eventLocation+eventMemo+eventColor);
+        event.push({
+            seq : seq,
+            type: type,
+            title: title,
+            eventStart: eventStart,
+            eventEnd : eventEnd,
+            eventLocation: eventLocation,
+            eventMemo : eventMemo,
+            eventColor : eventColor
+        })
         console.log(event);
+        console.log(event[0].seq);
         // location.href ="/calendar/updateEvent?eventSeq="+seq
         //     +"&eventType"+type+"&eventTitle"+title+
         //     +"&eventStart"+eventStart+

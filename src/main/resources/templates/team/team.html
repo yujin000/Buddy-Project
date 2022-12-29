@@ -38,7 +38,7 @@
     <button id="asideClose">aside</button>
     <button id="teamMember">team</button>
     <ul id="teamMemberList" class="teamMemberList">
-      <h1>teamMemberList</h1>
+      <h1>팀원 목록</h1>
       <li>
         <img src="" alt="">
         <span>이름</span>
@@ -281,6 +281,12 @@
       $("#dropdownList").append(teamListLi);
     }
   });
+
+  //팀원 목록을 출력해주는 ajax호출
+  // $.ajax({
+  //   type:"post",
+  //   url:"team/teamMemberList",
+  // });
 
   //팀 이동 클릭이벤트
   $(document).on("click", ".goTeam", function (){

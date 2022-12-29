@@ -17,7 +17,4 @@ public class NoticeFileService {
         return noticeFileDao.selectFile(noticeSeq);
     }
 
-    public NoticeFileDTO selectFileDetail(NoticeFileDTO noticeFileDto) throws Exception {
-        return noticeFileDao.selectFileDetail(noticeFileDto);
-    }
 }

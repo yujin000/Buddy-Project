@@ -179,3 +179,118 @@ button[class*="Btn"] {
     border: none;
     outline: none;
 }
+
+
+/* ==================등급 선택 modal1창 css ========================*/
+.modal1 {
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: absolute;
+    border: 1px solid #000;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    display: none;
+}
+
+.modalWrap1 {
+    margin: 0 auto;
+    margin-top: 25vh;
+    padding: 20px;
+    width: 400px;
+    height: 320px;
+    border-radius: 15px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.modalWrap1 h3 {
+    margin-top: 15px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.modalWrap1 button {
+    width: 100px;
+    height: 30px;
+    border-radius: 15px;
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #000;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+.modalWrap1 button:hover {
+    font-weight: bold;
+}
+
+#goBack1 {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    border-radius: 0;
+    border: none;
+    background: transparent;
+}
+
+/* ==================팀원 강퇴 modal2창 css ========================*/
+.modal2 {
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: absolute;
+    border: 1px solid #000;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    display: none;
+}
+
+.modalWrap2 {
+    margin: 0 auto;
+    margin-top: 25vh;
+    padding: 20px;
+    width: 400px;
+    height: 320px;
+    border-radius: 15px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.modalWrap2 h3 {
+    margin-top: 15px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.modalWrap2 button {
+    width: 100px;
+    height: 30px;
+    border-radius: 15px;
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #000;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+.modalWrap2 button:hover {
+    font-weight: bold;
+}
+
+#goBack2 {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    border-radius: 0;
+    border: none;
+    background: transparent;
+}

@@ -293,10 +293,41 @@ public class MemberController {
         return "redirect:/";
     }
 
+    // 로그인시 회원이 가입한 팀 목록 출력을 위한 통로
     @RequestMapping("loginIndex")
     public String loginIndex(Model model) {
-        List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
-        model.addAttribute("teamDtoList", teamDtoList);
+        if (session.getAttribute("memberSeq")!=null) {
+            List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
+            model.addAttribute("teamDtoList", teamDtoList);
+        }
         return "index";
+    }
+
+    // 관리자 페이지(1:1문의)로 이동
+    @RequestMapping("toAdminMember")
+    public String toAdminPage(Model model) throws Exception {
+        if (session.getAttribute("memberLogtype").equals("admin")) {
+            List<MemberDTO> list = memberService.selectMembers();
+            model.addAttribute("memberList", list);
+            return "admin/adminMember";
+        }
+        return "error";
+    }
+
+    // 회원 검색(관리자)
+    @RequestMapping("memberSearch")
+    public String memberSearch(String searchPick, String memberSearchText, Model model) throws Exception {
+        List<MemberDTO> list = memberService.memberSearch(searchPick, memberSearchText);
+        model.addAttribute("memberList", list);
+        return "/admin/adminMember";
+    }
+
+    // 회원 강퇴(관리자)
+    @RequestMapping("memberKickOut")
+    public String memberKickOut(int memberSeq, Model model) throws Exception {
+        memberService.memberKickOut(memberSeq);
+        List<MemberDTO> list = memberService.selectMembers();
+        model.addAttribute("memberList", list);
+        return "redirect:member/toAdminMember";
     }
 }

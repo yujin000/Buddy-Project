@@ -13,14 +13,14 @@ public class QnaFileService {
     @Autowired
     private QnaFileDAO qnaFileDao;
 
-    public int insertFile(QnaFileDTO qnaFileDto) throws Exception {
-        return qnaFileDao.insertFile(qnaFileDto);
+    public void insertFile(QnaFileDTO qnaFileDto) throws Exception {
+         qnaFileDao.insertFile(qnaFileDto);
     }
 
     public List<QnaFileDTO> selectFile(int qnaSeq) throws Exception{
         return qnaFileDao.selectFile(qnaSeq);
     }
-    public int deleteFile(int qnaSeq) throws Exception{
-        return qnaFileDao.deleteFile(qnaSeq);
+    public void deleteFile(int qnaSeq) throws Exception{
+         qnaFileDao.deleteFile(qnaSeq);
     }
 }

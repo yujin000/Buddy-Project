@@ -24,14 +24,28 @@ public class TeamMemberDAO {
         teamMemberMapper.enterTeam(teamMemberDto);
     }
 
-    // 회원 번호를 이용하여 팀 DTO값을 불러옴.
+    //회원 번호를 이용하여 해당 팀 관련 회원정보 출력.
     public TeamMemberDTO selectOne(TeamMemberDTO teamMemberDto) {
         return teamMemberMapper.selectOne(teamMemberDto);
     }
 
-    // 채팅방 참여자 목록을 출력.
+    // 기본채팅방 참여자 목록을 출력.
     public List<TeamMemberDTO> selectChatMember(int chatRooMSeq) {
         return teamMemberMapper.selectChatMember(chatRooMSeq);
     }
 
+    //멤버 등급 변경
+    public void updateTeamMemberGrade(TeamMemberDTO teamMemberDto){
+        teamMemberMapper.updateTeamMemberGrade(teamMemberDto);
+    }
+
+    //멤버 등급 변경 ( 매니저가 다른 사람한테 매니저 이양할 때 )
+    public void updateTeamMemberManager(Map<String,Integer> param){
+        teamMemberMapper.updateTeamMemberManager(param);
+    }
+
+    //팀 관리 페이지에서 팀원 강퇴
+    public void deleteTeamMember(TeamMemberDTO teamMemberDto){
+        teamMemberMapper.deleteTeamMember(teamMemberDto);
+    }
 }

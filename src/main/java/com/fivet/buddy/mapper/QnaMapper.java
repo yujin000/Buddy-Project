@@ -9,21 +9,21 @@ import java.util.List;
 
 @Mapper
 public interface QnaMapper {
-     int insert(QnaDTO qnaDto);
+    void insert(QnaDTO qnaDto);
 
-     int insertFile(QnaFileDTO qnaFileDto);
+    void insertFile(QnaFileDTO qnaFileDto);
 
-     List<QnaDTO> select(int qnaWriter);
+    List<QnaDTO> select(int qnaWriter);
 
-     List<QnaCommentDTO> selectComment(int qnaSeq);
+    List<QnaCommentDTO> selectComment(int qnaSeq);
 
-     QnaDTO selectDetail(QnaDTO qnaDto);
+    List<QnaFileDTO> selectFile(int qnaSeq);
 
-     List<QnaFileDTO> selectFile(int qnaSeq);
+    void delete(int qnaSeq);
 
-     int delete(int qnaSeq);
+    void deleteFile(int qnaSeq);
 
-     int deleteFile(int qnaSeq);
+    void deleteComment(int qnaSeq, int qnaCommentSeq);
 
-     int deleteComment(int qnaSeq,int qnaCommentSeq);
+    List<QnaDTO> selectQnaBoardAll();
 }

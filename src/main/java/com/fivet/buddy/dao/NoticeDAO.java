@@ -13,10 +13,7 @@ public class NoticeDAO {
     @Autowired
     private NoticeMapper noticemapper;
 
-    public List<NoticeDTO> select() throws Exception{
+    public List<NoticeDTO> select() throws Exception {
         return noticemapper.select();
-    }
-    public NoticeDTO selectDetail(NoticeDTO noticeDto) throws Exception{
-        return noticemapper.selectDetail(noticeDto);
     }
 }

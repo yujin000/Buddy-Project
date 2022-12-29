@@ -9,15 +9,7 @@
         select * from notice_board order by notice_seq desc
     </select>
 
-    <select id="selectDetail" resultType="com.fivet.buddy.dto.NoticeDTO">
-        select * from notice_board where notice_seq = #{noticeSeq}
-    </select>
-
     <select id="selectFile" resultType="com.fivet.buddy.dto.NoticeFileDTO">
-        select * from notice_files where notice_seq = #{noticeSeq}
-    </select>
-
-    <select id="selectFileDetail" resultType="com.fivet.buddy.dto.NoticeFileDTO">
         select * from notice_files where notice_seq = #{noticeSeq}
     </select>
 

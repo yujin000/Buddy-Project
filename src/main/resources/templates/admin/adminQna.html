@@ -91,20 +91,20 @@
                     <ul>
                         <li class="thead">
                             <span>번호</span>
-                            <span>문의유형</span><span>작성자(회원번호)</span>
+                            <span>문의유형</span>
+                            <span>작성자(회원번호)</span>
                             <span>제목</span>
                             <span>작성날짜</span>
                         </li>
-                        <li class="tdata" th:if="${qnaList!=null}">
-                            <th:block th:each="qnaList : ${qnaList}">
+                        <th:block th:if="${qnaList!=null}">
+                        <li class="tdata" th:each="qnaList : ${qnaList}">
                             <span th:text="${qnaList.qnaSeq}"></span>
                             <span th:text="${qnaList.qnaType}"></span>
                             <span th:text="${qnaList.qnaWriter}"></span>
                             <span th:text="${qnaList.qnaTitle}"></span>
                             <span th:text="${qnaList.qnaWriteDate}"></span>
-
-                            </th:block>
                         </li>
+                        </th:block>
                     </ul>
                     <hr />
                     <div class="listNum">

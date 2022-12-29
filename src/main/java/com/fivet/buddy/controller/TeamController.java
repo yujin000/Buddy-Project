@@ -109,7 +109,7 @@ public class TeamController {
         teamMemberService.updateTeamMemberGrade(teamMemberDto);
 
         //만약에 매니저가 다른 팀원에게 매니저를 이양한다면
-        if(teamMemberDto.getGrade().equals("manager")){
+        if(teamMemberDto.getGrade().equals("매니저")){
             // 이전 dto값은 변경되는 회원의 memberSeq값이 들어있음
             Map<String, Integer> param = new HashMap<>();
             param.put("memberSeq",teamMemberDto.getMemberSeq());

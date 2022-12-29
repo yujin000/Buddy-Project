@@ -16,7 +16,7 @@ public class QnaCommentService {
         return qnaCommentDAO.selectComment(qnaSeq);
     }
 
-    public int deleteComment(int qnaSeq,int qnaCommentSeq) throws Exception{
-        return qnaCommentDAO.deleteComment(qnaSeq,qnaCommentSeq);
+    public void deleteComment(int qnaSeq,int qnaCommentSeq) throws Exception{
+         qnaCommentDAO.deleteComment(qnaSeq,qnaCommentSeq);
     }
 }

@@ -12,8 +12,8 @@ public class QnaCommentService {
 
     @Autowired
     private QnaCommentDAO qnaCommentDAO;
-    public List<QnaCommentDTO> selectComment(QnaCommentDTO qnaCommentDto) throws  Exception{
-        return qnaCommentDAO.selectComment(qnaCommentDto);
+    public List<QnaCommentDTO> selectComment(int qnaSeq) throws  Exception{
+        return qnaCommentDAO.selectComment(qnaSeq);
     }
 
     public int deleteComment(int qnaSeq,int qnaCommentSeq) throws Exception{

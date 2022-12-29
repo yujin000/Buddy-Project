@@ -13,10 +13,12 @@ public class QnaService {
     private QnaDAO qnaDao;
 
     public int insert(QnaDTO qnaDto) throws Exception {
+        qnaDto.setQnaTitle(qnaDto.getQnaTitle().replace("<","&lt;"));
+        qnaDto.setQnaContents(qnaDto.getQnaContents().replace("<", "&lt;"));
         return qnaDao.insert(qnaDto);
     }
-    public List<QnaDTO> select() throws  Exception{
-        return qnaDao.select();
+    public List<QnaDTO> select(int qnaWriter) throws  Exception{
+        return qnaDao.select(qnaWriter);
     }
 
     public QnaDTO selectDetail(QnaDTO qnaDto) throws  Exception{

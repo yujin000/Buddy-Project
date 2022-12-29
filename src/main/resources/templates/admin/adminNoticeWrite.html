@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>관리자 페이지-공지 글쓰기</title>
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/admin.css" />
+  <link rel="stylesheet" href="/static/css/m-admin.css" />
+  <script
+          src="https://code.jquery.com/jquery-3.6.1.min.js"
+          integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+          crossorigin="anonymous"
+  ></script>
+  <script src="/static/js/jQueryCheck.js"></script>
+  <!-- include summernote css/js -->
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+</head>
+<body>
+<div class="moblieView">
+  <div class="logo">
+    <a href="">
+      <img src="" alt="" />
+    </a>
+  </div>
+  <h1>
+    죄송합니다. <br />
+    관리자 페이지는 모바일 환경을 지원하지 않습니다.
+  </h1>
+  <button><a href="../index.html">뒤로가기</a></button>
+</div>
+<form action="/admin/insertAdminNotice" id="form" method="post">
+  <div id="title">
+    <input type="text" placeholder="제목을 입력하세요." name="noticeTitle" id="noticeTitle">
+  </div>
+  <div id="summernote"></div>
+  <div>
+  <button type="button" id="insertAdminNotice">작성하기</button>
+  <button type="button" id="toAdminNotice">목록으로</button>
+  </div>
+</form>
+<script>
+  $('#summernote').summernote({
+    placeholder: '내용을 입력하세요.',
+    lang: "ko-KR",
+    tabsize: 2,
+    height: 120,
+    toolbar: [
+      ['style', ['style']],
+      ['font', ['bold', 'underline', 'clear']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['table', ['table']],
+      ['insert', ['link', 'picture']],
+      ['view', ['fullscreen', 'codeview', 'help']]
+    ]
+  });
+
+  $("#toAdminNotice").on("click",function (){
+    location.href = "/admin/toAdminNotice";
+  })
+  $("#insertAdminNotice").on("click", function (){
+    if ($("#noticeTitle").val()==0) {
+      alert("제목을 입력하세요.")
+    } else if ($(".note-editable").html()=="<p><br></p>") {
+      alert("내용을 입력하세요.")
+    } else {
+      let noticeContents = $("<input>");
+      noticeContents.attr("type", "hidden");
+      noticeContents.attr("name", "noticeContents");
+      noticeContents.val($(".note-editable").html());
+      $("#form").append(noticeContents);
+      $("#form").submit();
+    }
+  })
+</script>
+</body>
+</html>

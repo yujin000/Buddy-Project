@@ -124,7 +124,13 @@ body {
 }
 
 
-.article{
+.articleQna{
+    line-height: 60px;
+    padding: 0 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.4);
+}
+
+.articleNotice{
     line-height: 60px;
     padding: 0 10px;
     border-bottom: 1px solid rgba(0,0,0,0.4);

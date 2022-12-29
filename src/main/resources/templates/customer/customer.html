@@ -18,6 +18,19 @@
     <link rel="stylesheet" href="/static/css/customer.css">
     <link rel="stylesheet" href="/static/css/m-customer.css">
 
+    <style>
+        .qnaContent {
+            border: 1px solid;
+        }
+
+        .noticeContent {
+            border: 1px solid;
+        }
+
+        .btnDelete {
+            float: right;
+        }
+    </style>
 </head>
 <body>
 <div class="wrap">
@@ -35,37 +48,40 @@
             </ul>
         </nav>
 
-            <div class="boardQna" th:if="${qna != null}">
-                <ul th:each="qna : ${qna}">
-                    <li class="article" onclick="toggle(this)">
-                        <span class="tag">문의</span>
-                        <a class="title" onclick="toggle(this)">
-                            <span th:text="${qna.qnaTitle}"></span>
-                        </a>
-                        <span class="date">날짜 : [[${qna.qnaWriteDate}]]</span>
-                        <div class="hidden">
-                            <textarea name="" id="" cols="30" rows="10">
-                            </textarea>
-                            <p>답글 : </p>
+        <div class="boardQna" th:if="${qna != null}">
+            <ul th:each="qna : ${qna}">
+                <li class="articleQna" onclick="toggle(this)">
+                    <span class="tag">문의</span>
+                    <a class="title" onclick="toggle(this)">
+                        <input type="hidden" th:value="${qna.qnaSeq}" class="qnaSeq">
+                        <span th:text="${qna.qnaTitle}"></span>
+                    </a>
+                    <span class="date">날짜 : [[${qna.qnaWriteDate}]]</span>
+                    <div class="hidden">
+                        <img src="" class="qnaSysName" style="width: 500px">
+                        <div class="qnaContent" contenteditable="false" th:text="${qna.qnaContents}">
                         </div>
-                    </li>
-                </ul>
-            </div>
+                        <a href="" class="downloadFiles" style="color: blue"></a>
+                        <p class="qnaCmt">답변 : </p>
+                        <a href="" class="deleteBtn">삭제</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
-        <div class="boardNews" th:each="notice : ${notice}">
-            <ul>
-                <li class="article" onclick="toggle(this)">
+        <div class="boardNews" th:if="${notice != null}">
+            <ul th:each="notice : ${notice}">
+                <li class="articleNotice" onclick="toggle(this)">
                     <span class="tag">공지</span>
                     <a class="title" onclick="toggle(this)">
-                                <span th:text="${notice.noticeTitle}">
-                                </span>
+                        <input type="hidden" th:value="${notice.noticeSeq}" class="noticeSeq">
+                        <span th:text="${notice.noticeTitle}"></span>
                     </a>
-                    <span class="date">날짜 : 2022-12-12</span>
+                    <span class="date">날짜 : [[${notice.noticeWriteDate}]]</span>
                     <div class="hidden">
-                            <textarea name="" id="" cols="30" rows="10">
-
-                            </textarea>
-                        <p>답글 : </p>
+                        <img src="" class="noticeSysName" style="width: 500px">
+                        <div class="noticeContent" contenteditable="false" th:text="${notice.noticeContents}">
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -94,23 +110,106 @@
 
     // when you move thead > please print another list
 
-    // function popup() {
-    //     const url = "/qna/popup";
-    //     const name = "popup";
-    //     const option = "width = 800, height = 800, top = 100, left = 465, location = no"
-    //     const mOption = "width = 370px, height = 600px, top = 0, left = 0, location = no"
-    //
-    //     if ($("body").css("max-width", "600")) {
-    //         window.open(url, name, mOption);
-    //     } else {
-    //         window.open(url, name, option);
-    //     }
-    // }
-
-
     function toggle(arg) {
         $(arg).children(".hidden").toggle();
     }
+
+    $(".hidden").on("click", function () {
+        $(".hidden").css("display", "none");
+    })
+
+    $(".articleQna").on("click", function () {
+        let qnaSeq = $(this).children("a").find($(".qnaSeq")).val();
+        let qnaCmt = $(this).children($(".hidden")).find($(".qnaCmt"));
+        let qnaSysName = $(this).children($(".hidden")).find($(".qnaSysName"));
+        let downloadFiles = $(this).children($(".hidden")).find($(".downloadFiles"));
+        let deleteBtn = $(this).children($(".hidden")).find($(".deleteBtn"));
+
+        $.ajax({
+            url: "/qna/detail",
+            type: "post",
+            data: {"qnaSeq": qnaSeq},
+            success: function () {
+            }, error: function () {
+            }
+        }).done(function (rsp) {
+            if (rsp.length == 0) {
+                deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq);
+                deleteBtn.on("click", function () {
+                    confirm("정말 삭제 하시겠습니까?");
+                })
+            }
+            if (rsp[0].qnaCommentContents != null && rsp[0].qnaSysName == null) {
+                qnaCmt.text("답변 : " + rsp[0].qnaCommentContents);
+                deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq);
+            } else if (rsp[0].qnaCommentContents == null) {
+                qnaSysName.attr("src", "/qnaImg/" + rsp[0].qnaSysName);
+                downloadFiles.attr("href", "/qna/download?sysName=" + rsp[0].qnaSysName + "&oriName=" + rsp[0].qnaOriName);
+                downloadFiles.text(rsp[0].qnaOriName);
+                deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq + "&qnaSysName=" + rsp[0].qnaSysName);
+
+            } else if (rsp[1].qnaCommentContents != null && rsp[1].qnaSysName == null) {
+                qnaCmt.text("답변 : " + rsp[1].qnaCommentContents);
+                deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq);
+
+            } else if (rsp[1].qnaCommentContents == null) {
+                qnaSysName.attr("src", "/qnaImg/" + rsp[1].qnaSysName);
+                downloadFiles.attr("href", "/qna/download?sysName=" + rsp[1].qnaSysName + "&oriName=" + rsp[1].qnaOriName);
+                downloadFiles.text(rsp[1].qnaOriName);
+                deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq + "&qnaSysName=" + rsp[1].qnaSysName);
+
+            } else if (rsp[2].qnaCommentContents != null && rsp[2].qnaSysName == null) {
+                qnaCmt.text("답변 : " + rsp[2].qnaCommentContents);
+                deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq);
+
+            } else if (rsp[2].qnaCommentContents == null) {
+                qnaSysName.attr("src", "/qnaImg/" + rsp[2].qnaSysName);
+                downloadFiles.attr("href", "/qna/download?sysName=" + rsp[2].qnaSysName + "&oriName=" + rsp[2].qnaOriName);
+                downloadFiles.text(rsp[2].qnaOriName);
+                deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq + "&qnaSysName=" + rsp[2].qnaSysName);
+            }
+            if (rsp[0].qnaSysName != null && rsp[0].qnaCommentContents == null) {
+                qnaSysName.attr("src", "/qnaImg/" + rsp[0].qnaSysName);
+                downloadFiles.attr("href", "/qna/download?sysName=" + rsp[0].qnaSysName + "&oriName=" + rsp[0].qnaOriName);
+                downloadFiles.text(rsp[0].qnaOriName);
+                deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq + "&qnaSysName=" + rsp[0].qnaSysName);
+
+            } else if (rsp[1].qnaSysName != null && rsp[1].qnaCommentContents == null) {
+                qnaSysName.attr("src", "/qnaImg/" + rsp[1].qnaSysName);
+                downloadFiles.attr("href", "/qna/download?sysName=" + rsp[1].qnaSysName + "&oriName=" + rsp[1].qnaOriName);
+                downloadFiles.text(rsp[1].qnaOriName);
+                deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq + "&qnaSysName=" + rsp[1].qnaSysName);
+
+            } else if (rsp[2].qnaSysName != null && rsp[2].qnaCommentContents == null) {
+                qnaSysName.attr("src", "/qnaImg/" + rsp[2].qnaSysName);
+                downloadFiles.attr("href", "/qna/download?sysName=" + rsp[2].qnaSysName + "&oriName=" + rsp[2].qnaOriName);
+                downloadFiles.text(rsp[2].qnaOriName);
+                deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq + "&qnaSysName=" + rsp[2].qnaSysName);
+            }
+
+            deleteBtn.on("click", function () {
+                confirm("정말 삭제 하시겠습니까?");
+            })
+
+        })
+    });
+
+    $(".articleNotice").on("click", function () {
+        let noticeSeq = $(this).children("a").find($(".noticeSeq")).val();
+        let noticeSysName = $(this).children($(".hidden")).find($(".noticeSysName"));
+        console.log(noticeSeq);
+        console.log(noticeSysName);
+        $.ajax({
+            url: "/notice/detail",
+            type: "post",
+            data: {"noticeSeq": noticeSeq},
+            success: function () {
+            }, error: function () {
+            }
+        }).done(function (rsp) {
+            noticeSysName.attr("src", "/noticeImg/" + rsp[0].noticeSysName);
+        })
+    });
 </script>
 </body>
 </html>

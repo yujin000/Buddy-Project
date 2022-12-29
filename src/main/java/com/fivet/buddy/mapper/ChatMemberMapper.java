@@ -7,10 +7,7 @@ import java.util.Map;
 @Mapper
 public interface ChatMemberMapper {
 
-    //채팅 인원 추가
-    // void insertChatMember(int chatRoomSeq, int memberSeq);
-
-    //팀 생성시 생성되는 기본 채팅방 목록에 생성자 추가
-    void createTeam(Map<String, String> param);
+    //팀 합류시 기본생성되는 채팅방 목록 (생성포함)
+    void insertChatMember(Map<String, String> param);
 
 }

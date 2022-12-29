@@ -80,4 +80,5 @@ public class TeamService {
     public void updateTeamOwnerSeq(Map<String,Integer> param){
         teamDao.updateTeamOwnerSeq(param);
     }
+    public void updatePlusTeamCount(int teamSeq) { teamDao.updatePlusTeamCount(teamSeq); }
 }

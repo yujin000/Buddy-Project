@@ -62,4 +62,9 @@
     <update id="updateTeamOwnerSeq">
         update team set team_owner_seq=#{newManagerSeq} where team_owner_seq = #{manageSeq} and team_seq= #{teamSeq}
     </update>
+
+    <!--    새로운 팀원 추가시, 팀 인원수가 1 증가-->
+    <update id="updatePlusTeamCount">
+        update team set team_count = team_count+1 where team_seq = #{teamSeq}
+    </update>
 </mapper>

@@ -38,4 +38,9 @@ public class TeamMemberService {
     public void deleteTeamMember(TeamMemberDTO teamMemberDto){
         teamMemberDao.deleteTeamMember(teamMemberDto);
     }
+
+    // 초대된 팀으로 입장
+    public void enterTeam(TeamMemberDTO teamMemberDto) throws Exception{
+        teamMemberDao.enterTeam(teamMemberDto);
+    }
 }

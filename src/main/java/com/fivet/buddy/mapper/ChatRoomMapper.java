@@ -16,4 +16,8 @@ public interface ChatRoomMapper {
 
     void insertSelfChat(Map<String, String> param);
 
+    String selectChatRoomSeq(Map<String, String> param);
+
+    void updatePlusMemberCount(Map<String, String> param);
+
 }

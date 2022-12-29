@@ -47,4 +47,7 @@ public class TeamDAO {
     public void updateTeamOwnerSeq(Map<String,Integer> param){
         teamMapper.updateTeamOwnerSeq(param);
     }
+
+    //새로운 팀원 추가시, 팀 인원을 +1 증가
+    public void updatePlusTeamCount(int teamSeq) { teamMapper.updatePlusTeamCount(teamSeq);}
 }

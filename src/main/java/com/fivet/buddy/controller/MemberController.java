@@ -296,8 +296,10 @@ public class MemberController {
     // 로그인시 회원이 가입한 팀 목록 출력을 위한 통로
     @RequestMapping("loginIndex")
     public String loginIndex(Model model) {
-        List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
-        model.addAttribute("teamDtoList", teamDtoList);
+        if (session.getAttribute("memberSeq")!=null) {
+            List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
+            model.addAttribute("teamDtoList", teamDtoList);
+        }
         return "index";
     }
 

@@ -1,9 +1,7 @@
 package com.fivet.buddy.services;
 
 import com.fivet.buddy.dao.InviteDAO;
-import com.fivet.buddy.dao.TeamMemberDAO;
 import com.fivet.buddy.dto.InviteDTO;
-import com.fivet.buddy.dto.TeamMemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +10,6 @@ public class InviteService {
 
     @Autowired
     private InviteDAO inviteDao;
-
-    @Autowired
-    private TeamMemberDAO teamMemberDao;
 
     // invite 테이블에 코드 존재 여부 체크
     public boolean codeCheck(String inviteCode) throws Exception{
@@ -29,11 +24,6 @@ public class InviteService {
     // 사용자 코드 일치 >> 사용한 초대 코드 delete
     public void codeDelete(String inviteCode) throws Exception{
         inviteDao.codeDelete(inviteCode);
-    }
-
-    // 초대된 팀으로 입장
-    public void enterTeam(TeamMemberDTO teamMemberDto) throws Exception{
-        teamMemberDao.enterTeam(teamMemberDto);
     }
 
     // 코드에 맞는 팀 seq 검색

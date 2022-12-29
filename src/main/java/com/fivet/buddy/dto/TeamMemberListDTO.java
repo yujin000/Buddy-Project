@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.sql.Timestamp;
 
+//팀에서 팀 회원 목록을 출력하기 위한 DTO
 @Getter
 @Setter
 @NoArgsConstructor

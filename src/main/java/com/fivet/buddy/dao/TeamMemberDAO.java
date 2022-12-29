@@ -24,12 +24,12 @@ public class TeamMemberDAO {
         teamMemberMapper.enterTeam(teamMemberDto);
     }
 
-    // 회원 번호를 이용하여 팀 DTO값을 불러옴.
+    //회원 번호를 이용하여 해당 팀 관련 회원정보 출력.
     public TeamMemberDTO selectOne(TeamMemberDTO teamMemberDto) {
         return teamMemberMapper.selectOne(teamMemberDto);
     }
 
-    // 채팅방 참여자 목록을 출력.
+    // 기본채팅방 참여자 목록을 출력.
     public List<TeamMemberDTO> selectChatMember(int chatRooMSeq) {
         return teamMemberMapper.selectChatMember(chatRooMSeq);
     }

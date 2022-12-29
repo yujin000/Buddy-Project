@@ -194,7 +194,17 @@ public class MemberController {
         MemberDTO dto = memberService.selectMyInfo(memberSeq);
         model.addAttribute("userInfo",dto);
         List <TeamDTO> teamDtoList = teamService.selectMemberTeam(dto.getMemberSeq());
+        
+        //부매니저인 멤버 출력 (부매니저일때도 팀 관리 들어갈 수 있게)
         String SubManagerMember = teamMemberService.selectSubManagerMember((int) session.getAttribute("memberSeq"));
+        //프로필 이미지 출력
+        String ifSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
+        if(ifSysName.equals("/static/img/defaultProfileImg.png")){
+            model.addAttribute("memberImg",ifSysName);
+        }else{
+            String elseSysName = "/member/selectProfileImg/"+ifSysName;
+            model.addAttribute("memberImg",elseSysName);
+        }
         model.addAttribute("teamDtoList", teamDtoList);
         model.addAttribute("SubManagerMember",SubManagerMember);
         return memberIndex;
@@ -244,8 +254,8 @@ public class MemberController {
         if(ifSysName.equals("/static/img/defaultProfileImg.png")){
             return ifSysName;
         }else{
-            String imgSysName = "/member/selectProfileImg/"+ifSysName;
-            return imgSysName;
+            String elseSysName = "/member/selectProfileImg/"+ifSysName;
+            return elseSysName;
         }
     }
 
@@ -299,11 +309,21 @@ public class MemberController {
 
     // 로그인시 회원이 가입한 팀 목록 출력을 위한 통로
     @RequestMapping("loginIndex")
-    public String loginIndex(Model model) {
+    public String loginIndex(Model model) throws Exception {
         if (session.getAttribute("memberSeq")!=null) {
             List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
             //부매니저인 멤버 출력 (부매니저일때도 팀 관리 들어갈 수 있게)
             String SubManagerMember = teamMemberService.selectSubManagerMember((int) session.getAttribute("memberSeq"));
+
+            //프로필 이미지 출력
+            String ifSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
+            if(ifSysName.equals("/static/img/defaultProfileImg.png")){
+                model.addAttribute("memberImg",ifSysName);
+            }else{
+                String elseSysName = "/member/selectProfileImg/"+ifSysName;
+                model.addAttribute("memberImg",elseSysName);
+            }
+
             model.addAttribute("SubManagerMember",SubManagerMember);
             model.addAttribute("teamDtoList", teamDtoList);
         }

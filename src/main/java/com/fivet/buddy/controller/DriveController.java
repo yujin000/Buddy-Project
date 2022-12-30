@@ -37,6 +37,9 @@ public class DriveController {
     private PersonalFileService personalFileService;
 
     @Autowired
+    private BasicFolderService basicFolderService;
+
+    @Autowired
     private MemberService memberService;
 
     @Autowired
@@ -68,7 +71,9 @@ public class DriveController {
         model.addAttribute("myFiles", myFiles);
         // 타이틀(현재 폴더 이름) 뽑기
         model.addAttribute("nowFolder", personalFolderService.nowFolder(personalFolderService.myBasicFolder(memberSeq)));
-        // 공유폴더 정보
+        // 전체 사용 용량
+        long myVolume = basicFolderService.myVolume(memberSeq);
+        model.addAttribute("myVolume",myVolume);
 
         return "drive/fileDrive";
     }
@@ -83,9 +88,7 @@ public class DriveController {
         String ownerName = memberService.getOwnerName(checkOwner.getPersonalFolderMemberSeq());
 
         if(checkOwner.getPersonalFolderShared().equals("N") && memberSeq != checkOwner.getPersonalFolderMemberSeq()) {
-            return "redirect:/drive/toFileDrive?accessRights="+"false";
-        }else{
-            System.out.println("dd");
+            return "redirect:/drive/toFileDrive?accessRights=false";
         }
 
         if(memberSeq != checkOwner.getPersonalFolderMemberSeq()){
@@ -108,6 +111,10 @@ public class DriveController {
         model.addAttribute("childFolders", childFolders);
         model.addAttribute("childFiles", childFiles);
 
+        // 전체 사용 용량
+        long myVolume = basicFolderService.myVolume(memberSeq);
+        model.addAttribute("myVolume",myVolume);
+
         // 타이틀(현재 폴더 이름) 뽑기
         model.addAttribute("nowFolder", personalFolderService.nowFolder(resourceKey));
         return "drive/detailDrive";
@@ -129,6 +136,7 @@ public class DriveController {
             String type = map.get("type");
             String key = map.get("key");
             String name = map.get("name");
+            String folderKey = map.get("folder");
 
             if (type.equals("folder")) {
                 Map<String, String> folder = new HashMap<>();
@@ -140,6 +148,8 @@ public class DriveController {
                 Map<String, String> file = new HashMap<>();
                 file.put("key", key);
                 file.put("name", name);
+                file.put("folderKey",folderKey);
+                file.put("memberSeq",session.getAttribute("memberSeq").toString());
                 files.add(file);
                 fileDelete = true;
             }
@@ -211,4 +221,5 @@ public class DriveController {
         personalFolderService.accessStatus(access,key);
         return null;
     }
+
 }

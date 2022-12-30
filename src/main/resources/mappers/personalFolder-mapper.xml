@@ -29,7 +29,7 @@
         insert into
             personal_folder
         values
-            (#{personalFolderKey}, #{personalFolderName}, #{personalFolderMemberSeq},#{personalFolderParentKey},#{personalFolderPath},sysdate)
+            (#{personalFolderKey}, #{personalFolderName}, #{personalFolderMemberSeq},#{personalFolderParentKey},#{personalFolderPath},sysdate,'N',0)
     </insert>
 
     <!-- 폴더 존재 유무 체크 -->
@@ -47,7 +47,7 @@
         insert into
             personal_folder
         values
-            (#{newKey}, #{memberName}, #{memberSeq}, #{basicFolderKey}, #{path}, sysdate)
+            (#{newKey}, #{memberName}, #{memberSeq}, #{basicFolderKey}, #{path}, sysdate,'N')
     </insert>
 
     <!-- 부모폴더 경로 찾기-->
@@ -119,17 +119,64 @@
             personal_folder_key = #{value}
     </select>
 
-    <!-- 하위 폴더들 찾기 -->
-    <select id="folderChildFolders" resultMap="selectMapFolder">
+    <!-- 폴더 경로로 폴더들 삭제 -->
+    <delete id="deleteFolderByPath">
+        delete
+            from personal_folder
+        where
+            personal_folder_path like '%'||#{value}||'%'
+    </delete>
+
+    <!-- 폴더 경로에 있는 모든 byte 추출 -->
+
+
+    <!-- 하위 폴더들이 있는지 확인 -->
+    <select id="subIsExist" resultType="boolean">
         select
-            personal_folder_key
+            case when count(*) >= 1 then 1 else 0 end
         from
             personal_folder
         where
             personal_folder_parent_key = #{value}
     </select>
-    <resultMap id="selectMapFolder" type="map">
-        <result column="personal_folder_key" property="key" />
-    </resultMap>
 
+    <!-- 폴더 소유자/공유 여부 확인 -->
+    <select id="getFolderOwner" resultType="com.fivet.buddy.dto.PersonalFolderDTO">
+        select
+            *
+        from
+            personal_folder
+        where
+            personal_folder_key = #{value}
+    </select>
+
+    <!-- 접근 권한 -->
+    <update id="accessStatus">
+        update
+            personal_folder
+        set
+            personal_folder_shared = #{access}
+        where
+            personal_folder_key = #{key}
+    </update>
+
+    <!-- 파일 업로드 시 byte추가 -->
+    <update id="updateMyFolderByte">
+        update
+            personal_folder
+        set
+            personal_folder_byte = personal_folder_byte + #{fileSize}
+        where
+            personal_folder_key = #{key}
+    </update>
+
+    <!-- 내 폴더 정보 가져오기 -->
+    <select id="myFolderInfo" resultType="com.fivet.buddy.dto.PersonalFolderDTO">
+        select
+            *
+        from
+            personal_folder
+        where
+            personal_folder_key = #{value}
+    </select>
 </mapper>

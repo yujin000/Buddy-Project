@@ -117,4 +117,8 @@ public class MemberDAO {
     public void memberKickOut(int memberSeq) throws Exception{
         memberMapper.memberKickOut(memberSeq);
     }
+    // 폴더 소유자 이름
+    public String getOwnerName(int checkOwner) {
+        return memberMapper.getOwnerName(checkOwner);
+    }
 }

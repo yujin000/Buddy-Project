@@ -9,7 +9,7 @@
         insert into
             personal_files
         values
-            (#{personalFilesKey}, #{personalFilesOriname}, #{personalFilesSysname}, #{personalFilesMemberSeq}, #{personalFilesFolderKey})
+            (#{personalFilesKey}, #{personalFilesOriname}, #{personalFilesSysname}, #{personalFilesMemberSeq}, #{personalFilesFolderKey}, #{personalFilesPath}, #{personalFilesByte},sysdate)
     </insert>
 
     <!-- 내 폴더 불러오기 -->
@@ -61,17 +61,49 @@
             personal_folder_key = #{value}
     </select>
 
-    <!-- 선택한 폴더의 하위 파일들 선택 -->
-    <select id="folderChildFiles" resultMap="selectMapFile">
+    <!-- 경로로 삭제 -->
+    <delete id="deleteByPath">
+        delete from
+            personal_files
+        where
+            personal_files_path like '%'||#{value}||'%'
+    </delete>
+
+    <!-- 파일 다운로드 경로  -->
+    <select id="getFilePath" resultMap="selectMapFile">
         select
-            personal_files_key
+            personal_files_path,personal_files_sysname, personal_files_oriname
         from
             personal_files
         where
-            personal_files_folder_key = #{value}
+            personal_files_key in
+        <foreach collection="list" item="list" open="(" separator="," close=")">
+            #{list.key}
+        </foreach>
     </select>
     <resultMap id="selectMapFile" type="map">
-        <result column="personal_files_key" property="key" />
+        <result column="personal_files_path" property="path" />
+        <result column="personal_files_sysname" property="sysName" />
+        <result column="personal_files_oriname" property="oriName" />
     </resultMap>
 
+    <!-- oriName -->
+    <select id="thisOriName" resultType="String">
+        select
+            personal_files_oriname
+        from
+            personal_files
+        where
+            personal_files_key = #{value}
+    </select>
+
+    <!-- 파일 정보 -->
+    <select id="myFileInfo" resultType="com.fivet.buddy.dto.PersonalFileDTO">
+        select
+            *
+        from
+            personal_files
+        where
+            personal_files_key = #{value}
+    </select>
 </mapper>

@@ -4,6 +4,7 @@ import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.PersonalFolderDTO;
 import org.apache.ibatis.annotations.Mapper;
 
+import javax.mail.Folder;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -29,5 +30,15 @@ public interface PersonalFolderMapper {
 
     String myPath(String key);
 
-    List<Map<String, String>> folderChildFolders(String key);
+    void deleteFolderByPath(String path);
+
+    boolean subIsExist(String folderKey);
+
+    PersonalFolderDTO getFolderOwner(String resourceKey);
+
+    void accessStatus(Map<String,String> map);
+
+    void updateMyFolderByte(Map<String, Object> map);
+
+    PersonalFolderDTO myFolderInfo(String key);
 }

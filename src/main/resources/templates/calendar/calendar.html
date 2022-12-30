@@ -201,7 +201,7 @@
                                     });
 
                                 })
-
+                                console.log(events);
                                 successCallback(events);
                             }
                             ,error: function (request, status,error ){
@@ -210,20 +210,20 @@
 
                         });
 
-                    }
+                    },
+
                     // other events here
-
-
+                    // document.ready 동작테스트
                 }
             );
+
+
             //캘린더 렌더링 함수 호출
             calendar.render();
         });
 
     </script>
-    <style>
 
-    </style>
     <link rel="stylesheet" href="/static/css/calendar.css">
     <title>캘린더 테스트</title>
 </head>
@@ -231,10 +231,10 @@
 <div class="header">
     캘린더
     <div class="headerBtns">
-        <button onclick="" class="calType">
+        <button onclick="location.href='/calendar/selectAll'" class="calType" id="goTeam">
             팀
         </button>
-        <button onclick="" class="calType">
+        <button onclick="" class="calType" id="goPrivate">
             개인
         </button>
         <button class="plusBtn" style="display: none">+</button>
@@ -301,7 +301,7 @@
         $("#formToggle").click(function (){
             $("#form").toggle();
             $(".btns").toggle();
-        })
+        });
 
     })
 

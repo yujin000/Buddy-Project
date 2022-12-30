@@ -29,7 +29,7 @@
         insert into
             personal_folder
         values
-            (#{personalFolderKey}, #{personalFolderName}, #{personalFolderMemberSeq},#{personalFolderParentKey},#{personalFolderPath},sysdate,'N')
+            (#{personalFolderKey}, #{personalFolderName}, #{personalFolderMemberSeq},#{personalFolderParentKey},#{personalFolderPath},sysdate,'N',0)
     </insert>
 
     <!-- 폴더 존재 유무 체크 -->
@@ -127,9 +127,8 @@
             personal_folder_path like '%'||#{value}||'%'
     </delete>
 
-    <!-- 파일 공유 Y -->
+    <!-- 폴더 경로에 있는 모든 byte 추출 -->
 
-    <!-- 파일 공유 N -->
 
     <!-- 하위 폴더들이 있는지 확인 -->
     <select id="subIsExist" resultType="boolean">
@@ -160,4 +159,24 @@
         where
             personal_folder_key = #{key}
     </update>
+
+    <!-- 파일 업로드 시 byte추가 -->
+    <update id="updateMyFolderByte">
+        update
+            personal_folder
+        set
+            personal_folder_byte = personal_folder_byte + #{fileSize}
+        where
+            personal_folder_key = #{key}
+    </update>
+
+    <!-- 내 폴더 정보 가져오기 -->
+    <select id="myFolderInfo" resultType="com.fivet.buddy.dto.PersonalFolderDTO">
+        select
+            *
+        from
+            personal_folder
+        where
+            personal_folder_key = #{value}
+    </select>
 </mapper>

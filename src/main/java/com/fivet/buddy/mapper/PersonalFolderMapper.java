@@ -37,4 +37,8 @@ public interface PersonalFolderMapper {
     PersonalFolderDTO getFolderOwner(String resourceKey);
 
     void accessStatus(Map<String,String> map);
+
+    void updateMyFolderByte(Map<String, Object> map);
+
+    PersonalFolderDTO myFolderInfo(String key);
 }

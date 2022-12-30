@@ -84,4 +84,14 @@ public class PersonalFolderDAO {
     public void accessStatus(Map<String,String> map) {
         personalFolderMapper.accessStatus(map);
     }
+
+    // personal_folder 테이블에 update
+    public void updateMyFolderByte(Map<String, Object> map) {
+        personalFolderMapper.updateMyFolderByte(map);
+    }
+
+    // 폴더 정보 가져오기
+    public PersonalFolderDTO myFolderInfo(String key) {
+        return personalFolderMapper.myFolderInfo(key);
+    }
 }

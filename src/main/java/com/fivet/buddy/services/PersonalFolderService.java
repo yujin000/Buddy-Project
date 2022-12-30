@@ -145,6 +145,19 @@ public class PersonalFolderService {
         map.put("key",key);
         personalFolderDao.accessStatus(map);
     }
+
+    // personal_folder 테이블에 update
+    public void updateMyFolderByte(String attachFolder, long fileSize) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("key",attachFolder);
+        map.put("fileSize",fileSize);
+        personalFolderDao.updateMyFolderByte(map);
+    }
+
+    // 폴더 정보 가져오기
+    public PersonalFolderDTO myFolderInfo(String key) {
+        return personalFolderDao.myFolderInfo(key);
+    }
 }
 
 

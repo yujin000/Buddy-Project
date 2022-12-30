@@ -20,8 +20,8 @@ public class CalService {
         return calDao.selectAll(teamSeq);
     }
 
-    public void deleteEvent(int eventSeq) throws Exception{
-        calDao.deleteEvent(eventSeq);
+    public void deleteEvent(CalDTO calDto) throws Exception{
+        calDao.deleteEvent(calDto);
         }
 
         public void updateEvent(CalDTO calDto) throws Exception{

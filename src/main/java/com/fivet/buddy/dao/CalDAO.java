@@ -20,8 +20,8 @@ public class CalDAO {
         return calMapper.selectAll(teamSeq);
     }
 
-    public void deleteEvent(int eventSeq) throws Exception{
-        calMapper.deleteEvent(eventSeq);
+    public void deleteEvent(CalDTO calDto) throws Exception{
+        calMapper.deleteEvent(calDto);
     }
 
     public  void updateEvent(CalDTO calDto) throws  Exception {

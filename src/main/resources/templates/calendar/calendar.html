@@ -73,14 +73,10 @@
                         $("#submitBtn").css("display","none");
                         $("#eventWriter").attr("type","text");
 
-                        //
-                        // if (type === "team"){
-                        //     $("#eventColor").val("purple");
-                        //     $("#eventColor").css("background-color","purple");
-                        // }else {
-                        //     $("#eventColor").val(color);
-                        //     $("#eventColor").css("background-color",color);
-                        // }
+
+                        if (type === "team"){
+                            $("#eventColor").attr("readonly",true);
+                        }
                         $("#eventType").val(type);
                         $("#eventSeq").val(seq);
                         $("#eventName").val(title);

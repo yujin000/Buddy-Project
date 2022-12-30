@@ -61,8 +61,9 @@ public class CalController {
     }
 
     @RequestMapping("deleteEvent")
-    public String deleteEvent(int eventSeq) throws Exception{
-        calService.deleteEvent(eventSeq);
+    public String deleteEvent(CalDTO calDto) throws Exception{
+        calDto.setEventWriter((String) session.getAttribute("teamMemberNickname"));
+        calService.deleteEvent(calDto);
         return "redirect:/calendar/moveCalendar";
     }
 

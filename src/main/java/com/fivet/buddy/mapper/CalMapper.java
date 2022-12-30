@@ -13,7 +13,7 @@ public interface CalMapper {
 
     List<CalDTO> selectAll(int teamSeq);
 
-    void deleteEvent(int eventSeq);
+    void deleteEvent(CalDTO calDto);
 
     void updateEvent(CalDTO calDto);
 }

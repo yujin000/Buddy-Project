@@ -88,6 +88,14 @@
           </form>
                       <button type="button" id="cancel">취소하기</button>
           <hr />
+
+          <th:block th:if="${emoticonDto!=null}">
+            <th:block th:each="emoticonDto : ${emoticonDto}">
+              th:text=[[${emoticonDto.emoticonSeq}]]
+              th:text=[[${emoticonDto.emoticonSysName}]]
+            <img th:src="'/emoticon/'+${emoticonDto.getEmoticonSysName()}" alt="" class="myImg" />
+          </th:block>
+          </th:block>
           <div class="listNum">
             <a href=""><</a>
             <span>1</span>
@@ -128,7 +136,7 @@
         }
 
         let ext = $("#updateEmoticon").val().split('.').pop().toLowerCase();
-        if ($.inArray(ext, ['jpg', 'jpeg', 'png']) == -1) {
+        if ($.inArray(ext, ['jpg', 'jpeg', 'png','gif']) == -1) {
           alert("확장자는 jpg, png, jpeg만 가능합니다.");
           e.target.value = '';
           return;

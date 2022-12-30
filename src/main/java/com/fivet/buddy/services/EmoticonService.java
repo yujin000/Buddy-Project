@@ -5,6 +5,8 @@ import com.fivet.buddy.dto.EmoticonDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmoticonService {
     @Autowired
@@ -12,5 +14,9 @@ public class EmoticonService {
 
     public void insertEmoticon(EmoticonDTO emoticonDto) throws Exception{
         emoticonDAO.insertEmoticon(emoticonDto);
+    }
+
+    public List<EmoticonDTO> selectEmoticon() throws Exception{
+        return emoticonDAO.selectEmoticon();
     }
 }

@@ -16,7 +16,7 @@ public class FileHandler implements WebMvcConfigurer{
     @Value("${notice.root.path}")
     String noticePath;
 
-    @Value("file:///C:/files/emoticon/")
+    @Value("${emoticon.root.path}")
     String emoticonPath;
 
     @Override

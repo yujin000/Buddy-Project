@@ -77,7 +77,7 @@
     </delete>
 
     <!--부매니저인 멤버 출력 (부매니저일때도 팀 관리 들어갈 수 있게) -->
-    <select id="selectSubManagerMember" resultType="String">
-        select t.grade from team_member t inner join member m on m.member_seq=t.member_seq where t.member_seq= #{value}
+    <select id="selectSubManagerMember" resultType="int">
+        select count(t.grade) from team_member t inner join member m on m.member_seq=t.member_seq where t.member_seq= #{value} and t.grade='부매니저'
     </select>
 </mapper>

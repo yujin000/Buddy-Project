@@ -18,8 +18,11 @@ public class NoticeBoardDAO {
         return noticeBoardMapper.selectNotice();
     }
 
-    // 공지 글쓰기
+    // 공지글 쓰기
     public void insertNotice(NoticeBoardDTO noticeBoardDto) {
         noticeBoardMapper.insertNotice(noticeBoardDto);
     }
+
+    // 공지글 삭제
+    public void deleteNotice(int noticeBoardSeq) { noticeBoardMapper.deleteNotice(noticeBoardSeq); }
 }

@@ -23,4 +23,9 @@ public class NoticeBoardService {
         noticeBoardDao.insertNotice(noticeBoardDto);
     }
 
+    // 공지글 삭제
+    public void deleteNotice(int noticeBoardSeq) {
+        noticeBoardDao.deleteNotice(noticeBoardSeq);
+    }
+
 }

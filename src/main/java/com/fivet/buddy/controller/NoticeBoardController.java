@@ -1,6 +1,9 @@
 package com.fivet.buddy.controller;
 
+import com.fivet.buddy.dao.NoticeBoardDAO;
+import com.fivet.buddy.dto.NoticeBoardDTO;
 import com.fivet.buddy.dto.NoticeFileDTO;
+import com.fivet.buddy.services.NoticeBoardService;
 import com.fivet.buddy.services.NoticeFileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,10 @@ public class NoticeBoardController {
     @Autowired
     private NoticeFileService noticeFileService;
 
+    @Autowired
+    private NoticeBoardService noticeBoardService;
+
+    //공지글 보기(회원)
     @ResponseBody
     @RequestMapping("detail")
     public List<Map<String,String>> selectDetail(int noticeSeq) throws Exception{
@@ -32,7 +39,6 @@ public class NoticeBoardController {
             Map<String, String> map = new HashMap<>();
             map.put("noticeOriName" , noticeFileDto.get(i).getNoticeOriname());
             map.put("noticeSysName", noticeFileDto.get(i).getNoticeSysname());
-            //System.out.println(map.get("noticeSysName"));
             list.add(map);
         }
         return list;
@@ -42,7 +48,7 @@ public class NoticeBoardController {
     @RequestMapping("toAdminNotice")
     public String toAdminNotice() {
         if (session.getAttribute("memberLogtype").equals("admin")) {
-            return "admin/adminNotice";
+            return "/admin/adminNotice";
         } else {
             return "error";
         }
@@ -52,9 +58,16 @@ public class NoticeBoardController {
     @RequestMapping("toAdminNoticeWrite")
     public String toAdminNoticeWrite() {
         if (session.getAttribute("memberLogtype").equals("admin")) {
-            return "admin/adminNoticeWrite";
+            return "/admin/adminNoticeWrite";
         } else {
             return "error";
         }
+    }
+
+    //공지사항 글쓰기
+    @RequestMapping("insertNotice")
+    public String insertNotice(NoticeBoardDTO noticeBoardDto) {
+        noticeBoardService.insertNotice(noticeBoardDto);
+        return "/admin/adminNotice";
     }
 }

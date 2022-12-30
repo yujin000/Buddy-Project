@@ -29,10 +29,10 @@ public class QnaBoardController {
     private QnaCommentService qnaCommentService;
 
     @Autowired
-    private NoticeService noticeService;
+    private HttpSession session;
 
     @Autowired
-    private HttpSession session;
+    private NoticeBoardService noticeBoardService;
 
     @Value("${qna.save.path}")
     String qnaPath;
@@ -47,8 +47,8 @@ public class QnaBoardController {
     @RequestMapping("main")
     public String select(Model model) throws Exception {
         int qnaWriter = (int) session.getAttribute("memberSeq");
-        List<NoticeDTO> noticeDto = noticeService.select();
-        List<QnaDTO> qnaDto = qnaBoardService.select(qnaWriter);
+        List<NoticeBoardDTO> noticeDto = noticeBoardService.selectNotice();
+        List<QnaBoardDTO> qnaDto = qnaBoardService.select(qnaWriter);
         model.addAttribute("qna", qnaDto);
         model.addAttribute("notice", noticeDto);
         return "customer/customer";
@@ -56,7 +56,7 @@ public class QnaBoardController {
 
     //Qna글쓰기
     @RequestMapping("insert")
-    public String insert(@RequestParam MultipartFile[] uploadfile, Model model, QnaDTO qnaDto, QnaFileDTO qnaFileDto, FileUtil util) throws Exception {
+    public String insert(@RequestParam MultipartFile[] uploadfile, Model model, QnaBoardDTO qnaDto, QnaFileDTO qnaFileDto, FileUtil util) throws Exception {
         qnaDto.setQnaWriter((int) session.getAttribute("memberSeq"));
         System.out.println(uploadfile[0]);
         if (uploadfile[0].isEmpty()) {
@@ -86,7 +86,6 @@ public class QnaBoardController {
     @ResponseBody
     @PostMapping(value = "detail")
     public List<Map<String, String>> selectDetail(int qnaSeq) throws Exception {
-        System.out.println(qnaSeq);
         List<QnaFileDTO> qnaFileDto = qnaFileService.selectFile(qnaSeq);
         List<QnaCommentDTO> qnaCommentDto = qnaCommentService.selectComment(qnaSeq);
         List<Map<String, String>> list = new ArrayList<>();
@@ -124,6 +123,7 @@ public class QnaBoardController {
         return "redirect:/";
     }
 
+    //Qna 이미지 다운로드
     @RequestMapping("download")
     public ResponseEntity<Resource> download(FileUtil util, String sysName, String oriName) throws Exception {
         return util.download(qnaPath, sysName, oriName);
@@ -133,13 +133,20 @@ public class QnaBoardController {
     @RequestMapping("toAdminQna")
     public String toAdminQna(Model model) {
         if (session.getAttribute("memberLogtype").equals("admin")) {
-            List<QnaDTO> QnaList = qnaBoardService.selectQnaBoardAll();
+            List<QnaBoardDTO> QnaList = qnaBoardService.selectQnaBoardAll();
             model.addAttribute("qnaList", QnaList);
             return "/admin/adminQna";
         } else {
             return "error";
         }
     }
+
+    //관리자 페이지에서 1:1문의 본문 보기.
+    @RequestMapping("adminQnaDetail")
+    public String adminQnaDetail(QnaBoardDTO qnaBoardDTO, Model model) {
+        return "/admin/adminQnaDetail";
+    }
+
 
 
 }

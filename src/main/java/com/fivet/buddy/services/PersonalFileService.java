@@ -8,6 +8,7 @@ import com.fivet.buddy.util.RandomKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class PersonalFileService {
     private BasicFolderDAO basicFolderDao;
 
     // 파일첨부
-    public void uploadFile(String oriName, String sysName,String attachFolder,int memberSeq) throws Exception{
+    public void uploadFile(String oriName, String sysName, String attachFolder, int memberSeq, String filePath, long fileSize) throws Exception{
         PersonalFileDTO personalFileDto = new PersonalFileDTO();
 
         personalFileDto.setPersonalFilesMemberSeq(memberSeq);
@@ -33,6 +34,8 @@ public class PersonalFileService {
         personalFileDto.setPersonalFilesSysname(sysName);
         personalFileDto.setPersonalFilesFolderKey(attachFolder);
         personalFileDto.setPersonalFilesKey(randomKeyUtil.folderKey());
+        personalFileDto.setPersonalFilesPath(filePath);
+        personalFileDto.setPersonalFilesByte(fileSize);
         personalFileDao.uploadFile(personalFileDto);
     }
 
@@ -54,14 +57,38 @@ public class PersonalFileService {
     public void deleteFile(List<Map<String, String>> files, String parentKey) throws Exception {
         FileUtil fileUtil = new FileUtil();
 
+        // 삭제 보낼 Map
+        Map<String,String> sendMap = new HashMap<>();
         // 경로 불러오기
         String path = personalFileDao.myPath(parentKey);
         // 실제 경로에서 삭제
         for(Map<String, String> map : files){
             String name = map.get("name");
+            sendMap.put("key",map.get("folderKey"));
+            sendMap.put("memberSeq",map.get("memberSeq"));
             fileUtil.delete(path,name);
         }
 
+        basicFolderDao.deleteFileByte(sendMap);
         personalFileDao.deleteFile(files);
+    }
+
+    public List<Map<String, String>> getFilePath(List<Map<String, String>> files) {
+        return personalFileDao.getFilePath(files);
+    }
+
+    // oriName
+    public String thisOriName(String key) {
+        return personalFileDao.thisOriName(key);
+    }
+
+    // 폴더 경로 찾기
+    public String searchPath(String key) {
+        return personalFileDao.searchPath(key);
+    }
+
+    // 파일 정보 불러오기
+    public PersonalFileDTO myFileInfo(String key) {
+        return personalFileDao.myFileInfo(key);
     }
 }

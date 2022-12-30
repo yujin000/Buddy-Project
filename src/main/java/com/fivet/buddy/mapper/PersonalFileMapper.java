@@ -4,6 +4,7 @@ import com.fivet.buddy.dto.PersonalFileDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -19,5 +20,13 @@ public interface PersonalFileMapper {
 
     String myPath(String parentKey);
 
-    List<Map<String,String>> folderChildFiles(String key);
+    void deleteByPath(String path);
+
+    List<Map<String, String>> getFilePath(List<Map<String, String>> files);
+
+    String thisOriName(String key);
+
+    String searchPath(String key);
+
+    PersonalFileDTO myFileInfo(String key);
 }

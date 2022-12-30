@@ -194,19 +194,23 @@ public class MemberController {
         MemberDTO dto = memberService.selectMyInfo(memberSeq);
         model.addAttribute("userInfo",dto);
         List <TeamDTO> teamDtoList = teamService.selectMemberTeam(dto.getMemberSeq());
-        
+
         //부매니저인 멤버 출력 (부매니저일때도 팀 관리 들어갈 수 있게)
-        String SubManagerMember = teamMemberService.selectSubManagerMember((int) session.getAttribute("memberSeq"));
+        int SubManagerMember = teamMemberService.selectSubManagerMember((Integer) session.getAttribute("memberSeq"));
+        if(SubManagerMember>0){
+            model.addAttribute("SubManagerMember",SubManagerMember);
+        }
         //프로필 이미지 출력
         String ifSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
-        if(ifSysName.equals("/static/img/defaultProfileImg.png")){
-            model.addAttribute("memberImg",ifSysName);
-        }else{
-            String elseSysName = "/member/selectProfileImg/"+ifSysName;
-            model.addAttribute("memberImg",elseSysName);
+        if(ifSysName!=null) {
+            if (ifSysName.equals("/static/img/defaultProfileImg.png")) {
+                model.addAttribute("memberImg", ifSysName);
+            } else {
+                String elseSysName = "/member/selectProfileImg/" + ifSysName;
+                model.addAttribute("memberImg", elseSysName);
+            }
         }
         model.addAttribute("teamDtoList", teamDtoList);
-        model.addAttribute("SubManagerMember",SubManagerMember);
         return memberIndex;
     }
 
@@ -251,6 +255,9 @@ public class MemberController {
     @RequestMapping("selectProfileImg")
     public String selectProfileImg() throws Exception{
         String ifSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
+        if(ifSysName==null) {
+            return null;
+        }
         if(ifSysName.equals("/static/img/defaultProfileImg.png")){
             return ifSysName;
         }else{
@@ -313,18 +320,21 @@ public class MemberController {
         if (session.getAttribute("memberSeq")!=null) {
             List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
             //부매니저인 멤버 출력 (부매니저일때도 팀 관리 들어갈 수 있게)
-            String SubManagerMember = teamMemberService.selectSubManagerMember((int) session.getAttribute("memberSeq"));
+            int SubManagerMember = teamMemberService.selectSubManagerMember((Integer) session.getAttribute("memberSeq"));
+            if(SubManagerMember>0){
+                model.addAttribute("SubManagerMember",SubManagerMember);
+            }
 
             //프로필 이미지 출력
             String ifSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
-            if(ifSysName.equals("/static/img/defaultProfileImg.png")){
-                model.addAttribute("memberImg",ifSysName);
-            }else{
-                String elseSysName = "/member/selectProfileImg/"+ifSysName;
-                model.addAttribute("memberImg",elseSysName);
+            if(ifSysName!=null) {
+                if (ifSysName.equals("/static/img/defaultProfileImg.png")) {
+                    model.addAttribute("memberImg", ifSysName);
+                } else {
+                    String elseSysName = "/member/selectProfileImg/" + ifSysName;
+                    model.addAttribute("memberImg", elseSysName);
+                }
             }
-
-            model.addAttribute("SubManagerMember",SubManagerMember);
             model.addAttribute("teamDtoList", teamDtoList);
         }
         return "index";

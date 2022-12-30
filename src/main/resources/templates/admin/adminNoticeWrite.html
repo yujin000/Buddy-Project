@@ -31,7 +31,7 @@
   </h1>
   <button><a href="../index.html">뒤로가기</a></button>
 </div>
-<form action="/admin/insertAdminNotice" id="form" method="post">
+<form action="/notice/insertNotice" id="form" method="post">
   <div id="title">
     <input type="text" placeholder="제목을 입력하세요." name="noticeTitle" id="noticeTitle">
   </div>
@@ -55,11 +55,11 @@
       ['table', ['table']],
       ['insert', ['link', 'picture']],
       ['view', ['fullscreen', 'codeview', 'help']]
-    ]
+    ],
   });
 
   $("#toAdminNotice").on("click",function (){
-    location.href = "/admin/toAdminNotice";
+    location.href = "/notice/toAdminNotice";
   })
   $("#insertAdminNotice").on("click", function (){
     if ($("#noticeTitle").val()==0) {

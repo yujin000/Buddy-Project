@@ -1,14 +1,14 @@
 package com.fivet.buddy.services;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import com.fivet.buddy.dao.BasicFolderDAO;
 import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.util.RandomKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -34,4 +34,17 @@ public class BasicFolderService {
         basicFolderDao.newBasicFolder(map);
     };
 
+    // 파일업로드
+    public void uploadByte(int memberSeq,long fileSize) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("memberSeq",memberSeq);
+        map.put("fileSize",fileSize);
+
+        basicFolderDao.uploadByte(map);
+    }
+
+    // 내 현재 용량
+    public long myVolume(int memberSeq) {
+        return basicFolderDao.myVolume(memberSeq);
+    }
 }

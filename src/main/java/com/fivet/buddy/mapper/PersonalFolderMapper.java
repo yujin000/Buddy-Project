@@ -41,4 +41,12 @@ public interface PersonalFolderMapper {
     void updateMyFolderByte(Map<String, Object> map);
 
     PersonalFolderDTO myFolderInfo(String key);
+
+    void memberOut(int memberSeq);
+
+    long getMyByte(String key);
+
+    void deleteFileByte(Map<String, String> sendMap);
+
+    String myBasicPath(String key);
 }

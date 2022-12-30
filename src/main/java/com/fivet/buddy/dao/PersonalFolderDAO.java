@@ -94,4 +94,24 @@ public class PersonalFolderDAO {
     public PersonalFolderDTO myFolderInfo(String key) {
         return personalFolderMapper.myFolderInfo(key);
     }
+
+    // 폴더 삭제 하기
+    public void memberOut(int memberSeq) {
+        personalFolderMapper.memberOut(memberSeq);
+    }
+
+    // 삭제하려는 폴더 용량 가져오기
+    public long getMyByte(String key) {
+        return personalFolderMapper.getMyByte(key);
+    }
+
+    // 파일 삭제 시 폴더 용량 제거
+    public void deleteFileByte(Map<String, String> sendMap) {
+        personalFolderMapper.deleteFileByte(sendMap);
+    }
+
+    // 기존 파일 경로
+    public String myBasicPath(String key) {
+        return personalFolderMapper.myBasicPath(key);
+    }
 }

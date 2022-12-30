@@ -306,28 +306,28 @@
         let type = $(this).data("resource-type");
         let key = $(this).data("key");
         let name = $(this).data("name");
+        let folder = $(this).data("folder-key");
 
         list.push({
           type : type
           ,key : key
           ,name : name
+          ,folder : folder
         })
-
-      })
+      });
 
       $.ajax({
-        url : "/drive/delete?parentKey="+parentKey,
-        type : "post",
-        contentType: 'application/json',
-        data : JSON.stringify(list),
-        encoding : "UTF-8"
+        url : "/drive/delete?parentKey="+parentKey
+        ,type : "post"
+        ,contentType: 'application/json'
+        ,data : JSON.stringify(list)
+        ,encoding : "UTF-8"
       }).done(function(){
         location.reload();
-      })
-    }
+      });
+    };
 
-  })
-
+  });
 
   // 다운로드
 
@@ -432,7 +432,7 @@
 <!-- 파일 업로드 버튼 클릭 -->
 <script>
   // MaxVolume
-  const maxVolume = 100 * 1024 * 1024; // 100 MB
+  const maxVolume = 100 * 1000 * 1000; // 100 MB(1024*1024 해야하지만, 1000으로 함)
 
   $("#uploadFile").on('change', attachType);
 
@@ -616,22 +616,6 @@
   })
 
 </script>
-<!-- 데이터 사용량 -->
-<script>
-  //MaxVolume
-  const maxVolume = 100 * 1024 * 1024; // 100 MB
-
-  $(function(){
-    const myVolume = $('#myVolume').data('volume').toString();
-    const divide = (myVolume / 1000000).toString();
-    const volumeLength = divide.slice(0,4);
-    const result = volumeLength + ' MB / 100.00 MB';
-    const volumeBar = $('#volumeBar');
-
-    volumeBar.css("width",volumeLength*2);
-    $('#myVolume').html(result);
-  })
-</script>
 
 <!-- 데이터 사용량 -->
 <script>
@@ -683,7 +667,6 @@
         ,method: 'POST'
         ,data:{key:thisKey}
       }).done(function (rsp){
-        console.log(rsp);
         let divideByte = rsp.personalFilesByte / 1000000;
         let toMegaByte = divideByte.toString().slice(0,3) + ' MB';
         let date = rsp.personalFilesDate.toString().slice(0,10);

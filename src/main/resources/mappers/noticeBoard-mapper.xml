@@ -13,4 +13,9 @@
     <insert id="insertNotice">
         insert into notice_board values(notice_seq.nextval, #{noticeWriter}, #{noticeTitle}, #{noticeContents}, sysdate)
     </insert>
+
+    <!--    공지글 삭제-->
+    <delete id="deleteNotice">
+        delete from notice_board where notice_seq = #{value}
+    </delete>
 </mapper>

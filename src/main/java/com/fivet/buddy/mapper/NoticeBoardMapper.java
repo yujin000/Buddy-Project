@@ -11,4 +11,6 @@ public interface NoticeBoardMapper {
     List<NoticeBoardDTO> selectNotice();
 
     void insertNotice(NoticeBoardDTO noticeBoardDto);
+
+    void deleteNotice(int noticeBoardSeq);
 }

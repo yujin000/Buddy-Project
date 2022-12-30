@@ -9,6 +9,8 @@ import com.fivet.buddy.services.NoticeFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -72,6 +74,13 @@ public class NoticeBoardController {
     public String insertNotice(NoticeBoardDTO noticeBoardDto) {
         noticeBoardDto.setNoticeWriter((int)session.getAttribute("memberSeq"));
         noticeBoardService.insertNotice(noticeBoardDto);
+        return "redirect:/notice/toAdminNotice";
+    }
+
+    //공지사항 삭제
+    @PostMapping("deleteNotice")
+    public String deleteNotice(int noticeBoardSeq) {
+        noticeBoardService.deleteNotice(noticeBoardSeq);
         return "redirect:/notice/toAdminNotice";
     }
 }

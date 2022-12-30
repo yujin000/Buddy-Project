@@ -35,12 +35,16 @@ public class BasicFolderService {
     };
 
     // 파일업로드
-    public void uploadByte(int memberSeq,int fileSize) {
-        Map<String,Integer> map = new HashMap<>();
+    public void uploadByte(int memberSeq,long fileSize) {
+        Map<String,Object> map = new HashMap<>();
         map.put("memberSeq",memberSeq);
         map.put("fileSize",fileSize);
 
         basicFolderDao.uploadByte(map);
     }
 
+    // 내 현재 용량
+    public long myVolume(int memberSeq) {
+        return basicFolderDao.myVolume(memberSeq);
+    }
 }

@@ -25,7 +25,18 @@ public class BasicFolderDAO {
     }
 
     // 파일 업로드
-    public void uploadByte(Map<String,Integer> map) {
+    public void uploadByte(Map<String,Object> map) {
         basicFolderMapper.uploadByte(map);
+    }
+
+    // 사용 용량
+    public long myVolume(int memberSeq) {
+        return basicFolderMapper.myVolume(memberSeq);
+    }
+
+    // 사용 용량 제거
+    public long deleteFileByte(Map<String, String> sendMap) {
+        System.out.println(sendMap);
+        return basicFolderMapper.deleteFileByte(sendMap);
     }
 }

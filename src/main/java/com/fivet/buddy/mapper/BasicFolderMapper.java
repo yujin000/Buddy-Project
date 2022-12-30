@@ -13,5 +13,9 @@ public interface BasicFolderMapper {
 
     String myBasicFolder(int memberSeq);
 
-    void uploadByte(Map<String,Integer> map);
+    void uploadByte(Map<String,Object> map);
+
+    long myVolume(int memberSeq);
+
+    long deleteFileByte(Map<String, String> sendMap);
 }

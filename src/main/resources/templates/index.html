@@ -90,7 +90,7 @@
           </form>
           <form action="/team/goTeamSetting" method="post">
             <input type="hidden" th:value="${teamDtoList.teamSeq}" name="teamSeq">
-          <button id="managementTeam" class="floatBtn" th:if="${teamDtoList.teamOwnerSeq==session.memberSeq || SubManagerMember=='부매니저'}">
+          <button id="managementTeam" class="floatBtn" th:if="${teamDtoList.teamOwnerSeq==session.memberSeq || SubManagerMember>0}">
             팀 관리
           </button>
           </form>

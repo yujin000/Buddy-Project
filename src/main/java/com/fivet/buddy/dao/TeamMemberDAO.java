@@ -56,7 +56,7 @@ public class TeamMemberDAO {
     }
 
     //부매니저인 멤버 출력 (부매니저일때도 팀 관리 들어갈 수 있게)
-    public String selectSubManagerMember(int memberSeq){
+    public int selectSubManagerMember(int memberSeq){
         return teamMemberMapper.selectSubManagerMember(memberSeq);
     }
 }

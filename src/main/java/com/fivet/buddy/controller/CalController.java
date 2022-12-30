@@ -74,14 +74,13 @@ public class CalController {
 
 
     @RequestMapping(value="updateEvent")
-    public String updateEvent(CalDTO calDto ,String eventWriter) throws Exception{
-        String Session = (String) session.getAttribute("teamMemberNickname");
-        boolean result = Objects.equals(eventWriter, Session);
-        if (result){
+    public String updateEvent(CalDTO calDto){
+        try {
             calDto.setEventWriter((String)session.getAttribute("teamMemberNickname"));
             calService.updateEvent(calDto);
             return "redirect:/calendar/moveCalendar";
-        }else {
+        }catch (Exception e){
+            e.printStackTrace();
             return "/calendar/sessionError";
         }
 

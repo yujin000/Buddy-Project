@@ -109,27 +109,55 @@ public class PersonalFolderService {
     public void deleteFolder(List<Map<String, String>> folders) throws Exception{
         FileUtil fileUtil = new FileUtil();
 
-        // 실제 경로에서 폴더 삭제
         for(Map<String, String> map : folders){
             String key = map.get("key");
             String path = personalFolderDao.myPath(key);
-            //fileUtil.deleteFolder(path);
-
+            // 실제 경로에서 폴더 삭제
+            fileUtil.deleteFolder(path);
             // 하위 파일 DB에서 제거
-            //personalFileDao.deleteFile(personalFileDao.folderChildFiles(key));
-
-            // 하위 폴더 찾기
-            List<Map<String,String >> findFolder = personalFolderDao.folderChildFolders(key);
-            for(Map<String, String> map2 : findFolder){
-                String key2 = map2.get("key");
-
-            }
-
+            personalFileDao.deleteByPath(path);
+            // 하위 폴더 DB에서 제거(path로)
+            personalFolderDao.deleteFolderByPath(path);
         }
 
         //personalFolderDao.deleteFolder(folders);
     }
 
+    // 폴더 밑에 하위폴더가 있는지 확인
+    public boolean subIsExist(String folderKey) {
+        return personalFolderDao.subIsExist(folderKey);
+    }
+
+    // 폴더 경로 찾아오기
+    public String myPath(String key) throws Exception{
+        return personalFolderDao.myPath(key);
+    }
+
+    // 폴더 주인 시퀀스
+    public PersonalFolderDTO getFolderOwner(String resourceKey) {
+        return personalFolderDao.getFolderOwner(resourceKey);
+    }
+
+    // 사용 권한
+    public void accessStatus(String access, String key) {
+        Map<String,String> map = new HashMap<>();
+        map.put("access",access);
+        map.put("key",key);
+        personalFolderDao.accessStatus(map);
+    }
+
+    // personal_folder 테이블에 update
+    public void updateMyFolderByte(String attachFolder, long fileSize) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("key",attachFolder);
+        map.put("fileSize",fileSize);
+        personalFolderDao.updateMyFolderByte(map);
+    }
+
+    // 폴더 정보 가져오기
+    public PersonalFolderDTO myFolderInfo(String key) {
+        return personalFolderDao.myFolderInfo(key);
+    }
 }
 
 

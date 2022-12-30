@@ -5,6 +5,7 @@ import com.fivet.buddy.mapper.PersonalFolderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.mail.Folder;
 import java.util.List;
 import java.util.Map;
 
@@ -64,8 +65,33 @@ public class PersonalFolderDAO {
         return personalFolderMapper.myPath(key);
     }
 
-    // 삭제하려는 하위폴더들 찾기
-    public List<Map<String, String>> folderChildFolders(String key) {
-        return personalFolderMapper.folderChildFolders(key);
+    // 폴더 삭제(경로)
+    public void deleteFolderByPath(String path) {
+        personalFolderMapper.deleteFolderByPath(path);
+    }
+
+    // 폴더 밑에 하위폴더가 있는지 확인
+    public boolean subIsExist(String folderKey) {
+        return personalFolderMapper.subIsExist(folderKey);
+    }
+
+    // 폴더 주인 시퀀스
+    public PersonalFolderDTO getFolderOwner(String resourceKey) {
+        return personalFolderMapper.getFolderOwner(resourceKey);
+    }
+
+    // 권한 수정
+    public void accessStatus(Map<String,String> map) {
+        personalFolderMapper.accessStatus(map);
+    }
+
+    // personal_folder 테이블에 update
+    public void updateMyFolderByte(Map<String, Object> map) {
+        personalFolderMapper.updateMyFolderByte(map);
+    }
+
+    // 폴더 정보 가져오기
+    public PersonalFolderDTO myFolderInfo(String key) {
+        return personalFolderMapper.myFolderInfo(key);
     }
 }

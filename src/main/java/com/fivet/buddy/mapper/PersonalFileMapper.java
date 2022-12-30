@@ -27,4 +27,6 @@ public interface PersonalFileMapper {
     String thisOriName(String key);
 
     String searchPath(String key);
+
+    PersonalFileDTO myFileInfo(String key);
 }

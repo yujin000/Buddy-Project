@@ -3,6 +3,7 @@ package com.fivet.buddy.dao;
 import com.fivet.buddy.dto.PersonalFileDTO;
 import com.fivet.buddy.mapper.PersonalFileMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
@@ -57,5 +58,10 @@ public class PersonalFileDAO {
     // 폴더 경로
     public String searchPath(String key) {
         return personalFileMapper.searchPath(key);
+    }
+
+    // 폴더 정보
+    public PersonalFileDTO myFileInfo(String key) {
+        return personalFileMapper.myFileInfo(key);
     }
 }

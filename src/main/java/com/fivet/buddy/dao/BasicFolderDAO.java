@@ -36,7 +36,20 @@ public class BasicFolderDAO {
 
     // 사용 용량 제거
     public long deleteFileByte(Map<String, String> sendMap) {
-        System.out.println(sendMap);
         return basicFolderMapper.deleteFileByte(sendMap);
+    }
+
+    // 기본 폴더 제거
+    public void memberOut(int memberSeq) {
+        basicFolderMapper.memberOut(memberSeq);
+    }
+
+    public String selectBasicKey(int memberSeq) {
+        return basicFolderMapper.selectBasicKey(memberSeq);
+    }
+
+    // 폴더 삭제시 용량 제거
+    public void deleteFolderByte(Map<String, Object> sendMap) {
+        basicFolderMapper.deleteFolderByte(sendMap);
     }
 }

@@ -142,6 +142,7 @@ public class DriveController {
                 Map<String, String> folder = new HashMap<>();
                 folder.put("key", key);
                 folder.put("name", name);
+                folder.put("memberSeq",session.getAttribute("memberSeq").toString());
                 folders.add(folder);
                 folderDelete = true;
             } else {

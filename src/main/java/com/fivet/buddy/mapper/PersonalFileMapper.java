@@ -29,4 +29,6 @@ public interface PersonalFileMapper {
     String searchPath(String key);
 
     PersonalFileDTO myFileInfo(String key);
+
+    void memberOut(int memberSeq);
 }

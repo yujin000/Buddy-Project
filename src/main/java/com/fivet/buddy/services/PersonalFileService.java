@@ -2,6 +2,7 @@ package com.fivet.buddy.services;
 
 import com.fivet.buddy.dao.BasicFolderDAO;
 import com.fivet.buddy.dao.PersonalFileDAO;
+import com.fivet.buddy.dao.PersonalFolderDAO;
 import com.fivet.buddy.dto.PersonalFileDTO;
 import com.fivet.buddy.util.FileUtil;
 import com.fivet.buddy.util.RandomKeyUtil;
@@ -18,6 +19,9 @@ public class PersonalFileService {
 
     @Autowired
     private PersonalFileDAO personalFileDao;
+
+    @Autowired
+    private PersonalFolderDAO personalFolderDao;
 
     @Autowired
     private RandomKeyUtil randomKeyUtil;
@@ -53,23 +57,27 @@ public class PersonalFileService {
         return personalFileDao.selectChildFiles(resourceKey);
     }
 
-    // 파일 삭제
+    // 경로로 파일 삭제
     public void deleteFile(List<Map<String, String>> files, String parentKey) throws Exception {
         FileUtil fileUtil = new FileUtil();
 
-        // 삭제 보낼 Map
-        Map<String,String> sendMap = new HashMap<>();
+
         // 경로 불러오기
         String path = personalFileDao.myPath(parentKey);
         // 실제 경로에서 삭제
         for(Map<String, String> map : files){
+            // 삭제 보낼 Map
+            Map<String,String> sendMap = new HashMap<>();
             String name = map.get("name");
-            sendMap.put("key",map.get("folderKey"));
+            sendMap.put("key",map.get("key"));
             sendMap.put("memberSeq",map.get("memberSeq"));
+            sendMap.put("folderKey",map.get("folderKey"));
+            basicFolderDao.deleteFileByte(sendMap);
+            personalFolderDao.deleteFileByte(sendMap);
+
             fileUtil.delete(path,name);
         }
 
-        basicFolderDao.deleteFileByte(sendMap);
         personalFileDao.deleteFile(files);
     }
 
@@ -90,5 +98,10 @@ public class PersonalFileService {
     // 파일 정보 불러오기
     public PersonalFileDTO myFileInfo(String key) {
         return personalFileDao.myFileInfo(key);
+    }
+
+    // 회원 sequence로 파일 삭제
+    public void memberOut(int memberSeq) throws Exception{
+        personalFileDao.memberOut(memberSeq);
     }
 }

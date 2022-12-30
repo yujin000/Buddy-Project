@@ -65,6 +65,7 @@
 
 
                         $("#form").css("display","block");
+                        $(".btns").css("display","block");
                         $("#eventSeq").removeAttr("disabled");
                         $("#eventWriter").removeAttr("disabled");
                         //수정 및 삭제 버튼 생성
@@ -74,30 +75,13 @@
                         $("#closeBtn").css("display","block");
                         $("#eventWriter").attr("type","text");
 
-                        $("#eventColor").attr("disabled",true);
-                        $("#eventType").attr("disabled",true);
-
-                        if (type !== "team"){
-                            $("#teamColor").css("display","none");
-                            $("#eventColor").attr("disabled",false);
-                            $("#eventColor").val(color);
-                        }
-
-                        // function dateFormat(d){
-                        //     let offset = d.getTimezoneOffset() * 60000;
-                        //     const day = 8.64e+7; // 하루만큼에 시간을 **밀리초**단위로 계산한 값
-                        //     let dateOffset = new Date(d.getTime() - offset - day);
-                        //     let iso = dateOffset.toISOString();
-                        //     return iso.substring(0, 16);
-                        // }
-                        //
                         function  timeFormat(t) {
                             return t.toISOString().substring(0,16);
                         }
 
                         $("#eventType").val(type);
                         $("#eventSeq").val(seq);
-                        $("#eventName").val(title);
+                        $("#eventName").val(title.replace("[팀]","").replace("[개인]",""));
                         $("#eventWriter").val(writer);
                         $("#eventMemo").val(memo);
                         $("#eventLocation").val(location);
@@ -107,9 +91,6 @@
                         $("#eventEnd").val(timeFormat(eventEnd));
                         $("#eventColor").val(color);
                         $("#eventColor").css("background-color",color);
-                        console.log($("#eventSeq").val());
-                        console.log(timeFormat(eventStart));
-                        console.log(timeFormat(eventEnd));
 
                     },
                     // date click event 날짜 클릭 이벤트
@@ -148,15 +129,14 @@
                         let endFormat = dateFormat(end);
 
                         $("#form").css("display","block");
+                        $(".btns").css("display","block");
                         $("#updateBtn").css("display","none");
                         $("#delBtn").css("display","none");
                         $("#submitBtn").css("display","block");
                         $("#closeBtn").css("display","block");
-                        $("#eventColor").attr("disabled",false);
-                        $("#eventType").attr("disabled",false);
 
                         $("#eventSeq").val("");
-                        $("#eventType").val("team");
+                        $("#eventType").val("팀");
                         $("#eventName").val("");
                         $("#eventWriter").val("");
                         $("#eventWriter").attr("type","hidden");
@@ -180,12 +160,6 @@
                             $("#eventEnd").val(timezoneFormat(end));
                         }
 
-                        console.log(monthViewTrue);
-                        console.log(startFormat);
-                        console.log(endFormat);
-                        console.log(typeof(startFormat));
-                        console.log(typeof(endFormat));
-
 
                     },
 
@@ -196,7 +170,7 @@
                         $("#submitBtn").css("display","block");
 
                         $("#eventSeq").val("");
-                        $("#eventType").val("team");
+                        $("#eventType").val("팀");
                         $("#eventName").val("");
                         $("#eventWriter").val("");
                         $("#eventWriter").attr("type","hidden");
@@ -218,7 +192,7 @@
                                     events.push({
                                         seq : element.eventSeq,
                                         type : element.eventType,
-                                        title : element.eventName,
+                                        title : "["+element.eventType+"]"+element.eventName,
                                         writer : element.eventWriter,
                                         location : element.eventLocation,
                                         memo : element.eventMemo,
@@ -280,15 +254,15 @@
 
                 <form action="/calendar/insertEvent" id="form" method="post">
                     <select name="eventColor" id="eventColor" class="eventSelect" onchange="selectColor(value)" data-placeholder="색상">
-                        <option value="purple" style="background: purple" id="teamColor">team</option>
-                        <option value="blue" id="blue" style="background: blue">blue</option>
-                        <option value="red" id="red" style="background: red">red</option>
-                        <option value="green" id="green" style="background: green">green</option>
-                        <option value="black"  id="black" style="background: black">black</option>
+                        <option value="purple" style="background: purple" id="teamColor"></option>
+                        <option value="blue" id="blue" style="background: blue"></option>
+                        <option value="red" id="red" style="background: red"></option>
+                        <option value="green" id="green" style="background: green"></option>
+                        <option value="black"  id="black" style="background: black"></option>
                     </select>
-                    <select name="eventType" id="eventType" class="eventSelect" onchange="selectType(value)">
-                        <option value="team">팀 캘린더</option>
-                        <option value="private">개인 캘린더</option>
+                    <select name="eventType" id="eventType" class="eventSelect" >
+                        <option value="팀">팀 캘린더</option>
+                        <option value="개인">개인 캘린더</option>
                     </select>
                     <input type="hidden"  id="eventSeq" placeholder="seq" readonly disabled >
                     <input type="text" name="eventName" id="eventName" placeholder="제목">
@@ -304,8 +278,7 @@
                 <div class="btns" style="display: none">
                     <button type="submit" id="updateBtn" class="modalBtn" onclick="update()" style="display: none">수정</button>
                     <button type="submit" id="delBtn" class="modalBtn" onclick="del()" style="display: none">삭제</button>
-                    <button type="button" id="closeBtn" class="modalBtn" onclick="window.location.reload()" style="display: none">취소</button>
-
+                    <button type="button" id="closeBtn" class="modalBtn" onclick="window.location.reload()" >취소</button>
                 </div>
             </div>
 
@@ -328,7 +301,7 @@
         // 일정추가 토글 동작
         $("#formToggle").click(function (){
             $("#form").toggle();
-            $("#btns").toggle();
+            $(".btns").toggle();
         })
 
     })
@@ -351,61 +324,38 @@
     }
     // 업데이트 기능
     function update() {
-        let event = [];
-        const seq = $("#eventSeq").val();
-        const type =$("#eventType").val();
-        const title =$("#eventName").val();
-        const eventStart =$("#eventStart").val();
-        const eventEnd =$("#eventEnd").val();
-        const eventLocation =$("#eventLocation").val();
-        const eventMemo =$("#eventMemo").val();
-        const eventColor =$("#eventColor").val();
-        event.push({
-            seq : seq,
-            type: type,
-            title: title,
-            eventStart: eventStart,
-            eventEnd : eventEnd,
-            eventLocation: eventLocation,
-            eventMemo : eventMemo,
-            eventColor : eventColor
-        })
-        console.log(event);
-        console.log(event[0].seq);
+        let seq = $("#eventSeq").val();
+        let type =$("#eventType").val();
+        let title =$("#eventName").val();
+        let eventStart =$("#eventStart").val();
+        let eventEnd =$("#eventEnd").val();
+        let eventLocation =$("#eventLocation").val();
+        let eventMemo =$("#eventMemo").val();
+        let eventColor =$("#eventColor").val();
+
+        console.log(seq);
+        console.log(type);
+        console.log(title);
+        console.log(eventStart);
+        console.log(eventEnd);
+        console.log(eventLocation);
+        console.log(eventMemo);
+        console.log(eventColor);
+
         location.href ="/calendar/updateEvent?eventSeq="+seq
-            +"&eventType="+type+"&eventTitle="+title+
-            +"&eventStart="+eventStart+
-            "&eventEnd="+eventEnd+"&eventLocation="+eventLocation+
-            "&eventMemo="+eventMemo+"&eventColor="+eventColor;
+            +"&eventType="+type
+            +"&eventName="+title
+            +"&eventStart="+eventStart
+            +"&eventEnd="+eventEnd
+            +"&eventLocation="+eventLocation
+            +"&eventMemo="+eventMemo
+            +"&eventColor="+eventColor
     }
 
     function selectColor(arg) {
         $("#eventColor").css("background-color",arg);
     }
 
-    function selectType() {
-
-        let type = $("#eventType").val();
-
-        if (type === "team"){
-            $("#eventColor").val("purple");
-            $("#eventColor").css("background-color","purple");
-            $('#teamColor').css("display","block");
-            $("#blue").css("display","none");
-            $("#red").css("display","none");
-            $("#green").css("display","none");
-            $("#black").css("display","none");
-        }else {
-            $("#eventColor").val("blue");
-            $("#eventColor").css("background-color","blue");
-            $('#teamColor').css("display","none");
-            $("#blue").css("display","block");
-            $("#red").css("display","block");
-            $("#green").css("display","block");
-            $("#black").css("display","block");
-        }
-
-    }
 
 </script>
 </body>

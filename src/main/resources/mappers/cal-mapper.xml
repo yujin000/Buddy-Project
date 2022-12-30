@@ -28,9 +28,9 @@
     </delete>
 
     <update id="updateEvent">
-        update event set "event_type" = #{eventType}, "event_title" =#{eventTitle} ,
+        update event set "event_type" = #{eventType}, "event_name" =#{eventName} ,
         "event_start"=#{eventStart}, "event_end" =#{eventEnd}, "event_location" =#{eventLocation}, "event_memo" =#{eventMemo},
-        "event_color"=#{eventColor} where "event_writer" = "#{eventWriter}
+        "event_color"=#{eventColor} where "event_writer" = #{eventWriter} and "event_seq" =#{eventSeq}
 
     </update>
 

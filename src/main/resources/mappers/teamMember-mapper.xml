@@ -7,49 +7,77 @@
     <!-- 초대코드 입력 시 팀 입장 -->
     <insert id="enterTeam">
         insert into
-            team_member
+        team_member
         values
-            (#{teamSeq}, #{memberSeq}, #{memberId}, #{teamMemberNickname}, 'coworker', sysdate)
+        (#{teamSeq}, #{memberSeq}, #{memberId}, #{teamMemberNickname}, '팀원', sysdate)
     </insert>
 
     <!-- 팀 생성자가 팀 생성시, 팀 멤버 목록에 추가 -->
     <insert id="createTeam">
         <selectKey order="BEFORE" keyProperty="memberId" resultType="string">
             select
-                member_id
+            member_id
             from
-                member
+            member
             where member_seq = #{memberSeq}
         </selectKey>
         insert into
-            team_member
+        team_member
         values
-            (#{teamSeq}, #{memberSeq}, #{memberId}, #{teamMemberNickname}, 'manager', sysdate)
+        (#{teamSeq}, #{memberSeq}, #{memberId}, #{teamMemberNickname}, '매니저', sysdate)
     </insert>
 
-    <!--    회원 번호를 이용하여 팀 DTO값을 불러옴.-->
+    <!--    회원 번호를 이용하여 해당 팀 관련 회원정보 출력.-->
     <select id="selectOne" resultType="com.fivet.buddy.dto.TeamMemberDTO">
         select
-            *
+        *
         from
-            team_member
+        team_member
         where
-            member_seq = #{memberSeq} and team_seq = #{teamSeq}
+        member_seq = #{memberSeq} and team_seq = #{teamSeq}
     </select>
 
-    <!--    채팅방 참여자 목록을 출력 -->
+    <!--  기본채팅방 참여자 목록을 출력 -->
     <select id="selectChatMember" resultType="com.fivet.buddy.dto.TeamMemberDTO">
         select
-            tm.member_seq, team_member_nickname, grade
+        tm.member_seq, team_member_nickname, grade
         from
-            team_member tm
+        team_member tm
         inner join
-            chat_member cm
+        chat_member cm
         on
-            tm.member_seq = cm.member_seq and tm.team_seq = cm.team_seq
+        tm.member_seq = cm.member_seq and tm.team_seq = cm.team_seq
         where
-            chat_room_seq = #{chatRoomSeq}
+        chat_room_seq = #{chatRoomSeq}
     </select>
 
+    <!--팀 멤버 출력 -->
+    <select id="selectTeamMember" resultType="com.fivet.buddy.dto.TeamMemberListDTO">
+        select * from team_member t inner join member_img i on t.member_seq=i.member_img_member_seq where team_seq = #{value}
+        order by case
+        when grade='매니저' then 1
+        when grade='부매니저' then 2
+        when grade='팀원' then 3
+        end, member_seq asc
+    </select>
 
+    <!-- 멤버 등급 변경 -->
+    <update id="updateTeamMemberGrade">
+        update team_member set grade = #{grade} where member_seq = #{memberSeq} and team_seq = #{teamSeq}
+    </update>
+
+    <!-- 멤버 등급 변경 ( 매니저가 다른 사람한테 매니저 이양할 때 ) -->
+    <update id="updateTeamMemberManager">
+        update team_member set grade = '팀원' where member_seq = #{manageSeq} and team_seq = #{teamSeq}
+    </update>
+
+    <!-- 팀 관리 페이지에서 팀원 강퇴 -->
+    <delete id="deleteTeamMember">
+        delete from team_member where member_seq = #{memberSeq} and team_seq = #{teamSeq}
+    </delete>
+
+    <!--부매니저인 멤버 출력 (부매니저일때도 팀 관리 들어갈 수 있게) -->
+    <select id="selectSubManagerMember" resultType="String">
+        select t.grade from team_member t inner join member m on m.member_seq=t.member_seq where t.member_seq= #{value}
+    </select>
 </mapper>

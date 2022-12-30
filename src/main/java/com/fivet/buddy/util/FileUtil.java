@@ -59,7 +59,6 @@ public class FileUtil {
     public ResponseEntity<Resource> download(@ModelAttribute String realpath, String sysName , String oriName) throws Exception {
         Path path = Path.of(realpath + "/" + sysName);
         String contentType = Files.probeContentType(path);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentDisposition(ContentDisposition.builder("attachment").filename(oriName, StandardCharsets.UTF_8).build());
         headers.add(HttpHeaders.CONTENT_TYPE, contentType);

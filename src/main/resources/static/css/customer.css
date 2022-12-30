@@ -99,7 +99,7 @@ body {
     /*display: none;*/
 }
 
-.board {
+.boardQna {
     width: 100%;
     height: calc(100vh - 260px);
     overflow: scroll;
@@ -107,11 +107,30 @@ body {
     clear: both;
 }
 
-.board::-webkit-scrollbar{
+.boardQna::-webkit-scrollbar{
     display:none;
 }
 
-.article{
+.boardNews {
+    width: 100%;
+    height: calc(100vh - 260px);
+    overflow: scroll;
+    overflow-x: hidden;
+    clear: both;
+}
+
+.boardNews::-webkit-scrollbar{
+    display:none;
+}
+
+
+.articleQna{
+    line-height: 60px;
+    padding: 0 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.4);
+}
+
+.articleNotice{
     line-height: 60px;
     padding: 0 10px;
     border-bottom: 1px solid rgba(0,0,0,0.4);

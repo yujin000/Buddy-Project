@@ -14,4 +14,10 @@ public interface ChatRoomMapper {
 
     List<ChatRoomDTO> chatRoomList(Map<String, Integer> param);
 
+    void insertSelfChat(Map<String, String> param);
+
+    String selectChatRoomSeq(Map<String, String> param);
+
+    void updatePlusMemberCount(Map<String, String> param);
+
 }

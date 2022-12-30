@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -41,7 +42,7 @@ public class ChatRoomController {
 
     // 채팅방 목록 출력
     @ResponseBody
-    @RequestMapping("chatRoomList")
+    @PostMapping("chatRoomList")
     public String chatRoomList() {
         Map<String, Integer> param = new HashMap<>();
         param.put("memberSeq", (int)session.getAttribute("memberSeq"));

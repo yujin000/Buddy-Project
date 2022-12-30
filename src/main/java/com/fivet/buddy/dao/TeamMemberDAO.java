@@ -1,6 +1,7 @@
 package com.fivet.buddy.dao;
 
 import com.fivet.buddy.dto.TeamMemberDTO;
+import com.fivet.buddy.dto.TeamMemberListDTO;
 import com.fivet.buddy.mapper.TeamMemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,14 +25,38 @@ public class TeamMemberDAO {
         teamMemberMapper.enterTeam(teamMemberDto);
     }
 
-    // 회원 번호를 이용하여 팀 DTO값을 불러옴.
+    //회원 번호를 이용하여 해당 팀 관련 회원정보 출력.
     public TeamMemberDTO selectOne(TeamMemberDTO teamMemberDto) {
         return teamMemberMapper.selectOne(teamMemberDto);
     }
 
-    // 채팅방 참여자 목록을 출력.
+    // 기본채팅방 참여자 목록을 출력.
     public List<TeamMemberDTO> selectChatMember(int chatRooMSeq) {
         return teamMemberMapper.selectChatMember(chatRooMSeq);
     }
 
+    //팀 관리 멤버 출력
+    public List<TeamMemberListDTO> selectTeamMember(String teamSeq){
+        return teamMemberMapper.selectTeamMember(teamSeq);
+    }
+
+    //멤버 등급 변경
+    public void updateTeamMemberGrade(TeamMemberDTO teamMemberDto){
+        teamMemberMapper.updateTeamMemberGrade(teamMemberDto);
+    }
+
+    //멤버 등급 변경 ( 매니저가 다른 사람한테 매니저 이양할 때 )
+    public void updateTeamMemberManager(Map<String,Integer> param){
+        teamMemberMapper.updateTeamMemberManager(param);
+    }
+
+    //팀 관리 페이지에서 팀원 강퇴
+    public void deleteTeamMember(TeamMemberDTO teamMemberDto){
+        teamMemberMapper.deleteTeamMember(teamMemberDto);
+    }
+
+    //부매니저인 멤버 출력 (부매니저일때도 팀 관리 들어갈 수 있게)
+    public String selectSubManagerMember(int memberSeq){
+        return teamMemberMapper.selectSubManagerMember(memberSeq);
+    }
 }

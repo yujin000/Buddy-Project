@@ -2,12 +2,17 @@ package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.InviteDTO;
 import com.fivet.buddy.dto.TeamMemberDTO;
+import com.fivet.buddy.services.ChatRoomService;
 import com.fivet.buddy.services.InviteService;
+import com.fivet.buddy.services.TeamMemberService;
+import com.fivet.buddy.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/invite/")
@@ -17,6 +22,15 @@ public class InviteController {
 
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private TeamMemberService teamMemberService;
+
+    @Autowired
+    private TeamService teamService;
+
+    @Autowired
+    private ChatRoomService chatRoomService;
 
 
     // ExceptionHandler
@@ -65,11 +79,16 @@ public class InviteController {
         teamMemberDto.setMemberSeq(Integer.parseInt(session.getAttribute("memberSeq").toString()));
         // 팀 닉네임 (default : 이름)
         teamMemberDto.setTeamMemberNickname(session.getAttribute("memberName").toString());
-        inviteService.enterTeam(teamMemberDto);
-        return "redirect:/";
+        teamMemberService.enterTeam(teamMemberDto);
+        teamService.updatePlusTeamCount(teamMemberDto.getTeamSeq());
+
+        //기본 채팅방에 추가 및 나와의 채팅 생성을 위한 Map 구성
+        Map<String, String> param = new HashMap<>();
+        param.put("memberSeq", session.getAttribute("memberSeq").toString());
+        chatRoomService.addBasicAndSelfChat(teamMemberDto, param);
+
+        return "redirect:/member/loginIndex";
     }
-
-
 
     // 사용자 코드 일치 >> 사용한 초대 코드 delete
     @ResponseBody

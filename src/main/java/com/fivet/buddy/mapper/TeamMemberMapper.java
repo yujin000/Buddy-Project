@@ -1,6 +1,7 @@
 package com.fivet.buddy.mapper;
 
 import com.fivet.buddy.dto.TeamMemberDTO;
+import com.fivet.buddy.dto.TeamMemberListDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,5 +14,9 @@ public interface TeamMemberMapper {
     void createTeam(Map<String, String> param);
     TeamMemberDTO selectOne(TeamMemberDTO teamMemberDto);
     List<TeamMemberDTO> selectChatMember(int chatRoomSeq);
-
+    List<TeamMemberListDTO> selectTeamMember(String teamSeq);
+    void updateTeamMemberGrade(TeamMemberDTO teamMemberDto);
+    void updateTeamMemberManager(Map<String,Integer> param);
+    void deleteTeamMember(TeamMemberDTO teamMemberDto);
+    String selectSubManagerMember(int memberSeq);
 }

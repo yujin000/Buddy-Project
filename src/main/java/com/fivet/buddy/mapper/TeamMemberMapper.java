@@ -18,4 +18,5 @@ public interface TeamMemberMapper {
     void updateTeamMemberGrade(TeamMemberDTO teamMemberDto);
     void updateTeamMemberManager(Map<String,Integer> param);
     void deleteTeamMember(TeamMemberDTO teamMemberDto);
+    String selectSubManagerMember(int memberSeq);
 }

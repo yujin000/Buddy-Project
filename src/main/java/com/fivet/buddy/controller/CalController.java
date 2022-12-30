@@ -60,9 +60,8 @@ public class CalController {
 
     @GetMapping("deleteEvent")
     public String deleteEvent(int eventSeq , String eventWriter ) throws Exception{
-        String Session = (String) session.getAttribute("teamMemberNickname");
+        String Session = session.getAttribute("teamMemberNickname").toString();
         boolean result = Objects.equals(eventWriter, Session);
-        System.out.println(eventSeq);
         if (result){
         calService.deleteEvent(eventSeq);
         return "redirect:/calendar/moveCalendar";
@@ -73,14 +72,15 @@ public class CalController {
     }
 
 
-    @RequestMapping(value="updateEvent")
-    public String updateEvent(CalDTO calDto){
-        try {
-            calDto.setEventWriter((String)session.getAttribute("teamMemberNickname"));
+    @GetMapping (value="updateEvent")
+    public String updateEvent(CalDTO calDto, String eventWriter) throws Exception{
+        String Session = session.getAttribute("teamMemberNickname").toString();
+        boolean result = Objects.equals(eventWriter, Session);
+        if(result) {
+            calDto.setEventWriter(session.getAttribute("teamMemberNickname").toString());
             calService.updateEvent(calDto);
             return "redirect:/calendar/moveCalendar";
-        }catch (Exception e){
-            e.printStackTrace();
+        }else {
             return "/calendar/sessionError";
         }
 

@@ -100,7 +100,6 @@
                     select: function (arg){
                         const start = arg.start
                         const end = arg.end
-                        console.log(arg);
                         // date 를 timezone 에 맞게 format
                         // date 는 loacale 에 영향을 받기 때문에 kor 시간으로 설정 해줘야 함
                         function timezoneFormat(d){
@@ -313,17 +312,16 @@
     // 일정삭제 기능
     function del() {
         const seq = $("#eventSeq").val();
-        const name = $("#eventName").val();
+        const title = $("#eventName").val();
         const writer = document.querySelector("#eventWriter").value;
-        console.log(writer);
-        console.log(seq);
-        if (confirm("<"+name+">"+"일정을 삭제하시겠습니까?")){
+        if (confirm("<"+title+">"+"일정을 삭제하시겠습니까?")){
             $("#eventWriter").attr("disabled",false);
             location.href ="/calendar/deleteEvent?eventSeq="+seq+"&eventWriter="+writer;
         }
     }
     // 업데이트 기능
     function update() {
+        $("#eventWriter").attr("disabled",false);
         let seq = $("#eventSeq").val();
         let type =$("#eventType").val();
         let title =$("#eventName").val();
@@ -332,24 +330,19 @@
         let eventLocation =$("#eventLocation").val();
         let eventMemo =$("#eventMemo").val();
         let eventColor =$("#eventColor").val();
+        const writer = document.querySelector("#eventWriter").value;
 
-        console.log(seq);
-        console.log(type);
-        console.log(title);
-        console.log(eventStart);
-        console.log(eventEnd);
-        console.log(eventLocation);
-        console.log(eventMemo);
-        console.log(eventColor);
-
-        // location.href ="/calendar/updateEvent?eventSeq="+seq
-        //     +"&eventType="+type
-        //     +"&eventName="+title
-        //     +"&eventStart="+eventStart
-        //     +"&eventEnd="+eventEnd
-        //     +"&eventLocation="+eventLocation
-        //     +"&eventMemo="+eventMemo
-        //     +"&eventColor="+eventColor;
+        if (confirm("<"+title+">"+"일정을 수정하시겠습니까?")){
+        location.href ="/calendar/updateEvent?eventSeq="+seq
+            +"&eventType="+type
+            +"&eventName="+title
+            +"&eventStart="+eventStart
+            +"&eventEnd="+eventEnd
+            +"&eventLocation="+eventLocation
+            +"&eventMemo="+eventMemo
+            +"&eventColor="+eventColor
+            +"&eventWriter="+writer;
+        }
     }
 
     function selectColor(arg) {

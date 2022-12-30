@@ -112,6 +112,13 @@ public class PersonalFolderService {
         for(Map<String, String> map : folders){
             String key = map.get("key");
             String path = personalFolderDao.myPath(key);
+            // basic에서 용량 제거
+            long thisFolderByte = personalFolderDao.getMyByte(key);
+            Map<String, Object> sendMap = new HashMap<>();
+            sendMap.put("byte",thisFolderByte);
+            sendMap.put("memberSeq",map.get("memberSeq"));
+            basicFolderDao.deleteFolderByte(sendMap);
+
             // 실제 경로에서 폴더 삭제
             fileUtil.deleteFolder(path);
             // 하위 파일 DB에서 제거
@@ -157,6 +164,11 @@ public class PersonalFolderService {
     // 폴더 정보 가져오기
     public PersonalFolderDTO myFolderInfo(String key) {
         return personalFolderDao.myFolderInfo(key);
+    }
+
+    // 폴더 삭제 하기
+    public void memberOut(int memberSeq) {
+        personalFolderDao.memberOut(memberSeq);
     }
 }
 

@@ -106,4 +106,12 @@
         where
             personal_files_key = #{value}
     </select>
+
+    <!-- 회원 탈퇴 시 멤버번호로 삭제 -->
+    <delete id="memberOut">
+        delete from
+            personal_files
+        where
+            personal_files_member_seq = #{value}
+    </delete>
 </mapper>

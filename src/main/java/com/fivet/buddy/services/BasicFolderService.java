@@ -1,7 +1,9 @@
 package com.fivet.buddy.services;
 
 import com.fivet.buddy.dao.BasicFolderDAO;
+import com.fivet.buddy.dao.PersonalFolderDAO;
 import com.fivet.buddy.dto.MemberDTO;
+import com.fivet.buddy.util.FileUtil;
 import com.fivet.buddy.util.RandomKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class BasicFolderService {
 
     @Autowired
     private BasicFolderDAO basicFolderDao;
+
+    @Autowired
+    private PersonalFolderDAO personalFolderDAO;
 
     @Autowired
     private RandomKeyUtil randomKeyUtil;
@@ -46,5 +51,17 @@ public class BasicFolderService {
     // 내 현재 용량
     public long myVolume(int memberSeq) {
         return basicFolderDao.myVolume(memberSeq);
+    }
+
+    // 기본 폴더 제거
+    public void memberOut(int memberSeq) {
+        // 폴더 key
+        String key = basicFolderDao.selectBasicKey(memberSeq);
+        // 경로
+        String path = personalFolderDAO.myBasicPath(key);
+        // 실제 폴더 삭제
+        FileUtil fileUtil = new FileUtil();
+        fileUtil.deleteFolder(path);
+        basicFolderDao.memberOut(memberSeq);
     }
 }

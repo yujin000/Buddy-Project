@@ -49,12 +49,41 @@
         set
             basic_folder_byte = basic_folder_byte -
                 (select
-                    sum(personal_files_byte)
+                    personal_files_byte
                 from
                     personal_files
                 where
-                    personal_files_folder_key = #{key})
+                    personal_files_folder_key = #{folderKey} and personal_files_key = #{key})
         where
             basic_folder_member_seq = #{memberSeq}
     </update>
+
+    <!-- 폴더 삭제 시 폴더 용량, key로 삭제 -->
+    <update id="deleteFolderByte">
+        update
+            basic_folder
+        set
+            basic_folder_byte = basic_folder_byte - #{byte}
+        where
+            basic_folder_member_seq = #{memberSeq}
+    </update>
+
+    <!-- 회원 탈퇴 시 기본 폴더 제거 -->
+    <delete id="memberOut">
+        delete from
+            basic_folder
+        where
+            basic_folder_member_seq = #{value}
+    </delete>
+
+    <!-- 기본 파일 경로 -->
+    <select id="selectBasicKey" resultType="String">
+        select
+            basic_folder_key
+        from
+            basic_folder
+        where
+            basic_Folder_member_seq = #{value}
+    </select>
+
 </mapper>

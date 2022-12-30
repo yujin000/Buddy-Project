@@ -64,4 +64,9 @@ public class PersonalFileDAO {
     public PersonalFileDTO myFileInfo(String key) {
         return personalFileMapper.myFileInfo(key);
     }
+
+    // 회원 sequence로 파일 삭제
+    public void memberOut(int memberSeq) {
+        personalFileMapper.memberOut(memberSeq);
+    }
 }

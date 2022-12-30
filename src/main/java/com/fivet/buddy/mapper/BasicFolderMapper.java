@@ -18,4 +18,10 @@ public interface BasicFolderMapper {
     long myVolume(int memberSeq);
 
     long deleteFileByte(Map<String, String> sendMap);
+
+    void memberOut(int memberSeq);
+
+    String selectBasicKey(int memberSeq);
+
+    void deleteFolderByte(Map<String, Object> sendMap);
 }

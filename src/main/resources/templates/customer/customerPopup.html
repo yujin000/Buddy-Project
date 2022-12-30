@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Title</title>
     <script
             src="https://code.jquery.com/jquery-3.6.1.min.js"
@@ -14,31 +14,75 @@
     <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/customerPopup.css">
 
+    <script>
+        // let qnaTitle = $(".qnaTitle").val();
+        // let qnaContents = $("#qnaContents").val();
+        // let qnaType = $(".qnaType").val();
+        //
+        // let formData = new FormData();
+        // formData.append("qnaTitle",qnaTitle);
+        // formData.append("qnaContents",qnaContents);
+        // formData.append("uploadfile",uploadfile.files[0]);
+        // formData.append("qnaType",qnaType);
+        // $.ajax({
+        //     url: "/qna/insert",
+        //     processData: false,
+        //     //contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게 함
+        //     contentType: false,
+        //     data: formData,
+        //     type:"post",
+        // });
+
+        $(function() {
+            let selectedText = $(":selected").text();
+            $('#qnaCategory').val(selectedText);
+
+            // 콤보박스가 변경될 때
+            $('#categoryList').change(function () {
+                // 드롭다운리스트에서 선택된 값을 텍스트박스에 출력
+                let selectedText = $(":selected").text();
+                $('#qnaCategory').val(selectedText);
+            });
+        });
+    </script>
 </head>
 <body>
-    <div class="wrap">
-        <div class="header">
+<div class="wrap">
+    <div class="header">
         <h1>글쓰기</h1>
-
-        </div>
-
-        <form action="">
-        <p>제목</p>
-        <input type="text" class="inputTitle" placeholder="제목을 입력해주세요">
-        <p>내용</p>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-        <input type="file">
-
-            <div class="btn">
-
-        <button  type="submit">
-            전송
-        </button>
-        <button type="button">
-            취소
-        </button>
-            </div>
-        </form>
     </div>
+
+    <form action="/qna/insert" id="qnaForm" method="post" enctype="multipart/form-data">
+        <p>제목</p>
+        <input type="text" name="qnaTitle" class="qnaTitle" placeholder="제목을 입력해주세요">
+        <p>내용</p>
+        <textarea name="qnaContents" id="qnaContents" cols="30" rows="10"></textarea>
+        <input type="file" id="uploadfile" name="uploadfile" multiple="multiple" accept=".jpg, .png, .gif">
+        <div id="category">
+            <select id="categoryList">
+                <option selected>buddy관련</option>
+                <option>아이디문의</option>
+                <option>기능문의</option>
+                <option>신고하기</option>
+            </select>
+
+            <input type="hidden" id="qnaCategory" class="qnaType" name="qnaType">
+        </div>
+        <div class="btn">
+            <button type="submit">
+                전송
+            </button>
+            <button type="button" id="cancel">
+                취소
+            </button>
+        </div>
+    </form>
+</div>
+<script>
+    let cancel = $("#cancel");
+    cancel.on("click",function (){
+        location.href = "/qna/main";
+    });
+</script>
 </body>
 </html>

@@ -1,159 +1,159 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>관리자페이지</title>
-    <link rel="stylesheet" href="/static/css/reset.css">
-    <link rel="stylesheet" href="/static/css/admin.css" />
-    <link rel="stylesheet" href="/static/css/m-admin.css" />
-    <script
-            src="https://code.jquery.com/jquery-3.6.1.min.js"
-            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-            crossorigin="anonymous"
-    ></script>
-    <script src="/static/js/jQueryCheck.js"></script>
-</head>
-<body>
-<div class="moblieView">
-    <div class="logo">
-        <a href="">
-            <img src="" alt="" />
-        </a>
-    </div>
-    <h1>
-        죄송합니다. <br />
-        어드민 모드는 모바일 환경을 지원하지 않습니다.
-    </h1>
-    <button><a href="../index.html">뒤로가기</a></button>
-</div>
-<div class="wrap">
-    <div class="header">
-        <div class="logo">
-            <a href="../index.html">
-                <img src="" alt="" />
-            </a>
-        </div>
-        <p>어드민</p>
-        <button id="menu" class="iconMenu">menu</button>
-        <button id="asideClose">aside</button>
-    </div>
-    <div id="menuList" class="menuList">
-        <ul>
-            <li><a href="">list</a></li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-        </ul>
-    </div>
-    <div class="main">
-        <aside>
-            <div id="checked" class="asideTitle">
-                <img src="" alt="" />
-                <p><a href="adminMain.html">회원관리</a></p>
-            </div>
-            <div class="asideTitle">
-                <img src="" alt="" />
-                <p><a href="adminNews.html">뉴스관리</a></p>
-            </div>
-            <div class="asideTitle">
-                <img src="" alt="" />
-                <p><a href="adminQna.html">문의내역</a></p>
-            </div>
-        </aside>
-        <div class="content">
-            <div class="contentHeader">
-                <h1 class="contentTitle">회원관리</h1>
-                <form action="/member/memberSearch">
-                    <select name="searchPick" id="selectPick">
-                        <option value="member_seq">회원번호</option>
-                        <option value="member_name">회원이름</option>
-                        <option value="member_id">이메일</option>
-                        <option value="member_phone">전화번호</option>
-                        <option value="member_logtype">회원유형</option>
-                    </select>
-                    <input
-                            type="search"
-                            id="searchBar"
-                            class="searchBar"
-                            name="memberSearchText"
-                            placeholder="회원검색"
-                            style="padding-left: 10px"
-                    />
-                    <button id="memberSearch">검색</button>
-                </form>
-            </div>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8" />-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge" />-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+<!--    <title>관리자 페이지-회원 관리</title>-->
+<!--    <link rel="stylesheet" href="/static/css/reset.css">-->
+<!--    <link rel="stylesheet" href="/static/css/admin.css" />-->
+<!--    <link rel="stylesheet" href="/static/css/m-admin.css" />-->
+<!--    <script-->
+<!--            src="https://code.jquery.com/jquery-3.6.1.min.js"-->
+<!--            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="-->
+<!--            crossorigin="anonymous"-->
+<!--    ></script>-->
+<!--    <script src="/static/js/jQueryCheck.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="moblieView">-->
+<!--    <div class="logo">-->
+<!--        <a href="">-->
+<!--            <img src="" alt="" />-->
+<!--        </a>-->
+<!--    </div>-->
+<!--    <h1>-->
+<!--        죄송합니다. <br />-->
+<!--        관리자 페이지는 모바일 환경을 지원하지 않습니다.-->
+<!--    </h1>-->
+<!--    <button><a href="../index.html">뒤로가기</a></button>-->
+<!--</div>-->
+<!--<div class="wrap">-->
+<!--    <div class="header">-->
+<!--        <div class="logo">-->
+<!--            <a href="/member/loginIndex">-->
+<!--                <img src="" alt="" />-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <p>관리자 페이지</p>-->
+<!--        <button id="menu" class="iconMenu">menu</button>-->
+<!--        <button id="asideClose">aside</button>-->
+<!--    </div>-->
+<!--    <div id="menuList" class="menuList">-->
+<!--        <ul>-->
+<!--            <li><a href="">list</a></li>-->
+<!--            <li>list</li>-->
+<!--            <li>list</li>-->
+<!--            <li>list</li>-->
+<!--            <li>list</li>-->
+<!--            <li>list</li>-->
+<!--            <li>list</li>-->
+<!--            <li>list</li>-->
+<!--            <li>list</li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--    <div class="main">-->
+<!--        <aside>-->
+<!--            <div id="checked" class="asideTitle">-->
+<!--                <img src="" alt="" />-->
+<!--                <p><a href="/admin/toAdminPage">회원 관리</a></p>-->
+<!--            </div>-->
+<!--            <div class="asideTitle">-->
+<!--                <img src="" alt="" />-->
+<!--                <p><a href="/admin/toAdminNotice">공지 관리</a></p>-->
+<!--            </div>-->
+<!--            <div class="asideTitle">-->
+<!--                <img src="" alt="" />-->
+<!--                <p><a href="/admin/toAdminQna">문의내역 관리</a></p>-->
+<!--            </div>-->
+<!--        </aside>-->
+<!--        <div class="content">-->
+<!--            <div class="contentHeader">-->
+<!--                <h1 class="contentTitle">회원 관리</h1>-->
+<!--                <form action="/member/memberSearch">-->
+<!--                    <select name="searchPick" id="selectPick">-->
+<!--                        <option value="member_seq">회원번호</option>-->
+<!--                        <option value="member_name">회원이름</option>-->
+<!--                        <option value="member_id">이메일</option>-->
+<!--                        <option value="member_phone">전화번호</option>-->
+<!--                        <option value="member_logtype">회원유형</option>-->
+<!--                    </select>-->
+<!--                    <input-->
+<!--                            type="search"-->
+<!--                            id="searchBar"-->
+<!--                            class="searchBar"-->
+<!--                            name="memberSearchText"-->
+<!--                            placeholder="회원검색"-->
+<!--                            style="padding-left: 10px"-->
+<!--                    />-->
+<!--                    <button id="memberSearch">검색</button>-->
+<!--                </form>-->
+<!--            </div>-->
 
-            <hr />
+<!--            <hr />-->
 
-            <div class="contentTable">
-                <!-- <div class="tableTool">
-                  <button class="delBtn" id="delBtn">delete</button>
-                </div> -->
+<!--            <div class="contentTable">-->
+<!--                &lt;!&ndash; <div class="tableTool">-->
+<!--                  <button class="delBtn" id="delBtn">delete</button>-->
+<!--                </div> &ndash;&gt;-->
 
-                <div class="table">
-                    <ul>
-                        <li class="thead">
-                            <span>번호</span>
-                            <span>이름</span>
-                            <span>이메일</span>
-                            <span>전화번호</span>
-                            <span>회원유형</span>
-                            <span>삭제</span>
-                        </li>
-                        <li th:each="members : ${memberList}" class="tdata">
-                            <span th:text="${members.memberSeq}"></span>
-                            <span th:text="${members.memberName}"></span>
-                            <span th:text="${members.memberId}"></span>
-                            <span th:text="${members.memberPhone}"></span>
-                            <span th:text="${members.memberLogtype}"></span>
-                            <span><button class="delData" th:value="${members.memberSeq}">탈퇴</button></span>
-                        </li>
-                    </ul>
-                    <hr />
-                    <div class="listNum">
-                        <a href=""><</a>
-                        <span>1</span>
-                        <a href="">></a>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--                <div class="table">-->
+<!--                    <ul>-->
+<!--                        <li class="thead">-->
+<!--                            <span>번호</span>-->
+<!--                            <span>이름</span>-->
+<!--                            <span>이메일</span>-->
+<!--                            <span>전화번호</span>-->
+<!--                            <span>회원유형</span>-->
+<!--                            <span>삭제</span>-->
+<!--                        </li>-->
+<!--                        <li th:each="members : ${memberList}" class="tdata">-->
+<!--                            <span th:text="${members.memberSeq}"></span>-->
+<!--                            <span th:text="${members.memberName}"></span>-->
+<!--                            <span th:text="${members.memberId}"></span>-->
+<!--                            <span th:text="${members.memberPhone}"></span>-->
+<!--                            <span th:text="${members.memberLogtype}"></span>-->
+<!--                            <span><button class="delData" th:value="${members.memberSeq}">탈퇴</button></span>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                    <hr />-->
+<!--                    <div class="listNum">-->
+<!--                        <a href=""><</a>-->
+<!--                        <span>1</span>-->
+<!--                        <a href="">></a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        .
-    </div>
-</div>
-<script>
-    $(document).ready(function () {
-        let result = $("body").css("max-width", "600px");
+<!--        .-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        let result = $("body").css("max-width", "600px");-->
 
-        $("#menu").click(function () {
-            $("#menuList").toggle();
-        });
+<!--        $("#menu").click(function () {-->
+<!--            $("#menuList").toggle();-->
+<!--        });-->
 
-        $("#asideClose").click(function () {
-            $("aside").toggle();
-        });
+<!--        $("#asideClose").click(function () {-->
+<!--            $("aside").toggle();-->
+<!--        });-->
 
-        function goBack() {
-            window.history.back();
-        }
-    });
+<!--        function goBack() {-->
+<!--            window.history.back();-->
+<!--        }-->
+<!--    });-->
 
-    // 회원 강퇴
-    $(".delData").on('click',function(){
-       let memberSeq = $(this).val();
-       location.href="/admin/memberKickOut?memberSeq=" + memberSeq;
-    });
+<!--    // 회원 강퇴-->
+<!--    $(".delData").on('click',function(){-->
+<!--       let memberSeq = $(this).val();-->
+<!--       location.href="/admin/memberKickOut?memberSeq=" + memberSeq;-->
+<!--    });-->
 
 
 
-</script>
-</body>
-</html>
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->

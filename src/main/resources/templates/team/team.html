@@ -19,7 +19,6 @@
 <div class="wrap">
   <div class="header">
     <div class="logo">
-      <a href="../index.html">
         <img src="" alt="" />
         logo
       </a>
@@ -27,14 +26,11 @@
     <div id="teamList" class="teamList">
       <ul>
         <li>
-          <a href="" th:text="${session.teamName}"></a
+          <a th:text="${session.teamName}"></a
           ><button id="headerToggle">toggle</button>
         </li>
       </ul>
       <ul id="dropdownList">
-        <li><a href="team.html">teamList2</a></li>
-        <li><a href="team.html">teamList2</a></li>
-        <li><a href="../admin/adminMain.html">admin</a></li>
       </ul>
     </div>
 
@@ -42,31 +38,7 @@
     <button id="asideClose">aside</button>
     <button id="teamMember">team</button>
     <ul id="teamMemberList" class="teamMemberList">
-      <h1>teamMemberList</h1>
-      <li>
-        <img src="" alt="">
-        <span>이름</span>
-        <span>직책</span>
-      </li>
-      <li>
-        <img src="" alt="">
-        <span>이름</span>
-        <span>직책</span>
-      </li>    <li>
-      <img src="" alt="">
-      <span>이름</span>
-      <span>직책</span>
-    </li>    <li>
-      <img src="" alt="">
-      <span>이름</span>
-      <span>직책</span>
-    </li>
-      <li>
-        <img src="" alt="">
-        <span>이름</span>
-        <span>직책</span>
-      </li>
-
+      <h1>팀원 목록</h1>
     </ul>
   </div>
   <div class="main">
@@ -225,7 +197,7 @@
   <ul>
     <li><a href="/member/logout">logout</a></li>
     <li><a href="/team/teamOut">버디 메인으로</a></li>
-    <li>list</li>
+    <li><a href="/qna/main">문의하기 및 news</a></li>
     <li>list</li>
     <li>list</li>
     <li>list</li>
@@ -262,21 +234,69 @@
   </div>
 </div>
 
+<!-- 팀원 목록 출력 ajax -->
+<script th:inline="javascript">
+  $(function (){
+    $.ajax({
+      url:"/team/teamMemberList",
+      success : function (){
+      },error : function (){
+      }
+    }).done(function (rsp){
+      let JsonTeamMemberList = JSON.parse(rsp);
+      for (let i=0; i<JsonTeamMemberList.length; i++) {
+        let teamMemberListLi = $("<li>");
+        let teamMemberListImg = $("<img>");
+        let teamMemberListSpan1 = $("<span>");
+        let teamMemberListSpan2 = $("<span>");
+        teamMemberListImg.attr("src",JsonTeamMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonTeamMemberList[i].memberImgSysName);
+        teamMemberListLi.append(teamMemberListImg);
+        teamMemberListSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
+        teamMemberListLi.append(teamMemberListSpan1);
+        teamMemberListSpan2.text(JsonTeamMemberList[i].grade);
+        teamMemberListLi.append(teamMemberListSpan2);
+        $("#teamMemberList").append(teamMemberListLi);
+      }
+    })
+  })
+</script>
+
 <script>
-  // 채팅방 목록에서 채팅방 클릭시 해당 채팅방으로 이동
-  // $(".chatRoomList").on("click", function() {
-  //     console.log($(this).text());
-  //     let chatForm = $("<form>");
-  //     chatForm.attr("method","post");
-  //     chatForm.attr("action","/chatRoom/join");
-  //     let inputJoin = $("<input>");
-  //     inputJoin.attr("type","hidden");
-  //     inputJoin.attr("name","chatRoomSeq");
-  //     inputJoin.attr("value", $(this).text());
-  //     chatForm.append(inputJoin);
-  //     console.log(chatForm);
-  //     chatForm.submit();
-  // })
+  //팀목록을 출력해주는 ajax호출
+  $.ajax({
+    type:"post",
+    url:"/team/teamList"
+  }).done(function (resp){
+    let teamList = JSON.parse(resp);
+    for (let i=0; i<teamList.length; i++) {
+      let teamListLi = $("<li>");
+      let teamListForm = $("<form>");
+      let teamListInput = $("<input>");
+      teamListInput.attr("type","hidden");
+      teamListInput.val(teamList[i].teamSeq);
+      teamListInput.attr("name", "teamSeq");
+      teamListForm.attr("action", "/team/goTeam");
+      teamListForm.attr("method", "post");
+      teamListForm.append(teamListInput);
+      teamListLi.text(teamList[i].teamName);
+      teamListLi.append(teamListForm);
+      teamListLi.addClass("goTeam");
+      $("#dropdownList").append(teamListLi);
+    }
+  });
+
+  //팀원 목록을 출력해주는 ajax호출
+  // $.ajax({
+  //   type:"post",
+  //   url:"team/teamMemberList",
+  // });
+
+  //팀 이동 클릭이벤트
+  $(document).on("click", ".goTeam", function (){
+    //console.log();
+    $(this).children("form").submit();
+  })
+
   $(".chatRoomList").on("click", function() {
     $(this).find(".chatForm").submit();
   })
@@ -353,6 +373,5 @@
     $(arg).parent().parent().parent().css("display","none");
   }
 </script>
-
 </body>
 </html>

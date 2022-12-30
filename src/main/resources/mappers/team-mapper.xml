@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fivet.buddy.mapper.TeamMapper">
 
-<!--    팀 생성 후 teamSeq값을 teamDto에 set-->
+    <!--    팀 생성 후 teamSeq값을 teamDto에 set-->
     <insert id="insertTeam">
         insert into
             team
@@ -15,7 +15,7 @@
         </selectKey>
     </insert>
 
-<!--    회원이 속한 팀 출력-->
+    <!--    회원이 속한 팀 출력-->
     <select id="selectMemberTeam" resultType="com.fivet.buddy.dto.TeamDTO">
         select
             t.TEAM_SEQ, t.TEAM_NAME, t.TEAM_OWNER_SEQ
@@ -28,23 +28,13 @@
         order by 1
     </select>
 
-    <!--팀 관리 멤버 출력 -->
-    <select id="managementTeamSelectTeamMember" resultType="com.fivet.buddy.dto.TeamMemberDTO">
-        select * from team_member where team_seq = #{value}
-        order by case
-        when grade='manager' then 1
-        when grade='subManager' then 2
-        when grade='coworker' then 3
-        end, member_seq asc
-    </select>
-
     <!-- 팀 관리 팀 이름 출력-->
-    <select id="managementTeamSelectTeam" resultType="com.fivet.buddy.dto.TeamDTO">
-        select team_name, team_seq from team where team_seq = #{value}
+    <select id="selectTeamOne" resultType="com.fivet.buddy.dto.TeamDTO">
+        select * from team where team_seq = #{value}
     </select>
 
     <!-- 팀 관리 팀 이름 수정 -->
-    <update id="managementUpdateTeamName">
+    <update id="updateManagementTeamName">
         update team set team_name = #{teamName} where team_seq = #{teamSeq}
     </update>
 
@@ -52,7 +42,19 @@
     <delete id="deleteTeam">
         delete from team where team_seq = #{value}
     </delete>
+
+    <!--    팀 번호로 팀 이름 검색-->
     <select id="selectTeamName" resultType="String">
         select team_name from team where team_seq = #{value}
     </select>
+
+    <!-- 팀 관리에서 매니저가 바뀌면 team_owner_seq 변경 -->
+    <update id="updateTeamOwnerSeq">
+        update team set team_owner_seq=#{newManagerSeq} where team_owner_seq = #{manageSeq} and team_seq= #{teamSeq}
+    </update>
+
+    <!--    새로운 팀원 추가시, 팀 인원수가 1 증가-->
+    <update id="updatePlusTeamCount">
+        update team set team_count = team_count+1 where team_seq = #{teamSeq}
+    </update>
 </mapper>

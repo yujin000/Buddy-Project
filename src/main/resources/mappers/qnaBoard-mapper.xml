@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fivet.buddy.mapper.QnaBoardMapper">
+
+    <insert id="insert">
+        insert into qna_board values(qna_seq.nextval,#{qnaWriter},#{qnaTitle},#{qnaContents},sysdate,#{qnaType})
+
+        <selectKey order="AFTER" keyProperty="qnaSeq" resultType="int">
+            select qna_seq.currval from dual
+        </selectKey>
+    </insert>
+
+    <!-- 회원 본인의 문의글 출력   -->
+    <select id="select" resultType="com.fivet.buddy.dto.QnaDTO">
+        select * from qna_board where qna_writer = #{qnaWriter} order by qna_seq desc
+    </select>
+
+    <!--    문의글 본문보기-->
+    <select id="selectDetail" resultType="com.fivet.buddy.dto.QnaDTO">
+        select * from qna_board where qna_seq = #{qnaSeq}
+    </select>
+
+    <!--    1:1문의내역보기(관리자)-->
+    <select id="selectQnaBoardAll" resultType="com.fivet.buddy.dto.QnaDTO">
+        select * from qna_board order by 1 desc
+    </select>
+</mapper>

@@ -16,10 +16,14 @@ public class FileHandler implements WebMvcConfigurer{
     @Value("${notice.root.path}")
     String noticePath;
 
+    @Value("file:///C:/files/emoticon/")
+    String emoticonPath;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/qnaImg/**").addResourceLocations(qnaPath);
         registry.addResourceHandler("/noticeImg/**").addResourceLocations(noticePath);
         registry.addResourceHandler("/member/selectProfileImg/**").addResourceLocations(profilePath);
+        registry.addResourceHandler("/emoticon/**").addResourceLocations(emoticonPath);
     }
 }

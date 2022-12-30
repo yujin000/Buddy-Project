@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,5 +18,6 @@ public class PersonalFileDTO {
     private int personalFilesMemberSeq;
     private String personalFilesFolderKey;
     private String personalFilesPath;
-    private int personalFilesByte;
+    private long personalFilesByte;
+    private Timestamp personalFilesDate;
 }

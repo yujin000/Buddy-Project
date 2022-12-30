@@ -19,4 +19,5 @@ public class PersonalFolderDTO {
     private String personalFolderPath;
     private Timestamp personalFolderDate;
     private String personalFolderShared;
+    private long personalFolderByte;
 }

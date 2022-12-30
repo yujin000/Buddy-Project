@@ -93,35 +93,10 @@
               <span>번호</span><span>제목</span><span>작성자</span
             ><span>작성일</span><span>삭제</span>
             </li>
-            <li class="tdata">
-              <span>1</span><span>company</span><span>kh@gmail.com</span
-            ><span>010-1234-1234</span>
-              <span><button class="delData">del</button></span>
-            </li>
-            <li class="tdata">
-              <span>1</span><span>company</span><span>kh@gmail.com</span
-            ><span>010-1234-1234</span>
-              <span><button class="delData">del</button></span>
-            </li>
-            <li class="tdata">
-              <span>1</span><span>company</span><span>kh@gmail.com</span
-            ><span>010-1234-1234</span>
-              <span><button class="delData">del</button></span>
-            </li>
-            <li class="tdata">
-              <span>1</span><span>company</span><span>kh@gmail.com</span
-            ><span>010-1234-1234</span>
-              <span><button class="delData">del</button></span>
-            </li>
-            <li class="tdata">
-              <span>1</span><span>company</span><span>kh@gmail.com</span
-            ><span>010-1234-1234</span>
-              <span><button class="delData">del</button></span>
-            </li>
-            <li class="tdata">
-              <span>1</span><span>company</span><span>kh@gmail.com</span
-            ><span>010-1234-1234</span>
-              <span><button class="delData">del</button></span>
+            <li class="tdata" th:each="noticeBoardList : ${noticeBoardList}">
+              <span>[[${noticeBoardList.noticeSeq}]]</span><span>[[${noticeBoardList.noticeTitle}]]</span><span>[[${noticeBoardList.noticeWriter}]]</span
+            ><span>[[${noticeBoardList.noticeWriteDate}]]</span>
+              <span><button class="delData" th:data-index="${noticeBoardList.noticeSeq}">del</button></span>
             </li>
           </ul>
           <hr />
@@ -144,6 +119,13 @@
     .
   </div>
 </div>
+
+<script>
+  // $(".delData").on("click", function (){
+  //   $.ajax()
+  // })
+</script>
+
 <script>
   $(document).ready(function () {
     let result = $("body").css("max-width", "600px");

@@ -8,6 +8,7 @@ import com.fivet.buddy.services.NoticeFileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -46,8 +47,10 @@ public class NoticeBoardController {
 
     //공지 관리 페이지로 이동.
     @RequestMapping("toAdminNotice")
-    public String toAdminNotice() {
+    public String toAdminNotice(Model model) throws Exception {
         if (session.getAttribute("memberLogtype").equals("admin")) {
+            List<NoticeBoardDTO> noticeBoardList = noticeBoardService.selectNotice();
+            model.addAttribute("noticeBoardList", noticeBoardList);
             return "/admin/adminNotice";
         } else {
             return "error";
@@ -67,7 +70,8 @@ public class NoticeBoardController {
     //공지사항 글쓰기
     @RequestMapping("insertNotice")
     public String insertNotice(NoticeBoardDTO noticeBoardDto) {
+        noticeBoardDto.setNoticeWriter((int)session.getAttribute("memberSeq"));
         noticeBoardService.insertNotice(noticeBoardDto);
-        return "/admin/adminNotice";
+        return "redirect:/notice/toAdminNotice";
     }
 }

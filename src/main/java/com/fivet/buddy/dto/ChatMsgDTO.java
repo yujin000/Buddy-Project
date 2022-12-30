@@ -18,5 +18,6 @@ public class ChatMsgDTO {
     private String chatContent;
     private int memberSeq;
     private int readCount;
+    private int chatMsgType;
     private Timestamp chatDate;
 }

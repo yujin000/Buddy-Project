@@ -111,23 +111,73 @@
       updateScroll();
     }
 
+    let file = $("#uploadfile").val();
     $("#inputMsg").on("keydown", function(e) {
       if (e.keyCode == 13) {
-
-        // Json 생성
-        let wsJson = {
-          "chatRoomSeq" : chatRoomSeq,
-          "teamMemberNickname" : teamMemberNickname,
-          "chatContent" : $(this).val(),
-          "memberSeq" : memberSeq,
-        };
-        //JSON 전송
-        $(this).val("");
-        ws.send(JSON.stringify(wsJson));
-        return false;
+        if(file == "") {
+          // Json 생성
+          let wsJson = {
+            "chatRoomSeq": chatRoomSeq,
+            "teamMemberNickname": teamMemberNickname,
+            "chatContent": $(this).val(),
+            "memberSeq": memberSeq,
+            "chatMsgType": 0
+          };
+          //JSON 전송
+          $(this).val("");
+          ws.send(JSON.stringify(wsJson));
+          return false;
+        }
       }
     });
 
+    $(".fileSubmitBtn").on('change', attachType);
+
+          function attachType(e) {
+            let filef = $("#uploadFile")[0].files[0];
+            let fileSize = filef.size;
+            let maxFileSize = 10 * 1024 * 1024;
+
+            let extension = this.value.split(".").pop().toLowerCase();
+            let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip"];
+            let result = $.inArray(extension, accept);
+
+            if (fileSize > maxFileSize) {
+              alert("첨부하려는 '" + filef.name + "' 파일은 용량이 너무 큽니다. \n 업로드 할 수 있는 최대 용량은 '10 MB' 입니다.");
+              this.value = "";
+            }
+            if (result == -1) {
+              alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .xls, .ppt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip)");
+              this.value = "";
+            }
+          }
+            if (this.value) {
+              $.ajax({
+                type: "POST",
+                url: "/chatFile/insert",
+                data: new FormData($("#uploadfile")[0]),
+                processData: false,
+                contentType: false,
+                success: function (rsp) {
+                  console.log(rsp);
+                }
+              });
+            }
+            if (file != "") {
+              // // Json 생성
+              // let wsJson = {
+              //   "chatRoomSeq": chatRoomSeq,
+              //   "teamMemberNickname": teamMemberNickname,
+              //   "chatContent": $(this).val(),
+              //   "memberSeq": memberSeq,
+              //   "chatMsgType": 1
+              // };
+              // //JSON 전송
+              // $(this).val("");
+              // ws.send(JSON.stringify(wsJson));
+              // return false;
+            }
+  });
     //팀원 목록 출력 ajax
     $.ajax({
       url:"/team/teamMemberList",
@@ -270,9 +320,10 @@
           <div class="msg">
             [[${chatMsgList.teamMemberNickname}]]
             <br>
-            [[${chatMsgList.chatContent}]]
-            <br>
+            <div th:if="${chatMsgList.chatMsgType == 0}" th:text="${chatMsgList.chatContent}"></div>
+            <div th:if="${chatMsgList.chatMsgType == 1}" th:utext="${chatMsgList.chatContent}"></div>
             [[${chatMsgList.chatDate}]]
+            <br>
           </div>
         </th:block>
       </div>
@@ -300,9 +351,9 @@
             <div class="fileContents">
               <input
                       type="file"
-                      name="inputFile"
-                      id="inputFile"
-                      class="inputFile"
+                      name="uploadfile"
+                      id="uploadfile"
+                      class="uploadfile"
               />
               <button type="button" class="fileSubmitBtn" style="height: 30px">보내기</button>
             </div>
@@ -375,7 +426,6 @@
     location.href="/drive/toFileDrive";
   });
 </script>
-
 
 </body>
 </html>

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class ChatFilesDTO {
     private int chatFilesSeq;
     private String chatOriName;
-    private String SysName;
-    private int Seq;
+    private String chatSysName;
+    private int chatRoomSeq;
+    private int chatMsgSeq;
 }

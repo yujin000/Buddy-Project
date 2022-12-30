@@ -29,10 +29,10 @@ public class QnaBoardController {
     private QnaCommentService qnaCommentService;
 
     @Autowired
-    private NoticeService noticeService;
+    private HttpSession session;
 
     @Autowired
-    private HttpSession session;
+    private NoticeBoardService noticeBoardService;
 
     @Value("${qna.save.path}")
     String qnaPath;
@@ -47,7 +47,7 @@ public class QnaBoardController {
     @RequestMapping("main")
     public String select(Model model) throws Exception {
         int qnaWriter = (int) session.getAttribute("memberSeq");
-        List<NoticeDTO> noticeDto = noticeService.select();
+        List<NoticeBoardDTO> noticeDto = noticeBoardService.selectNotice();
         List<QnaDTO> qnaDto = qnaBoardService.select(qnaWriter);
         model.addAttribute("qna", qnaDto);
         model.addAttribute("notice", noticeDto);

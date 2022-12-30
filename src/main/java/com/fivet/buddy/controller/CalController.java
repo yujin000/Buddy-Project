@@ -11,11 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/calendar/")
@@ -62,9 +62,18 @@ public class CalController {
 
     @RequestMapping("deleteEvent")
     public String deleteEvent(CalDTO calDto) throws Exception{
+
+        String writer = calDto.getEventWriter();
+        String Session = (String) session.getAttribute("teamMemberNickname");
+        boolean result = Objects.equals(writer, Session);
+        if (result){
         calDto.setEventWriter((String) session.getAttribute("teamMemberNickname"));
         calService.deleteEvent(calDto);
         return "redirect:/calendar/moveCalendar";
+
+        }else {
+                return "/calendar/sessionError";
+        }
     }
 
 

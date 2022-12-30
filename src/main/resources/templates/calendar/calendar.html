@@ -51,7 +51,7 @@
                     dayMaxEvents: true,
                     //Whether or not to display a marker indicating the current time.
                     nowIndicator :true,
-                    eventClick: function (arg,el) {
+                    eventClick: function (arg) {
 
                         const seq = arg.event.extendedProps.seq;
                         const title = arg.event.title;
@@ -75,7 +75,13 @@
 
 
                         if (type === "team"){
-                            $("#eventColor").attr("readonly",true);
+                            $("#eventColor").attr("disabled",true);
+                            $("#eventType").attr("disabled",true);
+                            $("#teamColor").css("display","block");
+                        }else {
+                            $("#teamColor").css("display","none");
+                            $("#eventColor").attr("disabled",false);
+                            $("eventColor").val("blue");
                         }
                         $("#eventType").val(type);
                         $("#eventSeq").val(seq);
@@ -132,6 +138,8 @@
                         $("#updateBtn").css("display","none");
                         $("#delBtn").css("display","none");
                         $("#submitBtn").css("display","block");
+                        $("#eventColor").attr("disabled",false);
+                        $("#eventType").attr("disabled",false);
 
                         $("#eventSeq").val("");
                         $("#eventType").val("team");
@@ -157,6 +165,7 @@
                             $("#eventStart").val(startFormat);
                             $("#eventEnd").val(timezoneFormat(end));
                         }
+
                         console.log(monthViewTrue);
                         console.log(startFormat);
                         console.log(endFormat);
@@ -255,13 +264,13 @@
                 </button>
                 <form action="/calendar/insertEvent" id="form" method="post">
                     <select name="eventColor" id="eventColor" class="eventSelect" onchange="selectColor(value)" data-placeholder="색상">
-                        <option value="purple" style="background: purple" >team</option>
+                        <option value="purple" style="background: purple" id="teamColor">team</option>
                         <option value="blue" style="background: blue">blue</option>
                         <option value="red" style="background: red">red</option>
                         <option value="green" style="background: green">green</option>
                         <option value="black" style="background: black">black</option>
                     </select>
-                    <select name="eventType" id="eventType" class="eventSelect">
+                    <select name="eventType" id="eventType" class="eventSelect" onchange="selectType(value)">
                         <option value="team">팀 캘린더</option>
                         <option value="private">개인 캘린더</option>
                     </select>
@@ -350,36 +359,19 @@
         $("#eventColor").css("background-color",arg);
     }
 
+    function selectType() {
+        let type = $("#eventType").val();
 
-
-
-    // function clicked(e) {
-    //     const origin = window.getComputedStyle(e,null).getPropertyValue("background");
-    //     const black = "rgb(0,0,0)";
-    //
-    //     console.log(origin);
-    //
-    //     if(origin !== black){
-    //     e.style.background = "rgb(0,0,0)";
-    //     e.style.color = "rgb(255,255,255)";
-    //     } else if(origin === black){
-    //         console.log(origin);
-    //         e.style.background = "rgb(255,255,255)";
-    //         e.style.color = "rgb(0,0,0)";
-    //     } else {
-    //         console.log("error");
-    //     }
-    //     // let elem = document.getElementById('test');
-    //     // let ht = window.getComputedStyle(elem, null).getPropertyValue("height");
-    //     // console.log(ht)
-    //
-    //     // if(origin === "rgb(255 ,255,255)"){
-    //     // e.style.background = "rgb(0,0,0)";
-    //     // e.style.color = "rgb(255,255,255)";
-    //     // }else {
-    //     //     e.style.background = "rgb(255,255,255)";
-    //     //     e.style.color = "rgb(0,0,0)";
-    //     // }
+        if (type === "team"){
+            $("#eventColor").val("purple");
+            $("#eventColor").css("background-color","purple");
+            $('#teamColor').css("display","block");
+        }else {
+            $("#eventColor").val("blue");
+            $("#eventColor").css("background-color","blue");
+            $('#teamColor').css("display","none");
+        }
+    }
 
 </script>
 </body>

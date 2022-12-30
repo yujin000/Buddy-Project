@@ -3,6 +3,7 @@ package com.fivet.buddy.util;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.io.InputStreamResource;
@@ -71,20 +72,15 @@ public class FileUtil {
     }
 
     // 폴더 삭제
-    public void deleteFolder(String path) {
-        File folder = new File(path);
-        if (folder.exists() && folder.isDirectory()) {
-            File[] files = folder.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isDirectory()) {
-                        deleteFolder(file.getAbsolutePath());
-                    } else {
-                        file.delete();
-                    }
-                }
+    public void deleteFolder(String path){
+        String pathh = "C:/files/n7t5h09557z0xs6k5ywr강예찬/";
+        File file = new File(pathh);
+        if (file.exists()) {
+            try {
+                FileUtils.deleteDirectory(file);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            folder.delete();
         }
     }
 

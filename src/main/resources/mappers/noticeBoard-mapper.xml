@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fivet.buddy.mapper.NoticeBoardMapper">
+
+    <!-- 공지글 내역 출력   -->
+    <select id="selectNotice" resultType="com.fivet.buddy.dto.NoticeBoardDTO">
+        select * from notice_board order by notice_seq desc
+    </select>
+    
+    <insert id="insertNotice">
+        insert into notice_board values(notice_seq.nextval, #{noticeWriter}, #{noticeTitle}, #{noticeContents}, sysdate)
+    </insert>
+</mapper>

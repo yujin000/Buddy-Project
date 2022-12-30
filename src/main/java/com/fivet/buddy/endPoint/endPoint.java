@@ -42,7 +42,7 @@ public class endPoint {
 
         chatMsgService.insertChatMsg(chatMsgDto);
         //스크립트 어택 방지
-        chatMsgDto.setChatContent(chatMsgDto.getChatContent().replace("<", "&lt;"));
+        //chatMsgDto.setChatContent(chatMsgDto.getChatContent().replace("<", "&lt;"));
 
         for(Session s : sessions.get(chatMsgDto.getChatRoomSeq())) {
             s.getBasicRemote().sendText(g.toJson(chatMsgDto));

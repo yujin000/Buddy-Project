@@ -80,7 +80,7 @@
                     <span class="date">날짜 : [[${notice.noticeWriteDate}]]</span>
                     <div class="hidden">
                         <img src="" class="noticeSysName" style="width: 500px">
-                        <div class="noticeContent" contenteditable="false" th:text="${notice.noticeContents}">
+                        <div class="noticeContent" contenteditable="false" th:utext="${notice.noticeContents}">
                         </div>
                     </div>
                 </li>

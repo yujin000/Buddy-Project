@@ -5,6 +5,7 @@ import com.fivet.buddy.mapper.BasicFolderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -21,5 +22,34 @@ public class BasicFolderDAO {
     // 기본 폴더에 있는 폴더 key값 가져오기
     public String myBasicFolder(int memberSeq) throws Exception{
         return basicFolderMapper.myBasicFolder(memberSeq);
+    }
+
+    // 파일 업로드
+    public void uploadByte(Map<String,Object> map) {
+        basicFolderMapper.uploadByte(map);
+    }
+
+    // 사용 용량
+    public long myVolume(int memberSeq) {
+        return basicFolderMapper.myVolume(memberSeq);
+    }
+
+    // 사용 용량 제거
+    public long deleteFileByte(Map<String, String> sendMap) {
+        return basicFolderMapper.deleteFileByte(sendMap);
+    }
+
+    // 기본 폴더 제거
+    public void memberOut(int memberSeq) {
+        basicFolderMapper.memberOut(memberSeq);
+    }
+
+    public String selectBasicKey(int memberSeq) {
+        return basicFolderMapper.selectBasicKey(memberSeq);
+    }
+
+    // 폴더 삭제시 용량 제거
+    public void deleteFolderByte(Map<String, Object> sendMap) {
+        basicFolderMapper.deleteFolderByte(sendMap);
     }
 }

@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NoticeDTO {
+public class NoticeBoardDTO {
     private int noticeSeq;
     private int noticeWriter;
     private String noticeTitle;

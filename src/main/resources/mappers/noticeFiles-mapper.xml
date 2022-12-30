@@ -3,14 +3,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fivet.buddy.mapper.NoticeMapper">
+<mapper namespace="com.fivet.buddy.mapper.NoticeFileMapper">
 
-    <select id="select" resultType="com.fivet.buddy.dto.NoticeDTO">
-        select * from notice_board order by notice_seq desc
-    </select>
-
+    <!--    파일 목록 출력-->
     <select id="selectFile" resultType="com.fivet.buddy.dto.NoticeFileDTO">
         select * from notice_files where notice_seq = #{noticeSeq}
     </select>
-
 </mapper>

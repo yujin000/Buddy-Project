@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class QnaDTO {
+public class QnaBoardDTO {
 private int qnaSeq;
 private int qnaWriter;
 private String qnaTitle;

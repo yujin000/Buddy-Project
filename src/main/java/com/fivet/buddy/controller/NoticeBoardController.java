@@ -29,6 +29,7 @@ public class NoticeBoardController {
     @Autowired
     private NoticeBoardService noticeBoardService;
 
+    //공지글 보기(회원)
     @ResponseBody
     @RequestMapping("detail")
     public List<Map<String,String>> selectDetail(int noticeSeq) throws Exception{

@@ -24,7 +24,7 @@
     </select>
 
     <delete id="deleteEvent">
-        delete event where "event_seq" = #{eventSeq} and "event_writer" = #{eventWriter}
+        delete event where "event_seq" = #{value}
     </delete>
 
     <update id="updateEvent">

@@ -71,32 +71,45 @@
                         $("#updateBtn").css("display","block");
                         $("#delBtn").css("display","block");
                         $("#submitBtn").css("display","none");
+                        $("#closeBtn").css("display","block");
                         $("#eventWriter").attr("type","text");
 
+                        $("#eventColor").attr("disabled",true);
+                        $("#eventType").attr("disabled",true);
 
-                        if (type === "team"){
-                            $("#eventColor").attr("disabled",true);
-                            $("#eventType").attr("disabled",true);
-                            $("#teamColor").css("display","block");
-                        }else {
+                        if (type !== "team"){
                             $("#teamColor").css("display","none");
                             $("#eventColor").attr("disabled",false);
-                            $("eventColor").val("blue");
+                            $("#eventColor").val(color);
                         }
+
+                        // function dateFormat(d){
+                        //     let offset = d.getTimezoneOffset() * 60000;
+                        //     const day = 8.64e+7; // 하루만큼에 시간을 **밀리초**단위로 계산한 값
+                        //     let dateOffset = new Date(d.getTime() - offset - day);
+                        //     let iso = dateOffset.toISOString();
+                        //     return iso.substring(0, 16);
+                        // }
+                        //
+                        function  timeFormat(t) {
+                            return t.toISOString().substring(0,16);
+                        }
+
                         $("#eventType").val(type);
                         $("#eventSeq").val(seq);
                         $("#eventName").val(title);
                         $("#eventWriter").val(writer);
                         $("#eventMemo").val(memo);
                         $("#eventLocation").val(location);
-                        $("#eventStart").attr("data-placeholder",eventStart.toLocaleDateString());
-                        $("#eventStart").val(eventStart);
-                        $("#eventEnd").attr("data-placeholder",eventEnd.toLocaleDateString());
-                        $("#eventEnd").val(eventEnd);
+                        $("#eventStart").attr("data-placeholder",timeFormat(eventStart));
+                        $("#eventStart").val(timeFormat(eventStart));
+                        $("#eventEnd").attr("data-placeholder",timeFormat(eventEnd));
+                        $("#eventEnd").val(timeFormat(eventEnd));
                         $("#eventColor").val(color);
                         $("#eventColor").css("background-color",color);
-                        console.log(eventStart);
-                        console.log(eventEnd);
+                        console.log($("#eventSeq").val());
+                        console.log(timeFormat(eventStart));
+                        console.log(timeFormat(eventEnd));
 
                     },
                     // date click event 날짜 클릭 이벤트
@@ -138,6 +151,7 @@
                         $("#updateBtn").css("display","none");
                         $("#delBtn").css("display","none");
                         $("#submitBtn").css("display","block");
+                        $("#closeBtn").css("display","block");
                         $("#eventColor").attr("disabled",false);
                         $("#eventType").attr("disabled",false);
 
@@ -262,13 +276,15 @@
                 <button id="formToggle" type="button" class="formToggle">
                     일정추가 +
                 </button>
+
+
                 <form action="/calendar/insertEvent" id="form" method="post">
                     <select name="eventColor" id="eventColor" class="eventSelect" onchange="selectColor(value)" data-placeholder="색상">
                         <option value="purple" style="background: purple" id="teamColor">team</option>
-                        <option value="blue" style="background: blue">blue</option>
-                        <option value="red" style="background: red">red</option>
-                        <option value="green" style="background: green">green</option>
-                        <option value="black" style="background: black">black</option>
+                        <option value="blue" id="blue" style="background: blue">blue</option>
+                        <option value="red" id="red" style="background: red">red</option>
+                        <option value="green" id="green" style="background: green">green</option>
+                        <option value="black"  id="black" style="background: black">black</option>
                     </select>
                     <select name="eventType" id="eventType" class="eventSelect" onchange="selectType(value)">
                         <option value="team">팀 캘린더</option>
@@ -284,10 +300,13 @@
                     <button type="submit" id="submitBtn" class="modalBtn">
                         완료
                     </button>
+                </form>
+                <div class="btns" style="display: none">
                     <button type="submit" id="updateBtn" class="modalBtn" onclick="update()" style="display: none">수정</button>
                     <button type="submit" id="delBtn" class="modalBtn" onclick="del()" style="display: none">삭제</button>
-                    <button type="button" id="closeBtn" class="modalBtn" onclick="window.location.reload()">취소</button>
-                </form>
+                    <button type="button" id="closeBtn" class="modalBtn" onclick="window.location.reload()" style="display: none">취소</button>
+
+                </div>
             </div>
 
         </div>
@@ -309,6 +328,7 @@
         // 일정추가 토글 동작
         $("#formToggle").click(function (){
             $("#form").toggle();
+            $("#btns").toggle();
         })
 
     })
@@ -321,8 +341,12 @@
     function del() {
         const seq = $("#eventSeq").val();
         const name = $("#eventName").val();
-        if (confirm(name+"일정을 삭제하시겠습니까?")){
-            location.href ="/calendar/deleteEvent?eventSeq="+seq;
+        const writer = document.querySelector("#eventWriter").value;
+        console.log(writer);
+        console.log(seq);
+        if (confirm("<"+name+">"+"일정을 삭제하시겠습니까?")){
+            $("#eventWriter").attr("disabled",false);
+            location.href ="/calendar/deleteEvent?eventSeq="+seq+"&eventWriter="+writer;
         }
     }
     // 업데이트 기능
@@ -348,11 +372,11 @@
         })
         console.log(event);
         console.log(event[0].seq);
-        // location.href ="/calendar/updateEvent?eventSeq="+seq
-        //     +"&eventType"+type+"&eventTitle"+title+
-        //     +"&eventStart"+eventStart+
-        //     "&eventEnd"+eventEnd+"&eventLocation"+eventLocation+
-        //     "&eventMemo"+eventMemo+"&eventColor"+eventColor;
+        location.href ="/calendar/updateEvent?eventSeq="+seq
+            +"&eventType="+type+"&eventTitle="+title+
+            +"&eventStart="+eventStart+
+            "&eventEnd="+eventEnd+"&eventLocation="+eventLocation+
+            "&eventMemo="+eventMemo+"&eventColor="+eventColor;
     }
 
     function selectColor(arg) {
@@ -360,17 +384,27 @@
     }
 
     function selectType() {
+
         let type = $("#eventType").val();
 
         if (type === "team"){
             $("#eventColor").val("purple");
             $("#eventColor").css("background-color","purple");
             $('#teamColor').css("display","block");
+            $("#blue").css("display","none");
+            $("#red").css("display","none");
+            $("#green").css("display","none");
+            $("#black").css("display","none");
         }else {
             $("#eventColor").val("blue");
             $("#eventColor").css("background-color","blue");
             $('#teamColor').css("display","none");
+            $("#blue").css("display","block");
+            $("#red").css("display","block");
+            $("#green").css("display","block");
+            $("#black").css("display","block");
         }
+
     }
 
 </script>

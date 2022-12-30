@@ -9,9 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -60,15 +58,13 @@ public class CalController {
             return list;
     }
 
-    @RequestMapping("deleteEvent")
-    public String deleteEvent(CalDTO calDto) throws Exception{
-
-        String writer = calDto.getEventWriter();
+    @GetMapping("deleteEvent")
+    public String deleteEvent(int eventSeq , String eventWriter ) throws Exception{
         String Session = (String) session.getAttribute("teamMemberNickname");
-        boolean result = Objects.equals(writer, Session);
+        boolean result = Objects.equals(eventWriter, Session);
+        System.out.println(eventSeq);
         if (result){
-        calDto.setEventWriter((String) session.getAttribute("teamMemberNickname"));
-        calService.deleteEvent(calDto);
+        calService.deleteEvent(eventSeq);
         return "redirect:/calendar/moveCalendar";
 
         }else {

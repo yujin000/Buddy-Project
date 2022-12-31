@@ -28,6 +28,10 @@ public class CalService {
         return calDao.selectPrivate(teamSeq);
     }
 
+    public String selectGrade(String teamMemberNickname) throws Exception{
+        return calDao.selectGrade(teamMemberNickname);
+    }
+
     public void deleteEvent(int eventSeq) throws Exception{
         calDao.deleteEvent(eventSeq);
         }

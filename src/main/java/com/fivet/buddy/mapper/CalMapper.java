@@ -15,6 +15,8 @@ public interface CalMapper {
     List<CalDTO> selectTeam(int teamSeq);
     List<CalDTO> selectPrivate(int teamSeq);
 
+    String selectGrade(String teamMemberNickname);
+
     void deleteEvent(int eventSeq);
 
     void updateEvent(CalDTO calDto);

@@ -32,6 +32,10 @@
         select * from event where "team_seq" = #{teamSeq} and "event_type" = '개인'
     </select>
 
+    <select id="selectGrade" resultType="String">
+        select GRADE from TEAM_MEMBER where "TEAM_MEMBER_NICKNAME" = #{value}
+    </select>
+
     <delete id="deleteEvent">
         delete event where "event_seq" = #{value}
     </delete>

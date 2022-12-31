@@ -1,7 +1,10 @@
 package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.CalDTO;
-import com.fivet.buddy.services.CalService;
+import com.fivet.buddy.dto.ChatRoomDTO;
+import com.fivet.buddy.dto.TeamMemberDTO;
+import com.fivet.buddy.dto.TeamMemberListDTO;
+import com.fivet.buddy.services.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
@@ -12,8 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Controller
 @RequestMapping("/calendar/")
@@ -24,6 +26,8 @@ public class CalController {
 
     @Autowired
     private HttpSession session;
+
+
 
     private Logger logger = LoggerFactory.getLogger(CalController.class);
 
@@ -46,7 +50,7 @@ public class CalController {
         if ((Integer) session.getAttribute("teamSeq") != null ){
         return "calendar/calendar";
         }
-        return "index";
+        return "error";
     }
 
     @RequestMapping(value = "goPrivate")
@@ -64,6 +68,7 @@ public class CalController {
         }
         return "index";
     }
+
     @ResponseBody
     @RequestMapping (value = "selectAll" , produces = "text/html;charset=utf8")
     public String selectAll(Model model) throws Exception{
@@ -96,7 +101,21 @@ public class CalController {
         return list;
     }
 
-
+    @GetMapping("selectGrade")
+    public String selectGrade(int eventSeq) throws Exception{
+        String grade = calService.selectGrade(session.getAttribute("teamMemberNickname").toString());
+        String manager = "manager";
+        System.out.println(grade);
+        System.out.println(manager);
+        System.out.println(eventSeq);
+        boolean result =  Objects.equals(grade, manager);
+        if (result){
+            calService.deleteEvent(eventSeq);
+            return "redirect:/calendar/moveCalendar";
+        }else {
+            return "/calendar/sessionError";
+        }
+    }
     @GetMapping("deleteEvent")
     public String deleteEvent(int eventSeq , String eventWriter ) throws Exception{
         String Session = session.getAttribute("teamMemberNickname").toString();

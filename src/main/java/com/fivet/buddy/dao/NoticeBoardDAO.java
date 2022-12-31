@@ -30,4 +30,5 @@ public class NoticeBoardDAO {
     public NoticeBoardDTO noticeDetail(int noticeSeq) {
         return noticeBoardMapper.noticeDetail(noticeSeq);
     }
+    public void updateNotice(NoticeBoardDTO noticeBoardDto) { noticeBoardMapper.updateNotice(noticeBoardDto); }
 }

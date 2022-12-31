@@ -23,4 +23,9 @@
     <select id="noticeDetail" resultType="com.fivet.buddy.dto.NoticeBoardDTO">
         select * from notice_board where notice_seq = #{value}
     </select>
+
+    <!-- 공지글 수정   -->
+    <update id="updateNotice">
+        update notice_board set notice_title = #{noticeTitle}, notice_contents = #{noticeContents} where notice_seq = #{noticeSeq}
+    </update>
 </mapper>

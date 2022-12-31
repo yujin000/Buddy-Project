@@ -33,4 +33,7 @@ public class NoticeBoardService {
         return noticeBoardDao.noticeDetail(noticeSeq);
     }
 
+    //공지굴 수정
+    public void updateNotice(NoticeBoardDTO noticeBoardDto) { noticeBoardDao.updateNotice(noticeBoardDto); }
+
 }

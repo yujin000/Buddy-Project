@@ -1,7 +1,5 @@
 package com.fivet.buddy.controller;
 
-import com.fivet.buddy.dao.NoticeBoardDAO;
-import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.NoticeBoardDTO;
 import com.fivet.buddy.dto.NoticeFileDTO;
 import com.fivet.buddy.services.MemberService;
@@ -12,12 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +55,7 @@ public class NoticeBoardController {
         if (session.getAttribute("memberLogtype").equals("admin")) {
             List<NoticeBoardDTO> noticeBoardList = noticeBoardService.selectNotice();
             model.addAttribute("noticeBoardList", noticeBoardList);
-            return "/admin/adminNotice";
+            return "/admin/adminNotice/adminNotice";
         } else {
             return "error";
         }
@@ -69,7 +65,7 @@ public class NoticeBoardController {
     @RequestMapping("toAdminNoticeWrite")
     public String toAdminNoticeWrite() {
         if (session.getAttribute("memberLogtype").equals("admin")) {
-            return "/admin/adminNoticeWrite";
+            return "/admin/adminNotice/adminNoticeWrite";
         } else {
             return "error";
         }
@@ -82,7 +78,7 @@ public class NoticeBoardController {
         noticeBoardDto.setNoticeWriterName(session.getAttribute("memberName").toString());
         noticeBoardDto.setNoticeContents(noticeBoardDto.getNoticeContents().replace("<script>","&lt;script>"));
         noticeBoardService.insertNotice(noticeBoardDto);
-        return "redirect:/notice/toAdminNotice";
+        return "redirect:/notice/adminNotice/toAdminNotice";
     }
 
     //공지사항 삭제
@@ -97,10 +93,28 @@ public class NoticeBoardController {
     public String adminNoticeDetail(int noticeSeq, Model model){
         if (session.getAttribute("memberLogtype").equals("admin")) {
             model.addAttribute("notice", noticeBoardService.noticeDetail(noticeSeq));
-            return "/admin/adminNoticeDetail";
+            return "/admin/adminNotice/adminNoticeDetail";
         } else {
             return "error";
         }
+    }
 
+    // 공지글 수정화면으로 가기
+    @RequestMapping("toNoticeModify")
+    public String adminNoticeModify(int noticeSeq, Model model) {
+        if (session.getAttribute("memberLogtype").equals("admin")) {
+            NoticeBoardDTO noticeBoardDto = noticeBoardService.noticeDetail(noticeSeq);
+            model.addAttribute("notice",noticeBoardDto);
+            return "/admin/adminNotice/adminNoticeModify";
+        } else {
+            return "error";
+        }
+    }
+
+    // 공지글 수정
+    @PostMapping("modifyNotice")
+    public String modifyNotice(NoticeBoardDTO noticeBoardDto) {
+        noticeBoardService.updateNotice(noticeBoardDto);
+        return "redirect:/notice/toAdminNotice";
     }
 }

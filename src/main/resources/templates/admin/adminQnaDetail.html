@@ -27,8 +27,35 @@
     <div>내용</div>
     <div th:text="${qna.getQnaContents()}"></div>
     <div>답변</div>
-    <div></div>
-    <button type="button">답변 작성</button>
-    <button type="button" id="toAdmin">목록으로</button>
+    <div th:text="${qnaComment.get(0).getQnaCommentContents()}"></div>
+    <div>작성시각</div>
+    <div th:text="${qnaComment.get(0).getQnaCommentWriteDate()}"></div>
+    <th:block th:if="${qnaComment!=null}">
+    <div id="insert" th:data-count="${qnaCommentCount}">답변 작성하기
+        <form action="/qna/insertComment" id="form" method="post">
+            <textarea id="content" name="qnaCommentContents"></textarea>
+            <input type="hidden" name="qnaSeq" th:value="${qna.getQnaSeq()}">
+        </form>
+        <button type="button">이미지 첨부</button>
+        <button type="button" id="confirm" >답변 작성</button>
+        <button type="button" id="toAdminQna"><a href="/qna/toAdminQna?cpage=1">목록으로</a></button>
+    </div>
+    </th:block>
+    <script>
+        $("#confirm").on("click", function (){
+            if ($("#content").val().length==0) {
+                alert("내용을 입력하세요.")
+            } else if ($("#content").val().length>=200) {
+                alert("200자를 넘길 수 없습니다.");
+            } else {
+                $("#form").submit();
+            }
+        })
+
+        if ($("#insert").attr("data-count")>=1) {
+            $("#insert").css("display", "none");
+        }
+    </script>
+
 </body>
 </html>

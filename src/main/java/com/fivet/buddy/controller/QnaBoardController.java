@@ -157,17 +157,29 @@ public class QnaBoardController {
 
     //관리자 페이지에서 1:1문의 본문 보기.
     @RequestMapping("adminQnaDetail")
-    public String adminQnaDetail(QnaBoardDTO qnaBoardDto, Model model) {
+    public String adminQnaDetail(QnaBoardDTO qnaBoardDto, Model model) throws Exception {
         if (session.getAttribute("memberLogtype").equals("admin")) {
             qnaBoardDto = qnaBoardService.selectDetail(qnaBoardDto.getQnaSeq());
+            List<QnaCommentDTO> qnaComment = qnaCommentService.selectComment(qnaBoardDto.getQnaSeq());
+            int qnaCommentCount = qnaCommentService.count(qnaBoardDto.getQnaSeq());
             model.addAttribute("qna", qnaBoardDto);
+            model.addAttribute("qnaComment", qnaComment);
+            model.addAttribute("qnaCommentCount", qnaCommentCount);
             return "/admin/adminQnaDetail";
         } else {
             return "error";
         }
-
     }
 
-
-
+    // 문의내역 답글 달기
+    @PostMapping("insertComment")
+    public String insertComment(QnaCommentDTO qnaCommentDto) {
+        if (session.getAttribute("memberLogtype").equals("admin")) {
+           qnaCommentDto.setQnaCommentWriter((int)session.getAttribute("memberSeq"));
+           qnaCommentService.insertComment(qnaCommentDto);
+           return "redirect:/qna/adminQnaDetail?qnaSeq=" + qnaCommentDto.getQnaSeq();
+        } else {
+            return "error";
+        }
+    }
 }

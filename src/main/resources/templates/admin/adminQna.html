@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>관리자페이지-문의내역</title>
+    <title>관리자 페이지-문의내역</title>
     <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/admin.css" />
     <link rel="stylesheet" href="/static/css/m-admin.css" />
@@ -92,25 +92,23 @@
                         <li class="thead">
                             <span>번호</span>
                             <span>문의유형</span>
-                            <span>작성자(회원번호)</span>
+                            <span>작성자(이메일)</span>
                             <span>제목</span>
                             <span>작성날짜</span>
                         </li>
-<!--                        <th:block th:if="${qnaList!=null}">-->
-                        <li class="tdata" th:each="qnaList : ${qnaList}">
-                            <span th:text="${qnaList.qnaSeq}"></span>
-                            <span th:text="${qnaList.qnaType}"></span>
-                            <span th:text="${qnaList.qnaWriter}"></span>
-                            <span th:text="${qnaList.qnaTitle}"></span>
-                            <span th:text="${qnaList.qnaWriteDate}"></span>
-                        </li>
-<!--                        </th:block>-->
+                        <th:block th:each="qnaList : ${qnaList}">
+                            <li class="tdata">
+                                <span th:text="${qnaList.qnaSeq}"></span>
+                                <span th:text="${qnaList.qnaType}"></span>
+                                <span th:text="${qnaList.qnaWriterId}"></span>
+                                <span class="detail" th:text="${qnaList.qnaTitle}" th:data-qnaSeq="${qnaList.qnaSeq}"></span>
+                                <span th:text="${qnaList.qnaWriteDate}"></span>
+                            </li>
+                        </th:block>
                     </ul>
                     <hr />
                     <div class="listNum">
-                        <a href=""><</a>
-                        <span>1</span>
-                        <a href="">></a>
+                        <span th:utext="${pageNavi}"></span>
                     </div>
                 </div>
             </div>
@@ -119,6 +117,15 @@
         .
     </div>
 </div>
+
+<script>
+    //제목 클릭시, 글 본문으로 이동하는 이벤트
+    $(".detail").on("click", function (){
+        console.log("/qna/adminQnaDetail?qnaSeq=" + $(this).attr("data-qnaSeq"));
+        location.href = "/qna/adminQnaDetail?qnaSeq=" + $(this).attr("data-qnaSeq");
+    })
+</script>
+
 <script>
     $(document).ready(function () {
         let result = $("body").css("max-width", "600px");

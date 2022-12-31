@@ -164,4 +164,14 @@
         where
             member_seq = #{value}
     </select>
+
+    <!--    회원 번호를 통해 회원 이름과 이메일을 검색-->
+    <select id="getMemberId" resultType="string">
+        select
+            member_id
+        from
+            member
+        where
+            member_seq = #{value}
+    </select>
 </mapper>

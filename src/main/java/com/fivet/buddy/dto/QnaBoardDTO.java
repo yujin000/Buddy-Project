@@ -12,7 +12,8 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class QnaBoardDTO {
 private int qnaSeq;
-private int qnaWriter;
+private int qnaWriterSeq;
+private String qnaWriterId;
 private String qnaTitle;
 private String qnaContents;
 private Timestamp qnaWriteDate;

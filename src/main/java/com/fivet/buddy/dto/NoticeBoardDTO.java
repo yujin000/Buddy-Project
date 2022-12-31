@@ -11,9 +11,10 @@ import java.sql.Timestamp;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NoticeDTO {
+public class NoticeBoardDTO {
     private int noticeSeq;
-    private int noticeWriter;
+    private int noticeWriterSeq;
+    private String noticeWriterName;
     private String noticeTitle;
     private String noticeContents;
     private Timestamp noticeWriteDate;

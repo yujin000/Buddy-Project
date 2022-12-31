@@ -3,6 +3,8 @@ package com.fivet.buddy.util;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -14,13 +16,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import javax.mail.Folder;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Data
 @AllArgsConstructor
@@ -67,20 +72,39 @@ public class FileUtil {
     }
 
     // 폴더 삭제
-    public void deleteFolder(String path) {
-        File folder = new File(path);
-        if (folder.exists() && folder.isDirectory()) {
-            File[] files = folder.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isDirectory()) {
-                        deleteFolder(file.getAbsolutePath());
-                    } else {
-                        file.delete();
-                    }
-                }
+    public void deleteFolder(String path){
+        String pathh = "C:/files/n7t5h09557z0xs6k5ywr강예찬/";
+        File file = new File(pathh);
+        if (file.exists()) {
+            try {
+                FileUtils.deleteDirectory(file);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            folder.delete();
+        }
+    }
+
+    // 파일 다운로드(경로)
+    public ResponseEntity<Resource> downloadByPath(@ModelAttribute String realpath, String oriName) throws Exception {
+        Path path = Path.of(realpath);
+        String contentType = Files.probeContentType(path);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDisposition(ContentDisposition.builder("attachment").filename(oriName, StandardCharsets.UTF_8).build());
+        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+        Resource resource = new InputStreamResource(Files.newInputStream(path));
+        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+    }
+
+    // 폴더 재귀함수
+    public void addFolderToZip(ZipOutputStream zos, File folder) throws IOException {
+        for (File file : folder.listFiles()) {
+            if (file.isDirectory()) {
+                addFolderToZip(zos, file);
+            } else {
+                zos.putNextEntry(new ZipEntry(file.getName()));
+                Files.copy(file.toPath(), zos);
+                zos.closeEntry();
+            }
         }
     }
 

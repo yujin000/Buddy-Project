@@ -5,15 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>관리자 페이지-공지 글쓰기</title>
-  <link rel="stylesheet" href="/static/css/reset.css">
-  <link rel="stylesheet" href="/static/css/admin.css" />
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/admin.css" />
   <link rel="stylesheet" href="/static/css/m-admin.css" />
   <script
           src="https://code.jquery.com/jquery-3.6.1.min.js"
           integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
           crossorigin="anonymous"
   ></script>
-  <script src="/static/js/jQueryCheck.js"></script>
+  <script src="/js/jQueryCheck.js"></script>
   <!-- include summernote css/js -->
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
@@ -29,9 +29,9 @@
     죄송합니다. <br />
     관리자 페이지는 모바일 환경을 지원하지 않습니다.
   </h1>
-  <button><a href="../index.html">뒤로가기</a></button>
+  <button><a href="../../index.html">뒤로가기</a></button>
 </div>
-<form action="/admin/insertAdminNotice" id="form" method="post">
+<form action="/notice/insertNotice" id="form" method="post">
   <div id="title">
     <input type="text" placeholder="제목을 입력하세요." name="noticeTitle" id="noticeTitle">
   </div>
@@ -55,11 +55,11 @@
       ['table', ['table']],
       ['insert', ['link', 'picture']],
       ['view', ['fullscreen', 'codeview', 'help']]
-    ]
+    ],
   });
 
   $("#toAdminNotice").on("click",function (){
-    location.href = "/admin/toAdminNotice";
+    location.href = "/notice/toAdminNotice";
   })
   $("#insertAdminNotice").on("click", function (){
     if ($("#noticeTitle").val()==0) {

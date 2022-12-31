@@ -46,6 +46,9 @@ public class MemberController {
     @Autowired
     private PersonalFolderService personalFolderService;
 
+    @Autowired
+    private PersonalFileService personalFileService;
+
     private Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     // 회원 indexPage 경로
@@ -309,6 +312,13 @@ public class MemberController {
     //회원 탈퇴
     @RequestMapping("deleteMember")
     public String deleteMember() throws Exception{
+        int memberSeq = (int) session.getAttribute("memberSeq");
+        // 파일 삭제
+        personalFileService.memberOut(memberSeq);
+        // 폴더 삭제
+        personalFolderService.memberOut(memberSeq);
+        // 기본 폴더 삭제
+        basicFolderService.memberOut(memberSeq);
         memberService.deleteMember(String.valueOf(session.getAttribute("memberSeq")));
         session.invalidate();
         return "redirect:/";

@@ -112,7 +112,7 @@
     }
 
     $("#inputMsg").on("keydown", function(e) {
-      if (e.keyCode == 13) {
+      if (e.keyCode == 13 && !e.shiftKey) {
 
         // Json 생성
         let wsJson = {

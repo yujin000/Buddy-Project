@@ -100,7 +100,7 @@
                             <span>제목</span>
                             <span>작성날짜</span>
                         </li>
-                        <th:block th:if="${qnaList!=null}">
+<!--                        <th:block th:if="${qnaList!=null}">-->
                         <li class="tdata" th:each="qnaList : ${qnaList}">
                             <span th:text="${qnaList.qnaSeq}"></span>
                             <span th:text="${qnaList.qnaType}"></span>
@@ -108,7 +108,7 @@
                             <span th:text="${qnaList.qnaTitle}"></span>
                             <span th:text="${qnaList.qnaWriteDate}"></span>
                         </li>
-                        </th:block>
+<!--                        </th:block>-->
                     </ul>
                     <hr />
                     <div class="listNum">

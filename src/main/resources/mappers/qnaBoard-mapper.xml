@@ -13,17 +13,17 @@
     </insert>
 
     <!-- 회원 본인의 문의글 출력   -->
-    <select id="select" resultType="com.fivet.buddy.dto.QnaDTO">
+    <select id="select" resultType="com.fivet.buddy.dto.QnaBoardDTO">
         select * from qna_board where qna_writer = #{qnaWriter} order by qna_seq desc
     </select>
 
     <!--    문의글 본문보기-->
-    <select id="selectDetail" resultType="com.fivet.buddy.dto.QnaDTO">
+    <select id="selectDetail" resultType="com.fivet.buddy.dto.QnaBoardDTO">
         select * from qna_board where qna_seq = #{qnaSeq}
     </select>
 
     <!--    1:1문의내역보기(관리자)-->
-    <select id="selectQnaBoardAll" resultType="com.fivet.buddy.dto.QnaDTO">
+    <select id="selectQnaBoardAll" resultType="com.fivet.buddy.dto.QnaBoardDTO">
         select * from qna_board order by 1 desc
     </select>
 </mapper>

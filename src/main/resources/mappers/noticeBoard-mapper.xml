@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fivet.buddy.mapper.NoticeBoardMapper">
+
+    <!-- 공지글 내역 출력   -->
+    <select id="selectNotice" resultType="com.fivet.buddy.dto.NoticeBoardDTO">
+        select * from notice_board order by notice_seq desc
+    </select>
+    
+    <insert id="insertNotice">
+        insert into notice_board values(notice_seq.nextval, #{noticeWriterSeq}, #{noticeWriterName}, #{noticeTitle}, #{noticeContents}, sysdate)
+    </insert>
+
+    <!--    공지글 삭제-->
+    <delete id="deleteNotice">
+        delete from notice_board where notice_seq = #{value}
+    </delete>
+
+    <!-- 공지글 보기   -->
+    <select id="noticeDetail" resultType="com.fivet.buddy.dto.NoticeBoardDTO">
+        select * from notice_board where notice_seq = #{value}
+    </select>
+
+    <!-- 공지글 수정   -->
+    <update id="updateNotice">
+        update notice_board set notice_title = #{noticeTitle}, notice_contents = #{noticeContents} where notice_seq = #{noticeSeq}
+    </update>
+
+    <!--    페이지 목록 출력-->
+    <select id="selectNoticePage" resultType="com.fivet.buddy.dto.NoticeBoardDTO">
+        select * from (select notice_board.*, row_number() over(order by 1 desc) rn from notice_board) where rn between #{start} and #{end}
+    </select>
+
+    <!--    전체 글 수 출력-->
+    <select id="totalCount" resultType="int">
+        select count(*) from notice_board
+    </select>
+</mapper>

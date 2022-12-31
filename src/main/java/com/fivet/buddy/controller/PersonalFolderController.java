@@ -1,5 +1,6 @@
 package com.fivet.buddy.controller;
 
+import com.fivet.buddy.dto.PersonalFolderDTO;
 import com.fivet.buddy.services.PersonalFolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/personalFolder/")
@@ -51,4 +53,10 @@ public class PersonalFolderController {
         }
     }
 
+    // 폴더 (정보)
+    @ResponseBody
+    @RequestMapping("myFolderInfo")
+    public PersonalFolderDTO myFolderInfo(String key) throws Exception{
+        return personalFolderService.myFolderInfo(key);
+    }
 }

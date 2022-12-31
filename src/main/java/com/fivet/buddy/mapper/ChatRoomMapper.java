@@ -19,5 +19,6 @@ public interface ChatRoomMapper {
     String selectChatRoomSeq(Map<String, String> param);
 
     void updatePlusMemberCount(Map<String, String> param);
+    void insertTopic(ChatRoomDTO chatRoomDto);
 
 }

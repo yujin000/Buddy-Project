@@ -222,12 +222,12 @@
     <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
     </form>
 
-    <form action="" class="topicForm">
+    <form action="/chatRoom/insertTopic" id="form" class="topicForm" method="post">
         <h1>✨토픽 생성하기</h1>
       <ul class="list">
-        <li><input type="text" placeholder="토픽 이름" ></li>
+        <li><input name="chatTitle" type="text" placeholder="토픽 이름" ></li>
       </ul>
-      <button type="submit" >토픽 생성하기</button>
+      <button type="button" id="insertTopic">토픽 생성하기</button>
       <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
 
     </form>
@@ -285,20 +285,23 @@
     }
   });
 
-  //팀원 목록을 출력해주는 ajax호출
-  // $.ajax({
-  //   type:"post",
-  //   url:"team/teamMemberList",
-  // });
-
   //팀 이동 클릭이벤트
   $(document).on("click", ".goTeam", function (){
     //console.log();
     $(this).children("form").submit();
   })
 
+  //채팅방 클릭 이벤트
   $(".chatRoomList").on("click", function() {
     $(this).find(".chatForm").submit();
+  })
+</script>
+
+<script>
+  // 토픽 생성 이벤트
+  $("#insertTopic").click(function (){
+    alert("토픽 생성 완료!");
+    $("#form").submit();
   })
 </script>
 

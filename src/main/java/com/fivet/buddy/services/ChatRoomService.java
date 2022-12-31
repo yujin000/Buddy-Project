@@ -3,6 +3,7 @@ package com.fivet.buddy.services;
 import com.fivet.buddy.dao.ChatMemberDAO;
 import com.fivet.buddy.dao.ChatRoomDAO;
 import com.fivet.buddy.dto.ChatRoomDTO;
+import com.fivet.buddy.dto.TeamDTO;
 import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.mapper.ChatMemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +41,14 @@ public class ChatRoomService {
         chatRoomDao.insertSelfChat(param);
         chatMemberDao.insertChatMember(param);
     }
+
+    // 토픽 생성
+    public ChatRoomDTO insertTopic(TeamDTO teamDto, ChatRoomDTO chatRoomDto) {
+        chatRoomDto.setMemberCount(teamDto.getTeamCount());
+        chatRoomDto.setTeamSeq(teamDto.getTeamSeq());
+        chatRoomDto.setRoomOwnerSeq(teamDto.getTeamOwnerSeq());
+        chatRoomDao.insertTopic(chatRoomDto);
+        return chatRoomDto;
+    }
+
 }

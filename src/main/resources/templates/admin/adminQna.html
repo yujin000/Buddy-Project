@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>관리자페이지-문의내역</title>
+    <title>관리자 페이지-문의내역</title>
     <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/admin.css" />
     <link rel="stylesheet" href="/static/css/m-admin.css" />
@@ -108,9 +108,7 @@
                     </ul>
                     <hr />
                     <div class="listNum">
-                        <a href=""><</a>
-                        <span>1</span>
-                        <a href="">></a>
+                        <span th:utext="${pageNavi}"></span>
                     </div>
                 </div>
             </div>

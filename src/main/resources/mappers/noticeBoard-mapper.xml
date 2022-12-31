@@ -28,4 +28,14 @@
     <update id="updateNotice">
         update notice_board set notice_title = #{noticeTitle}, notice_contents = #{noticeContents} where notice_seq = #{noticeSeq}
     </update>
+
+    <!--    페이지 목록 출력-->
+    <select id="selectNoticePage" resultType="com.fivet.buddy.dto.NoticeBoardDTO">
+        select * from (select notice_board.*, row_number() over(order by 1 desc) rn from notice_board) where rn between #{start} and #{end}
+    </select>
+
+    <!--    전체 글 수 출력-->
+    <select id="totalCount" resultType="int">
+        select count(*) from notice_board
+    </select>
 </mapper>

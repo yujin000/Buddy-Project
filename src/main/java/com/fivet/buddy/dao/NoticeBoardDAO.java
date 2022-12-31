@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class NoticeBoardDAO {
@@ -30,5 +31,17 @@ public class NoticeBoardDAO {
     public NoticeBoardDTO noticeDetail(int noticeSeq) {
         return noticeBoardMapper.noticeDetail(noticeSeq);
     }
+
+    // 공지 수정
     public void updateNotice(NoticeBoardDTO noticeBoardDto) { noticeBoardMapper.updateNotice(noticeBoardDto); }
+
+    // 공지글 페이지에 맞춰 출력
+    public List<NoticeBoardDTO> selectNoticePage(Map<String, Integer> param) {
+        return noticeBoardMapper.selectNoticePage(param);
+    };
+
+    // 공지글 전체수 출력
+    public int totalCount() {
+        return noticeBoardMapper.totalCount();
+    }
 }

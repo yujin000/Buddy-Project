@@ -6,6 +6,7 @@ import com.fivet.buddy.services.MemberService;
 import com.fivet.buddy.services.NoticeBoardService;
 import com.fivet.buddy.services.NoticeFileService;
 
+import com.fivet.buddy.util.PageNavi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,10 +52,19 @@ public class NoticeBoardController {
 
     //공지 관리 페이지로 이동.
     @RequestMapping("toAdminNotice")
-    public String toAdminNotice(Model model) throws Exception {
+    public String toAdminNotice(int cpage, Model model) throws Exception {
         if (session.getAttribute("memberLogtype").equals("admin")) {
-            List<NoticeBoardDTO> noticeBoardList = noticeBoardService.selectNotice();
+            //List<NoticeBoardDTO> noticeBoardList = noticeBoardService.selectNotice();
+            int rcpp = 10; // RecordCountPerPage
+            int ncpp = 10; // NaviCountPagePage
+            int rtc = noticeBoardService.totalCount(); // RecodeTotalCount
+            Map<String, Integer> param = new HashMap<>();
+            param.put("start", (cpage-1)*rcpp+1);
+            param.put("end", cpage*rcpp);
+            List<NoticeBoardDTO> noticeBoardList = noticeBoardService.selectNoticePage(param);
+            String pageNavi = new PageNavi().getPageNaviAll(cpage, rcpp, ncpp, rtc, "/notice/toAdminNotice", "cpage");
             model.addAttribute("noticeBoardList", noticeBoardList);
+            model.addAttribute("pageNavi", pageNavi);
             return "/admin/adminNotice/adminNotice";
         } else {
             return "error";

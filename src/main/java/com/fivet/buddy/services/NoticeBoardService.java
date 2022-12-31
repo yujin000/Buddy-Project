@@ -2,10 +2,12 @@ package com.fivet.buddy.services;
 
 import com.fivet.buddy.dao.NoticeBoardDAO;
 import com.fivet.buddy.dto.NoticeBoardDTO;
+import com.fivet.buddy.mapper.NoticeBoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class NoticeBoardService {
@@ -35,5 +37,15 @@ public class NoticeBoardService {
 
     //공지굴 수정
     public void updateNotice(NoticeBoardDTO noticeBoardDto) { noticeBoardDao.updateNotice(noticeBoardDto); }
+
+    //공지글 페이지에 맞춰 출력
+    public List<NoticeBoardDTO> selectNoticePage(Map<String, Integer> param) {
+        return noticeBoardDao.selectNoticePage(param);
+    }
+
+    // 공지글 카운트
+    public int totalCount() {
+        return noticeBoardDao.totalCount();
+    }
 
 }

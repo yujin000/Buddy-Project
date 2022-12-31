@@ -305,16 +305,7 @@
 
     })
 
-    function resizeWindow(win)    {
-
-        var wid = win.document.body.offsetWidth + 30;
-
-        var hei = win.document.body.offsetHeight + 40;        //30 과 40은 넉넉하게 하려는 임의의 값임
-
-        win.resizeTo(wid,hei);
-
-    }
-
+   // popUp 시 viewport 에 따른 화면 자동조정
     function winResize()
     {
         var Dwidth = parseInt(document.body.scrollWidth);
@@ -351,7 +342,7 @@
             const title = $("#eventName").val();
             if (confirm("<"+title+">"+"일정을 삭제하시겠습니까?,team")){
                 $("#eventWriter").attr("disabled",false);
-                location.href ="/calendar/selectGrade?eventSeq="+seq+"&eventWriter="+writer;
+                location.href ="/calendar/teamEventDel?eventSeq="+seq+"&eventWriter="+writer;
             }
         }
     }
@@ -368,17 +359,34 @@
         let eventColor =$("#eventColor").val();
         const writer = document.querySelector("#eventWriter").value;
 
-        if (confirm("<"+title+">"+"일정을 수정하시겠습니까?")){
-        location.href ="/calendar/updateEvent?eventSeq="+seq
-            +"&eventType="+type
-            +"&eventName="+title
-            +"&eventStart="+eventStart
-            +"&eventEnd="+eventEnd
-            +"&eventLocation="+eventLocation
-            +"&eventMemo="+eventMemo
-            +"&eventColor="+eventColor
-            +"&eventWriter="+writer;
+        // 타입이 팀 이라면
+        if(type === "팀"){
+            if (confirm("<"+title+">"+"일정을 수정하시겠습니까?")){
+                location.href ="/calendar/teamEventUpd?eventSeq="+seq
+                    +"&eventType="+type
+                    +"&eventName="+title
+                    +"&eventStart="+eventStart
+                    +"&eventEnd="+eventEnd
+                    +"&eventLocation="+eventLocation
+                    +"&eventMemo="+eventMemo
+                    +"&eventColor="+eventColor
+                    +"&eventWriter="+writer;
+            }
+
+        }else {
+            if (confirm("<"+title+">"+"일정을 수정하시겠습니까?")){
+                location.href ="/calendar/updateEvent?eventSeq="+seq
+                    +"&eventType="+type
+                    +"&eventName="+title
+                    +"&eventStart="+eventStart
+                    +"&eventEnd="+eventEnd
+                    +"&eventLocation="+eventLocation
+                    +"&eventMemo="+eventMemo
+                    +"&eventColor="+eventColor
+                    +"&eventWriter="+writer;
+            }
         }
+
     }
 
     function selectColor(arg) {

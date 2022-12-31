@@ -113,7 +113,7 @@
 
     let file = $("#uploadfile").val();
     $("#inputMsg").on("keydown", function(e) {
-      if (e.keyCode == 13) {
+      if (e.keyCode == 13 && !e.shiftKey) {
         if(file == "") {
           // Json 생성
           let wsJson = {

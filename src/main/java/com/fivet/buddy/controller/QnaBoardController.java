@@ -3,6 +3,7 @@ package com.fivet.buddy.controller;
 import com.fivet.buddy.dto.*;
 import com.fivet.buddy.services.*;
 import com.fivet.buddy.util.FileUtil;
+import com.fivet.buddy.util.PageNavi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -131,10 +132,19 @@ public class QnaBoardController {
 
     //관리자 페이지 (1:1문의)로 이동.
     @RequestMapping("toAdminQna")
-    public String toAdminQna(Model model) {
+    public String toAdminQna(int cpage, Model model) throws Exception {
         if (session.getAttribute("memberLogtype").equals("admin")) {
-            List<QnaBoardDTO> QnaList = qnaBoardService.selectQnaBoardAll();
+            //List<QnaBoardDTO> QnaList = qnaBoardService.selectQnaBoardAll();
+            int rcpp = 10; // RecordCountPerPage
+            int ncpp = 10; // NaviCountPagePage
+            int rtc = qnaBoardService.totalCount();
+            Map<String, Integer> param = new HashMap<>();
+            param.put("start", (cpage-1)*rcpp+1);
+            param.put("end", cpage*rcpp);
+            List<QnaBoardDTO> QnaList = qnaBoardService.selectQnaBoardPage(param);
+            String pageNavi = new PageNavi().getPageNaviAll(cpage, rcpp, ncpp, rtc, "/qna/toAdminQna", "cpage");
             model.addAttribute("qnaList", QnaList);
+            model.addAttribute("pageNavi", pageNavi);
             return "/admin/adminQna";
         } else {
             return "error";

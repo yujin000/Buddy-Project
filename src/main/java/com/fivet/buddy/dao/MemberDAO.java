@@ -121,4 +121,9 @@ public class MemberDAO {
     public String getOwnerName(int checkOwner) {
         return memberMapper.getOwnerName(checkOwner);
     }
+
+    // 회원 번호를 통해 이름과 이메일 추출
+    public MemberDTO getNameAndEmail(int memberSeq) {
+        return memberMapper.getMemberNameAndEmail(memberSeq);
+    }
 }

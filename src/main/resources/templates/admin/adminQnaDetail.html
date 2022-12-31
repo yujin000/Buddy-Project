@@ -16,12 +16,19 @@
     <script src="/static/js/jQueryCheck.js"></script>
 </head>
 <body>
+    <div>번호</div>
+    <div th:text="${qna.getQnaSeq()}"></div>
+    <div>유형</div>
+    <div th:text="${qna.getQnaType()}"></div>
+    <div>작성자</div>
+    <div th:text="${qna.getQnaWriterId()}"></div>
     <div>제목</div>
-    <div></div>
+    <div th:text="${qna.getQnaTitle()}"></div>
     <div>내용</div>
-    <div></div>
+    <div th:text="${qna.getQnaContents()}"></div>
     <div>답변</div>
     <div></div>
-    <button>답변 작성</button>
+    <button type="button">답변 작성</button>
+    <button type="button" id="toAdmin">목록으로</button>
 </body>
 </html>

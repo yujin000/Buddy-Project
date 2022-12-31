@@ -10,8 +10,8 @@ import java.util.Map;
 public interface QnaBoardMapper {
     void insert(QnaBoardDTO qnaDto);
     List<QnaBoardDTO> select(int qnaWriter);
+    QnaBoardDTO selectDetail(int qnaSeq);
     void delete(int qnaSeq);
-    List<QnaBoardDTO> selectQnaBoardAll();
     List<QnaBoardDTO> selectQnaBoardPage(Map<String, Integer> param);
     int totalCount();
 }

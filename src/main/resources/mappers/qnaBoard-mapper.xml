@@ -5,7 +5,7 @@
 <mapper namespace="com.fivet.buddy.mapper.QnaBoardMapper">
 
     <insert id="insert">
-        insert into qna_board values(qna_seq.nextval,#{qnaWriter},#{qnaTitle},#{qnaContents},sysdate,#{qnaType})
+        insert into qna_board values(qna_seq.nextval,#{qnaWriterSeq}, #{qnaWriterId}, #{qnaTitle},#{qnaContents},sysdate,#{qnaType})
 
         <selectKey order="AFTER" keyProperty="qnaSeq" resultType="int">
             select qna_seq.currval from dual
@@ -14,7 +14,7 @@
 
     <!-- 회원 본인의 문의글 출력   -->
     <select id="select" resultType="com.fivet.buddy.dto.QnaBoardDTO">
-        select * from qna_board where qna_writer = #{qnaWriter} order by qna_seq desc
+        select * from qna_board where qna_writer_Seq = #{qnaWriterSeq} order by qna_seq desc
     </select>
 
     <!--    문의글 본문보기-->
@@ -22,7 +22,7 @@
         select * from qna_board where qna_seq = #{qnaSeq}
     </select>
 
-    <!--    1:1문의내역보기(관리자)-->
+    <!--    1:1문의내역 페이지에 맞춰 보기(관리자)-->
     <select id="selectQnaBoardPage" resultType="com.fivet.buddy.dto.QnaBoardDTO">
         select * from (select qna_board.*, row_number() over(order by 1 desc) rn from qna_board) where rn between #{start} and #{end}
     </select>

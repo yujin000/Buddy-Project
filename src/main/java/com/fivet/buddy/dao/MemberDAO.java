@@ -15,9 +15,6 @@ public class MemberDAO {
     @Autowired
     private MemberMapper memberMapper;
 
-    @Autowired
-    private TeamMapper teamMapper;
-
     // 회원가입 (signUp)
     public void signUp(MemberDTO memberDto) throws Exception {
         memberMapper.signUp(memberDto);
@@ -123,7 +120,7 @@ public class MemberDAO {
     }
 
     // 회원 번호를 통해 이름과 이메일 추출
-    public MemberDTO getNameAndEmail(int memberSeq) {
-        return memberMapper.getMemberNameAndEmail(memberSeq);
+    public String getMemberId(int memberSeq) {
+        return memberMapper.getMemberId(memberSeq);
     }
 }

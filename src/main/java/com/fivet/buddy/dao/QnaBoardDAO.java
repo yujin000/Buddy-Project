@@ -13,20 +13,24 @@ public class QnaBoardDAO {
     @Autowired
     private QnaBoardMapper qnaBoardMapper;
 
+    // Qna 글쓰기
     public void insert(QnaBoardDTO qnaDto) throws Exception{
         qnaBoardMapper.insert(qnaDto);
     }
+
+    //회원이 자신의 Qna 목록 출력
     public List<QnaBoardDTO> select(int qnaWriter) throws Exception{
         return qnaBoardMapper.select(qnaWriter);
     }
 
+    //Qna 삭제
     public void delete(int qnaSeq) throws Exception{
         qnaBoardMapper.delete(qnaSeq);
     }
 
-    // Qna 모든 글 출력
-    public List<QnaBoardDTO> selectQnaBoardAll() {
-        return qnaBoardMapper.selectQnaBoardAll();
+    // 문의글 본문보기
+    public QnaBoardDTO selectDetail(int qnaSeq) {
+        return qnaBoardMapper.selectDetail(qnaSeq);
     }
 
     // Qna글 페이지에 맞춰 출력

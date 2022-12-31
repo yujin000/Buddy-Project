@@ -166,9 +166,9 @@
     </select>
 
     <!--    회원 번호를 통해 회원 이름과 이메일을 검색-->
-    <select id="getMemberNameAndEmail" resultType="com.fivet.buddy.dto.MemberDTO">
+    <select id="getMemberId" resultType="string">
         select
-            member_email, member_name
+            member_id
         from
             member
         where

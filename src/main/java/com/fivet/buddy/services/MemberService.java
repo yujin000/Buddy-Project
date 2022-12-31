@@ -136,7 +136,7 @@ public class MemberService {
     }
 
     // 회원 번호를 통해 이름과 이메일 추출
-    public MemberDTO getNameAndEmail(int memberSeq) {
-        return memberDao.getNameAndEmail(memberSeq);
+    public String getMemberId(int memberSeq) {
+        return memberDao.getMemberId(memberSeq);
     }
 }

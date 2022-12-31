@@ -35,6 +35,9 @@ public class QnaBoardController {
     @Autowired
     private NoticeBoardService noticeBoardService;
 
+    @Autowired
+    private MemberService memberService;
+
     @Value("${qna.save.path}")
     String qnaPath;
 
@@ -58,7 +61,8 @@ public class QnaBoardController {
     //Qna글쓰기
     @RequestMapping("insert")
     public String insert(@RequestParam MultipartFile[] uploadfile, Model model, QnaBoardDTO qnaDto, QnaFileDTO qnaFileDto, FileUtil util) throws Exception {
-        qnaDto.setQnaWriter((int) session.getAttribute("memberSeq"));
+        qnaDto.setQnaWriterSeq((int) session.getAttribute("memberSeq"));
+        qnaDto.setQnaWriterId(memberService.getMemberId(qnaDto.getQnaWriterSeq()));
         System.out.println(uploadfile[0]);
         if (uploadfile[0].isEmpty()) {
             qnaBoardService.insert(qnaDto);
@@ -153,8 +157,15 @@ public class QnaBoardController {
 
     //관리자 페이지에서 1:1문의 본문 보기.
     @RequestMapping("adminQnaDetail")
-    public String adminQnaDetail(QnaBoardDTO qnaBoardDTO, Model model) {
-        return "/admin/adminQnaDetail";
+    public String adminQnaDetail(QnaBoardDTO qnaBoardDto, Model model) {
+        if (session.getAttribute("memberLogtype").equals("admin")) {
+            qnaBoardDto = qnaBoardService.selectDetail(qnaBoardDto.getQnaSeq());
+            model.addAttribute("qna", qnaBoardDto);
+            return "/admin/adminQnaDetail";
+        } else {
+            return "error";
+        }
+
     }
 
 

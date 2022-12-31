@@ -54,7 +54,6 @@ public class NoticeBoardController {
     @RequestMapping("toAdminNotice")
     public String toAdminNotice(int cpage, Model model) throws Exception {
         if (session.getAttribute("memberLogtype").equals("admin")) {
-            //List<NoticeBoardDTO> noticeBoardList = noticeBoardService.selectNotice();
             int rcpp = 10; // RecordCountPerPage
             int ncpp = 10; // NaviCountPagePage
             int rtc = noticeBoardService.totalCount(); // RecodeTotalCount

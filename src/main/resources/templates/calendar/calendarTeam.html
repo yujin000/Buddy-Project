@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset='utf-8'/>
+  <script src='/static/fullcalendar/dist/index.global.js'></script>
+  <script src="/static/fullcalendar/packages/core/locales-all.global.js"></script>
+  <script
+          src="https://code.jquery.com/jquery-3.6.2.js"
+          integrity="sha256-pkn2CUZmheSeyssYw3vMp1+xyub4m+e+QK4sQskvuo4="
+          crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // 캘린더 생성 함수
+      const calendarEl = document.getElementById('calendar');
+      // div 가 calendar 인 캘린더 객체 호출
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        // 맨 처음 띄우는 캘린더 화면
+        initialView: 'dayGridMonth',
+        // 테마 : 부트스트랩 적용 / 미적용
+        themeSystem: 'bootstrap5',
+        // 툴바 설정
+        headerToolbar: {
+          left: 'prev,next',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+        },
+        // 사용자 버튼 생성
+
+        // 언어 설정
+        locale: 'ko',
+        weekday: 'short',
+        day: 'short',
+        // Allows a user to highlight multiple days or timeslots by clicking and dragging.
+        selectable: true,
+        // Whether to draw a “placeholder” event while the user is dragging.
+        selectMirror: true,
+        // Whether to automatically scoll the scroll-containers during event drag-and-drop and date selecting.
+        dragScroll: true,
+        // date 를 click 했을때 발생하는 이벤트(핸들러)
+        navLinks: true,
+
+        // allow "more" link when too many events 너무 많은 이벤트가 생성될시 more링크를 생성
+        dayMaxEvents: true,
+        //Whether or not to display a marker indicating the current time.
+        nowIndicator: true,
+        eventClick: function (arg) {
+
+          const seq = arg.event.extendedProps.seq;
+          const title = arg.event.title;
+          const writer = arg.event.extendedProps.writer;
+          const type = arg.event.extendedProps.type;
+          const eventStart = arg.event._instance.range.start;
+          const eventEnd = arg.event._instance.range.end;
+          const memo = arg.event.extendedProps.memo;
+          const location = arg.event.extendedProps.location;
+          const color = arg.event._def.ui.backgroundColor;
+
+
+          $("#form").css("display", "block");
+          $(".btns").css("display", "block");
+          $("#eventSeq").removeAttr("disabled");
+          $("#eventWriter").removeAttr("disabled");
+          //수정 및 삭제 버튼 생성
+          $("#updateBtn").css("display", "block");
+          $("#delBtn").css("display", "block");
+          $("#submitBtn").css("display", "none");
+          $("#closeBtn").css("display", "block");
+          $("#eventWriter").attr("type", "text");
+
+          function timeFormat(t) {
+            return t.toISOString().substring(0, 16);
+          }
+
+          $("#eventType").val(type);
+          $("#eventSeq").val(seq);
+          $("#eventName").val(title.replace("[팀]", ""));
+          $("#eventWriter").val(writer);
+          $("#eventMemo").val(memo);
+          $("#eventLocation").val(location);
+          $("#eventStart").attr("data-placeholder", timeFormat(eventStart));
+          $("#eventStart").val(timeFormat(eventStart));
+          $("#eventEnd").attr("data-placeholder", timeFormat(eventEnd));
+          $("#eventEnd").val(timeFormat(eventEnd));
+          $("#eventColor").val(color);
+          $("#eventColor").css("background-color", color);
+
+        },
+        // date click event 날짜 클릭 이벤트
+        dateClick: function (arg) {
+
+        },
+        select: function (arg) {
+          const start = arg.start
+          const end = arg.end
+          // date 를 timezone 에 맞게 format
+          // date 는 loacale 에 영향을 받기 때문에 kor 시간으로 설정 해줘야 함
+          function timezoneFormat(d) {
+            let offset = d.getTimezoneOffset() * 60000;
+            // timezone Offset
+            let dateOffset = new Date(d.getTime() - offset);
+            // timezone Setting
+            let iso = dateOffset.toISOString();
+            // ISO 형식으로 변환
+            return iso.substring(0, 16);
+          }
+
+          // date 를 형식에 맞게 format 하는 함수
+          // 원인 : date type에서 **기간**을 선택할때, 하루가 더 해져서 나옴
+          // 해결 : 시간에 하루만큼에 시간을 빼줘서 출력
+          // input date type 에 value 를 넣기 위해서 는 IOS 방식으로 변환해야함
+          function dateFormat(d) {
+            let offset = d.getTimezoneOffset() * 60000;
+            const day = 8.64e+7; // 하루만큼에 시간을 **밀리초**단위로 계산한 값
+            let dateOffset = new Date(d.getTime() - offset - day);
+            let iso = dateOffset.toISOString();
+            return iso.substring(0, 16);
+          }
+
+
+          let startFormat = timezoneFormat(start);
+          let endFormat = dateFormat(end);
+
+          $("#form").css("display", "block");
+          $(".btns").css("display", "block");
+          $("#updateBtn").css("display", "none");
+          $("#delBtn").css("display", "none");
+          $("#submitBtn").css("display", "block");
+          $("#closeBtn").css("display", "block");
+
+          $("#eventSeq").val("");
+          $("#eventType").val("팀");
+          $("#eventName").val("");
+          $("#eventWriter").val("");
+          $("#eventWriter").attr("type", "hidden");
+          $("#eventLocation").val("");
+          $("#eventMemo").val("");
+          $("#eventColor").val("purple");
+          $("#eventColor").css("background-color", "purple");
+
+
+          // month view 가 true 일 때만, date 값을 조정
+          // day view 나 week view 에서는 date 값을 조정하지 않음,
+          // 하루만 선택 했을때도 하루만큼 에 시간이 빠지기 때문
+          let monthViewTrue = $('button[title="월"]').attr("aria-pressed");
+          // aria-pressed = true
+          if (monthViewTrue === "true") {
+            $("#eventStart").val(startFormat);
+            $("#eventEnd").val(endFormat);
+          }// aria-pressed = false
+          else {
+            $("#eventStart").val(startFormat);
+            $("#eventEnd").val(timezoneFormat(end));
+          }
+
+
+        },
+
+        unselect: function () {
+          $("#form").css("display", "block");
+          $("#updateBtn").css("display", "none");
+          $("#delBtn").css("display", "none");
+          $("#submitBtn").css("display", "block");
+
+          $("#eventSeq").val("");
+          $("#eventType").val("팀");
+          $("#eventName").val("");
+          $("#eventWriter").val("");
+          $("#eventWriter").attr("type", "hidden");
+          $("#eventLocation").val("");
+          $("#eventMemo").val("");
+          $("#eventColor").val("purple");
+          $("#eventColor").css("background-color", "purple");
+        },
+
+        // events object 이벤트 객체 [일정의 데이터가 담기는 공간 json 타입]
+        events: function (info, successCallback) {
+
+          $.ajax({
+            url: "/calendar/selectTeam",
+            success: function (resp) {
+              const events = [];
+              let jsonParse = JSON.parse(resp);
+              $.each(jsonParse, function (index, element) {
+                events.push({
+                  seq: element.eventSeq,
+                  type: element.eventType,
+                  title: "[" + element.eventType + "]" + element.eventName,
+                  writer: element.eventWriter,
+                  location: element.eventLocation,
+                  memo: element.eventMemo,
+                  start: element.eventStart,
+                  end: element.eventEnd,
+                  color: element.eventColor
+                });
+
+              })
+              console.log(events);
+              successCallback(events);
+            }
+            , error: function (request, status, error) {
+              alert("code:" + request.status + error);
+            }
+
+          });
+
+        },
+        // other events here
+        // document.ready 동작테스트
+
+
+      })
+      calendar.render();
+      //캘린더 렌더링 함수 호출
+    });
+
+
+
+
+  </script>
+
+  <link rel="stylesheet" href="/static/css/calendar.css">
+  <title>팀 캘린더</title>
+</head>
+<body>
+<div class="header">
+  캘린더
+  <div class="headerBtns">
+    <button onclick="location.href='/calendar/goTeam'" class="calType" id="goTeam">
+      팀
+    </button>
+    <button onclick="location.href='/calendar/goPrivate'" class="calType" id="goPrivate">
+      개인
+    </button>
+    <button onclick="location.href='/calendar/moveCalendar'" class="calType" id="goAll">
+      전체
+    </button>
+    <button class="plusBtn" style="display: none">+</button>
+  </div>
+</div>
+<div class="wrap" style="clear: both">
+  <div class="modal">
+    <div class="modalWrap">
+
+      <div class="inputEvent">
+
+        <button id="formToggle" type="button" class="formToggle">
+          일정추가 +
+        </button>
+
+
+        <form action="/calendar/insertEvent" id="form" method="post">
+          <select name="eventColor" id="eventColor" class="eventSelect" onchange="selectColor(value)" data-placeholder="색상">
+            <option value="purple" style="background: purple" id="teamColor"></option>
+            <option value="blue" id="blue" style="background: blue"></option>
+            <option value="red" id="red" style="background: red"></option>
+            <option value="green" id="green" style="background: green"></option>
+            <option value="black"  id="black" style="background: black"></option>
+          </select>
+          <select name="eventType" id="eventType" class="eventSelect" >
+            <option value="팀">팀 캘린더</option>
+          </select>
+          <input type="hidden"  id="eventSeq" placeholder="seq" readonly disabled >
+          <input type="text" name="eventName" id="eventName" placeholder="제목">
+          <input type="hidden"  id="eventWriter" placeholder="작성자" readonly disabled>
+          <input type="datetime-local" name="eventStart" id="eventStart"  data-placeholder="시작날짜"  required aria-required="true">
+          <input type="datetime-local" name="eventEnd" id="eventEnd"  data-placeholder="마감날짜" placeholder=""  required aria-required="true">
+          <input type="text" name="eventLocation" id="eventLocation" placeholder="장소">
+          <textarea name="eventMemo" id="eventMemo" cols="30" rows="10" placeholder="메모"></textarea>
+          <button type="submit" id="submitBtn" class="modalBtn">
+            완료
+          </button>
+        </form>
+        <div class="btns" style="display: none">
+          <button type="submit" id="updateBtn" class="modalBtn" onclick="update()" style="display: none">수정</button>
+          <button type="submit" id="delBtn" class="modalBtn" onclick="del()" style="display: none">삭제</button>
+          <button type="button" id="closeBtn" class="modalBtn" onclick="window.location.reload()" >취소</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div id='calendar'>
+
+
+  </div>
+
+
+</div>
+<script >
+
+
+
+  $(document).ready(function (){
+    // document.ready 동작테스트
+    console.log("DOMReadyPrintTest");
+    // 일정추가 토글 동작
+    $("#formToggle").click(function (){
+      $("#form").toggle();
+      $(".btns").toggle();
+    });
+
+
+
+  })
+
+  // 일정 불러오기
+  function select() {
+    location.href ="/calendar/selectAll"
+  }
+  // 일정삭제 기능
+  function del() {
+    const seq = $("#eventSeq").val();
+    const title = $("#eventName").val();
+    const writer = document.querySelector("#eventWriter").value;
+    if (confirm("<"+title+">"+"일정을 삭제하시겠습니까?")){
+      $("#eventWriter").attr("disabled",false);
+      location.href ="/calendar/deleteEvent?eventSeq="+seq+"&eventWriter="+writer;
+    }
+  }
+  // 업데이트 기능
+  function update() {
+    $("#eventWriter").attr("disabled",false);
+    let seq = $("#eventSeq").val();
+    let type =$("#eventType").val();
+    let title =$("#eventName").val();
+    let eventStart =$("#eventStart").val();
+    let eventEnd =$("#eventEnd").val();
+    let eventLocation =$("#eventLocation").val();
+    let eventMemo =$("#eventMemo").val();
+    let eventColor =$("#eventColor").val();
+    const writer = document.querySelector("#eventWriter").value;
+
+    if (confirm("<"+title+">"+"일정을 수정하시겠습니까?")){
+      location.href ="/calendar/updateEvent?eventSeq="+seq
+              +"&eventType="+type
+              +"&eventName="+title
+              +"&eventStart="+eventStart
+              +"&eventEnd="+eventEnd
+              +"&eventLocation="+eventLocation
+              +"&eventMemo="+eventMemo
+              +"&eventColor="+eventColor
+              +"&eventWriter="+writer;
+    }
+  }
+
+  function selectColor(arg) {
+    $("#eventColor").css("background-color",arg);
+  }
+
+
+
+
+</script>
+</body>
+</html>

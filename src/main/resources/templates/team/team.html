@@ -108,7 +108,7 @@
         <button id="appToggle" class="appToggle">앱 toggle</button>
         <div id="appList">
           <button class="app" id="appDrive"><a href="">드라이브</a></button>
-          <button class="app" id="appCal"><a href="">캘린더</a></button>
+          <button class="app" id="appCal"><a>캘린더</a></button>
         </div>
       </div>
     </aside>
@@ -375,6 +375,14 @@
   function closer(arg) {
     $(arg).parent().parent().parent().css("display","none");
   }
+</script>
+<script>
+
+  $("#appCal").on("click",function(){
+
+    window.open('/calendar/moveCalendar','calendar','scrollbars=no,resizable=yes width=1920 height=1080, left=0,top=0')
+})
+
 </script>
 </body>
 </html>

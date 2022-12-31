@@ -499,3 +499,34 @@ aside {
   border: 1px solid red;
   border-radius: 10px;
 }
+
+.fileView{
+  bottom: 55px;
+  left: 169px;
+  width: 250px;
+  height: 150px;
+  border: 1px solid #000;
+  background-color: white;
+  display: none;
+  position: absolute;
+}
+
+.fileView ul{
+  width: 248px;
+  line-height : 40px;
+}
+
+.fileView h3{
+  text-align: center;
+  width: 248px;
+}
+#uploadfile{
+  width: 70%;
+}
+.fileContents{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 70%;
+}

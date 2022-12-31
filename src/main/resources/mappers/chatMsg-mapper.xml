@@ -9,7 +9,7 @@
         insert into
             chat_msg
         values
-            (chat_msg_seq.nextval, #{chatRoomSeq}, #{teamMemberNickname}, #{chatContent}, #{memberSeq}, 1, sysdate)
+            (chat_msg_seq.nextval, #{chatRoomSeq}, #{teamMemberNickname}, #{chatContent}, #{memberSeq}, 1, #{chatMsgType},sysdate)
         <selectKey order="AFTER" keyProperty="chatDate" resultType="java.sql.Timestamp">
             select
                 Max(chat_date)
@@ -18,6 +18,10 @@
             where
                 chat_room_seq = #{chatRoomSeq}
         </selectKey>
+    </insert>
+
+    <insert id="insertFiles">
+        insert into chat_files values(chat_files_seq.nextval, #{chatOriName}, #{chatSysName}, #{chatRoomSeq})
     </insert>
 
     <!-- 이전 메세지 불러오기   -->

@@ -12,6 +12,8 @@ public interface CalMapper {
     void insertEvent(CalDTO calDto);
 
     List<CalDTO> selectAll(int teamSeq);
+    List<CalDTO> selectTeam(int teamSeq);
+    List<CalDTO> selectPrivate(int teamSeq);
 
     void deleteEvent(int eventSeq);
 

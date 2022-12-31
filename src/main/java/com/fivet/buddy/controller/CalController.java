@@ -48,6 +48,22 @@ public class CalController {
         }
         return "index";
     }
+
+    @RequestMapping(value = "goPrivate")
+    public String goPrivate()throws Exception {
+        if ((Integer) session.getAttribute("teamSeq") != null ){
+            return "calendar/calendarPrivate";
+        }
+        return "index";
+    }
+
+    @RequestMapping(value = "goTeam")
+    public String goTeam()throws Exception {
+        if ((Integer) session.getAttribute("teamSeq") != null ){
+            return "calendar/calendarTeam";
+        }
+        return "index";
+    }
     @ResponseBody
     @RequestMapping (value = "selectAll" , produces = "text/html;charset=utf8")
     public String selectAll(Model model) throws Exception{
@@ -57,6 +73,29 @@ public class CalController {
             String list = gson.toJson(calList);
             return list;
     }
+
+    @ResponseBody
+    @RequestMapping (value = "selectTeam" , produces = "text/html;charset=utf8")
+    public String selectTeam(Model model) throws Exception{
+        List<CalDTO> calList = calService.selectTeam((Integer) session.getAttribute("teamSeq"));
+        model.addAttribute("list",calList);
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        String list = gson.toJson(calList);
+        System.out.println(list);
+        return list;
+    }
+
+    @ResponseBody
+    @RequestMapping (value = "selectPrivate" , produces = "text/html;charset=utf8")
+    public String selectPrivate(Model model) throws Exception{
+        List<CalDTO> calList = calService.selectPrivate((Integer) session.getAttribute("teamSeq"));
+        model.addAttribute("list",calList);
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        String list = gson.toJson(calList);
+        System.out.println(list);
+        return list;
+    }
+
 
     @GetMapping("deleteEvent")
     public String deleteEvent(int eventSeq , String eventWriter ) throws Exception{

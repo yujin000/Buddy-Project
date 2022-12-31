@@ -20,6 +20,14 @@ public class CalService {
         return calDao.selectAll(teamSeq);
     }
 
+    public List<CalDTO> selectTeam(int teamSeq) throws Exception{
+        return calDao.selectTeam(teamSeq);
+    }
+
+    public List<CalDTO> selectPrivate(int teamSeq) throws Exception{
+        return calDao.selectPrivate(teamSeq);
+    }
+
     public void deleteEvent(int eventSeq) throws Exception{
         calDao.deleteEvent(eventSeq);
         }
@@ -27,4 +35,6 @@ public class CalService {
         public void updateEvent(CalDTO calDto) throws Exception{
         calDao.updateEvent(calDto);
         }
+
+
 }

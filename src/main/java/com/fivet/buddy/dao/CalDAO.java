@@ -20,6 +20,13 @@ public class CalDAO {
         return calMapper.selectAll(teamSeq);
     }
 
+    public List<CalDTO> selectTeam(int teamSeq) throws Exception{
+        return calMapper.selectTeam(teamSeq);
+    }
+    public List<CalDTO> selectPrivate(int teamSeq) throws Exception{
+        return calMapper.selectPrivate(teamSeq);
+    }
+
     public void deleteEvent(int eventSeq) throws Exception{
         calMapper.deleteEvent(eventSeq);
     }

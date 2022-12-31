@@ -23,6 +23,15 @@
         select * from event where "team_seq" = #{teamSeq}
     </select>
 
+
+    <select id="selectTeam" resultType="com.fivet.buddy.dto.CalDTO">
+        select * from event where "team_seq" = #{teamSeq} and "event_type" = '팀'
+    </select>
+
+    <select id="selectPrivate" resultType="com.fivet.buddy.dto.CalDTO">
+        select * from event where "team_seq" = #{teamSeq} and "event_type" = '개인'
+    </select>
+
     <delete id="deleteEvent">
         delete event where "event_seq" = #{value}
     </delete>

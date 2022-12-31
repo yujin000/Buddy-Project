@@ -6,6 +6,8 @@ import com.fivet.buddy.services.ChatFilesService;
 import com.fivet.buddy.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +24,7 @@ public class ChatFilesController {
 
     @Value("${chat.save.path}")
     String chatPath;
+
     @ResponseBody
     @RequestMapping("insert")
     public Map<String, String> insertFiles(MultipartFile[] uploadfile, FileUtil util, ChatMsgDTO chatMsgDto, ChatFilesDTO chatFilesDto) throws Exception {
@@ -34,8 +37,7 @@ public class ChatFilesController {
                         0,
                         file.getOriginalFilename(),
                         sysName,
-                        chatMsgDto.getChatRoomSeq(),
-                        chatMsgDto.getChatSeq());
+                        chatMsgDto.getChatRoomSeq());
                 chatFilesList.add(chatFilesDto);
                 util.saves(uploadfile, chatPath, sysName);
             }
@@ -45,5 +47,9 @@ public class ChatFilesController {
         map.put("chatOriName",chatFilesDto.getChatOriName());
         map.put("chatSysName",chatFilesDto.getChatSysName());
         return map;
+    }
+    @RequestMapping("download")
+    public ResponseEntity<Resource> download(FileUtil util, String chatSysName, String chatOriName) throws Exception{
+        return util.download(chatPath,chatSysName,chatOriName);
     }
 }

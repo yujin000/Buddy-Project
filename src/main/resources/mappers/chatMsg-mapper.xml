@@ -20,6 +20,10 @@
         </selectKey>
     </insert>
 
+    <insert id="insertFiles">
+        insert into chat_files values(chat_files_seq.nextval, #{chatOriName}, #{chatSysName}, #{chatRoomSeq})
+    </insert>
+
     <!-- 이전 메세지 불러오기   -->
     <select id="selectChatMsg" resultType="com.fivet.buddy.dto.ChatMsgDTO">
         select

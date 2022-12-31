@@ -13,5 +13,4 @@ public class ChatFilesDTO {
     private String chatOriName;
     private String chatSysName;
     private int chatRoomSeq;
-    private int chatMsgSeq;
 }

@@ -1,9 +1,6 @@
 package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.CalDTO;
-import com.fivet.buddy.dto.ChatRoomDTO;
-import com.fivet.buddy.dto.TeamMemberDTO;
-import com.fivet.buddy.dto.TeamMemberListDTO;
 import com.fivet.buddy.services.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,14 +24,10 @@ public class CalController {
     @Autowired
     private HttpSession session;
 
-
-
-    private Logger logger = LoggerFactory.getLogger(CalController.class);
-
     @ExceptionHandler(Exception.class)
     public String exceptionHandler(Exception e) {
         e.printStackTrace();
-        return "error";
+        return "/calendar/calendarError";
     }
 
     @RequestMapping("insertEvent")
@@ -50,7 +43,7 @@ public class CalController {
         if ((Integer) session.getAttribute("teamSeq") != null ){
         return "calendar/calendar";
         }
-        return "error";
+        return "/calendar/calendarError";
     }
 
     @RequestMapping(value = "goPrivate")
@@ -58,7 +51,7 @@ public class CalController {
         if ((Integer) session.getAttribute("teamSeq") != null ){
             return "calendar/calendarPrivate";
         }
-        return "index";
+        return "/calendar/calendarError";
     }
 
     @RequestMapping(value = "goTeam")
@@ -66,7 +59,7 @@ public class CalController {
         if ((Integer) session.getAttribute("teamSeq") != null ){
             return "calendar/calendarTeam";
         }
-        return "index";
+        return "/calendar/calendarError";
     }
 
     @ResponseBody
@@ -101,19 +94,31 @@ public class CalController {
         return list;
     }
 
-    @GetMapping("selectGrade")
-    public String selectGrade(int eventSeq) throws Exception{
+    @GetMapping("teamEventDel")
+    public String teamEventDel(int eventSeq) throws Exception{
         String grade = calService.selectGrade(session.getAttribute("teamMemberNickname").toString());
         String manager = "manager";
-        System.out.println(grade);
-        System.out.println(manager);
-        System.out.println(eventSeq);
         boolean result =  Objects.equals(grade, manager);
         if (result){
             calService.deleteEvent(eventSeq);
             return "redirect:/calendar/moveCalendar";
         }else {
-            return "/calendar/sessionError";
+            return "/calendar/gradeError";
+        }
+    }
+    @GetMapping("teamEventUpd")
+    public String privateEventDel(CalDTO calDto) throws Exception{
+        String grade = calService.selectGrade(session.getAttribute("teamMemberNickname").toString());
+        String manager = "manager";
+        System.out.println(grade);
+        System.out.println(manager);
+        boolean result =  Objects.equals(grade, manager);
+        if (result){
+            calService.updateEvent(calDto);
+            return "redirect:/calendar/moveCalendar";
+        }else {
+            return "/calendar/gradeError";
+
         }
     }
     @GetMapping("deleteEvent")
@@ -125,7 +130,8 @@ public class CalController {
         return "redirect:/calendar/moveCalendar";
 
         }else {
-                return "/calendar/sessionError";
+            return "/calendar/gradeError";
+
         }
     }
 
@@ -139,7 +145,8 @@ public class CalController {
             calService.updateEvent(calDto);
             return "redirect:/calendar/moveCalendar";
         }else {
-            return "/calendar/sessionError";
+            return "/calendar/gradeError";
+
         }
 
     }

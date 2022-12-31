@@ -134,4 +134,9 @@ public class MemberService {
     public String getOwnerName(int checkOwner) {
         return memberDao.getOwnerName(checkOwner);
     }
+
+    // 회원 번호를 통해 이름과 이메일 추출
+    public MemberDTO getNameAndEmail(int memberSeq) {
+        return memberDao.getNameAndEmail(memberSeq);
+    }
 }

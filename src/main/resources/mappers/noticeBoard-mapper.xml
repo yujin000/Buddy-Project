@@ -11,11 +11,16 @@
     </select>
     
     <insert id="insertNotice">
-        insert into notice_board values(notice_seq.nextval, #{noticeWriter}, #{noticeTitle}, #{noticeContents}, sysdate)
+        insert into notice_board values(notice_seq.nextval, #{noticeWriterSeq}, #{noticeWriterName}, #{noticeTitle}, #{noticeContents}, sysdate)
     </insert>
 
     <!--    공지글 삭제-->
     <delete id="deleteNotice">
         delete from notice_board where notice_seq = #{value}
     </delete>
+
+    <!-- 공지글 보기   -->
+    <select id="noticeDetail" resultType="com.fivet.buddy.dto.NoticeBoardDTO">
+        select * from notice_board where notice_seq = #{value}
+    </select>
 </mapper>

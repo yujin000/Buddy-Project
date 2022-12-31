@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>관리자 페이지-공지사항 보기</title>
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/admin.css" />
+  <link rel="stylesheet" href="/static/css/m-admin.css" />
+  <script
+          src="https://code.jquery.com/jquery-3.6.1.min.js"
+          integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+          crossorigin="anonymous"
+  ></script>
+  <script src="/static/js/jQueryCheck.js"></script>
+</head>
+<body>
+  <div>
+    <div>
+      <div>번호</div>
+      <div>작성자</div>
+      <div>작성날짜</div>
+    </div>
+    <th:block th:each="notice : ${notice}">
+    <div>
+      <div th:text="${notice.noticeSeq}"></div>
+      <div th:text="${notice.noticeWriterName}"></div>
+      <div th:text="${notice.noticeWriteDate}"></div>
+    </div>
+    <!-- 본문   -->
+    <div th:utext="${notice.getNoticeContents}"></div>
+    </th:block>
+  </div>
+  <button type="button">수정하기</button>
+  <button type="button" id="toNoticeList">목록으로</button>
+
+  <script>
+    //목록 버튼 클릭 이벤트
+    $("#toNoticeList").on("click", function (){
+      location.href = "/notice/toAdminNotice";
+    })
+  </script>
+</body>
+</html>

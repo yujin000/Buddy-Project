@@ -24,5 +24,10 @@ public class NoticeBoardDAO {
     }
 
     // 공지글 삭제
-    public void deleteNotice(int noticeBoardSeq) { noticeBoardMapper.deleteNotice(noticeBoardSeq); }
+    public void deleteNotice(int noticeSeq) { noticeBoardMapper.deleteNotice(noticeSeq); }
+
+    // 공지글 보기
+    public NoticeBoardDTO noticeDetail(int noticeSeq) {
+        return noticeBoardMapper.noticeDetail(noticeSeq);
+    }
 }

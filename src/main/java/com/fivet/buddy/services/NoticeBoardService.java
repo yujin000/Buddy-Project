@@ -24,8 +24,13 @@ public class NoticeBoardService {
     }
 
     // 공지글 삭제
-    public void deleteNotice(int noticeBoardSeq) {
-        noticeBoardDao.deleteNotice(noticeBoardSeq);
+    public void deleteNotice(int noticeSeq) {
+        noticeBoardDao.deleteNotice(noticeSeq);
+    }
+
+    //공지글 보기
+    public NoticeBoardDTO noticeDetail(int noticeSeq) {
+        return noticeBoardDao.noticeDetail(noticeSeq);
     }
 
 }

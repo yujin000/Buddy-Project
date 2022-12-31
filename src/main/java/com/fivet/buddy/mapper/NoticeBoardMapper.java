@@ -13,4 +13,6 @@ public interface NoticeBoardMapper {
     void insertNotice(NoticeBoardDTO noticeBoardDto);
 
     void deleteNotice(int noticeBoardSeq);
+    NoticeBoardDTO noticeDetail(int noticeSeq);
+
 }

@@ -1,8 +1,10 @@
 package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dao.NoticeBoardDAO;
+import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.NoticeBoardDTO;
 import com.fivet.buddy.dto.NoticeFileDTO;
+import com.fivet.buddy.services.MemberService;
 import com.fivet.buddy.services.NoticeBoardService;
 import com.fivet.buddy.services.NoticeFileService;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +34,9 @@ public class NoticeBoardController {
 
     @Autowired
     private NoticeBoardService noticeBoardService;
+
+    @Autowired
+    private MemberService memberService;
 
     //공지글 보기(회원)
     @ResponseBody
@@ -72,15 +78,29 @@ public class NoticeBoardController {
     //공지사항 글쓰기
     @RequestMapping("insertNotice")
     public String insertNotice(NoticeBoardDTO noticeBoardDto) {
-        noticeBoardDto.setNoticeWriter((int)session.getAttribute("memberSeq"));
+        noticeBoardDto.setNoticeWriterSeq((int)session.getAttribute("memberSeq"));
+        noticeBoardDto.setNoticeWriterName(session.getAttribute("memberName").toString());
+        noticeBoardDto.setNoticeContents(noticeBoardDto.getNoticeContents().replace("<script>","&lt;script>"));
         noticeBoardService.insertNotice(noticeBoardDto);
         return "redirect:/notice/toAdminNotice";
     }
 
     //공지사항 삭제
     @PostMapping("deleteNotice")
-    public String deleteNotice(int noticeBoardSeq) {
-        noticeBoardService.deleteNotice(noticeBoardSeq);
+    public String deleteNotice(int noticeSeq) {
+        noticeBoardService.deleteNotice(noticeSeq);
         return "redirect:/notice/toAdminNotice";
+    }
+
+    // 공지글 보기
+    @RequestMapping("adminNoticeDetail")
+    public String adminNoticeDetail(int noticeSeq, Model model){
+        if (session.getAttribute("memberLogtype").equals("admin")) {
+            model.addAttribute("notice", noticeBoardService.noticeDetail(noticeSeq));
+            return "/admin/adminNoticeDetail";
+        } else {
+            return "error";
+        }
+
     }
 }

@@ -90,14 +90,15 @@
         <div class="table">
           <ul>
             <li class="thead">
-              <span>번호</span><span>제목</span><span>작성자</span
+              <span>번호</span><span>작성자</span><span>제목</span
             ><span>작성일</span><span>삭제</span>
             </li>
             <li class="tdata" th:each="noticeBoardList : ${noticeBoardList}">
-              <span>[[${noticeBoardList.noticeSeq}]]</span><span>[[${noticeBoardList.noticeTitle}]]</span><span>[[${noticeBoardList.noticeWriter}]]</span
+              <span>[[${noticeBoardList.noticeSeq}]]</span><span>[[${noticeBoardList.noticeWriterName}]]</span>
+              <span class="detail" th:noticeSeq="${noticeBoardList.noticeSeq}">[[${noticeBoardList.noticeTitle}]]</span
             ><span>[[${noticeBoardList.noticeWriteDate}]]</span>
               <span><form class="delForm" action="/notice/deleteNotice" method="post">
-                <input type="hidden" name="noticeBoardSeq" th:value="${noticeBoardList.noticeSeq}">
+                <input type="hidden" name="noticeSeq" th:value="${noticeBoardList.noticeSeq}">
                 <button type="button" class="delData">del</button>
               </form></span>
 
@@ -125,11 +126,17 @@
 </div>
 
 <script>
+  //삭제 이벤트
   $(".delData").on("click", function () {
     if (confirm("정말 삭제하시겠습니까?")) {
       $(this).closest("form").submit();
     }
   });
+
+  //제목 클릭시, 본문 이동 이벤트
+  $(".detail").on("click",function (){
+    location.href = "/notice/adminNoticeDetail?noticeSeq="+$(this).attr("noticeSeq");
+  })
 </script>
 
 <script>

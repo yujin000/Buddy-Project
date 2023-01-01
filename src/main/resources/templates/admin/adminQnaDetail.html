@@ -43,11 +43,11 @@
     </th:block>
     <th:block th:if="${#lists.isEmpty(qnaComment)}">
     <div id="insert" th:data-count="${qnaCommentCount}">답변 작성하기
-        <form action="/qna/insertComment" id="form" method="post">
+        <form action="/qna/insertComment" id="form" method="post" enctype="multipart/form-data">
             <textarea id="content" name="qnaCommentContents"></textarea>
             <input type="hidden" name="qnaSeq" th:value="${qna.getQnaSeq()}">
         </form>
-        <button type="button">이미지 첨부</button>
+        <input type="file" id="uploadFile" name="uploadFile" multiple="multiple" accept=".jpg, .png, .gif">
         <button type="button" id="confirm" >답변 작성</button>
         <button type="button" id="toAdminQna"><a href="/qna/toAdminQna?cpage=1">목록으로</a></button>
     </div>

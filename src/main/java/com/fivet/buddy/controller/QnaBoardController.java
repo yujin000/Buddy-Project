@@ -63,7 +63,6 @@ public class QnaBoardController {
     public String insert(@RequestParam MultipartFile[] uploadfile, Model model, QnaBoardDTO qnaDto, QnaFileDTO qnaFileDto, FileUtil util) throws Exception {
         qnaDto.setQnaWriterSeq((int) session.getAttribute("memberSeq"));
         qnaDto.setQnaWriterId(memberService.getMemberId(qnaDto.getQnaWriterSeq()));
-        System.out.println(uploadfile[0]);
         if (uploadfile[0].isEmpty()) {
             qnaBoardService.insert(qnaDto);
         } else {

@@ -64,6 +64,7 @@ public class EmailController {
         return emailUtil.sendInviteEmail( (String) params.get("userId")
                 , (String) params.get("subject")
                 , (String) params.get("body")
+                , (String) params.get("teamName")
         );
     }
 

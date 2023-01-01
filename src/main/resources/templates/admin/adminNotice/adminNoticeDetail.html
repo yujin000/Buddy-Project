@@ -30,6 +30,7 @@
     <!-- 본문   -->
     <div th:utext="${notice.getNoticeContents}"></div>
   </div>
+  <button type="button" id="deleteNotice" th:data-index="${notice.noticeSeq}">삭제하기</button>
   <button type="button" id="toNoticeModify" th:data-index="${notice.noticeSeq}">수정하기</button>
   <button type="button" id="toNoticeList">목록으로</button>
 
@@ -43,6 +44,14 @@
     //목록 버튼 클릭 이벤트
     $("#toNoticeList").on("click", function (){
       location.href = "/notice/toAdminNotice?cpage=1";
+    })
+
+    //삭제 버튼 클릭 이벤트
+    $("#deleteNotice").on("click", function (){
+      if (confirm("정말 삭제하시겠습니까?")) {
+        alert("삭제 완료");
+        location.href = "/notice/deleteNotice?noticeSeq=" + $(this).attr("data-index");
+      }
     })
   </script>
 </body>

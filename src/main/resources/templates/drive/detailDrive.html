@@ -103,7 +103,7 @@
           <th:block th:if="${#strings.equals(shared,0)}">
             <label for="uploadFile" class="fileLabel mainButton">
               업로드
-              <input type="file" name="multipartFile" id="uploadFile" accept=".txt,.xls,.ppt,.hwp,.jpg,.png,.gif,.mp4,.mp3,.zip" >
+              <input type="file" name="multipartFile" id="uploadFile" accept=".txt,.xls,.ppt,.hwp,.jpg,.png,.gif,.mp4,.mp3,.zip,.pptx,.xlsx" >
               <input type="hidden" th:value="${parentKey}" name="attachFolder">
             </label>
             <button type="button" id="newFolder" class="mainButton">새 폴더</button>
@@ -116,6 +116,11 @@
       </form>
       <!-- 본문 -->
       <div class="fileMainPlace">
+        <form action="/drive/dragFile" method="post" enctype="multipart/form-data" id="dropForm">
+          <div id="dropArea"></div>
+          <input type="file" id="dropFile" name="multipartFile">
+          <input type="hidden" th:value="${parentKey}" id="attachFolder">
+        </form>
         <div id="listArea">
           <ul class="listThumb">
             <div th:if="${#strings.isEmpty(childFolders)} and ${#strings.isEmpty(childFiles)}">
@@ -444,7 +449,7 @@
     let maxFileSize = 10 * 1024 * 1024;
 
     let extension = this.value.split(".").pop().toLowerCase();
-    let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip"];
+    let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip", "xlsx", "pptx"];
     let result = $.inArray(extension, accept);
 
     if (fileSize + myVolume > maxVolume){
@@ -475,6 +480,88 @@
       });
     }
   }
+
+</script>
+
+<!-- 드래그앤 드롭 -->
+<script>
+  $(function(){
+    const fileDropArea = $('#dropArea');
+    const listArea = $('#listArea');
+
+    listArea.on('dragenter', function(e) {
+      fileDropArea.css('display', 'block');
+    });
+
+    fileDropArea.on('dragleave', function(e) {
+      fileDropArea.css('display', 'none');
+    });
+
+    fileDropArea.on('dragover', function(e) {
+      e.preventDefault();
+      fileDropArea.addClass('active');
+    });
+
+    fileDropArea.on('drop', function(e) {
+      e.preventDefault();
+      fileDropArea.removeClass('active');
+      fileDropArea.css('display', 'none');
+
+      const myVolume = $('#myVolume').data('volume');
+      let files = e.originalEvent.dataTransfer.files;
+
+      if (files.length > 1) {
+        alert('한 번에 한 개의 파일만 첨부할 수 있습니다.');
+        return;
+      }
+
+      let file = files[0];
+      let fileSize = file.size;
+      let maxFileSize = 10 * 1024 * 1024;
+
+      let extension = file.name.split(".").pop().toLowerCase();
+      let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip", "xlsx", "pptx"];
+      let result = $.inArray(extension, accept);
+
+      let valid = false;
+
+      if (fileSize + myVolume > maxVolume){
+        alert("개인 드라이브에 첨부할 수 있는 파일의 최대 용량은 100MB 입니다. \n 100MB를 초과하여 업로드 할 수 없습니다.");
+        return;
+      }
+
+      if (fileSize > maxFileSize) {
+        alert("첨부하려는 '" + file.name + "' 파일은 용량이 너무 큽니다. \n 업로드 할 수 있는 최대 용량은 '10 MB' 입니다.");
+        return;
+      }
+
+      if (result == -1) {
+        alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .xls, .ppt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip)");
+        return;
+      }
+
+      valid = true;
+
+      if (valid){
+        let formData = new FormData();
+        formData.append('multipartFile',files[0]);
+        formData.append('attachFolder', $('#attachFolder').val());
+
+        $.ajax({
+          url: '/personalFile/uploadFile',
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false
+        }).done(function(){
+          location.reload();
+        });
+      }
+
+    });
+  })
+
+  //
 
 </script>
 

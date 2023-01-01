@@ -468,3 +468,21 @@ aside {
     text-align: center;
     padding:50% 0% 50% 0%;
 }
+/* 드래그 드랍 */
+#dropArea {
+    width: 80%;
+    height: 90%;
+    border: 2px dashed lightseagreen;
+    padding: 20px;
+    text-align: center;
+    position:absolute;
+    display:none;
+}
+
+#dropArea.active {
+    background: lightblue;
+    opacity:0.3;
+}
+#dropFile{
+    display: none;
+}

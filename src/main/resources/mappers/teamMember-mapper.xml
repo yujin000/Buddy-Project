@@ -95,4 +95,10 @@
         where
             member_seq = #{memberSeq} and team_seq = #{teamSeq}
     </select>
+
+    <!--    회원이 속한 팀 수를 체크-->
+    <select id="countMemberTeam" resultType="int">
+        select count(*) from team_member where member_seq = #{value}
+    </select>
+
 </mapper>

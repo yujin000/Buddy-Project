@@ -11,5 +11,4 @@ public class NoticeFileDTO {
     private int noticeFilesSeq;
     private String noticeOriname;
     private String noticeSysname;
-    private int noticeSeq;
 }

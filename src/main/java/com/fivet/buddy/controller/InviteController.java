@@ -2,12 +2,10 @@ package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.InviteDTO;
 import com.fivet.buddy.dto.TeamMemberDTO;
-import com.fivet.buddy.services.ChatRoomService;
-import com.fivet.buddy.services.InviteService;
-import com.fivet.buddy.services.TeamMemberService;
-import com.fivet.buddy.services.TeamService;
+import com.fivet.buddy.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -32,6 +30,9 @@ public class InviteController {
     @Autowired
     private ChatRoomService chatRoomService;
 
+    @Autowired
+    private MemberService memberService;
+
 
     // ExceptionHandler
     @ExceptionHandler(Exception.class)
@@ -40,25 +41,25 @@ public class InviteController {
         return "error";
     }
 
-    // 초대 테스트페이지 이동(추후 경로 변경 예정)
-    @RequestMapping("test")
-    public String test()throws Exception{
-        return "testInvite";
+    // 초대 페이지 이동
+    @RequestMapping("sendInviteMail")
+    public String sendInviteMail(Model model)throws Exception{
+        model.addAttribute("memberName",memberService.getOwnerName((Integer)session.getAttribute("memberSeq")));
+        model.addAttribute("teamSeq",session.getAttribute("teamSeq"));
+        model.addAttribute("teamName",session.getAttribute("teamName"));
+        return "invite/sendInviteMail";
     }
 
-    // 초대확인 테스트 페이지 이동(추후 경로 변경 예정)
-    @RequestMapping("testInviteConfirm")
+    // 초대 코드 입력페이지 이동
+    @RequestMapping("goEnterTeam")
     public String testInviteConfirm() throws Exception{
-        return "testInviteConfirm";
+        return "invite/enterTeam";
     }
 
     // 초대 발송 시 invite 테이블에 초대정보 insert(초대팀 index, 초대 멤버 index(session), 수신 이메일, 초대 코드)
     @ResponseBody
     @RequestMapping("codeInsert")
     public void codeInsert(InviteDTO inviteDto) throws Exception{
-        // 초대 팀seq값은 추후 session으로 대체함(test 중에서는 ajax를 통해 임의로 받아서 사용)
-        //inviteDto.setInviteTeamSeq(Integer.parseInt(session.getAttribute("teamSeq").toString()));
-
         // 초대인
         inviteDto.setInviteSendMemSeq(Integer.parseInt(session.getAttribute("memberSeq").toString()));
 
@@ -79,6 +80,7 @@ public class InviteController {
         teamMemberDto.setMemberSeq(Integer.parseInt(session.getAttribute("memberSeq").toString()));
         // 팀 닉네임 (default : 이름)
         teamMemberDto.setTeamMemberNickname(session.getAttribute("memberName").toString());
+        teamMemberDto.setMemberId(memberService.getMemberId((Integer)session.getAttribute("memberSeq")));
         teamMemberService.enterTeam(teamMemberDto);
         teamService.updatePlusTeamCount(teamMemberDto.getTeamSeq());
 

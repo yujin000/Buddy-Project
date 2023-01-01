@@ -6,19 +6,21 @@ import com.fivet.buddy.services.MemberService;
 import com.fivet.buddy.services.NoticeBoardService;
 import com.fivet.buddy.services.NoticeFileService;
 
+import com.fivet.buddy.util.FileUtil;
 import com.fivet.buddy.util.PageNavi;
+import org.apache.logging.log4j.message.ReusableMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/notice/")
@@ -32,8 +34,8 @@ public class NoticeBoardController {
     @Autowired
     private NoticeBoardService noticeBoardService;
 
-    @Autowired
-    private MemberService memberService;
+    @Value("C:/files/noticeImg")
+    String noticePath;
 
     //공지글 보기(회원)
     @ResponseBody
@@ -87,14 +89,19 @@ public class NoticeBoardController {
         noticeBoardDto.setNoticeWriterName(session.getAttribute("memberName").toString());
         noticeBoardDto.setNoticeContents(noticeBoardDto.getNoticeContents().replace("<script>","&lt;script>"));
         noticeBoardService.insertNotice(noticeBoardDto);
-        return "redirect:/notice/adminNotice/toAdminNotice";
+        return "redirect:/notice/toAdminNotice?cpage=1";
     }
 
     //공지사항 삭제
-    @PostMapping("deleteNotice")
+    @RequestMapping("deleteNotice")
     public String deleteNotice(int noticeSeq) {
-        noticeBoardService.deleteNotice(noticeSeq);
-        return "redirect:/notice/toAdminNotice";
+        if (session.getAttribute("memberLogtype").equals("admin")) {
+            noticeBoardService.deleteNotice(noticeSeq);
+            return "redirect:/notice/toAdminNotice?cpage=1";
+        } else {
+            return "error";
+        }
+
     }
 
     // 공지글 보기
@@ -125,5 +132,19 @@ public class NoticeBoardController {
     public String modifyNotice(NoticeBoardDTO noticeBoardDto) {
         noticeBoardService.updateNotice(noticeBoardDto);
         return "redirect:/notice/toAdminNotice";
+    }
+
+    //공지글 이미지 첨부 (ajax)
+    @ResponseBody
+    @PostMapping("imageUpload")
+    public String imageUpload(@RequestParam MultipartFile uploadFile, Model model, NoticeFileDTO noticeFileDto, FileUtil util) throws Exception {
+        String sysName = UUID.randomUUID().toString() + uploadFile.getOriginalFilename();
+        noticeFileDto = new NoticeFileDTO(
+                0,
+                uploadFile.getOriginalFilename(),
+                sysName
+                );
+        util.save(uploadFile, noticePath, sysName);
+        return "/noticeImg/"+sysName;
     }
 }

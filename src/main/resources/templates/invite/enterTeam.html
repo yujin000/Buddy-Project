@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script src="/static/js/jQueryCheck.js"></script>
+    <script src="/js/jQueryCheck.js"></script>
+
 </head>
 <body>
-회원초대 테스트 페이지 입니다.<br>
-<input type="text" name="" id="inviteConfirm" placeholder="인증번호" maxlength="11">
+<input type="text" name="" id="inviteConfirm" placeholder="초대코드를 입력해주세요." maxlength="11">
 <button type="button" id="inviteConfirmBtn">초대코드 확인</button>
 
 <!-- 인증코드 -->
@@ -21,38 +21,31 @@
 
     $("#inviteConfirmBtn").on("click",function (){
         let inputInviteCode = $("#inviteConfirm").val();
-        console.log(inputInviteCode);
+
         $.ajax({
             url:"/invite/codeCheck"
             ,data:{
                 inviteCode : inputInviteCode
-            },success:(function (){
-                console.log("성공");
-                chkResult = true;
-                console.log(chkResult);
-            }),error:(function(){
-                alert("유효하지 않은 초대 코드입니다. 다시 확인해주세요.");
-                chkResult = false;
+            },success:(function (rsp){
+                if(rsp){
+                    chkResult = true;
+                }else{
+                    alert("유효하지 않은 코드입니다.");
+                    $("#inviteConfirm").val("").focus();
+                    chkResult = false;
+                }
             })
         }).done(function (){
-            console.log("done 도착");
-            console.log(inputInviteCode);
             if(chkResult){
                 $.ajax({
                     url:"/invite/codeDelete"
                     ,data:{
                         inviteCode: inputInviteCode
-                    },success:(function (){
-                        console.log("삭제 성공쓰");
-                    }),error:(function (){
-                        console.log("삭제 실패쓰");
-                    })
-                }).done(function (rsp){
-                    console.log(rsp);
-                    location.href="/invite/enterTeam?teamSeq="+rsp;
+                    },success: function (rsp){
+                        location.href="/invite/enterTeam?teamSeq="+rsp;
+                        window.close();
+                    }
                 })
-            }else{
-                alert("유효하지 않습니다요.");
             }
         })
     })

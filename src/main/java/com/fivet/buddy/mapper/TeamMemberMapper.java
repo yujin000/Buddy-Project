@@ -21,4 +21,5 @@ public interface TeamMemberMapper {
     int selectSubManagerMember(int memberSeq);
     List<Integer> selectTeamMemberSeq(int teamSeq);
     int selectCheckMember(TeamMemberDTO teamMemberDto);
+    int countMemberTeam(int memberSeq);
 }

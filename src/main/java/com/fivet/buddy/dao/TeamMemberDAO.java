@@ -71,4 +71,9 @@ public class TeamMemberDAO {
         return teamMemberMapper.selectCheckMember(teamMemberDto);
     }
 
+    // 회원이 속한 팀 숫자 체크
+    public int selectMemberTeam (int memberSeq) {
+        return teamMemberMapper.countMemberTeam(memberSeq);
+    }
+
 }

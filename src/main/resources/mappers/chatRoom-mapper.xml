@@ -70,4 +70,14 @@
         </selectKey>
     </insert>
 
+    <!-- 팀내 토픽 목록 출력   -->
+    <select id="selectTopic" resultType="com.fivet.buddy.dto.ChatRoomDTO">
+        select * from chat_room where chat_type='topic' and team_seq = #{value} order by 1
+    </select>
+
+    <!-- 토픽수 count   -->
+    <select id="countTopic" resultType="int">
+        select count(*) from chat_room where chat_type='topic' and team_seq=#{value}
+    </select>
+
 </mapper>

@@ -40,4 +40,14 @@ public class ChatRoomDAO {
     public void insertTopic(ChatRoomDTO chatRoomDto) {
         chatRoomMapper.insertTopic(chatRoomDto);
     }
+
+    // 토픽 출력
+    public List<ChatRoomDTO> selectTopic(int teamSeq) {
+        return chatRoomMapper.selectTopic(teamSeq);
+    }
+
+    // 토픽 카운트
+    public int countTopic(int teamSeq) {
+        return chatRoomMapper.countTopic(teamSeq);
+    }
 }

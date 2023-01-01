@@ -74,10 +74,15 @@ public class TeamController {
                 param.put("memberSeq", teamMemberDto.getMemberSeq());
                 // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
                 List<ChatRoomDTO> chatRoomList = chatRoomService.chatRoomList(param);
+                // 팀 토픽 갯수 카운트
+                int topicCount = chatRoomService.countTopic(param.get("teamSeq"));
                 //팀 입장 시, 팀 멤버 출력
                 List<TeamMemberListDTO> teamMemberDtoList =  teamMemberService.selectTeamMember(session.getAttribute("teamSeq").toString());
+                List<ChatRoomDTO> topicList = chatRoomService.selectTopic(param.get("teamSeq"));
                 model.addAttribute("teamMemberDtoList", teamMemberDtoList);
                 model.addAttribute("chatRoomList", chatRoomList);
+                model.addAttribute("topicList", topicList);
+                model.addAttribute("topicCount", topicCount);
                 return "team/team";
       }
 
@@ -162,7 +167,7 @@ public class TeamController {
         return g.toJson(teamMemberDtoList);
     }
 
-    // 컨트롤러에서 팀 메인화면으로 재이동하기 위한 mapping
+    // 컨트롤러에서 팀 메인화면으로 재이동하기 위한 mapping (팀 변경없을시)
     @RequestMapping("goTeamAgain")
     public String goTeamAgain(Model model) {
         //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
@@ -173,8 +178,14 @@ public class TeamController {
         List<ChatRoomDTO> chatRoomList = chatRoomService.chatRoomList(param);
         //팀 입장 시, 팀 멤버 출력
         List<TeamMemberListDTO> teamMemberDtoList =  teamMemberService.selectTeamMember(session.getAttribute("teamSeq").toString());
+        // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
+        List<ChatRoomDTO> topicList = chatRoomService.selectTopic(param.get("teamSeq"));
+        // 팀 토픽 갯수 카운트
+        int topicCount = chatRoomService.countTopic(param.get("teamSeq"));
         model.addAttribute("teamMemberDtoList", teamMemberDtoList);
         model.addAttribute("chatRoomList", chatRoomList);
+        model.addAttribute("topicList", topicList);
+        model.addAttribute("topicCount", topicCount);
         return "team/team";
     }
 

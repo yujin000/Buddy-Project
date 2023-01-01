@@ -14,6 +14,7 @@
         delete from qna_board where qna_seq = #{qnaSeq}
     </delete>
 
+    <!--    댓글작성-->
     <insert id="insertComment">
         insert into
             qna_comment
@@ -28,6 +29,7 @@
         </selectKey>
     </insert>
 
+    <!--    댓글 갯수 출력-->
     <select id="count" resultType="int">
         select count(*) from qna_comment where qna_seq = #{value}
     </select>

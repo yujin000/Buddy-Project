@@ -161,7 +161,11 @@ public class QnaBoardController {
         if (session.getAttribute("memberLogtype").equals("admin")) {
             qnaBoardDto = qnaBoardService.selectDetail(qnaBoardDto.getQnaSeq());
             List<QnaCommentDTO> qnaComment = qnaCommentService.selectComment(qnaBoardDto.getQnaSeq());
+            //댓글 유무 판별하는 int값 (1=있음, 0=없음)
             int qnaCommentCount = qnaCommentService.count(qnaBoardDto.getQnaSeq());
+            //이미지가 있는 경우, 이미지를 담아준다.
+            List<QnaFileDTO> qnaFileList = qnaFileService.selectFile(qnaBoardDto.getQnaSeq());
+            model.addAttribute("qnaFileList", qnaFileList);
             model.addAttribute("qna", qnaBoardDto);
             model.addAttribute("qnaComment", qnaComment);
             model.addAttribute("qnaCommentCount", qnaCommentCount);

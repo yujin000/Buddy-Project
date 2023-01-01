@@ -51,4 +51,14 @@ public class ChatRoomService {
         return chatRoomDto;
     }
 
+    // 토픽 리스트 출력
+    public List<ChatRoomDTO> selectTopic(int teamSeq) {
+        return chatRoomDao.selectTopic(teamSeq);
+    }
+
+    // 토픽 카운트
+    public int countTopic(int teamSeq) {
+        return chatRoomDao.countTopic(teamSeq);
+    }
+
 }

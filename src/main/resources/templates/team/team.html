@@ -68,21 +68,13 @@
 
       <div id="topic" class="asideList">
         <div class="asideTitle">
-          <h3>토픽</h3>
+          <h3>토픽 <span id="topicCount">[[${topicCount}]]</span><span> / 4</span></h3>
           <button id="topicToggle" class="toggle">v</button>
           <button id="topicCreate" class="createBtn">+</button>
         </div>
         <div id="topicList" class="asideItem">
-          <ul>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
+          <ul th:each="topicList : ${topicList}">
+            <li><a th:href="@{/chatRoom/join/(chatRoomSeq=${topicList.chatRoomSeq})}">[[${topicList.chatTitle}]]</a></li>
           </ul>
         </div>
       </div>
@@ -152,24 +144,7 @@
             <li>4</li>
           </ul>
         </div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
+<!--        <div class="msg">Msg</div>-->
       </div>
       <div class="msgSend">
           <input
@@ -225,7 +200,7 @@
     <form action="/chatRoom/insertTopic" id="form" class="topicForm" method="post">
         <h1>✨토픽 생성하기</h1>
       <ul class="list">
-        <li><input name="chatTitle" type="text" placeholder="토픽 이름" ></li>
+        <li><input id="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
       </ul>
       <button type="button" id="insertTopic">토픽 생성하기</button>
       <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
@@ -300,8 +275,14 @@
 <script>
   // 토픽 생성 이벤트
   $("#insertTopic").click(function (){
-    alert("토픽 생성 완료!");
-    $("#form").submit();
+      if ($("#topicTitle").val().length==0) {
+        alert("제목을 입력해주세요!");
+      } else if ($("#topicTitle").val().length>=15) {
+        alert("제목은 15자를 넘을 수 없습니다.")
+      } else {
+        alert("토픽 생성 완료!");
+        $("#form").submit();
+      }
   })
 </script>
 
@@ -356,9 +337,15 @@
     })
 
     $("#topicCreate").click(function (){
-      $(".createView").css("display","block");
-      $(".chatForm").css("display","none");
-      $(".topicForm").css("display","block");
+      console.log($("#topicCount").text());
+      if ($("#topicCount").text()>=4) {
+        alert("더이상 토픽을 생성할 수 없습니다!")
+      } else {
+        $(".createView").css("display","block");
+        $(".chatForm").css("display","none");
+        $(".topicForm").css("display","block");
+      }
+
     })
 
 

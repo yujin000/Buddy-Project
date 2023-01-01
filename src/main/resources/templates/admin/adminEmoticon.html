@@ -89,13 +89,14 @@
                       <button type="button" id="cancel">취소하기</button>
           <hr />
 
-          <th:block th:if="${emoticonDto!=null}">
+          <div th:if="${emoticonDto!=null}">
             <th:block th:each="emoticonDto : ${emoticonDto}">
-              th:text=[[${emoticonDto.emoticonSeq}]]
-              th:text=[[${emoticonDto.emoticonSysName}]]
-            <img th:src="'/emoticon/'+${emoticonDto.getEmoticonSysName()}" alt="" class="myImg" />
+              <div>
+            <img th:src="'/emoticon/'+${emoticonDto.emoticonSysName}" alt="" class="myImg" />
+                <button>삭제</button>
+              </div>
           </th:block>
-          </th:block>
+          </div>
           <div class="listNum">
             <a href=""><</a>
             <span>1</span>

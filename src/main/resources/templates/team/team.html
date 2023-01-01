@@ -185,13 +185,9 @@
   <div class="wrap">
     <form action="" class="chatForm">
       <h1>😀채팅 시작하기</h1>
-    <ul class="list">
+    <ul class="list" id="chatMemberUl">
       <li><input type="text" placeholder="채팅방 이름"></li>
-    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
-    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
-    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
-    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
-    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
+<!--    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>-->
     </ul>
     <button type="submit" >대화 시작하기</button>
     <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
@@ -231,6 +227,20 @@
         teamMemberListSpan2.text(JsonTeamMemberList[i].grade);
         teamMemberListLi.append(teamMemberListSpan2);
         $("#teamMemberList").append(teamMemberListLi);
+      }
+      for (let i=0; i<JsonTeamMemberList.length; i++) {
+        let chatMemberLi = $("<li>");
+        let chatMemberImg = $("<img>");
+        let chatMemberSpan1 = $("<span>");
+        let chatMemberSpan2 = $("<span>");
+        chatMemberImg.attr("src",JsonTeamMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonTeamMemberList[i].memberImgSysName);
+        chatMemberLi.append(chatMemberImg);
+        chatMemberSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
+        chatMemberLi.append(chatMemberSpan1);
+        chatMemberSpan2.attr('claas','tag');
+        chatMemberSpan2.text(JsonTeamMemberList[i].grade);
+        chatMemberLi.append(chatMemberSpan2);
+        $("#chatMemberUl").append(chatMemberLi);
       }
     })
   })

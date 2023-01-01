@@ -32,4 +32,9 @@ public class ChatMemberService {
             chatMemberDao.insertChatMember(param);
         }
     }
+
+    //채팅방 멤버 출력
+    public List<ChatMemberDTO> selectChatMember(int chatRoomSeq){
+        return chatMemberDao.selectChatMember(chatRoomSeq);
+    }
 }

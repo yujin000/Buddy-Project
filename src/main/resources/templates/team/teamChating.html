@@ -112,9 +112,11 @@
         }
 
         let file = $("#uploadfile").val();
+        let emoticonSrc;
         $("#inputMsg").on("keydown", function (e) {
+            emoticonSrc=$("#emoticonClickImg").attr("src");
             if (e.keyCode == 13 && !e.shiftKey) {
-                if (file == "") {
+                if(file == "" && emoticonSrc=="") {
                     // Json 생성
                     let wsJson = {
                         "chatRoomSeq": chatRoomSeq,
@@ -127,6 +129,46 @@
                     $(this).val("");
                     ws.send(JSON.stringify(wsJson));
                     return false;
+                }
+                //이모티콘만 보내기
+                else if($("#inputMsg").val()=="" && emoticonSrc.length!=""){
+                    let wsJson = {
+                        "chatRoomSeq": chatRoomSeq,
+                        "teamMemberNickname": teamMemberNickname,
+                        "chatContent": "<img src="+emoticonSrc+"/>",
+                        "memberSeq": memberSeq,
+                        "chatMsgType": 1
+                    };
+                    //JSON 전송
+                    $(this).val("");
+                    $("#emoticonClickImg").attr("src","");
+                    $("#emoticonClickView").hide();
+                    ws.send(JSON.stringify(wsJson));
+                    return false;
+                }
+                //이모티콘 + 메세지 보내기
+                else if(emoticonSrc.length!="" && $("#inputMsg").val()!=""){
+                    let wsJson = {
+                        "chatRoomSeq": chatRoomSeq,
+                        "teamMemberNickname": teamMemberNickname,
+                        "chatContent": "<img src="+emoticonSrc+"/><br/>"+$(this).val(),
+                        "memberSeq": memberSeq,
+                        "chatMsgType": 1
+                    };
+                    //JSON 전송
+                    $(this).val("");
+                    $("#emoticonClickImg").attr("src","");
+                    $("#emoticonClickView").hide();
+                    ws.send(JSON.stringify(wsJson));
+                    return false;
+                }
+            }
+            //이모티콘 클릭 후 backspace 누를 시 선택된 이모티콘 선택 해제됨
+            else if($("#inputMsg").val()=="" && emoticonSrc.length!=""){
+                if (e.keyCode == 8) {
+                    $(this).val("");
+                    $("#emoticonClickImg").attr("src","");
+                    $("#emoticonClickView").hide();
                 }
             }
         });
@@ -195,26 +237,38 @@
         // /qna/download?sysName=" + rsp[0].qnaSysName + "&oriName=" + rsp[0].qnaOriNam
 
     });
-    //팀원 목록 출력 ajax
+
+    //이모티콘 클릭 시
+    let clickEmoticon;
+    $(document).on("click",".emoticonImg",function(){
+        clickEmoticon=$(this).data("sysname");
+        $(".emoticonView").hide();
+        $("#emoticonClickView").toggle();
+        $("#emoticonClickImg").attr("src","/emoticon/"+clickEmoticon);
+        $("#inputMsg").focus();
+    })
+
+    //채팅방 멤버들 출력
     $.ajax({
-        url: "/team/teamMemberList",
-        success: function () {
-        }, error: function () {
+        url:"/chatRoom/selectChatMember",
+        data:{"chatRoomSeq": chatRoomSeq},
+        success : function (){
+        },error : function (){
         }
-    }).done(function (rsp) {
-        let JsonTeamMemberList = JSON.parse(rsp);
-        for (let i = 0; i < JsonTeamMemberList.length; i++) {
-            let teamMemberListLi = $("<li>");
-            let teamMemberListImg = $("<img>");
-            let teamMemberListSpan1 = $("<span>");
-            let teamMemberListSpan2 = $("<span>");
-            teamMemberListImg.attr("src", JsonTeamMemberList[i].memberImgSysName == '/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonTeamMemberList[i].memberImgSysName);
-            teamMemberListLi.append(teamMemberListImg);
-            teamMemberListSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
-            teamMemberListLi.append(teamMemberListSpan1);
-            teamMemberListSpan2.text(JsonTeamMemberList[i].grade);
-            teamMemberListLi.append(teamMemberListSpan2);
-            $("#teamMemberList").append(teamMemberListLi);
+    }).done(function (rsp){
+        let JsonChatMemberList = JSON.parse(rsp);
+        for (let i=0; i<JsonChatMemberList.length; i++) {
+            let ChatMemberListLi = $("<li>");
+            let ChatMemberListImg = $("<img>");
+            let ChatMemberListSpan1 = $("<span>");
+            let ChatMemberListSpan2 = $("<span>");
+            ChatMemberListImg.attr("src",JsonChatMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonChatMemberList[i].memberImgSysName);
+            ChatMemberListLi.append(ChatMemberListImg);
+            ChatMemberListSpan1.text(JsonChatMemberList[i].teamMemberNickname);
+            ChatMemberListLi.append(ChatMemberListSpan1);
+            ChatMemberListSpan2.text(JsonChatMemberList[i].grade);
+            ChatMemberListLi.append(ChatMemberListSpan2);
+            $("#memberList").append(ChatMemberListLi);
         }
     });
 
@@ -316,13 +370,6 @@
                 <div id="subSection">
                     <ul id="memberList" class="subItem">
                         <h1>member</h1>
-                        <th:block th:each="chatMemberList: ${chatMemberList}">
-                            <li>
-                                <img src="" alt=""/>
-                                <span th:text="${chatMemberList.teamMemberNickname}"></span>
-                                <span th:text="${chatMemberList.grade}"></span>
-                            </li>
-                        </th:block>
                     </ul>
 
                     <ul id="resultList" class="subItem">
@@ -366,9 +413,15 @@
                         <li>
                             <button>4</button>
                         </li>
-                        <li>
-                            <button>5</button>
-                        </li>
+                        <li><button type="button" id="emoticonBtn">😊</button></li>
+                        <div id="emoticonClickView">
+                            <img src="" id="emoticonClickImg">
+                        </div>
+                        <div class="emoticonView">
+                            <div id="emoticonList">
+
+                            </div>
+                        </div>
                         <li>
                             <button type="button" id="fileSelect" class="aside">@</button>
                         </li>
@@ -458,6 +511,30 @@
     $("#appDrive").on("click", function () {
         location.href = "/drive/toFileDrive";
     });
+</script>
+
+</script>
+<script>
+    $("#emoticonBtn").on("click",function (){
+        $("#emoticonClickView").hide();
+        $(".emoticonView").toggle();
+        $("#emoticonClickImg").attr("src","");
+    })
+    $.ajax({
+        url:"/emoticon/selectEmoticon",
+        success : function (){
+        },error : function (){
+        }
+    }).done(function (rsp){
+        let emoticonList = JSON.parse(rsp);
+        for (let i=0; i<emoticonList.length; i++) {
+            let emoticonListImg = $("<img>");
+            emoticonListImg.attr("class","emoticonImg");
+            emoticonListImg.attr("data-sysname",emoticonList[i].emoticonSysName);
+            emoticonListImg.attr("src","/emoticon/" + emoticonList[i].emoticonSysName);
+            $("#emoticonList").append(emoticonListImg);
+        }
+    })
 </script>
 
 </body>

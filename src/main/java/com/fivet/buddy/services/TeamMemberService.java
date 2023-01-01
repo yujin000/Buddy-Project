@@ -64,4 +64,9 @@ public class TeamMemberService {
     public int selectCheckMember(TeamMemberDTO teamMemberDto) {
         return teamMemberDao.selectCheckMember(teamMemberDto);
     }
+
+    // 회원이 속한 팀 갯수 체크
+    public int selectMemberTeam(int memberSeq) {
+        return teamMemberDao.selectMemberTeam(memberSeq);
+    }
 }

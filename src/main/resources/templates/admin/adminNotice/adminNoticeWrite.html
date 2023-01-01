@@ -46,7 +46,8 @@
     placeholder: '내용을 입력하세요.',
     lang: "ko-KR",
     tabsize: 2,
-    height: 120,
+    height: 600,
+
     toolbar: [
       ['style', ['style']],
       ['font', ['bold', 'underline', 'clear']],
@@ -56,7 +57,37 @@
       ['insert', ['link', 'picture']],
       ['view', ['fullscreen', 'codeview', 'help']]
     ],
+    callbacks: {
+      onImageUpload: function (files, editor, welEdittable) {
+        for (let i=files.length - 1; i>=0; i--) {
+          if (files[i].size>1024*1024*2) {
+            alert("이미지 첨부는 2mb까지만 가능합니다.");
+            return;
+          } else {
+            sendFile(files[i], this);
+          }
+        }
+      }
+    }
   });
+
+  function sendFile(uploadFile, el) {
+
+    let form_data = new FormData();
+    form_data.append('uploadFile', uploadFile);
+    $.ajax({
+      data: form_data,
+      type: "POST",
+      url: "/notice/imageUpload",
+      cache: false,
+      contentType: false,
+      enctype: 'multipart/form-data',
+      processData: false,
+      success: function(imgUrl) {
+        $(el).summernote('editor.insertImage', imgUrl);
+      }
+    });
+  }
 
   $("#toAdminNotice").on("click",function (){
     location.href = "/notice/toAdminNotice?cpage=1";
@@ -75,6 +106,7 @@
       $("#form").submit();
     }
   })
+
 </script>
 </body>
 </html>

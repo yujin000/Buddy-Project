@@ -25,12 +25,23 @@
     <div>제목</div>
     <div th:text="${qna.getQnaTitle()}"></div>
     <div>내용</div>
+    <th:block th:if="${!#lists.isEmpty(qnaFileList)}">
+        <div id="img">
+        <th:block th:each="qnaFileList : ${qnaFileList}">
+            <img id="imgSrc" th:src="@{'/qnaImg/'+${qnaFileList.qnaSysName}}">
+        </th:block>
+        </div>
+    </th:block>
     <div th:text="${qna.getQnaContents()}"></div>
+    <th:block th:if="${!#lists.isEmpty(qnaComment)}">
     <div>답변</div>
-    <div th:text="${qnaComment.get(0).getQnaCommentContents()}"></div>
-    <div>작성시각</div>
-    <div th:text="${qnaComment.get(0).getQnaCommentWriteDate()}"></div>
-    <th:block th:if="${qnaComment!=null}">
+        <th:block th:each="qnaComment : ${qnaComment}">
+        <div th:text="${qnaComment.qnaCommentContents}"></div>
+        <div>작성시각</div>
+        <div th:text="${qnaComment.qnaCommentWriteDate}"></div>
+        </th:block>
+    </th:block>
+    <th:block th:if="${#lists.isEmpty(qnaComment)}">
     <div id="insert" th:data-count="${qnaCommentCount}">답변 작성하기
         <form action="/qna/insertComment" id="form" method="post">
             <textarea id="content" name="qnaCommentContents"></textarea>
@@ -55,6 +66,10 @@
         if ($("#insert").attr("data-count")>=1) {
             $("#insert").css("display", "none");
         }
+    </script>
+
+    <script>
+        console.log($("#imgSrc").attr("src"));
     </script>
 
 </body>

@@ -93,10 +93,15 @@ public class NoticeBoardController {
     }
 
     //공지사항 삭제
-    @PostMapping("deleteNotice")
+    @RequestMapping("deleteNotice")
     public String deleteNotice(int noticeSeq) {
-        noticeBoardService.deleteNotice(noticeSeq);
-        return "redirect:/notice/toAdminNotice";
+        if (session.getAttribute("memberLogtype").equals("admin")) {
+            noticeBoardService.deleteNotice(noticeSeq);
+            return "redirect:/notice/toAdminNotice?cpage=1";
+        } else {
+            return "error";
+        }
+
     }
 
     // 공지글 보기

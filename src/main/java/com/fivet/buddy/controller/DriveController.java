@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
@@ -221,6 +222,16 @@ public class DriveController {
     public String accessStatus(String access,String key) throws Exception{
         personalFolderService.accessStatus(access,key);
         return null;
+    }
+
+    @ResponseBody
+    @RequestMapping("dragFile")
+    public String dragFile(@RequestParam("formData") MultipartFile formData, String attachFolder) throws Exception{
+        System.out.println(formData);
+        System.out.println(formData.getSize());
+        System.out.println(attachFolder);
+        System.out.println("도착");
+        return "done";
     }
 
 }

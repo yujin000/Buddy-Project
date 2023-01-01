@@ -70,7 +70,6 @@ public class ChatRoomController {
         chatRoomDto = chatRoomService.insertTopic(teamDto, chatRoomDto);
 
         //ChatMember 영역(각 회원을 토픽에 가입)
-        chatRoomService.insertTopic(teamDto, chatRoomDto);
         chatMemberService.insertTopicMember(chatRoomDto);
 
         return "redirect:/team/goTeamAgain";

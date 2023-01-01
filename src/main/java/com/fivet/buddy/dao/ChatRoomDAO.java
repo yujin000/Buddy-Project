@@ -50,4 +50,7 @@ public class ChatRoomDAO {
     public int countTopic(int teamSeq) {
         return chatRoomMapper.countTopic(teamSeq);
     }
+
+    // 일반채팅방 개설
+    public void insertNormalChat(ChatRoomDTO chatRoomDto) { chatRoomMapper.insertNormalChat(chatRoomDto); }
 }

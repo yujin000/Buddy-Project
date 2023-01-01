@@ -22,5 +22,6 @@ public interface ChatRoomMapper {
     void insertTopic(ChatRoomDTO chatRoomDto);
     List<ChatRoomDTO> selectTopic(int teamSeq);
     int countTopic (int teamSeq);
+    void insertNormalChat(ChatRoomDTO chatRoomDto);
 
 }

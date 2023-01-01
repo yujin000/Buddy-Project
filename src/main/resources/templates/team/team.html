@@ -16,6 +16,7 @@
   <script src="/static/js/jQueryCheck.js"></script>
 </head>
 <body>
+<input type="hidden" th:value="${session.memberSeq}" id="session.memberSeq">
 <div class="wrap">
   <div class="header">
     <div class="logo">
@@ -186,11 +187,11 @@
     <form action="" class="chatForm">
       <h1>😀채팅 시작하기</h1>
     <ul class="list" id="chatMemberUl">
-      <li><input type="text" placeholder="채팅방 이름"></li>
+      <li><input type="text" placeholder="채팅방 이름" id="makeChatTitle"></li>
 <!--    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>-->
     </ul>
-    <button type="submit" >대화 시작하기</button>
-    <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
+    <button type="button" id="startChat">대화 시작하기</button>
+    <button type="button" class="closeBtn" id="closeBtn" onclick="closer(this)">취소</button>
     </form>
 
     <form action="/chatRoom/insertTopic" id="form" class="topicForm" method="post">
@@ -215,6 +216,7 @@
       }
     }).done(function (rsp){
       let JsonTeamMemberList = JSON.parse(rsp);
+      //팀 화면에서 팀 목록을 출력
       for (let i=0; i<JsonTeamMemberList.length; i++) {
         let teamMemberListLi = $("<li>");
         let teamMemberListImg = $("<img>");
@@ -229,10 +231,14 @@
         $("#teamMemberList").append(teamMemberListLi);
       }
       for (let i=0; i<JsonTeamMemberList.length; i++) {
+        //채팅방 만들기에서 팀 목록을 출력
         let chatMemberLi = $("<li>");
         let chatMemberImg = $("<img>");
         let chatMemberSpan1 = $("<span>");
         let chatMemberSpan2 = $("<span>");
+        chatMemberLi.addClass("makeTeamMember");
+        chatMemberLi.attr("data-checked", "false");
+        chatMemberLi.attr("data-memberSeq", JsonTeamMemberList[i].memberSeq);
         chatMemberImg.attr("src",JsonTeamMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonTeamMemberList[i].memberImgSysName);
         chatMemberLi.append(chatMemberImg);
         chatMemberSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
@@ -293,6 +299,51 @@
         alert("토픽 생성 완료!");
         $("#form").submit();
       }
+  })
+</script>
+
+<script>
+  // 채팅방 생성관련 작업
+  let makeChat = new Set();
+  $(function () {
+    $(document).on("click", ".makeTeamMember", function () {
+      if ($(this).attr("data-checked")=="false") {
+        $(this).css("background-color", "yellow");
+        $(this).attr("data-checked", true);
+        makeChat.add($(this).attr("data-memberSeq"));
+      } else {
+        $(this).css("background-color", "white");
+        $(this).attr("data-checked", false);
+        makeChat.delete($(this).attr("data-memberSeq"));
+      }
+    })
+
+    // 취소버튼 클릭시 새채팅방 후보 회원 초기화
+    $("#closeBtn").on("click", function () {
+      makeChat.clear();
+    })
+
+    // 시작하기 버튼 클릭 이벤트
+    $("#startChat").on("click", function (){
+      if (makeChat.size==0) {
+        alert("채팅방 멤버는 1인 이상의 타 회원이 포함되어야합니다.");
+      } else {
+        console.log(makeChat);
+        let makeChatMember = Array.from(makeChat);
+        console.log(makeChatMember);
+        $.ajax({
+          type:"post",
+          url:"/chatRoom/insertChat",
+          contentType:'application/json',
+          data: JSON.stringify({
+            "chatTitle" : $("#makeChatTitle").val(),
+            "makeChat": makeChatMember
+          })
+        })
+      }
+
+    })
+
   })
 </script>
 

@@ -61,4 +61,7 @@ public class ChatRoomService {
         return chatRoomDao.countTopic(teamSeq);
     }
 
+    // 일반 채팅방 생성
+    public void insertNormalChat (ChatRoomDTO chatRoomDto) { chatRoomDao.insertNormalChat(chatRoomDto); }
+
 }

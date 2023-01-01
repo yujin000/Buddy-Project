@@ -50,7 +50,6 @@ public class PageNavi {
         if (needNext) {
             sb.append("<a href='").append(url).append("?").append(param).append("=").append(endNavi+1).append("'> > </a>");
         }
-        System.out.println(sb);
         return sb.toString();
         //SQL문
         //select * from (select TABLE.*, row_number() over(order by 1 desc) rn from TABLE) where rn between #{start} and #{end}

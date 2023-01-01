@@ -32,5 +32,5 @@ public interface MemberMapper {
     List<MemberDTO> memberSearch(String searchPick, String memberSearchText);
     void memberKickOut(int memberSeq);
     String getOwnerName(int checkOwner);
-    MemberDTO getMemberNameAndEmail(int memberSeq);
+    String getMemberId(int memberSeq);
 }

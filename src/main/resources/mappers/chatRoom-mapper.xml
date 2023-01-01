@@ -26,14 +26,19 @@
         </selectKey>
     </insert>
 
-    <!-- 팀 및 회원 정보로 채팅방 목록을 출력 -->
+    <!-- 팀 및 회원 정보로 채팅방 목록을 출력 (토픽제외) -->
     <select id="chatRoomList" resultType="com.fivet.buddy.dto.ChatRoomDTO">
         select
             cr.chat_room_seq, chat_title
         from
             chat_room cr inner join chat_member cm on cr.chat_room_seq = cm.chat_room_seq
         where
-            cm.member_seq = #{memberSeq} and cm.team_seq = #{teamSeq}
+            cm.member_seq = #{memberSeq}
+            and
+            cm.team_seq = #{teamSeq}
+            and
+            chat_type != 'topic'
+
         order by 1
     </select>
 
@@ -46,4 +51,33 @@
     <update id="updatePlusMemberCount">
         update team set member_count = member_count+1 where chat_room_seq = #{chatRoomSeq}
     </update>
+
+    <!--    토픽 생성-->
+    <insert id="insertTopic">
+        insert into
+            chat_room
+        values (
+            chat_room_seq.nextval,
+            #{teamSeq},
+            #{chatTitle},
+            #{roomOwnerSeq},
+            'topic',
+            #{memberCount},
+            sysdate
+            )
+        <selectKey order="AFTER" keyProperty="chatRoomSeq" resultType="int">
+            select chat_room_seq.currval from dual
+        </selectKey>
+    </insert>
+
+    <!-- 팀내 토픽 목록 출력   -->
+    <select id="selectTopic" resultType="com.fivet.buddy.dto.ChatRoomDTO">
+        select * from chat_room where chat_type='topic' and team_seq = #{value} order by 1
+    </select>
+
+    <!-- 토픽수 count   -->
+    <select id="countTopic" resultType="int">
+        select count(*) from chat_room where chat_type='topic' and team_seq=#{value}
+    </select>
+
 </mapper>

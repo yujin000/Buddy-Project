@@ -50,8 +50,18 @@ public class TeamMemberService {
         teamMemberDao.enterTeam(teamMemberDto);
     }
 
-    //부매니저인 멤버 출력 (부매니저일때도 팀 관리 들어갈 수 있게)
+    // 부매니저인 멤버 출력 (부매니저일때도 팀 관리 들어갈 수 있게)
     public int selectSubManagerMember(int memberSeq){
         return teamMemberDao.selectSubManagerMember(memberSeq);
+    }
+
+    // 팀 회원 번호 목록 출력
+    public List<Integer> selectTeamMemberSeq(int teamSeq) {
+        return teamMemberDao.selectTeamMemberSeq(teamSeq);
+    }
+
+    // 회원의 팀 소속 여부 판단
+    public int selectCheckMember(TeamMemberDTO teamMemberDto) {
+        return teamMemberDao.selectCheckMember(teamMemberDto);
     }
 }

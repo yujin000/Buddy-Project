@@ -1,5 +1,6 @@
 package com.fivet.buddy.dao;
 
+import com.fivet.buddy.dto.QnaBoardDTO;
 import com.fivet.buddy.dto.QnaCommentDTO;
 import com.fivet.buddy.mapper.QnaCommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,4 +23,15 @@ public class QnaCommentDAO {
     public void deleteComment(int qnaSeq,int qnaCommentSeq) throws Exception{
          qnaCommentMapper.deleteComment(qnaSeq,qnaCommentSeq);
     }
+
+    // 댓글 입력
+    public void insertComment(QnaCommentDTO qnaCommentDto) {
+        qnaCommentMapper.insertComment(qnaCommentDto);
+    }
+
+    // 댓글 유무 확인
+    public int count(int qnaSeq) {
+        return qnaCommentMapper.count(qnaSeq);
+    }
+
 }

@@ -14,5 +14,22 @@
         delete from qna_board where qna_seq = #{qnaSeq}
     </delete>
 
+    <insert id="insertComment">
+        insert into
+            qna_comment
+        values
+            (qna_comment_seq.nextval,
+            #{qnaCommentWriter},
+            #{qnaCommentContents},
+            sysdate,
+            #{qnaSeq})
+        <selectKey order="AFTER" keyProperty="qnaCommentSeq" resultType="int">
+            select qna_comment_seq.currval from dual
+        </selectKey>
+    </insert>
+
+    <select id="count" resultType="int">
+        select count(*) from qna_comment where qna_seq = #{value}
+    </select>
 
 </mapper>

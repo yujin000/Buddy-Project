@@ -57,4 +57,5 @@
     <update id="updatePlusTeamCount">
         update team set team_count = team_count+1 where team_seq = #{teamSeq}
     </update>
+
 </mapper>

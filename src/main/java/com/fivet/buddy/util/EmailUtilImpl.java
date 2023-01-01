@@ -64,7 +64,7 @@ public class EmailUtilImpl implements EmailUtil {
     }
 
     @Override
-    public Map<String, Object> sendInviteEmail(String toAddress, String subject, String body) {
+    public Map<String, Object> sendInviteEmail(String toAddress, String subject, String body, String teamName) {
         Map<String, Object> result = new HashMap<String, Object>();
         MimeMessage message = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -80,7 +80,7 @@ public class EmailUtilImpl implements EmailUtil {
                 "            <div style=\"margin:auto; width:400px; height:70%;\">\n" +
                 "                <h2>&#50504;&#45397;&#54616;&#49464;&#50836;&#128522;&#128522;</h2>\n" +
                 "                <p>&#54801;&#50629;&#47700;&#49888;&#51200; Buddy&#51077;&#45768;&#45796;.</p>\n" +
-                "                <p>[abc] &#54016;&#50640;&#49436; &#48372;&#45240; &#54016; &#52488;&#45824;&#53076;&#46300;&#51077;&#45768;&#45796;.</p>\n" +
+                "                <p>'"+ teamName +"'&#54016;&#50640;&#49436; &#48372;&#45240; &#54016; &#52488;&#45824;&#53076;&#46300;&#51077;&#45768;&#45796;.</p>\n" +
                 "                <p>&#50500;&#47000; &#52488;&#45824; &#53076;&#46300;&#47484; &#52488;&#45824;&#53076;&#46300; &#51077;&#47141; &#52285;&#50640; &#51077;&#47141;&#54644;&#51452;&#49464;&#50836;.</p>\n" +
                 "                <div style=\"margin:auto; width:400px; height:30%; background-color:beige; text-align:center; line-height:60px; font-size:30px; font-weight:bold;\">\n" +
                 "                    "+body+"\n" +

@@ -12,10 +12,12 @@ public class EmoticonService {
     @Autowired
     private EmoticonDAO emoticonDAO;
 
+    //이모티콘 관리자 페이지로
     public void insertEmoticon(EmoticonDTO emoticonDto) throws Exception{
         emoticonDAO.insertEmoticon(emoticonDto);
     }
 
+    //이모티콘 추가
     public List<EmoticonDTO> selectEmoticon() throws Exception{
         return emoticonDAO.selectEmoticon();
     }

@@ -8,6 +8,5 @@ import java.util.List;
 @Mapper
 public interface EmoticonMapper {
     void insertEmoticon(EmoticonDTO emoticonDto);
-
     List<EmoticonDTO> selectEmoticon();
 }

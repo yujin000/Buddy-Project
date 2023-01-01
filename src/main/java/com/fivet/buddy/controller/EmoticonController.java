@@ -20,13 +20,17 @@ public class EmoticonController {
     @Autowired
     private EmoticonService emoticonService;
 
+    //이모티콘 관리자 페이지로
     @RequestMapping("emoticonMain")
     public String emoticonMain(Model model) throws Exception {
+        //이모티콘 출력
         List<EmoticonDTO> emoticonDto = emoticonService.selectEmoticon();
         model.addAttribute("emoticonDto",emoticonDto);
         return "admin/adminEmoticon";
     }
 
+
+    //이모티콘 추가
     @Value("C:/files/emoticon/")
     String emoticonPath;
     @RequestMapping("insertEmoticon")
@@ -38,8 +42,8 @@ public class EmoticonController {
         emoticonDto.setEmoticonSysName(emoticonSysName);
         util.save(file,emoticonPath,emoticonSysName);
         emoticonService.insertEmoticon(emoticonDto);
-        System.out.println("save : " +  emoticonSysName);
-        System.out.println("getSysname : " +emoticonDto.getEmoticonSysName());
+//        System.out.println("save : " +  emoticonSysName);
+//        System.out.println("getSysname : " +emoticonDto.getEmoticonSysName());
         return "redirect:/emoticon/emoticonMain";
     }
 

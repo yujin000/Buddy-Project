@@ -2,10 +2,7 @@ package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dao.ChatMemberDAO;
 import com.fivet.buddy.dao.ChatRoomDAO;
-import com.fivet.buddy.dto.ChatMemberDTO;
-import com.fivet.buddy.dto.ChatRoomDTO;
-import com.fivet.buddy.dto.TeamDTO;
-import com.fivet.buddy.dto.TeamMemberDTO;
+import com.fivet.buddy.dto.*;
 import com.fivet.buddy.services.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,4 +76,12 @@ public class ChatRoomController {
         return "redirect:/team/goTeamAgain";
     }
 
+    //채팅방 멤버 출력
+    @ResponseBody
+    @RequestMapping("selectChatMember")
+    public String selectChatMember(int chatRoomSeq){
+        List<ChatMemberDTO> chatMemberList =  chatMemberService.selectChatMember(chatRoomSeq);
+        Gson g = new Gson();
+        return g.toJson(chatMemberList);
+    }
 }

@@ -346,6 +346,7 @@ public class MemberController {
                 }
             }
             model.addAttribute("teamDtoList", teamDtoList);
+            model.addAttribute("teamCount", teamMemberService.selectMemberTeam((int)session.getAttribute("memberSeq")));
         }
         return "index";
     }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>sessionError</title>
+</head>
+<body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+  $(document).ready(function() {
+    let message = "알 수 없는 에러입니다.😥 관리자에게 문의해주세요✅";
+    alert(message);
+    window.close();
+  })
+</script>
+<form action="/member/loginIndex" method="post" id="form">
+  <input id="error" type="hidden" th:value="${session.memberSeq}" name="memberSeq">
+  <button type="submit">뒤로가기</button>
+</form>
+</body>
+</html>

@@ -1,8 +1,12 @@
 package com.fivet.buddy.controller;
 
-import com.fivet.buddy.services.ChatMsgService;
-import com.fivet.buddy.services.ChatRoomService;
-import com.fivet.buddy.services.TeamMemberService;
+import com.fivet.buddy.dao.ChatMemberDAO;
+import com.fivet.buddy.dao.ChatRoomDAO;
+import com.fivet.buddy.dto.ChatMemberDTO;
+import com.fivet.buddy.dto.ChatRoomDTO;
+import com.fivet.buddy.dto.TeamDTO;
+import com.fivet.buddy.dto.TeamMemberDTO;
+import com.fivet.buddy.services.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -30,6 +35,12 @@ public class ChatRoomController {
 
     @Autowired
     private TeamMemberService teamMemberService;
+
+    @Autowired
+    private TeamService teamService;
+
+    @Autowired
+    private ChatMemberService chatMemberService;
 
     //채팅방 입장
     @RequestMapping("join")
@@ -50,6 +61,22 @@ public class ChatRoomController {
 
         Gson g = new Gson();
         return g.toJson(chatRoomService.chatRoomList(param));
+    }
+
+    // 토픽 생성
+    @PostMapping("insertTopic")
+    public String insertTopic(ChatRoomDTO chatRoomDto) {
+        TeamDTO teamDto = teamService.selectTeamOne(session.getAttribute("teamSeq").toString());
+
+        //ChatRoomDTO 영역 (chatRoom테이블에 topic 생성)
+
+        chatRoomDto = chatRoomService.insertTopic(teamDto, chatRoomDto);
+
+        //ChatMember 영역(각 회원을 토픽에 가입)
+        chatRoomService.insertTopic(teamDto, chatRoomDto);
+        chatMemberService.insertTopicMember(chatRoomDto);
+
+        return "redirect:/team/goTeamAgain";
     }
 
 }

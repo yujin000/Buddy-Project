@@ -76,9 +76,9 @@
       </div>
       <button type="button" id="insertInviteCode">초대코드입력</button>
       <div class="temListBox" th:if="${teamDtoList!=null}">
-        <p class="title">팀 리스트</p>
+        <p class="title">팀 리스트 <span id="teamCount">[[${teamCount}]]</span><span> / 5</span></p>
         <div class="teamProfile" th:each="teamDtoList : ${teamDtoList}">
-          <img src="" alt="" id="teamImg" class="profileImg" />
+          <img src="/static/img/logo.png" alt="" id="teamImg" class="profileImg" />
           <div class="info">
             <h1 id="teamName" class="name" th:text="${teamDtoList.teamName}"></h1>
           </div>
@@ -96,10 +96,10 @@
           </form>
         </div>
       </div>
-        <div class="addTeam">
-          <a href="/team/add">
+
+        <div class="addTeam" id="addTeam">
             팀 생성 하기
-          </a>
+
         </div>
       </div>
     </div>
@@ -267,6 +267,18 @@
     $("#adminPage").on("click",function(){
       location.href = "/member/toAdminMember";
     });
+  </script>
+
+  <script>
+    //팀 생성 이벤트
+    $("#addTeam").click(function (){
+      if ($("#teamCount").val()>=5) {
+        alert("5팀 이상 참여할 수 없습니다.");
+      } else {
+        location.href = "/team/add";
+      }
+    })
+
   </script>
 
   <!-- 초대코드 입력 -->

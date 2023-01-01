@@ -99,7 +99,6 @@ body {
     margin-top: 10px;
     width: 100%;
     /*padding: 5px;*/
-    /*border: 1px solid black;*/
     text-align: center;
     position: relative;
     display: none;
@@ -127,7 +126,6 @@ body {
 
 #eventColor{
     background: purple;
-    color: white;
 }
 .eventSelect option {
     width: 100%;
@@ -166,9 +164,10 @@ input[type='time']:valid::before {
     height: 30px;
 }
 
-#form .modalBtn {
+.modalBtn {
     width: 100%;
-    display: inline-block;
+    height: 30px;
+    display: block;
     margin-bottom: 5px;
 }
 

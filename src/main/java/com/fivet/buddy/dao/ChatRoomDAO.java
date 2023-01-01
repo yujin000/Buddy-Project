@@ -33,6 +33,21 @@ public class ChatRoomDAO {
         return chatRoomMapper.selectChatRoomSeq(param);
     }
 
+    // 채팅방에 새로운 인원 입장시, 채팅방 인원수 1 증가.
     public void updatePlusMemberCount(Map<String, String> param) { chatRoomMapper.updatePlusMemberCount(param); }
 
+    // 토픽 생성
+    public void insertTopic(ChatRoomDTO chatRoomDto) {
+        chatRoomMapper.insertTopic(chatRoomDto);
+    }
+
+    // 토픽 출력
+    public List<ChatRoomDTO> selectTopic(int teamSeq) {
+        return chatRoomMapper.selectTopic(teamSeq);
+    }
+
+    // 토픽 카운트
+    public int countTopic(int teamSeq) {
+        return chatRoomMapper.countTopic(teamSeq);
+    }
 }

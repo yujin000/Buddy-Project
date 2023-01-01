@@ -80,4 +80,25 @@
     <select id="selectSubManagerMember" resultType="int">
         select count(t.grade) from team_member t inner join member m on m.member_seq=t.member_seq where t.member_seq= #{value} and t.grade='부매니저'
     </select>
+
+    <!--    멤버 번호 목록을 출력-->
+    <select id="selectTeamMemberSeq" resultType="int">
+        select member_seq from team_member where team_Seq = #{teamSeq}
+    </select>
+
+    <!--    회원이 팀에 속하는지 판단-->
+    <select id="selectCheckMember" resultType="int">
+        select
+            count(*)
+        from
+            team_member
+        where
+            member_seq = #{memberSeq} and team_seq = #{teamSeq}
+    </select>
+
+    <!--    회원이 속한 팀 수를 체크-->
+    <select id="countMemberTeam" resultType="int">
+        select count(*) from team_member where member_seq = #{value}
+    </select>
+
 </mapper>

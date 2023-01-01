@@ -1,5 +1,6 @@
 package com.fivet.buddy.dao;
 
+import com.fivet.buddy.dto.TeamDTO;
 import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.dto.TeamMemberListDTO;
 import com.fivet.buddy.mapper.TeamMemberMapper;
@@ -59,4 +60,20 @@ public class TeamMemberDAO {
     public int selectSubManagerMember(int memberSeq){
         return teamMemberMapper.selectSubManagerMember(memberSeq);
     }
+
+    // 팀 회원번호 리스트 출력
+    public List<Integer> selectTeamMemberSeq(int teamSeq) {
+        return teamMemberMapper.selectTeamMemberSeq(teamSeq);
+    }
+
+    // 팀에 회원이 소속되있는지 체크
+    public int selectCheckMember (TeamMemberDTO teamMemberDto) {
+        return teamMemberMapper.selectCheckMember(teamMemberDto);
+    }
+
+    // 회원이 속한 팀 숫자 체크
+    public int selectMemberTeam (int memberSeq) {
+        return teamMemberMapper.countMemberTeam(memberSeq);
+    }
+
 }

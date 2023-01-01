@@ -68,21 +68,13 @@
 
       <div id="topic" class="asideList">
         <div class="asideTitle">
-          <h3>토픽</h3>
+          <h3>토픽 <span id="topicCount">[[${topicCount}]]</span><span> / 4</span></h3>
           <button id="topicToggle" class="toggle">v</button>
           <button id="topicCreate" class="createBtn">+</button>
         </div>
         <div id="topicList" class="asideItem">
-          <ul>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
-            <li>list</li>
+          <ul th:each="topicList : ${topicList}">
+            <li><a th:href="@{/chatRoom/join/(chatRoomSeq=${topicList.chatRoomSeq})}">[[${topicList.chatTitle}]]</a></li>
           </ul>
         </div>
       </div>
@@ -108,7 +100,7 @@
         <button id="appToggle" class="appToggle">앱 toggle</button>
         <div id="appList">
           <button class="app" id="appDrive"><a href="">드라이브</a></button>
-          <button class="app" id="appCal"><a href="">캘린더</a></button>
+          <button class="app" id="appCal"><a>캘린더</a></button>
         </div>
       </div>
     </aside>
@@ -152,24 +144,7 @@
             <li>4</li>
           </ul>
         </div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
-        <div class="msg">Msg</div>
+<!--        <div class="msg">Msg</div>-->
       </div>
       <div class="msgSend">
           <input
@@ -210,24 +185,20 @@
   <div class="wrap">
     <form action="" class="chatForm">
       <h1>😀채팅 시작하기</h1>
-    <ul class="list">
+    <ul class="list" id="chatMemberUl">
       <li><input type="text" placeholder="채팅방 이름"></li>
-    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
-    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
-    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
-    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
-    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>
+<!--    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>-->
     </ul>
     <button type="submit" >대화 시작하기</button>
     <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
     </form>
 
-    <form action="" class="topicForm">
+    <form action="/chatRoom/insertTopic" id="form" class="topicForm" method="post">
         <h1>✨토픽 생성하기</h1>
       <ul class="list">
-        <li><input type="text" placeholder="토픽 이름" ></li>
+        <li><input id="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
       </ul>
-      <button type="submit" >토픽 생성하기</button>
+      <button type="button" id="insertTopic">토픽 생성하기</button>
       <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
 
     </form>
@@ -257,6 +228,20 @@
         teamMemberListLi.append(teamMemberListSpan2);
         $("#teamMemberList").append(teamMemberListLi);
       }
+      for (let i=0; i<JsonTeamMemberList.length; i++) {
+        let chatMemberLi = $("<li>");
+        let chatMemberImg = $("<img>");
+        let chatMemberSpan1 = $("<span>");
+        let chatMemberSpan2 = $("<span>");
+        chatMemberImg.attr("src",JsonTeamMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonTeamMemberList[i].memberImgSysName);
+        chatMemberLi.append(chatMemberImg);
+        chatMemberSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
+        chatMemberLi.append(chatMemberSpan1);
+        chatMemberSpan2.attr('claas','tag');
+        chatMemberSpan2.text(JsonTeamMemberList[i].grade);
+        chatMemberLi.append(chatMemberSpan2);
+        $("#chatMemberUl").append(chatMemberLi);
+      }
     })
   })
 </script>
@@ -285,20 +270,29 @@
     }
   });
 
-  //팀원 목록을 출력해주는 ajax호출
-  // $.ajax({
-  //   type:"post",
-  //   url:"team/teamMemberList",
-  // });
-
   //팀 이동 클릭이벤트
   $(document).on("click", ".goTeam", function (){
     //console.log();
     $(this).children("form").submit();
   })
 
+  //채팅방 클릭 이벤트
   $(".chatRoomList").on("click", function() {
     $(this).find(".chatForm").submit();
+  })
+</script>
+
+<script>
+  // 토픽 생성 이벤트
+  $("#insertTopic").click(function (){
+      if ($("#topicTitle").val().length==0) {
+        alert("제목을 입력해주세요!");
+      } else if ($("#topicTitle").val().length>=15) {
+        alert("제목은 15자를 넘을 수 없습니다.")
+      } else {
+        alert("토픽 생성 완료!");
+        $("#form").submit();
+      }
   })
 </script>
 
@@ -353,9 +347,15 @@
     })
 
     $("#topicCreate").click(function (){
-      $(".createView").css("display","block");
-      $(".chatForm").css("display","none");
-      $(".topicForm").css("display","block");
+      console.log($("#topicCount").text());
+      if ($("#topicCount").text()>=4) {
+        alert("더이상 토픽을 생성할 수 없습니다!")
+      } else {
+        $(".createView").css("display","block");
+        $(".chatForm").css("display","none");
+        $(".topicForm").css("display","block");
+      }
+
     })
 
 
@@ -372,6 +372,14 @@
   function closer(arg) {
     $(arg).parent().parent().parent().css("display","none");
   }
+</script>
+<script>
+
+  $("#appCal").on("click",function(){
+
+    window.open('/calendar/moveCalendar','calendar','scrollbars=no,resizable=yes width=1920 height=1080, left=0,top=0')
+})
+
 </script>
 
 <!-- 팀원 초대 -->

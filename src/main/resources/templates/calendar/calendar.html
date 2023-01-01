@@ -12,6 +12,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             // 캘린더 생성 함수
             const calendarEl = document.getElementById('calendar');
+
             // div 가 calendar 인 캘린더 객체 호출
             const calendar = new FullCalendar.Calendar(calendarEl, {
                 // 맨 처음 띄우는 캘린더 화면
@@ -293,15 +294,15 @@
 
 
     $(document).ready(function (){
+
         // document.ready 동작테스트
         console.log("DOMReadyPrintTest");
+
         // 일정추가 토글 동작
         $("#formToggle").click(function (){
             $("#form").toggle();
             $(".btns").toggle();
         });
-
-
 
     })
 

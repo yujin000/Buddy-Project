@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,14 +8,17 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
             crossorigin="anonymous"
     ></script>
-    <script src="/static/js/jQueryCheck.js"></script>
+    <script src="/js/jQueryCheck.js"></script>
+    <link rel="stylesheet" href="/static/css/sendInviteMail.css">
 </head>
 <body>
-회원초대 테스트 페이지 입니다.<br>
-<input type="text" id="teamSeq" name="teamSeq">
-<input type="text" name="inviteReceivememEmail" id="inviteEmail" placeholder="초대할 이메일" maxlength="30">
-<button type="button" id="inviteBtn">초대이메일 보내기</button>
-<a href="/invite/testInviteConfirm">이동</a>
+<div class="container">
+    <div id="text">초대할 대상의 이메일을 입력해주세요.</div>
+    <input type="text" name="inviteReceivememEmail" id="inviteEmail" placeholder="이메일" maxlength="30">
+    <button type="button" id="inviteBtn" th:data-team="${teamSeq}" th:data-name="${teamName}" th:data-member-name="${memberName}">초대이메일 보내기</button>
+    <p id="status"></p>
+</div>
+
 <script>
 
     // 이메일 검증
@@ -23,20 +26,20 @@
     let emailCheck = false;
 
     $("#inviteBtn").on("click", function () {
+        $('#status').html("초대코드 전송중...").css("color","dodgerblue");
         let inviteEmailVal = $("#inviteEmail").val();
         let emailResult = emailRegex.test(inviteEmailVal);
 
         if (inviteEmailVal == "") {
-            alert("이메일을 입력해주세요.");
+            $('#status').html("이메일을 입력해주세요.").css("color","red");
             emailCheck = false;
         } else if (!emailResult) {
-            alert("이메일 양식을 확인해주세요.");
+            $('#status').html("이메일 양식을 확인해주세요 \n ex) example@google.com").css("color","red");
             emailCheck = false;
         } else {
             emailCheck = true;
             if (emailCheck) {
                 emailSend();
-                console.log("이메일 요청 완료");
             } else {
                 alert("이메일을 다시 확인해주세요.(중복된 이메일 또는 유효하지 않은 이메일입니다.");
             }
@@ -51,15 +54,8 @@
             url: "/email/inviteProve"
             ,type: "post"
             ,async: false
-            ,success: function (){
-                console.log("본문생성 성공");
-            },error: function (){
-                console.log("본문 생성 실패");
-            }
         }).done(function(rsp){
             serialNo = rsp;
-            console.log("본문 생성 완료");
-            console.log(rsp);
         })
     }
 
@@ -67,16 +63,19 @@
 
     function emailSend() {
         emailRan();
-        let subject = "[Buddy] [Sender]님이 회원님을 Buddy [chatRoom]에 초대합니다.";
         let body = serialNo;
         let emailAdd = $("#inviteEmail").val();
-        let sendTeamSeq = $("#teamSeq").val();
+        let sendTeamSeq = $('#inviteBtn').data('team');
+        let teamName = $('#inviteBtn').data('name');
+        let senderName = $('#inviteBtn').data('member-name');
+        let subject = "[Buddy] "+senderName+"님이 회원님을 '"+teamName+"' 팀에 초대합니다.";
 
-        var params = {
+
+        let params = {
             userId: emailAdd
             , subject: subject
             , body: body
-            // , writer:writer
+            , teamName : teamName
         }
 
         $.ajax({
@@ -87,8 +86,6 @@
             , data: JSON.stringify(params)
             , dataType: "json"
             ,success: function(){
-                console.log(sendTeamSeq);
-                console.log(emailAdd);
                 $.ajax({
                     url:"/invite/codeInsert"
                     ,data:{
@@ -96,18 +93,12 @@
                         ,inviteTeamSeq : sendTeamSeq
                         ,inviteReceiveMemEmail : emailAdd
                     },success:(function (){
-                        console.log("성공");
+                        $('#status').html("초대코드 발송 완료!").css("color","green");
                     }),error:(function (){
-                        console.log("실패");
+                        $('#status').html("초대코드 발송 실패!").css("color","red");
                     })
                 })
-                console.log("메일전송 성공!");
             }
-            ,error: function () {
-                console.log("메일전송 실패!");
-            }
-        }).done(function(){
-            console.log("done");
         })
     }
 </script>

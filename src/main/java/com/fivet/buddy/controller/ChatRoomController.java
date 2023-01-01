@@ -102,4 +102,14 @@ public class ChatRoomController {
     }
 
 
+    //채팅방 멤버 출력
+    @ResponseBody
+    @RequestMapping("selectChatMember")
+    public String selectChatMember(int chatRoomSeq){
+        List<ChatMemberDTO> chatMemberList =  chatMemberService.selectChatMember(chatRoomSeq);
+        Gson g = new Gson();
+        return g.toJson(chatMemberList);
+    }
+
+
 }

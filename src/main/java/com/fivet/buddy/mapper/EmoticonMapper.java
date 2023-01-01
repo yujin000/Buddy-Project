@@ -9,4 +9,5 @@ import java.util.List;
 public interface EmoticonMapper {
     void insertEmoticon(EmoticonDTO emoticonDto);
     List<EmoticonDTO> selectEmoticon();
+    void deleteEmoticon(int emoticonSeq);
 }

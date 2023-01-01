@@ -3,11 +3,13 @@ package com.fivet.buddy.controller;
 import com.fivet.buddy.dto.EmoticonDTO;
 import com.fivet.buddy.services.EmoticonService;
 import com.fivet.buddy.util.FileUtil;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -24,11 +26,19 @@ public class EmoticonController {
     @RequestMapping("emoticonMain")
     public String emoticonMain(Model model) throws Exception {
         //이모티콘 출력
-        List<EmoticonDTO> emoticonDto = emoticonService.selectEmoticon();
-        model.addAttribute("emoticonDto",emoticonDto);
+        List<EmoticonDTO> emoticonList = emoticonService.selectEmoticon();
+        model.addAttribute("emoticonList",emoticonList);
         return "admin/adminEmoticon";
     }
 
+    //이모티콘 출력
+    @ResponseBody
+    @RequestMapping("selectEmoticon")
+    public String selectEmoticon(Model model) throws Exception {
+        List<EmoticonDTO> emoticonList = emoticonService.selectEmoticon();
+        Gson g = new Gson();
+        return g.toJson(emoticonList);
+    }
 
     //이모티콘 추가
     @Value("C:/files/emoticon/")
@@ -47,4 +57,11 @@ public class EmoticonController {
         return "redirect:/emoticon/emoticonMain";
     }
 
+    //이모티콘 삭제
+    @RequestMapping("deleteEmoticon")
+    public String deleteEmoticon(int emoticonSeq, String emoticonSysName, FileUtil util){
+        util.delete(emoticonPath,emoticonSysName);
+        emoticonService.deleteEmoticon(emoticonSeq);
+        return "redirect:/emoticon/emoticonMain";
+    }
 }

@@ -51,5 +51,8 @@ public class ChatMemberService {
         return chatMemberDao.selectChatMember(chatRoomSeq);
     }
 
+    //채팅방 삭제
+    public void delChatRoom(int chatRoomSeq) { chatMemberDao.delChatRoom(chatRoomSeq);}
+
 
 }

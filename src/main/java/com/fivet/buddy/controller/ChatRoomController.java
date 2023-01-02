@@ -111,5 +111,15 @@ public class ChatRoomController {
         return g.toJson(chatMemberList);
     }
 
+    // 채팅방 삭제
+    @ResponseBody
+    @PostMapping("delChatRoom")
+    public String delChatRoom(int chatRoomSeq) {
+        chatRoomService.delChatRoom(chatRoomSeq);
+        chatMemberService.delChatRoom(chatRoomSeq);
+        chatMsgService.delChatRoom(chatRoomSeq);
+        return String.valueOf(chatRoomSeq);
+    }
+
 
 }

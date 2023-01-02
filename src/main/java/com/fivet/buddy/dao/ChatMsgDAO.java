@@ -22,4 +22,5 @@ public class ChatMsgDAO {
     public List<ChatMsgDTO> selectChatMsg(int chatRoomSeq) {
         return chatMsgMapper.selectChatMsg(chatRoomSeq);
     }
+    public void delChatRoom(int chatRoomSeq) { chatMsgMapper.delChatRoom(chatRoomSeq);}
 }

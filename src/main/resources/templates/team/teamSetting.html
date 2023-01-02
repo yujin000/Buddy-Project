@@ -128,8 +128,8 @@
     <div class="modalWrap2">
       <h1>🤔</h1>
       <h3 id="h3_2"></h3>
-      <button class="okNoBtn">예</button>
-      <button class="okNoBtn">아니요</button>
+      <button class="okNoBtn" id="yes">예</button>
+      <button class="okNoBtn" id="no">아니요</button>
       <button id="goBack2" type="button" onclick="closer2()">나가기</button>
     </div>
   </div>
@@ -139,7 +139,7 @@
   <form action="/team/deleteTeam" id="deleteTeam" method="post">
     <input type="hidden" name="teamSeq" id="teamSeq" th:value="${teamDto.getTeamSeq()}">
     <p class="cancel">
-      ⛔팀 삭제를 원하시나요? <a href="#" onclick="delClick();" onmouseenter="this.style.opacity =1;" onmouseleave="this.style.opacity=0.5;" style="opacity: 0.3;">탈퇴</a>
+      ⛔ 팀 삭제를 원하시나요?  <a href="#" onclick="delClick();" onmouseenter="this.style.opacity =1;" onmouseleave="this.style.opacity=0.5;" style="opacity: 0.3;">탈퇴</a>
     </p>
   </form>
   </th:block>

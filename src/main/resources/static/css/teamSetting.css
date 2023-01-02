@@ -65,9 +65,11 @@ div[class*="Profile"] {
 
 .subTitle {
     padding-left: 10px;
-    height: 30px;
+    height: 40px;
     line-height: 30px;
     border-bottom: var(--border);
+    display: block;
+
 }
 
 .article {
@@ -92,6 +94,7 @@ div[class*="Profile"] {
 }
 
 .inputText {
+    width: 100%;
     font-size: 1.2rem;
     font-weight: bold;
     background: transparent;
@@ -99,7 +102,9 @@ div[class*="Profile"] {
     outline: none;
 }
 .inputEmail {
+    width: 100%;
     border: none;
+    background: none;
 }
 .metaData {
     height: 100%;
@@ -109,6 +114,7 @@ div[class*="Profile"] {
 }
 
 .texts {
+    width: calc(100% - 80px);
     margin-top: 5px;
     margin-right: 20px;
     height: 100%;
@@ -309,20 +315,24 @@ button[class*="Btn"] {
     margin-bottom: 30px;
     font-weight: bold;
 }
-
 .modalWrap2 button {
     width: 100px;
     height: 30px;
     border-radius: 15px;
     display: block;
     margin: 0 auto;
-    border: 1px solid #000;
     margin-bottom: 10px;
     font-weight: normal;
 }
 
 .modalWrap2 button:hover {
-    font-weight: bold;
+    opacity: 0.8;
+}
+
+#no{
+    border: var(--border);
+    background: none;
+    color: #333;
 }
 
 #goBack2 {

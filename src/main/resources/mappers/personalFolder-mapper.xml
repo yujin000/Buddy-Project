@@ -293,4 +293,14 @@
         where
             personal_folder_key = #{value}
     </select>
+
+    <!-- 폴더 중복 유무 체크 -->
+    <select id="nameList" resultType="map">
+        select
+            personal_folder_name
+        from
+            personal_folder
+        where
+            personal_folder_parent_key = #{value}
+    </select>
 </mapper>

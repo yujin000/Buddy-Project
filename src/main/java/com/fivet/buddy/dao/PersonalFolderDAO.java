@@ -148,4 +148,9 @@ public class PersonalFolderDAO {
     public String getParentKey(String searchKey) {
         return personalFolderMapper.getParentKey(searchKey);
     }
+
+    // 폴더 중복 유무
+    public List<Map<String, String>> nameList(String parentKey) {
+        return personalFolderMapper.nameList(parentKey);
+    }
 }

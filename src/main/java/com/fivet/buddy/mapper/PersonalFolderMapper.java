@@ -63,4 +63,6 @@ public interface PersonalFolderMapper {
     String getRootTeamKey(int folderTeamSeq);
 
     String getParentKey(String searchKey);
+
+    List<Map<String, String>> nameList(String parentKey);
 }

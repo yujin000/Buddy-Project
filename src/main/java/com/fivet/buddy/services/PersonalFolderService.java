@@ -56,7 +56,11 @@ public class PersonalFolderService {
         personalFolderDto.setPersonalFolderParentKey(parentKey);
         personalFolderDto.setPersonalFolderPath(uploadFilePath+folderName+"/");
         personalFolderDto.setPersonalFolderKey(randomKeyUtil.folderKey());
-        personalFolderDto.setPersonalFolderType(isTeam);
+        if(isTeam == null){
+            personalFolderDto.setPersonalFolderType("user");
+        }else{
+            personalFolderDto.setPersonalFolderType(isTeam);
+        }
         personalFolderDao.insertNewFolder(personalFolderDto);
     }
 
@@ -218,6 +222,11 @@ public class PersonalFolderService {
     // 부모 key값 가져오기
     public String getParentKey(String searchKey) {
         return personalFolderDao.getParentKey(searchKey);
+    }
+
+    // 폴더 중복 유무
+    public List<Map<String, String>> nameList(String parentKey) {
+        return personalFolderDao.nameList(parentKey);
     }
 }
 

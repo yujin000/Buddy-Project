@@ -305,7 +305,7 @@
       }).done(function(rsp){
         // rsp : true(사용할 수 있음), false(사용할 수 없음)
         if(!rsp) {
-          alert("개인 드라이브 내에 이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
+          alert("이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
           modifyText.attr("disabled",false).css("color","red");
         }else{
           location.reload();

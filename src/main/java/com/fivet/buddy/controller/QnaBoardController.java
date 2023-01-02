@@ -137,7 +137,6 @@ public class QnaBoardController {
     @RequestMapping("toAdminQna")
     public String toAdminQna(int cpage, Model model) throws Exception {
         if (session.getAttribute("memberLogtype").equals("admin")) {
-            //List<QnaBoardDTO> QnaList = qnaBoardService.selectQnaBoardAll();
             int rcpp = 10; // RecordCountPerPage
             int ncpp = 10; // NaviCountPagePage
             int rtc = qnaBoardService.totalCount();
@@ -181,6 +180,26 @@ public class QnaBoardController {
            qnaCommentDto.setQnaCommentWriter((int)session.getAttribute("memberSeq"));
            qnaCommentService.insertComment(qnaCommentDto);
            return "redirect:/qna/adminQnaDetail?qnaSeq=" + qnaCommentDto.getQnaSeq();
+        } else {
+            return "error";
+        }
+    }
+
+    // 회원 이메일로 Qna글 목록 검색
+    @RequestMapping("searchAdminQna")
+    public String searchAdminQna(QnaBoardDTO qnaBoardDto, int cpage, Model model) throws Exception {
+        if (session.getAttribute("memberLogtype").equals("admin")) {
+            int rcpp = 10; // RecordCountPerPage
+            int ncpp = 10; // NaviCountPagePage
+            int rtc = qnaBoardService.totalCount();
+            Map<String, Integer> param = new HashMap<>();
+            param.put("start", (cpage-1)*rcpp+1);
+            param.put("end", cpage*rcpp);
+            List<QnaBoardDTO> QnaList = qnaBoardService.selectQnaBoardPage(param);
+            String pageNavi = new PageNavi().getPageNaviAll(cpage, rcpp, ncpp, rtc, "/qna/toAdminQna", "cpage");
+            model.addAttribute("qnaList", QnaList);
+            model.addAttribute("pageNavi", pageNavi);
+            return "/admin/adminQna";
         } else {
             return "error";
         }

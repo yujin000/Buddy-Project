@@ -14,4 +14,5 @@ public interface QnaBoardMapper {
     void delete(int qnaSeq);
     List<QnaBoardDTO> selectQnaBoardPage(Map<String, Integer> param);
     int totalCount();
+    List<QnaBoardDTO> selectQnaSearch(Map<String, String> param);
 }

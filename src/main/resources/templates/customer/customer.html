@@ -41,12 +41,33 @@
     <div class="main">
         <nav class="nav">
             <ul>
-                <li class="thead" id="news"><a>공지사항</a></li>
                 <li class="thead" id="qna"><a>1:1 문의</a></li>
+                <li class="thead" id="news"><a>공지사항</a></li>
                 <li class="thead" onclick="mainOut()"><a>메인으로</a></li>
                 <a href="/qna/write" class="writeBtn">글쓰기</a>
             </ul>
         </nav>
+
+        <div class="boardQna" th:if="${qna != null}">
+            <ul th:each="qna : ${qna}">
+                <li class="articleQna" onclick="toggle(this)">
+                    <span class="tag">문의</span>
+                    <a class="title" onclick="toggle(this)">
+                        <input type="hidden" th:value="${qna.qnaSeq}" class="qnaSeq">
+                        <span th:text="${qna.qnaTitle}"></span>
+                    </a>
+                    <span class="date">날짜 : [[${qna.qnaWriteDate}]]</span>
+                    <div class="hidden">
+                        <img src="" class="qnaSysName" style="width: 500px">
+                        <div class="qnaContent" contenteditable="false" th:text="${qna.qnaContents}">
+                        </div>
+                        <a href="" class="downloadFiles" style="color: blue"></a>
+                        <p class="qnaCmt">답변 : </p>
+                        <a href="" class="deleteBtn">삭제</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
         <div class="boardNews" th:if="${notice != null}">
             <ul th:each="notice : ${notice}">
@@ -69,26 +90,6 @@
             </div>
         </div>
 
-        <div class="boardQna" th:if="${qna != null}">
-            <ul th:each="qna : ${qna}">
-                <li class="articleQna" onclick="toggle(this)">
-                    <span class="tag">문의</span>
-                    <a class="title" onclick="toggle(this)">
-                        <input type="hidden" th:value="${qna.qnaSeq}" class="qnaSeq">
-                        <span th:text="${qna.qnaTitle}"></span>
-                    </a>
-                    <span class="date">날짜 : [[${qna.qnaWriteDate}]]</span>
-                    <div class="hidden">
-                        <img src="" class="qnaSysName" style="width: 500px">
-                        <div class="qnaContent" contenteditable="false" th:text="${qna.qnaContents}">
-                        </div>
-                        <a href="" class="downloadFiles" style="color: blue"></a>
-                        <p class="qnaCmt">답변 : </p>
-                        <a href="" class="deleteBtn">삭제</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
     </div>
 </div>
 <script>
@@ -151,6 +152,7 @@
                     }
                 })
             }
+
             if (rsp[0].qnaCommentContents != null && rsp[0].qnaSysName == null) {
                 qnaCmt.text("답변 : " + rsp[0].qnaCommentContents);
                 deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq);

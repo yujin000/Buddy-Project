@@ -198,6 +198,13 @@ public class TeamController {
         return "team/team";
     }
 
+    @ResponseBody
+    @RequestMapping("SubManagerMemberCount")
+    //부매니저 수 체크
+    public int subManagerCount(int teamSeq){
+        return teamMemberService.subManagerCount(teamSeq);
+    }
+
     // Exception Handler
     @ExceptionHandler(Exception.class)
     public String exceptionHandler(Exception e){

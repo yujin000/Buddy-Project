@@ -23,7 +23,10 @@
     let chatRoomSeq = [[${chatRoomSeq}]];
     let teamMemberNickname = [[${session.teamMemberNickname}]];
     let memberSeq = [[${session.memberSeq}]];
-    let chatMemberImg = [[${chatMemberImg}]];
+    let memberImgSysName = [[${memberImgSysName}]];
+    if(memberImgSysName!="/static/img/defaultProfileImg.png"){
+        memberImgSysName="/member/selectProfileImg/" + memberImgSysName;
+    }
     /*]]>*/
 </script>
 
@@ -103,6 +106,8 @@
             let data = JSON.parse(e.data);
             let msg = $("<div>");
             msg.addClass("msg");
+            msg.append(data.memberImgSysName);
+            msg.append("<br>");
             msg.append(data.teamMemberNickname);
             msg.append("<br>");
             msg.append(data.chatContent);
@@ -120,7 +125,7 @@
                 if(file == "" && emoticonSrc=="") {
                     // Json 생성
                     let wsJson = {
-                        "memberImgSysName":chatMemberImg,
+                        "memberImgSysName":"<img src="+memberImgSysName+"/>",
                         "chatRoomSeq": chatRoomSeq,
                         "teamMemberNickname": teamMemberNickname,
                         "chatContent": $(this).val(),
@@ -135,6 +140,7 @@
                 //이모티콘만 보내기
                 else if($("#inputMsg").val()=="" && emoticonSrc.length!=""){
                     let wsJson = {
+                        "memberImgSysName":"<img src="+memberImgSysName+"/>",
                         "chatRoomSeq": chatRoomSeq,
                         "teamMemberNickname": teamMemberNickname,
                         "chatContent": "<img src="+emoticonSrc+"/>",
@@ -151,6 +157,7 @@
                 //이모티콘 + 메세지 보내기
                 else if(emoticonSrc.length!="" && $("#inputMsg").val()!=""){
                     let wsJson = {
+                        "memberImgSysName":"<img src="+memberImgSysName+"/>",
                         "chatRoomSeq": chatRoomSeq,
                         "teamMemberNickname": teamMemberNickname,
                         "chatContent": "<img src="+emoticonSrc+"/><br/>"+$(this).val(),
@@ -208,6 +215,7 @@
                     let ext = chatOriName.split('.').pop().toLowerCase();
                     if ($.inArray(ext, ['jpg', 'jpeg', 'png', 'gif']) != -1) {
                         let wsJson = {
+                            "memberImgSysName":"<img src="+memberImgSysName+"/>",
                             "chatRoomSeq": chatRoomSeq,
                             "teamMemberNickname": teamMemberNickname,
                             "chatContent": "<img src='/chatImg/"+chatSysName+"' style='width: 40px'><br><a href='/chatFile/download?chatSysName=" + chatSysName + "&chatOriName=" + chatOriName + "' style='color: blue'>" + chatOriName + "</a>",
@@ -221,6 +229,7 @@
                         return false;
                     } else {
                         let wsJson = {
+                            "memberImgSysName":"<img src="+memberImgSysName+"/>",
                             "chatRoomSeq": chatRoomSeq,
                             "teamMemberNickname": teamMemberNickname,
                             "chatContent": "<img src='/static/img/fileImg.png 'style='width: 40px'><br><a href='/chatFile/download?chatSysName=" + chatSysName + "&chatOriName=" + chatOriName + "' style='color: blue'>" + chatOriName + "</a>",
@@ -375,6 +384,8 @@
                 </div>
                 <th:block th:each="chatMsgList : ${chatMsgList}">
                     <div class="msg">
+                        <div class="memberImg" th:utext="${chatMsgList.memberImgSysName}">
+                        </div>
                         [[${chatMsgList.teamMemberNickname}]]
                         <br>
                         <div th:if="${chatMsgList.chatMsgType == 0}" th:text="${chatMsgList.chatContent}"></div>

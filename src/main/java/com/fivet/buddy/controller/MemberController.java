@@ -276,7 +276,7 @@ public class MemberController {
     public void updateProfileImg(MemberImgDTO memberImgDto, MultipartFile file, FileUtil util) throws Exception{
         if(!memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq"))).equals("/static/img/defaultProfileImg.png")){
             memberImgDto.setMemberImgSysName(memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq"))));
-            util.delete(proFilePath,memberImgDto.getMemberImgSysName());
+//            util.delete(proFilePath,memberImgDto.getMemberImgSysName());
 
             String memberImgOriName = file.getOriginalFilename();
             String memberImgSysName = UUID.randomUUID() + "_" + memberImgOriName;
@@ -305,7 +305,7 @@ public class MemberController {
     @RequestMapping("defaultProfileImg")
     public void updateDefaultProfileImg(MemberImgDTO memberImgDto, FileUtil util) throws Exception{
         memberImgDto.setMemberImgSysName(memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq"))));
-        util.delete(proFilePath,memberImgDto.getMemberImgSysName());
+//        util.delete(proFilePath,memberImgDto.getMemberImgSysName());
         memberService.updateDefaultProfileImg(String.valueOf(session.getAttribute("memberSeq")));
     }
 

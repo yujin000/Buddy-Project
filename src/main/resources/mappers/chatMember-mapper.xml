@@ -34,7 +34,7 @@
     </delete>
 
     <!-- 채팅방 멤버 프로필 이미지 -->
-    <select id="selectChatMemberImg" resultType="com.fivet.buddy.dto.MemberImgDTO  ">
-    select * from member_img m inner join chat_member c on m.member_img_member_seq=c.member_seq where c.member_seq = #{memberSeq} and c.chat_room_seq = #{chatRoomSeq};
+    <select id="selectChatMemberImg" resultType="String">
+    select m.member_img_sysname from member_img m inner join chat_member c on m.member_img_member_seq=c.member_seq where c.member_seq = #{memberSeq} and c.chat_room_seq = #{chatRoomSeq}
     </select>
 </mapper>

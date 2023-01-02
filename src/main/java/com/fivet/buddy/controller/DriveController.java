@@ -2,10 +2,8 @@ package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.PersonalFileDTO;
 import com.fivet.buddy.dto.PersonalFolderDTO;
-import com.fivet.buddy.services.BasicFolderService;
-import com.fivet.buddy.services.MemberService;
-import com.fivet.buddy.services.PersonalFileService;
-import com.fivet.buddy.services.PersonalFolderService;
+import com.fivet.buddy.dto.TeamDTO;
+import com.fivet.buddy.services.*;
 import com.fivet.buddy.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -44,6 +42,10 @@ public class DriveController {
     private MemberService memberService;
 
     @Autowired
+    private TeamService teamService;
+
+
+    @Autowired
     private HttpSession session;
 
     // Exception Handler
@@ -70,32 +72,54 @@ public class DriveController {
         model.addAttribute("parentKey", personalFolderService.myBasicFolder(memberSeq));
         model.addAttribute("myFolders", myFolders);
         model.addAttribute("myFiles", myFiles);
+
         // 타이틀(현재 폴더 이름) 뽑기
         model.addAttribute("nowFolder", personalFolderService.nowFolder(personalFolderService.myBasicFolder(memberSeq)));
+
         // 전체 사용 용량
         long myVolume = basicFolderService.myVolume(memberSeq);
         model.addAttribute("myVolume",myVolume);
+
+        // 팀 리스트
+        List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
+
+        List<Map<String,Integer>> teamSeqList = new ArrayList<>();
+
+        for(TeamDTO teamDto : teamDtoList){
+            Map<String, Integer> map = new HashMap<>();
+            map.put("seq",teamDto.getTeamSeq());
+            teamSeqList.add(map);
+        }
+
+        List<PersonalFolderDTO> teamFolderList = personalFolderService.getRootTeamFolder(teamSeqList);
+        model.addAttribute("teamList",teamFolderList);
 
         return "drive/fileDrive";
     }
 
     // 폴더 세부내역으로 이동
     @RequestMapping("detailDrive")
-    public String detailDrive(String resourceKey, String accessRights, Model model) throws Exception {
+    public String detailDrive(String resourceKey,String teamAccess, Model model) throws Exception {
         int memberSeq = (Integer)session.getAttribute("memberSeq");
 
         // 공유받은 폴더인지 확인
         PersonalFolderDTO checkOwner = personalFolderService.getFolderOwner(resourceKey);
         String ownerName = memberService.getOwnerName(checkOwner.getPersonalFolderMemberSeq());
 
-        if(checkOwner.getPersonalFolderShared().equals("N") && memberSeq != checkOwner.getPersonalFolderMemberSeq()) {
-            return "redirect:/drive/toFileDrive?accessRights=false";
+        if(teamAccess == null){
+            if(checkOwner.getPersonalFolderShared().equals("N") && memberSeq != checkOwner.getPersonalFolderMemberSeq()) {
+                return "redirect:/drive/toFileDrive?accessRights=false";
+            }
         }
 
-        if(memberSeq != checkOwner.getPersonalFolderMemberSeq()){
-            model.addAttribute("ownerName",ownerName);
-            model.addAttribute("shared",1);
-        }else{
+        if(teamAccess == null){
+            if(memberSeq != checkOwner.getPersonalFolderMemberSeq()){
+                model.addAttribute("ownerName",ownerName);
+                model.addAttribute("shared",1);
+            }else{
+                model.addAttribute("shared",0);
+            }
+        }else if(teamAccess.equals("true")){
             model.addAttribute("shared",0);
         }
 
@@ -112,15 +136,53 @@ public class DriveController {
         model.addAttribute("childFolders", childFolders);
         model.addAttribute("childFiles", childFiles);
 
-        // 전체 사용 용량
-        long myVolume = basicFolderService.myVolume(memberSeq);
-        model.addAttribute("myVolume",myVolume);
+
+        // 팀 폴더 여부
+        boolean isTeam = personalFolderService.isTeam(resourceKey);
+        String resultToString = String.valueOf(isTeam);
+        model.addAttribute("isTeam",resultToString);
+
 
         // 타이틀(현재 폴더 이름) 뽑기
         model.addAttribute("nowFolder", personalFolderService.nowFolder(resourceKey));
+
+        // 팀 리스트
+        List <TeamDTO> teamDtoList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
+
+        List<Map<String,Integer>> teamSeqList = new ArrayList<>();
+
+        for(TeamDTO teamDto : teamDtoList){
+            Map<String, Integer> map = new HashMap<>();
+            map.put("seq",teamDto.getTeamSeq());
+            teamSeqList.add(map);
+        }
+
+        List<PersonalFolderDTO> teamFolderList = personalFolderService.getRootTeamFolder(teamSeqList);
+        model.addAttribute("teamList",teamFolderList);
+
+        // 팀 / 개인 사용 용량
+        if(!isTeam){
+            long myVolume = basicFolderService.myVolume(memberSeq);
+            model.addAttribute("myVolume",myVolume);
+        }
+        else{
+            int folderTeamSeq;
+            String searchKey = resourceKey;
+
+            while(true){
+                folderTeamSeq = personalFolderService.getTeamSeq(searchKey);
+                if(folderTeamSeq == 0){
+                    searchKey = personalFolderService.getParentKey(searchKey);
+                }else{
+                    long teamRootVolume = basicFolderService.getTeamVolume(personalFolderService.getRootTeamKey(folderTeamSeq));
+                    model.addAttribute("teamVolume",teamRootVolume);
+                    break;
+                }
+            }
+        }
+
         return "drive/detailDrive";
     }
-
 
     // 파일 삭제하기
     @ResponseBody
@@ -224,14 +286,17 @@ public class DriveController {
         return null;
     }
 
+    // 팀인지 개인인지 확인
     @ResponseBody
-    @RequestMapping("dragFile")
-    public String dragFile(@RequestParam("formData") MultipartFile formData, String attachFolder) throws Exception{
-        System.out.println(formData);
-        System.out.println(formData.getSize());
-        System.out.println(attachFolder);
-        System.out.println("도착");
-        return "done";
+    @RequestMapping("isTeam")
+    public boolean isTeam(String parentKey) throws Exception{
+        return personalFolderService.isTeam(parentKey);
     }
 
+    // 전체 기본폴더 key 출력
+    @ResponseBody
+    @RequestMapping("allKeys")
+    public List<Map<String,String>> allBasicKey() throws Exception{
+        return basicFolderService.allBasicKey();
+    }
 }

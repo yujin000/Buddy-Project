@@ -1,10 +1,7 @@
 package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dto.*;
-import com.fivet.buddy.services.ChatRoomService;
-import com.fivet.buddy.services.MemberService;
-import com.fivet.buddy.services.TeamMemberService;
-import com.fivet.buddy.services.TeamService;
+import com.fivet.buddy.services.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +33,12 @@ public class TeamController {
     private TeamMemberService teamMemberService;
 
     @Autowired
+    private BasicFolderService basicFolderService;
+
+    @Autowired
+    private PersonalFolderService personalFolderService;
+
+    @Autowired
     private MemberService memberService;
 
     //팀 생성 페이지로 이동
@@ -53,38 +56,44 @@ public class TeamController {
         // session값인 이름만 닉네임에 담아 service에 전송.
         param.put("teamMemberNickname", String.valueOf(session.getAttribute("memberName")));
         teamService.insertTeam(teamDto, param);
+
+        // 팀 생성시 팀 기본폴더 생성
+        basicFolderService.newTeamBasicFolder(teamDto);
+        // 팀 생성시 팀 폴더 생성
+        personalFolderService.newTeamSubFolder(teamDto);
+
         return "redirect:/member/loginIndex";
     }
 
         //팀 이동
         @PostMapping("goTeam")
         public String goTeam(TeamMemberDTO teamMemberDto, Model model) {
-                teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
-                // 회원 번호를 이용하여 팀 DTO값을 불러옴.
-                teamMemberDto = teamMemberService.selectOne(teamMemberDto);
-                // 팀 번호 session 부여
-                session.setAttribute("teamSeq", teamMemberDto.getTeamSeq());
-                // 회원의 팀내 닉네임 session 부여
-                session.setAttribute("teamMemberNickname", teamMemberDto.getTeamMemberNickname());
-                // 팀 이름 session 부여
-                session.setAttribute("teamName", teamService.selectTeamName(teamMemberDto.getTeamSeq()));
-                //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
-                Map<String, Integer> param = new HashMap<>();
-                param.put("teamSeq", teamMemberDto.getTeamSeq());
-                param.put("memberSeq", teamMemberDto.getMemberSeq());
-                // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
-                List<ChatRoomDTO> chatRoomList = chatRoomService.chatRoomList(param);
-                // 팀 토픽 갯수 카운트
-                int topicCount = chatRoomService.countTopic(param.get("teamSeq"));
-                //팀 입장 시, 팀 멤버 출력
-                List<TeamMemberListDTO> teamMemberDtoList =  teamMemberService.selectTeamMember(session.getAttribute("teamSeq").toString());
-                List<ChatRoomDTO> topicList = chatRoomService.selectTopic(param.get("teamSeq"));
-                model.addAttribute("teamMemberDtoList", teamMemberDtoList);
-                model.addAttribute("chatRoomList", chatRoomList);
-                model.addAttribute("topicList", topicList);
-                model.addAttribute("topicCount", topicCount);
-                return "team/team";
-      }
+            teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+            // 회원 번호를 이용하여 팀 DTO값을 불러옴.
+            teamMemberDto = teamMemberService.selectOne(teamMemberDto);
+            // 팀 번호 session 부여
+            session.setAttribute("teamSeq", teamMemberDto.getTeamSeq());
+            // 회원의 팀내 닉네임 session 부여
+            session.setAttribute("teamMemberNickname", teamMemberDto.getTeamMemberNickname());
+            // 팀 이름 session 부여
+            session.setAttribute("teamName", teamService.selectTeamName(teamMemberDto.getTeamSeq()));
+            //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
+            Map<String, Integer> param = new HashMap<>();
+            param.put("teamSeq", teamMemberDto.getTeamSeq());
+            param.put("memberSeq", teamMemberDto.getMemberSeq());
+            // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
+            List<ChatRoomDTO> chatRoomList = chatRoomService.chatRoomList(param);
+            // 팀 토픽 갯수 카운트
+            int topicCount = chatRoomService.countTopic(param.get("teamSeq"));
+            //팀 입장 시, 팀 멤버 출력
+            List<TeamMemberListDTO> teamMemberDtoList =  teamMemberService.selectTeamMember(session.getAttribute("teamSeq").toString());
+            List<ChatRoomDTO> topicList = chatRoomService.selectTopic(param.get("teamSeq"));
+            model.addAttribute("teamMemberDtoList", teamMemberDtoList);
+            model.addAttribute("chatRoomList", chatRoomList);
+            model.addAttribute("topicList", topicList);
+            model.addAttribute("topicCount", topicCount);
+            return "team/team";
+        }
 
     //팀 관리 이동
     @RequestMapping("goTeamSetting")

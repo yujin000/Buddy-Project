@@ -1,5 +1,8 @@
 @import url(reset.css);
-
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+*{
+    font-family: 'Noto Sans KR', sans-serif;
+}
 .wrap {
     width: 100vh;
     height: 100vh;
@@ -9,16 +12,15 @@
 .header {
     width: 100%;
     height: 50px;
-    border: 1px dashed #000;
     display: flex;
     position: fixed;
     z-index: 10;
+    margin-left: 10px;
 }
 .logo {
-    width: 120px;
+    width: 50px;
     height: 100%;
     margin-right: 10px;
-    border: 1px solid magenta;
 }
 
 .secondLogo{
@@ -45,7 +47,6 @@
     width: 50px;
     height: 50px;
     right: 0px;
-    border: 1px solid magenta;
     position: absolute;
     cursor: pointer;
 }
@@ -63,24 +64,31 @@ aside {
     min-width: 280px;
     width: 280px;
     height: 100%;
-    border: 1px dashed #000;
-    background: silver;
+    background: #F8F8F8;
     display: flex;
     flex-direction: column;
     position: relative;
     overflow: hidden;
+    border-right:black;
 }
 
 .asideTitle {
     width: 100%;
     min-height: 50px;
-    border: 1px solid magenta;
     display: flex;
+    border-top:0.5px solid black;
+    border-bottom:0.5px solid black;
+    background-color:#8723f7;
+    color:white;
 }
 
 .asideTitle h3 {
     padding-left: 10px;
     line-height: 50px;
+}
+
+.asideTitle h3 a{
+    color:white;
 }
 #alarmView {
     width: 60px;
@@ -97,22 +105,38 @@ aside {
     max-height: 280px;
     overflow-y: scroll;
     overflow-x: hidden;
-    border: 1px solid magenta;
+    border-top: 0.5px solid black;
+    border-bottom: 0.5px solid black;
     /* -ms-overflow-style: none; */
 }
 .asideItem::-webkit-scrollbar {
-    width: 10px; /*스크롤바의 너비*/
+    width: 5px; /*스크롤바의 너비*/
+    height:5px;
 }
 
 .asideItem::-webkit-scrollbar-thumb {
     /*스크롤바의 색상*/
-    background-color: black;
-    border-radius: 20px;
+    background-color: #666666;
+    border-radius: 10px;
 }
 
 .asideItem::-webkit-scrollbar-track {
     background-color: transparent; /*스크롤바 트랙 색상*/
 }
+
+#listArea::-webkit-scrollbar {
+    width: 5px; /*스크롤바의 너비*/
+    height:5px;
+}
+#listArea::-webkit-scrollbar-thumb {
+    /*스크롤바의 색상*/
+    background-color: #666666;
+    border-radius: 10px;
+}
+#listArea::-webkit-scrollbar-track {
+    background-color: transparent; /*스크롤바 트랙 색상*/
+}
+
 
 @media (max-height: 800px) {
     .asideItem {
@@ -120,7 +144,7 @@ aside {
         height: 200px;
         overflow-y: scroll;
         overflow-x: hidden;
-        border: 1px solid magenta;
+        border: 1px solid black;
         -ms-overflow-style: none;
     }
 }
@@ -128,14 +152,24 @@ aside {
 .asideItem ul > li {
     width: 100%;
     height: 40px;
-    border: 1px solid magenta;
+    border: 1px solid black;
 }
 
 .asideTool {
     width: 100%;
     position: absolute;
-    bottom: 30px;
+    bottom: 70px;
     text-align: center;
+}
+
+.asidePassage{
+    position: absolute;
+    bottom: 30px;
+    left:50%;
+    transform:translateX(-50%);
+}
+.asidePassage a:hover{
+    font-weight: bolder;
 }
 
 .appToggle {
@@ -168,11 +202,13 @@ aside {
     height: 100%;
     overflow: hidden;
     position: relative;
+    border-left:1px solid black;
 }
 .fileHeader {
     width: 100%;
     height: 50px;
-    border: 1px solid #000;
+    border-top: 1px solid #000;
+    border-bottom:1px solid #000;
     display: flex;
     position: relative;
 }
@@ -278,11 +314,10 @@ aside {
 
 /* 파일 리스트 들어갈 구간 */
 #listArea{
-    border:1px solid black;
     width: 80%;
     height: 90%;
     float: left;
-    margin-left:25px;
+    margin:7px 0 0 35px;
     padding: 30px 25px 16px 0px;
     overflow-y: scroll;
 }
@@ -316,10 +351,9 @@ aside {
 
 /* 헤더 버튼 공간*/
 .attachBtnArea{
-    border: 1px solid black;
     width:100%;
     height:40px;
-    padding: 7px 0px 0px 25px;
+    padding: 7px 0px 7px 25px;
 }
 
 /* 본문 파일 정보 */
@@ -328,7 +362,10 @@ aside {
     height:100%;
     width:15vw;
     position: absolute;
-    border:1px solid red;
+    margin-right:20px;
+    margin-bottom: 20px;
+    background-color:#efefef;
+    position:fixed;
 }
 #fileInfo img{
     width:100px;
@@ -367,43 +404,76 @@ aside {
     margin-left:120px;
 }
 .infoDate{
-    margin-left:30px;
+    margin-left:55px;
 }
 /* 파일 라벨, 새 폴더 */
-.fileLabel{
-    background-color:aquamarine;
-    border:1px solid black;
-    width:50px;
-    height:10px;
+.fileLabel,.mainButton{
+    width:80px;
     cursor: pointer;
     margin-right:6px;
     font-weight: normal;
+    background-color: #969696;
+    font-size:15px;
+    border-radius: 5px;
+    padding:0 10px;
+    line-height: normal;
+    border: none;
+    color:white;
 }
-#uploadFile{
+
+.fileLabel{
+    height:10px;
+    background-color:#4078ff;
+    color:white;
+    padding:5px 10px;
+}
+
+.fileLabel,.mainButton,#backBtn{
+    vertical-align: middle;
+}
+
+
+.mainButton{
+    height:32px;
+}
+
+#uploadFile,#deleteBtn,#downloadBtn{
     display:none;
 }
 
-#shareBtn{
-    display: none;
+.mainButton:hover{
+    background-color: #5e5e5e;
 }
-#deleteBtn{
-    display: none;
+
+.fileLabel:hover{
+    color:white;
+    background-color: #1661ff;
 }
-#downloadBtn{
-    display: none;
+.copyUrl{
+    width:120px;
+}
+#backBtn{
+    border:none;
+    background-color:#ffffff;
+    position:relative;
+    top:-5px;
+    left:-15px;
 }
 
 /* 폴더 및 파일 */
 .listThumb li{
     list-style: none;
-    padding:10px 20px 20px 20px;
+    padding:10px 20px 20px 25px;
     margin:0px 20px 20px 0px;
-    border:1px solid black;
+    border-radius: 5px;
+    background-color: #e5ecff;
     width:150px;
-    height:180px;
+    height:240px;
     float:left;
     cursor: pointer;
+    z-index:50;
 }
+
 .listThumb li img {
     width:100px;
     height:100px;
@@ -416,11 +486,44 @@ aside {
     cursor: pointer;
 }
 
+.listThumb li:hover{
+    background-color:#4078ff;
+}
+
+/* 공유 버튼 */
+.shareUrl{
+    margin-top:7px;
+    display: inline-block;
+    width:110px
+}
+
+.copyUrl{
+    display: inline-block;
+    width:120px;
+}
+.nowShare{
+    width:100px;
+}
+.bubble{
+    z-index: 100;
+}
+/* 폴더, 파일 이름 */
+.printFolderName,.printFileName{
+    border:none;
+    text-align:center;
+    width:100px;
+    background-color:white;
+    border-radius: 5px;
+}
+
 /* 사이드 폴더 */
 .sideList{
     display: inline;
     cursor: pointer;
     font-size: 15px;
+}
+.sideList:hover{
+    font-weight: bolder;
 }
 .fa-solid{
     margin: 10px 0px 0px 20px;
@@ -430,8 +533,13 @@ aside {
 #main{
     cursor: pointer;
     margin: 5px 0px 0px 10px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 0.3px solid black;
 }
-
+#folderList{
+    overflow-x:scroll;
+}
 /* 서브 폴더 */
 .sub{
     display: block;
@@ -440,27 +548,32 @@ aside {
     margin-left:20px;
 }
 
-/* 공유 */
-.copyUrl{
-    display: inline-block;
-}
+
 
 /* 용량 */
-#volumeLog{
-    width: 200px;
-    height:15px;
+.volumeLog{
+    width: 210px;
+    height:5px;
     margin:auto;
     border:1px solid black;
     border-radius: 10px;
     overflow:hidden;
+    display: inline-block;
 }
-#volumeBar{
+.volumeBar{
     width:0px;
     height:100%;
-    background-color: blue;
-    border-radius: 10px;
+    background-color: #8723f7;
 }
-
+.myVolume{
+    font-size:small;
+    display: inline-block;
+}
+.volumeTitle{
+    text-align: left;
+    font-size: small;
+    display: inline-block;
+}
 /* 공유 실패 */
 #reduceAccess{
     width:100%;
@@ -472,7 +585,7 @@ aside {
 #dropArea {
     width: 80%;
     height: 90%;
-    border: 2px dashed lightseagreen;
+    border: 2px dashed #1661ff;
     padding: 20px;
     text-align: center;
     position:absolute;
@@ -481,7 +594,21 @@ aside {
 
 #dropArea.active {
     background: lightblue;
-    opacity:0.3;
+    opacity:0.7;
+}
+
+#dropArea p{
+    position: absolute;
+    top:80%;
+    transform: translateY(-80%);
+    left:50%;
+    transform: translateX(-50%);
+    font-size:20px;
+    background-color:#1661ff;
+    border-radius: 5px;
+    color:white;
+    opacity:1;
+    padding:10px;
 }
 #dropFile{
     display: none;

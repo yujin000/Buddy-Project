@@ -97,7 +97,7 @@ public class MemberController {
 
     // 회원가입 아이디 체크
     @ResponseBody
-    @RequestMapping(value="idCheck",produces = "text/html;charest=utf8")
+    @RequestMapping(value="idCheck",produces = "text/html;charset=utf8")
     public String idCheck(String id ) throws Exception{
         boolean result = memberService.idCheck(id);
         return String.valueOf(result);
@@ -351,7 +351,7 @@ public class MemberController {
         return "index";
     }
 
-    // 관리자 페이지(1:1문의)로 이동
+    // 관리자 페이지(회원관리)로 이동
     @RequestMapping("toAdminMember")
     public String toAdminPage(Model model) throws Exception {
         if (session.getAttribute("memberLogtype").equals("admin")) {

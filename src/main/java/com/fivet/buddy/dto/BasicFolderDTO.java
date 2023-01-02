@@ -14,4 +14,5 @@ public class BasicFolderDTO {
     private int basicFolderMemberSeq;
     private String basicFolderName;
     private long basicFolderByte;
+    private String basicFolderType;
 }

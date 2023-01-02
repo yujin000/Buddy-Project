@@ -52,4 +52,27 @@ public class BasicFolderDAO {
     public void deleteFolderByte(Map<String, Object> sendMap) {
         basicFolderMapper.deleteFolderByte(sendMap);
     }
+
+    // 팀 생성 시 기본 폴더 생성
+    public void newTeamFolder(Map<String, Object> map) {
+        basicFolderMapper.newTeamBasicFolder(map);
+    }
+
+    // 팀 번호로 key찾기
+    public String myTeamFolderKey(int teamSeq) {
+        return basicFolderMapper.myTeamFolderKey(teamSeq);
+    }
+    // 모든 key 출력
+    public List<Map<String,String>> allBasicKey(){
+        return basicFolderMapper.allBasicKey();
+    }
+
+    // team root 용량
+    public long getTeamVolume(String rootTeamKey) {
+        return basicFolderMapper.getTeamVolume(rootTeamKey);
+    }
+    // 파일 업로드(팀)
+    public void uploadTeamByte(Map<String, Object> map) {
+        basicFolderMapper.uploadTeamByte(map);
+    }
 }

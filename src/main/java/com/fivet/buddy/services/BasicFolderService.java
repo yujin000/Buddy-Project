@@ -3,6 +3,7 @@ package com.fivet.buddy.services;
 import com.fivet.buddy.dao.BasicFolderDAO;
 import com.fivet.buddy.dao.PersonalFolderDAO;
 import com.fivet.buddy.dto.MemberDTO;
+import com.fivet.buddy.dto.TeamDTO;
 import com.fivet.buddy.util.FileUtil;
 import com.fivet.buddy.util.RandomKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,22 @@ public class BasicFolderService {
         basicFolderDao.newBasicFolder(map);
     };
 
-    // 파일업로드
+    // 팀 생성시 기본 폴더 생성
+    public void newTeamBasicFolder(TeamDTO teamDto) throws Exception{
+        // 폴더 key생성
+        String basicFolderKey = randomKeyUtil.folderKey();
+
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("basicFolderKey",basicFolderKey);
+        map.put("memberSeq",teamDto.getTeamOwnerSeq());
+        map.put("seq",teamDto.getTeamSeq());
+        map.put("name",teamDto.getTeamName());
+
+        basicFolderDao.newTeamFolder(map);
+    };
+
+    // 파일업로드(개인)
     public void uploadByte(int memberSeq,long fileSize) {
         Map<String,Object> map = new HashMap<>();
         map.put("memberSeq",memberSeq);
@@ -48,6 +64,14 @@ public class BasicFolderService {
         basicFolderDao.uploadByte(map);
     }
 
+    // 파일 업로드(팀)
+    public void uploadTeamByte(String key, long fileSize){
+        Map<String,Object> map = new HashMap<>();
+        map.put("key",key);
+        map.put("fileSize",fileSize);
+
+        basicFolderDao.uploadTeamByte(map);
+    }
     // 내 현재 용량
     public long myVolume(int memberSeq) {
         return basicFolderDao.myVolume(memberSeq);
@@ -63,5 +87,15 @@ public class BasicFolderService {
         FileUtil fileUtil = new FileUtil();
         fileUtil.deleteFolder(path);
         basicFolderDao.memberOut(memberSeq);
+    }
+
+    // 모든 key 출력
+    public List<Map<String,String>> allBasicKey(){
+        return basicFolderDao.allBasicKey();
+    }
+
+    // team root 용량
+    public long getTeamVolume(String rootTeamKey) {
+        return basicFolderDao.getTeamVolume(rootTeamKey);
     }
 }

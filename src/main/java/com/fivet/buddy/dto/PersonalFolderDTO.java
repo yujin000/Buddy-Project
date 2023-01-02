@@ -20,4 +20,6 @@ public class PersonalFolderDTO {
     private Timestamp personalFolderDate;
     private String personalFolderShared;
     private long personalFolderByte;
+    private String personalFolderTeamSeq;
+    private String personalFolderType;
 }

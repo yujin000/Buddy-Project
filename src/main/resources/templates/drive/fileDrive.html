@@ -17,6 +17,9 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -28,23 +31,17 @@
 <div class="wrap">
     <div class="header">
         <div class="logo">
-            <a href="">
-                <img src="" alt="" />
-                logo
+            <a href="/member/loginIndex">
+                <img src="/static/img/logo.png" />
             </a>
         </div>
-        <div class="secondLogo">
-            secondLogo
-        </div>
-
-        <button id="menu" class="iconMenu">menu</button>
         <button id="asideClose">aside</button>
     </div>
     <div class="main">
         <aside>
             <div id="profile" class="asideTitle">
                 <img src="" alt="" />
-                <h3><a href="/member/goMyProfile" th:text="${session.memberName}"></a></h3>
+                <h3><a th:text="${session.memberName + ' 님의 Drive'}"></a></h3>
             </div>
 
             <div id="allFiles" class="asideList">
@@ -69,22 +66,37 @@
 
             <div id="chat" class="asideList">
                 <div class="asideTitle">
-                    <h3>My Team</h3>
-                    <button id="fileTypeToggle" class="toggle">v</button>
+                    <h3>팀 공유 폴더</h3>
                 </div>
                 <div id="chatList" class="asideItem">
                     <ul>
-                        <li>팀 공유 리스트 </li>
+                        <div th:if="${#strings.isEmpty(teamList)}">
+                            아직 팀이 없습니다.
+                        </div>
+                        <div th:unless="${#strings.isEmpty(teamList)}">
+                            <th:block th:each="team : ${teamList}">
+                                <div>
+                                    <i class="fa-solid fa-chevron-right arrowBtn" arrowType="right"></i>
+                                    <li th:text="${team.getPersonalFolderName()}" class="sideList" th:data-folder="${team.getPersonalFolderKey()}" data-resource-type="team"></li><br>
+                                    <ul class="sub"></ul>
+                                </div>
+                            </th:block>
+                        </div>
                     </ul>
                 </div>
             </div>
 
             <div class="asideTool">
-                <p>내 사용량</p>
-                <p th:data-volume="${myVolume}" id="myVolume"></p>
-                <div id="volumeLog">
-                    <div id="volumeBar"></div>
+                <p class="volumeTitle">내 Drive 사용량 | </p>
+                <p th:data-volume="${myVolume}" class="myVolume"></p>
+                <div class="volumeLog">
+                    <div class="volumeBar"></div>
                 </div>
+            </div>
+            <div class="asidePassage">
+                <a href="/member/loginIndex">메인으로   </a>
+                |
+                <a href="/member/logout">   로그아웃</a>
             </div>
         </aside>
 
@@ -102,16 +114,15 @@
                         <input type="hidden" th:value="${parentKey}" name="attachFolder">
                     </label>
                     <button type="button" id="newFolder" class="mainButton">새 폴더</button>
-                    <button type="button" id="shareBtn" class="mainButton">공유</button>
+                    <button type="button" class="copyUrl mainButton" th:data-share-url="${'localhost/drive/detailDrive?resourceKey='+parentKey}">  현재 폴더 공유  </button>
                     <button type="button" id="downloadBtn" class="mainButton">내려받기</button>
                     <button type="button" id="deleteBtn" class="mainButton">삭제</button>
-                    <button type="button" class="copyUrl" th:data-share-url="${'localhost/drive/detailDrive?resourceKey='+parentKey}">현재 폴더 공유</button>
                 </div>
             </form>
             <!-- 본문 -->
             <div class="fileMainPlace">
                 <form action="/drive/dragFile" method="post" enctype="multipart/form-data" id="dropForm">
-                    <div id="dropArea"></div>
+                    <div id="dropArea"><p>파일을 여기다 끌어놓으면 업로드가 시작됩니다.</p></div>
                     <input type="file" id="dropFile" name="multipartFile">
                     <input type="hidden" th:value="${parentKey}" id="attachFolder">
                 </form>
@@ -131,23 +142,23 @@
                             <div th:unless="${#strings.isEmpty(myFolders)}">
                                 <input type="hidden" th:value="${parentKey}" id="parentKey">
                                 <th:block th:each="folder : ${myFolders}">
-                                    <li data-resource-type="folder">
-                                        <input type="checkbox" class='check' th:data-key="${folder.getPersonalFolderKey()}" data-resource-type="folder" th:data-name="${folder.getPersonalFolderName()}"th:data-folder-key="0">
-                                        <img src='/static/img/folderImg.png' class="thisFolder" th:data-folder="${folder.getPersonalFolderKey()}">
+                                    <li data-resource-type="folder" class="contentBlock">
+                                        <input type="checkbox" id="check" class='check' th:data-key="${folder.getPersonalFolderKey()}" data-resource-type="folder" th:data-name="${folder.getPersonalFolderName()}"th:data-folder-key="0">
+                                        <img src='/static/img/folderImg.png' class="thisFolder" th:data-folder="${folder.getPersonalFolderKey()}" th:data-resource-type="${folder.getPersonalFolderType()}">
                                         <input type='text' class="printFolderName" th:value='${folder.getPersonalFolderName()}' th:id="${'folder' + folder.getPersonalFolderKey()}" disabled>
                                         <th:block th:if="${#strings.equals(folder.getPersonalFolderShared(),'Y')}">
-                                            <button type="button" class="shareUrl" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유 중단</button>
-                                            <button type="button" class="copyUrl" th:data-share-url="${'localhost/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}">URL복사</button>
+                                            <button type="button" class="shareUrl nowShare" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유 중단</button>
+                                            <button type="button" class="copyUrl nowShare" th:data-share-url="${'localhost/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}">URL복사</button>
                                         </th:block>
                                         <th:block th:if="${#strings.equals(folder.getPersonalFolderShared(),'N')}">
-                                            <button type="button" class="shareUrl" th:data-share-url="${'localhost/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유</button>
+                                            <button type="button" class="shareUrl nowShare" th:data-share-url="${'localhost/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유</button>
                                         </th:block>
                                     </li>
                                 </th:block>
                             </div>
                             <div th:unless="${#strings.isEmpty(myFiles)}">
                                 <th:block th:each="file : ${myFiles}">
-                                    <li th:data-folder="${file.getPersonalFilesFolderKey()}" data-resource-type="file">
+                                    <li th:data-folder="${file.getPersonalFilesFolderKey()}" data-resource-type="file" class="contentBlock">
                                         <input type="checkbox" class='check' th:data-key="${file.getPersonalFilesKey()}" data-resource-type="file" th:data-name="${file.getPersonalFilesSysname()}" th:data-folder-key="${file.getPersonalFilesFolderKey()}">
                                         <img src='/static/img/fileImg.png' class="thisFile">
                                         <input type='text' class="printFileName" th:value='${file.getPersonalFilesOriname()}' th:id="${'file' + file.getPersonalFilesOriname()}" disabled>
@@ -158,8 +169,8 @@
                     </th:block>
                 </div>
                 <div id="fileInfo">
-                    <h3 id="infoName">파일 이름</h3>
-                    <img src="/static/img/fileImg.png">
+                    <h3 id="infoName">정보</h3>
+                    <img src="/static/img/none.png" id="infoImg">
                     <ul id="fileInfoText">
                         <li class="infoIndex">
                             <p class="information">종류</p>
@@ -181,30 +192,11 @@
     <!-- 모달 -->
 
 </div>
-<div id="menuList" class="menuList">
-    <ul>
-        <li><a href="">logout</a></li>
-        <li>list</li>
-        <li>list</li>
-        <li>list</li>
-        <li>list</li>
-        <li>list</li>
-        <li>list</li>
-    </ul>
-</div>
 <!-- 토글 -->
 <script>
     $(document).ready(function () {
         $("#headerToggle").click(function () {
             $("#dropdownList").toggle();
-        });
-
-        $("#menu").click(function () {
-            $("#menuList").toggle();
-        });
-
-        $("#fileTypeToggle").click(function () {
-            $("#chatList").toggle();
         });
 
         $("#asideClose").click(function () {
@@ -263,7 +255,7 @@
                 }).done(function(rsp){
                     // rsp : true(사용할 수 있음), false(사용할 수 없음)
                     if(!rsp) {
-                        alert("개인 드라이브 내에 이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
+                        alert("이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
                         modifyText.attr("disabled",false).css("color","red");
                     }else{
                         location.reload();
@@ -290,18 +282,24 @@
 <!-- 체크박스 클릭 -->
 <script>
 
+
     // 체크 박스
     $(".check").on('change',function(){
-        if($(".check").is(":checked")){
+        let checkedCount = $(".check:checked").length;
+        if (checkedCount > 0) {
             $("#deleteBtn").css("display","inline");
-            $("#shareBtn").css("display","inline");
             $("#downloadBtn").css("display","inline");
-        }else{
+        } else {
             $("#deleteBtn").css("display","none");
-            $("#shareBtn").css("display","none");
             $("#downloadBtn").css("display","none");
         }
-    })
+
+        if($(this).is(":checked")){
+            $(this).parent('li').css("background-color","#4078ff");
+        }else{
+            $(this).parent('li').css("background-color","#e5ecff");
+        }
+    });
 
     // 삭제
     $("#deleteBtn").on("click",function (){
@@ -424,6 +422,8 @@
                         }
                     }).done(function (blob,status,info){
                         download(blob,name+".zip","application/octet-stream");
+                        $("input:checkbox[class='check']:checked").prop("checked",false);
+                        $(".contentBlock").css("background-color","#e5ecff");
                     })
                 }
         });
@@ -574,10 +574,12 @@
 
             $(this).attr("arrowType","down");
             $(this).attr("class","fa-solid fa-chevron-down arrowBtn");
+            $(this).next("li").css({"font-weight":"bold","color":"#8723f7"});
 
             let container = $("<div>");
 
             let parentFolderKey = $(this).next("li").data("folder");
+            let type = $(this).next("li").data("resource-type");
 
             $.ajax({
                 url : "/drive/getKey?parentFolderKey="+parentFolderKey
@@ -587,8 +589,16 @@
                         let div = $("<div>");
                         let li = $("<li>");
                         let i = $("<i>").addClass("fa-solid fa-chevron-right arrowBtn newer").attr("arrowType","right");
-                        let list = $("<li>").addClass("sideList").attr("data-folder",value.personalFolderKey).attr("data-resource-type","folder").html(value.personalFolderName);
+                        let list = $("<li>").addClass("sideList").attr("data-folder",value.personalFolderKey).html(value.personalFolderName);
                         let ul = $("<ul>").addClass("sub");
+
+                        if(type == "folder"){
+                            list.attr("data-resource-type","folder");
+                        }else if(type == "team"){
+                            list.attr("data-resource-type","team");
+                        }else{
+                            list.attr("data-resource-type","folder");
+                        }
 
                         $.ajax({
                             url : "/drive/subIsExist?folderKey="+value.personalFolderKey
@@ -599,19 +609,20 @@
                                 div.append(li).append(i).append(list).append(ul);
                                 container.append(div);
                             }else{
-                                div.append(li).append(list).append(ul).css("margin-left","20px");
+                                div.append(li).append(list).append(ul).css("margin-left","23px");
                                 container.append(div);
                             }
                         })
 
                     })
-                    arrowThis.siblings("ul").append(container).css("margin","0px 0px 5px 20px");
+                    arrowThis.siblings("ul").append(container).css("margin","0px 0px 5px 23px");
                 }
             })
 
         }else{
             $(this).attr("arrowType","right");
             $(this).attr("class","fa-solid fa-chevron-right arrowBtn newer");
+            $(this).next("li").css({"font-weight":"normal","color":"black"});
             $(this).siblings("ul").children().remove();
         }
 
@@ -626,10 +637,13 @@
     })
 
     $(document).on("click",".sideList",function(){
+        let folderData = $(this).data("folder");
         let thisType = $(this).data("resource-type");
+
         if(thisType == "folder"){
-            let folderData = $(this).data("folder");
             location.href = "/drive/detailDrive?resourceKey="+folderData;
+        }else if(thisType == "team"){
+            location.href = "/drive/detailDrive?resourceKey="+folderData+"&teamAccess=true";
         }
     })
 </script>
@@ -647,16 +661,7 @@
                     url: '/drive/access?access=Y&key=' + thisKey,
                     method: 'POST',
                     success: function() {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'URL복사 버튼을 클릭해서 이 폴더를 공유할 수 있습니다.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                        setTimeout(function() {
-                            location.reload();
-                        }, 1500);
+                        location.reload();
                     }
                 });
             }
@@ -666,16 +671,7 @@
                     url: '/drive/access?access=N&key=' + thisKey,
                     method: 'POST',
                     success: function() {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: '폴더 공유가 중단되었습니다.',
-                            showConfirmButton: false,
-                            timer: 1000
-                        });
-                        setTimeout(function() {
-                            location.reload();
-                        }, 1100);
+                        location.reload();
                     }
                 });
             }
@@ -686,15 +682,29 @@
 
     $(document).on('click','.copyUrl',function (){
         const inputValue = $(this).data('share-url');
+        const bubble = $('<div>');
+        bubble.addClass('bubble');
+        bubble.html('공유 URL이 클립보드에 저장되었습니다.');
+        bubble.css({
+            "z-index":"100",
+            "display": "block",
+            "background-color": "#4078ff",
+            "border-radius": "10px",
+            "box-shadow": "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+            "padding": "10px 20px",
+            "font-size": "16px",
+            "width":"400px",
+            "color":"white",
+            "text-align":"center"
+        });
+        $(this).after(bubble);
 
         navigator.clipboard.writeText(inputValue).then(function() {
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: '클립보드에 복사되었습니다.',
-                showConfirmButton: false,
-                timer: 1000
-            })
+            setTimeout(function() {
+                $(".bubble").fadeOut(1500, function(){
+                    $(".bubble").remove();
+                });
+            }, 1100);
         });
     })
 
@@ -703,14 +713,14 @@
 <!-- 데이터 사용량 -->
 <script>
     $(function(){
-        const myVolume = $('#myVolume').data('volume').toString();
+        const myVolume = $('.myVolume').data('volume').toString();
         const divide = (myVolume / 1000000).toString();
         const volumeLength = divide.slice(0,4);
         const result = volumeLength + ' MB / 100.00 MB';
-        const volumeBar = $('#volumeBar');
+        const volumeBar = $('.volumeBar');
 
         volumeBar.css("width",volumeLength*2);
-        $('#myVolume').html(result);
+        $('.myVolume').html(result);
     })
 </script>
 
@@ -733,15 +743,24 @@
                ,method: 'POST'
                ,data:{key:thisKey}
            }).done(function (rsp){
-               let divideByte = rsp.personalFolderByte / 1000000;
-               let toMegaByte = divideByte.toString().slice(0,3) + ' MB';
+               if(rsp.personalFolderByte < 1000000){
+                   let divideByte = rsp.personalFolderByte / 1000;
+                   let toKiloByte = divideByte.toString().slice(0,3) + ' kb';
+                   $('.infoSize').html(toKiloByte);
+               }else{
+                   let divideByte = rsp.personalFolderByte / 1000000;
+                   let toMegaByte = divideByte.toString().slice(0,3) + ' MB';
+                   $('.infoSize').html(toMegaByte);
+               }
+
                let date = rsp.personalFolderDate.toString().slice(0,10);
-               let name = $(this).data('name');
+               let name = rsp.personalFolderName;
 
                $('#infoName').html(name);
                $('.infoType').html('폴더');
                $('.infoDate').html(date);
-               $('.infoSize').html(toMegaByte);
+
+               $('#infoImg').attr("src","/static/img/folderImg.png");
            })
 
        }else{
@@ -750,8 +769,16 @@
                ,method: 'POST'
                ,data:{key:thisKey}
            }).done(function (rsp){
-               let divideByte = rsp.personalFilesByte / 1000000;
-               let toMegaByte = divideByte.toString().slice(0,3) + ' MB';
+               if(rsp.personalFilesByte < 1000000){
+                   let divideByte = rsp.personalFilesByte / 1000;
+                   let toKiloByte = divideByte.toString().slice(0,3) + ' kb';
+                   $('.infoSize').html(toKiloByte);
+               }else{
+                   let divideByte = rsp.personalFilesByte / 1000000;
+                   let toMegaByte = divideByte.toString().slice(0,3) + ' MB';
+                   $('.infoSize').html(toMegaByte);
+               }
+
                let date = rsp.personalFilesDate.toString().slice(0,10);
                let name = rsp.personalFilesOriname;
                let type = name.slice(name.indexOf('.',4));
@@ -759,7 +786,7 @@
                $('#infoName').html(name);
                $('.infoType').html(type);
                $('.infoDate').html(date);
-               $('.infoSize').html(toMegaByte);
+               $('#infoImg').attr("src","/static/img/fileImg.png");
            })
        }
     });

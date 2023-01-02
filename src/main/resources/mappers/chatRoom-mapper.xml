@@ -102,7 +102,7 @@
     </update>
 
     <!--    회원 채팅방 나간경우, 인원수 1 감소-->
-    <update id="deleteChatMember">
+    <update id="delChatMember">
         update chat_room set member_count = member_count -1 where chat_room_seq = #{value}
     </update>
 
@@ -110,5 +110,10 @@
     <update id="updateChatMemberCount">
         update chat_room set member_count = member_count +1 where chat_room_seq = #{value}
     </update>
+
+    <!--    회원수가 0이 된 채팅방은 지운다. delectChatMember 등과 연계하여 사용.-->
+    <delete id="delChatRoomCountZero">
+        delete from chat_room where member_count = 0
+    </delete>
 
 </mapper>

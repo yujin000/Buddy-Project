@@ -59,4 +59,10 @@ public class ChatRoomDAO {
 
     // 일반채팅방 제목 변경
     public void updateChatTitle(ChatRoomDTO chatRoomDto) { chatRoomMapper.updateChatTitle(chatRoomDto); }
+
+    // 채팅방에서 이탈시, 회원수를 1 감소.
+    public void delChatMember(int chatRoomSeq) { chatRoomMapper.delChatMember(chatRoomSeq);}
+
+    //인원수가 0명인 채팅방 삭제
+    public void delChatRoomCountZero() { chatRoomMapper.delChatRoomCountZero(); }
 }

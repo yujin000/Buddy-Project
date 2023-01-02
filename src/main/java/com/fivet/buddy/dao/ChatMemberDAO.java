@@ -26,4 +26,9 @@ public class ChatMemberDAO {
 
     //채팅방 삭제
     public void delChatRoom (int chatRoomSeq) { chatMemberMapper.delChatRoom(chatRoomSeq); }
+
+    //채팅방 회원 목록에서 회원 삭제
+    public void delChatMember(ChatMemberDTO chatMemberDto) { chatMemberMapper.delChatMember(chatMemberDto); }
+
+
 }

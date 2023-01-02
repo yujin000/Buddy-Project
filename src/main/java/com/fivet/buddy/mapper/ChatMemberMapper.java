@@ -14,4 +14,5 @@ public interface ChatMemberMapper {
     //채팅방 멤버 출력
     List<ChatMemberDTO> selectChatMember(int chatRoomSeq);
     void delChatRoom(int chatRoomSeq);
+    void delChatMember(ChatMemberDTO chatMemberDto);
 }

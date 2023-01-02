@@ -29,7 +29,7 @@
         insert into
             personal_folder
         values
-            (#{personalFolderKey}, #{personalFolderName}, #{personalFolderMemberSeq},#{personalFolderParentKey},#{personalFolderPath},sysdate,'N',0)
+            (#{personalFolderKey}, #{personalFolderName}, #{personalFolderMemberSeq},#{personalFolderParentKey},#{personalFolderPath},sysdate,'N',0,0,#{personalFolderType})
     </insert>
 
     <!-- 폴더 존재 유무 체크 -->
@@ -47,7 +47,15 @@
         insert into
             personal_folder
         values
-            (#{newKey}, #{memberName}, #{memberSeq}, #{basicFolderKey}, #{path}, sysdate,'N',0)
+            (#{newKey}, #{memberName}, #{memberSeq}, #{basicFolderKey}, #{path}, sysdate,'N',0,0,'user')
+    </insert>
+
+    <!-- 팀 생성시 팀 폴더 생성 -->
+    <insert id="newTeamSubFolder">
+        insert into
+            personal_folder
+        values
+            (#{newKey}, #{teamName}, #{memberSeq}, #{basicFolderKey}, #{path}, sysdate, 'N', 0, #{teamSeq},'team')
     </insert>
 
     <!-- 부모폴더 경로 찾기-->
@@ -60,6 +68,15 @@
             personal_folder_key = #{value}
     </select>
 
+    <!-- 부모 폴더 경로 및 타입 찾기 -->
+    <select id="pathAndType" resultType="com.fivet.buddy.dto.PersonalFolderDTO">
+        select
+            *
+        from
+            personal_folder
+        where
+            personal_folder_key = #{value}
+    </select>
     <!-- personal_folder 테이블에서 내 기본 폴더번호 추출 -->
     <select id="myBasicFolder" resultType="String">
         select
@@ -108,6 +125,19 @@
             #{item.key}
         </foreach>
     </delete>
+
+    <!-- 팀 루트 폴더 정보 가져오기 -->
+    <select id="getRootTeamFolder" resultType="com.fivet.buddy.dto.PersonalFolderDTO">
+        select
+            *
+        from
+            personal_folder
+        where
+            personal_folder_team_seq in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item.seq}
+        </foreach>
+    </select>
 
     <!-- 선택된 폴더 경로 -->
     <select id="myPath" resultType="String">
@@ -222,5 +252,45 @@
             personal_folder
         where
             personal_folder_parent_key = #{value}
+    </select>
+
+    <!-- 팀인지 개인인지 확인 -->
+    <select id="isTeam" resultType="boolean">
+        select
+            case when personal_folder_type = 'team' then 1 else 0 end
+        from
+            personal_folder
+        where
+            personal_folder_key = #{value}
+    </select>
+
+    <!-- 팀 seq값 가져오기 -->
+    <select id="getTeamSeq" resultType="int">
+        select
+            personal_folder_team_seq
+        from
+            personal_folder
+        where
+            personal_folder_key = #{value}
+    </select>
+
+    <!-- team root key -->
+    <select id="getRootTeamKey" resultType="String">
+        select
+            personal_folder_parent_key
+        from
+            personal_folder
+        where
+            personal_folder_team_seq = #{value}
+    </select>
+
+    <!-- parentKey 가져오기 (key 로) -->
+    <select id="getParentKey" resultType="String">
+        select
+            personal_folder_parent_key
+        from
+            personal_folder
+        where
+            personal_folder_key = #{value}
     </select>
 </mapper>

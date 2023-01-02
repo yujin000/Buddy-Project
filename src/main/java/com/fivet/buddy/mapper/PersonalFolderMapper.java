@@ -49,4 +49,18 @@ public interface PersonalFolderMapper {
     void deleteFileByte(Map<String, String> sendMap);
 
     String myBasicPath(String key);
+
+    void newTeamSubFolder(Map<String, Object> map);
+
+    List<PersonalFolderDTO> getRootTeamFolder(List<Map<String, Integer>> teamSeqList);
+
+    boolean isTeam(String parentKey);
+
+    PersonalFolderDTO pathAndType(String thisFolderKey);
+
+    int getTeamSeq(String resourceKey);
+
+    String getRootTeamKey(int folderTeamSeq);
+
+    String getParentKey(String searchKey);
 }

@@ -5,6 +5,7 @@ import com.fivet.buddy.dao.PersonalFileDAO;
 import com.fivet.buddy.dao.PersonalFolderDAO;
 import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.PersonalFolderDTO;
+import com.fivet.buddy.dto.TeamDTO;
 import com.fivet.buddy.util.FileUtil;
 import com.fivet.buddy.util.RandomKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,8 @@ public class PersonalFolderService {
     }
 
     // 폴더 생성
-    public void insertNewFolder(String folderName, String parentKey, String uploadFilePath,int memberSeq) throws Exception{
+    public void insertNewFolder(String folderName, String parentKey, String uploadFilePath,int memberSeq,String isTeam) throws Exception{
+        System.out.println(isTeam);
         PersonalFolderDTO personalFolderDto = new PersonalFolderDTO();
 
         // 폴더 이름, 멤버seq값, 부모폴더 key값, 폴더 저장경로 세팅
@@ -54,6 +56,7 @@ public class PersonalFolderService {
         personalFolderDto.setPersonalFolderParentKey(parentKey);
         personalFolderDto.setPersonalFolderPath(uploadFilePath+folderName+"/");
         personalFolderDto.setPersonalFolderKey(randomKeyUtil.folderKey());
+        personalFolderDto.setPersonalFolderType(isTeam);
         personalFolderDao.insertNewFolder(personalFolderDto);
     }
 
@@ -83,6 +86,23 @@ public class PersonalFolderService {
         map.put("path",uploadFilePath + newKey + memberDto.getMemberName()+"/");
 
         personalFolderDao.newPersonalFolder(map);
+    }
+
+    // 팀 생성 시 personal folder 테이블에 insert
+    public void newTeamSubFolder(TeamDTO teamDto) throws Exception{
+        String newKey = randomKeyUtil.folderKey();
+        File file = new File(uploadFilePath + newKey + teamDto.getTeamName());
+        file.mkdir();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("newKey",newKey);
+        map.put("teamName",teamDto.getTeamName());
+        map.put("memberSeq",teamDto.getTeamOwnerSeq());
+        map.put("basicFolderKey",basicFolderDao.myTeamFolderKey(teamDto.getTeamSeq()));
+        map.put("path",uploadFilePath + newKey + teamDto.getTeamName()+"/");
+        map.put("teamSeq",teamDto.getTeamSeq());
+
+        personalFolderDao.newTeamSubFolder(map);
     }
 
     // 부모 폴더 경로 찾아오기(폴더 생성,파일 첨부)
@@ -169,6 +189,35 @@ public class PersonalFolderService {
     // 폴더 삭제 하기
     public void memberOut(int memberSeq) {
         personalFolderDao.memberOut(memberSeq);
+    }
+
+    // 팀 폴더 가져오기
+    public List<PersonalFolderDTO> getRootTeamFolder(List<Map<String, Integer>> teamSeqList) {
+        return personalFolderDao.getRootTeamFolder(teamSeqList);
+    }
+
+    // 팀인지 개인인지 확인
+    public boolean isTeam(String parentKey) {
+        return personalFolderDao.isTeam(parentKey);
+    }
+
+    public PersonalFolderDTO pathAndType(String thisFolderKey) {
+        return personalFolderDao.pathAndType(thisFolderKey);
+    }
+
+    // 팀 seq값 가져오기
+    public int getTeamSeq(String resourceKey) {
+        return personalFolderDao.getTeamSeq(resourceKey);
+    }
+
+    // team root의 key값 가져오기
+    public String getRootTeamKey(int folderTeamSeq) {
+        return personalFolderDao.getRootTeamKey(folderTeamSeq);
+    }
+
+    // 부모 key값 가져오기
+    public String getParentKey(String searchKey) {
+        return personalFolderDao.getParentKey(searchKey);
     }
 }
 

@@ -114,4 +114,38 @@ public class PersonalFolderDAO {
     public String myBasicPath(String key) {
         return personalFolderMapper.myBasicPath(key);
     }
+
+    // 팀 생성시 sub 폴더 생성
+    public void newTeamSubFolder(Map<String, Object> map) {
+        personalFolderMapper.newTeamSubFolder(map);
+    }
+
+    // 팀 폴더 가져오기
+    public List<PersonalFolderDTO> getRootTeamFolder(List<Map<String, Integer>> teamSeqList) {
+        return personalFolderMapper.getRootTeamFolder(teamSeqList);
+    }
+
+    // 팀인지 개인인지 확인
+    public boolean isTeam(String parentKey) {
+        return personalFolderMapper.isTeam(parentKey);
+    }
+
+    public PersonalFolderDTO pathAndType(String thisFolderKey) {
+        return personalFolderMapper.pathAndType(thisFolderKey);
+    }
+
+    // 팀 seq값 가져오기
+    public int getTeamSeq(String resourceKey) {
+        return personalFolderMapper.getTeamSeq(resourceKey);
+    }
+
+    // team root의 key값 가져오기
+    public String getRootTeamKey(int folderTeamSeq) {
+        return personalFolderMapper.getRootTeamKey(folderTeamSeq);
+    }
+
+    // 부모 key 가져오기
+    public String getParentKey(String searchKey) {
+        return personalFolderMapper.getParentKey(searchKey);
+    }
 }

@@ -50,6 +50,7 @@ public class ChatRoomController {
         model.addAttribute("chatRoomSeq",chatRoomSeq);
         model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));
         model.addAttribute("chatMemberList",teamMemberService.selectChatMember(chatRoomSeq));
+        model.addAttribute("chatMemberImg", chatMemberService.selectChatMemberImg((Integer) session.getAttribute("memberSeq"),chatRoomSeq));
         return ("/team/teamChating");
     }
 
@@ -111,5 +112,11 @@ public class ChatRoomController {
         return g.toJson(chatMemberList);
     }
 
+    //채팅방 멤버 프로필 이미지
+//    @ResponseBody
+//    @RequestMapping("selectChatMemberImg")
+//    public String selectChatMemberImg(int chatRoomSeq){
+//        return chatMemberService.selectChatMemberImg((Integer) session.getAttribute("memberSeq"),chatRoomSeq);
+//    }
 
 }

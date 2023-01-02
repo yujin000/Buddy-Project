@@ -23,6 +23,7 @@
     let chatRoomSeq = [[${chatRoomSeq}]];
     let teamMemberNickname = [[${session.teamMemberNickname}]];
     let memberSeq = [[${session.memberSeq}]];
+    let chatMemberImg = [[${chatMemberImg}]];
     /*]]>*/
 </script>
 
@@ -119,6 +120,7 @@
                 if(file == "" && emoticonSrc=="") {
                     // Json 생성
                     let wsJson = {
+                        "memberImgSysName":chatMemberImg,
                         "chatRoomSeq": chatRoomSeq,
                         "teamMemberNickname": teamMemberNickname,
                         "chatContent": $(this).val(),
@@ -363,21 +365,12 @@
         <section class="msgSection">
             <div class="chatHeader">
                 <h1>team-list</h1>
-                <input type="search" placeholder="검색" id="searchMsg"/>
                 <button id="memberView">멤버</button>
             </div>
             <div class="msgView">
                 <div id="subSection">
                     <ul id="memberList" class="subItem">
                         <h1>member</h1>
-                    </ul>
-
-                    <ul id="resultList" class="subItem">
-                        <h1>검색결과</h1>
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                        <li>4</li>
                     </ul>
                 </div>
                 <th:block th:each="chatMsgList : ${chatMsgList}">
@@ -485,12 +478,6 @@
 
         $("#appToggle").click(function () {
             $("#appList").toggle();
-        });
-        $("#searchMsg").keypress(function enterEvent(e) {
-            if (e.keyCode == 13) {
-                $("#resultList").toggle();
-                $("#memberList").css("display", "none");
-            }
         });
 
         $("#memberView").click(function () {

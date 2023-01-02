@@ -23,4 +23,9 @@ public class ChatMemberDAO {
     public List<ChatMemberDTO> selectChatMember(int chatRoomSeq){
         return chatMemberMapper.selectChatMember(chatRoomSeq);
     }
+
+    //채팅방 멤버 프로필 이미지
+    public String selectChatMemberImg(int memberSeq, int chatRoomSeq){
+        return chatMemberMapper.selectChatMemberImg(memberSeq,chatRoomSeq);
+    }
 }

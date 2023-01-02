@@ -35,4 +35,16 @@
     <select id="totalCount" resultType="int">
         select count(*) from qna_board
     </select>
+
+    <!--    관리자에서 Qna 이메일검색-->
+    <select id="selectQnaSearch" resultType="com.fivet.buddy.dto.QnaBoardDTO">
+        select
+            *
+        from
+            (select qna_board.*, row_number() over(order by 1 desc) rn from qna_board)
+        where
+            (rn between #{start} and #{end})
+            and
+            qna_writer_id = #{qnaWriterId}
+    </select>
 </mapper>

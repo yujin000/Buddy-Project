@@ -24,4 +24,14 @@ public interface BasicFolderMapper {
     String selectBasicKey(int memberSeq);
 
     void deleteFolderByte(Map<String, Object> sendMap);
+
+    void newTeamBasicFolder(Map<String, Object> map);
+
+    String myTeamFolderKey(int teamSeq);
+
+    List<Map<String,String>> allBasicKey();
+
+    long getTeamVolume(String rootTeamKey);
+
+    void uploadTeamByte(Map<String, Object> map);
 }

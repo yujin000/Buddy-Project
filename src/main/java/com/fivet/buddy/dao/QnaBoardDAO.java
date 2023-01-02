@@ -38,8 +38,13 @@ public class QnaBoardDAO {
         return qnaBoardMapper.selectQnaBoardPage(param);
     }
 
-    //Qna 전체 글 수 출력
+    // Qna 전체 글 수 출력
     public int totalCount() {
         return qnaBoardMapper.totalCount();
+    }
+
+    // Qna글 회원 이메일로 검색
+    public List<QnaBoardDTO> selectQnaSearch(Map<String, String> param) {
+        return qnaBoardMapper.selectQnaSearch(param);
     }
 }

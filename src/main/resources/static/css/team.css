@@ -501,24 +501,26 @@ aside {
 }
 
 .fileView{
-  bottom: 55px;
-  left: 169px;
-  width: 250px;
-  height: 150px;
+  border-radius: 10px;
+  bottom: 122px;
+  left: 3px;
+  width: 300px;
+  height: 110px;
   border: 1px solid #000;
   background-color: white;
   display: none;
+  box-shadow: 0 4px 4px -4px black;
   position: absolute;
 }
 
 .fileView ul{
-  width: 248px;
+  width: 299px;
   line-height : 40px;
 }
 
 .fileView h3{
   text-align: center;
-  width: 248px;
+  width: 299px;
 }
 #uploadfile{
   width: 70%;
@@ -528,31 +530,36 @@ aside {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 70%;
+  height: 65%;
 }
 
 @media (max-width: 800px) {
   .fileView{
-    bottom: 55px;
-    left: 169px;
-    width: 230px;
-    height: 150px;
+    bottom: 119px;
+    left: 0px;
+    width: 100%;
+    height: 130px;
     border: 1px solid #000;
     background-color: white;
     display: none;
     position: absolute;
   }
   .fileView ul{
-    width: 228px;
-    line-height : 40px;
+    width: 100%;
+    line-height : 35px;
   }
 
   .fileView h3{
     text-align: center;
-    width: 228px;
+    width: 100%;
   }
 }
-
+#fileIcon{
+  margin-left: 30px;
+  margin-top: 8px;
+  width: 25px;
+  height: 25px;
+}
 .emoticonView{
   bottom: 119px;
   left: -1px;

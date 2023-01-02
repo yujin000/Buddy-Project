@@ -235,7 +235,6 @@
             });
         })
         // /qna/download?sysName=" + rsp[0].qnaSysName + "&oriName=" + rsp[0].qnaOriNam
-
     });
 
     //이모티콘 클릭 시
@@ -430,7 +429,9 @@
                         <div class="fileView">
                             <input type="hidden" th:value="${chatRoomSeq}" name="chatRoomSeq">
                             <ul>
-                                <h3>파일첨부</h3>
+                                <img src="/static/img/pcicon.png" id="fileIcon">
+                                <h3>
+                                    내 컴퓨터에서 업로드</h3>
                             </ul>
                             <div class="fileContents">
                                 <input

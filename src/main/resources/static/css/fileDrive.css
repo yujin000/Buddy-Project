@@ -446,7 +446,7 @@ aside {
 }
 
 /* 용량 */
-#volumeLog{
+.volumeLog{
     width: 200px;
     height:15px;
     margin:auto;
@@ -454,7 +454,7 @@ aside {
     border-radius: 10px;
     overflow:hidden;
 }
-#volumeBar{
+.volumeBar{
     width:0px;
     height:100%;
     background-color: blue;

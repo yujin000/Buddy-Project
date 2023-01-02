@@ -139,11 +139,6 @@ public class NoticeBoardController {
     @PostMapping("imageUpload")
     public String imageUpload(@RequestParam MultipartFile uploadFile, Model model, NoticeFileDTO noticeFileDto, FileUtil util) throws Exception {
         String sysName = UUID.randomUUID().toString() + uploadFile.getOriginalFilename();
-        noticeFileDto = new NoticeFileDTO(
-                0,
-                uploadFile.getOriginalFilename(),
-                sysName
-                );
         util.save(uploadFile, noticePath, sysName);
         return "/noticeImg/"+sysName;
     }

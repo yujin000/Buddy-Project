@@ -69,7 +69,7 @@
             <input type="hidden" id="qnaCategory" class="qnaType" name="qnaType">
         </div>
         <div class="btn">
-            <button type="submit">
+            <button type="button" id="submitBtn">
                 전송
             </button>
             <button type="button" id="cancel">
@@ -82,6 +82,15 @@
     let cancel = $("#cancel");
     cancel.on("click",function (){
         location.href = "/qna/main";
+    });
+
+    let subminBtn =  $("#submitBtn");
+    subminBtn.on("click",function (){
+        if($("#qnaContents").val().length == 0){
+            alert("본문을 입력해주세요");
+        }else {
+            $("#qnaForm").submit();
+        }
     });
 </script>
 </body>

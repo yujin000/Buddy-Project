@@ -41,12 +41,33 @@
     <div class="main">
         <nav class="nav">
             <ul>
-                <li class="thead" id="qna"><a>1:1 문의</a></li>
                 <li class="thead" id="news"><a>공지사항</a></li>
+                <li class="thead" id="qna"><a>1:1 문의</a></li>
                 <li class="thead" onclick="mainOut()"><a>메인으로</a></li>
                 <a href="/qna/write" class="writeBtn">글쓰기</a>
             </ul>
         </nav>
+
+        <div class="boardNews" th:if="${notice != null}">
+            <ul th:each="notice : ${notice}">
+                <li class="articleNotice" onclick="toggle(this)">
+                    <span class="tag">공지</span>
+                    <a class="title" onclick="toggle(this)">
+                        <input type="hidden" th:value="${notice.noticeSeq}" class="noticeSeq">
+                        <span th:text="${notice.noticeTitle}"></span>
+                    </a>
+                    <span class="date">날짜 : [[${notice.noticeWriteDate}]]</span>
+                    <div class="hidden">
+                        <img src="" class="noticeSysName" style="width: 500px">
+                        <div class="noticeContent" contenteditable="false" th:utext="${notice.noticeContents}">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="listNum">
+                <div th:utext="${pageNavi}"></div>
+            </div>
+        </div>
 
         <div class="boardQna" th:if="${qna != null}">
             <ul th:each="qna : ${qna}">
@@ -64,24 +85,6 @@
                         <a href="" class="downloadFiles" style="color: blue"></a>
                         <p class="qnaCmt">답변 : </p>
                         <a href="" class="deleteBtn">삭제</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div class="boardNews" th:if="${notice != null}">
-            <ul th:each="notice : ${notice}">
-                <li class="articleNotice" onclick="toggle(this)">
-                    <span class="tag">공지</span>
-                    <a class="title" onclick="toggle(this)">
-                        <input type="hidden" th:value="${notice.noticeSeq}" class="noticeSeq">
-                        <span th:text="${notice.noticeTitle}"></span>
-                    </a>
-                    <span class="date">날짜 : [[${notice.noticeWriteDate}]]</span>
-                    <div class="hidden">
-                        <img src="" class="noticeSysName" style="width: 500px">
-                        <div class="noticeContent" contenteditable="false" th:utext="${notice.noticeContents}">
-                        </div>
                     </div>
                 </li>
             </ul>

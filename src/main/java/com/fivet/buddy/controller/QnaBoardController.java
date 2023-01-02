@@ -49,12 +49,20 @@ public class QnaBoardController {
 
     //고객센터 메인으로
     @RequestMapping("main")
-    public String select(Model model) throws Exception {
+    public String select(int cpage ,Model model) throws Exception {
         int qnaWriter = (int) session.getAttribute("memberSeq");
-        List<NoticeBoardDTO> noticeDto = noticeBoardService.selectNotice();
+        int rcpp = 10; // RecordCountPerPage
+        int ncpp = 10; // NaviCountPagePage
+        int rtc = noticeBoardService.totalCount(); // RecodeTotalCount
+        Map<String, Integer> param = new HashMap<>();
+        param.put("start", (cpage-1)*rcpp+1);
+        param.put("end", cpage*rcpp);
+        List<NoticeBoardDTO> noticeBoardList = noticeBoardService.selectNoticePage(param);
         List<QnaBoardDTO> qnaDto = qnaBoardService.select(qnaWriter);
+        String pageNavi = new PageNavi().getPageNaviAll(cpage, rcpp, ncpp, rtc, "/qna/main", "cpage");
         model.addAttribute("qna", qnaDto);
-        model.addAttribute("notice", noticeDto);
+        model.addAttribute("notice", noticeBoardList);
+        model.addAttribute("pageNavi", pageNavi);
         return "customer/customer";
     }
 

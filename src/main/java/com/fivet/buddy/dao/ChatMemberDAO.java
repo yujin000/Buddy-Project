@@ -23,4 +23,7 @@ public class ChatMemberDAO {
     public List<ChatMemberDTO> selectChatMember(int chatRoomSeq){
         return chatMemberMapper.selectChatMember(chatRoomSeq);
     }
+
+    //채팅방 삭제
+    public void delChatRoom (int chatRoomSeq) { chatMemberMapper.delChatRoom(chatRoomSeq); }
 }

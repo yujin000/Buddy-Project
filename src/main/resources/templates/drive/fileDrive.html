@@ -74,16 +74,27 @@
                 </div>
                 <div id="chatList" class="asideItem">
                     <ul>
-                        <li>팀 공유 리스트 </li>
+                        <div th:if="${#strings.isEmpty(teamList)}">
+                            아직 팀이 없습니다.
+                        </div>
+                        <div th:unless="${#strings.isEmpty(teamList)}">
+                            <th:block th:each="team : ${teamList}">
+                                <div>
+                                    <i class="fa-solid fa-chevron-right arrowBtn" arrowType="right"></i>
+                                    <li th:text="${team.getPersonalFolderName()}" class="sideList" th:data-folder="${team.getPersonalFolderKey()}" data-resource-type="team"></li><br>
+                                    <ul class="sub"></ul>
+                                </div>
+                            </th:block>
+                        </div>
                     </ul>
                 </div>
             </div>
 
             <div class="asideTool">
-                <p>내 사용량</p>
-                <p th:data-volume="${myVolume}" id="myVolume"></p>
-                <div id="volumeLog">
-                    <div id="volumeBar"></div>
+                <p>내 Drive 사용량</p>
+                <p th:data-volume="${myVolume}" class="myVolume"></p>
+                <div class="volumeLog">
+                    <div class="volumeBar"></div>
                 </div>
             </div>
         </aside>
@@ -133,7 +144,7 @@
                                 <th:block th:each="folder : ${myFolders}">
                                     <li data-resource-type="folder">
                                         <input type="checkbox" class='check' th:data-key="${folder.getPersonalFolderKey()}" data-resource-type="folder" th:data-name="${folder.getPersonalFolderName()}"th:data-folder-key="0">
-                                        <img src='/static/img/folderImg.png' class="thisFolder" th:data-folder="${folder.getPersonalFolderKey()}">
+                                        <img src='/static/img/folderImg.png' class="thisFolder" th:data-folder="${folder.getPersonalFolderKey()}" th:data-resource-type="${folder.getPersonalFolderType()}">
                                         <input type='text' class="printFolderName" th:value='${folder.getPersonalFolderName()}' th:id="${'folder' + folder.getPersonalFolderKey()}" disabled>
                                         <th:block th:if="${#strings.equals(folder.getPersonalFolderShared(),'Y')}">
                                             <button type="button" class="shareUrl" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유 중단</button>
@@ -263,7 +274,7 @@
                 }).done(function(rsp){
                     // rsp : true(사용할 수 있음), false(사용할 수 없음)
                     if(!rsp) {
-                        alert("개인 드라이브 내에 이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
+                        alert("이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
                         modifyText.attr("disabled",false).css("color","red");
                     }else{
                         location.reload();
@@ -578,6 +589,7 @@
             let container = $("<div>");
 
             let parentFolderKey = $(this).next("li").data("folder");
+            let type = $(this).next("li").data("resource-type");
 
             $.ajax({
                 url : "/drive/getKey?parentFolderKey="+parentFolderKey
@@ -587,8 +599,16 @@
                         let div = $("<div>");
                         let li = $("<li>");
                         let i = $("<i>").addClass("fa-solid fa-chevron-right arrowBtn newer").attr("arrowType","right");
-                        let list = $("<li>").addClass("sideList").attr("data-folder",value.personalFolderKey).attr("data-resource-type","folder").html(value.personalFolderName);
+                        let list = $("<li>").addClass("sideList").attr("data-folder",value.personalFolderKey).html(value.personalFolderName);
                         let ul = $("<ul>").addClass("sub");
+
+                        if(type == "folder"){
+                            list.attr("data-resource-type","folder");
+                        }else if(type == "team"){
+                            list.attr("data-resource-type","team");
+                        }else{
+                            list.attr("data-resource-type","folder");
+                        }
 
                         $.ajax({
                             url : "/drive/subIsExist?folderKey="+value.personalFolderKey
@@ -626,10 +646,13 @@
     })
 
     $(document).on("click",".sideList",function(){
+        let folderData = $(this).data("folder");
         let thisType = $(this).data("resource-type");
+
         if(thisType == "folder"){
-            let folderData = $(this).data("folder");
             location.href = "/drive/detailDrive?resourceKey="+folderData;
+        }else if(thisType == "team"){
+            location.href = "/drive/detailDrive?resourceKey="+folderData+"&teamAccess=true";
         }
     })
 </script>
@@ -703,14 +726,14 @@
 <!-- 데이터 사용량 -->
 <script>
     $(function(){
-        const myVolume = $('#myVolume').data('volume').toString();
+        const myVolume = $('.myVolume').data('volume').toString();
         const divide = (myVolume / 1000000).toString();
         const volumeLength = divide.slice(0,4);
         const result = volumeLength + ' MB / 100.00 MB';
-        const volumeBar = $('#volumeBar');
+        const volumeBar = $('.volumeBar');
 
         volumeBar.css("width",volumeLength*2);
-        $('#myVolume').html(result);
+        $('.myVolume').html(result);
     })
 </script>
 

@@ -24,6 +24,9 @@ public class ChatMemberDAO {
         return chatMemberMapper.selectChatMember(chatRoomSeq);
     }
 
+    //채팅방 삭제
+    public void delChatRoom (int chatRoomSeq) { chatMemberMapper.delChatRoom(chatRoomSeq); }
+
     //채팅방 멤버 프로필 이미지
     public String selectChatMemberImg(int memberSeq, int chatRoomSeq){
         return chatMemberMapper.selectChatMemberImg(memberSeq,chatRoomSeq);

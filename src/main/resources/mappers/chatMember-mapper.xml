@@ -23,6 +23,16 @@
         end, c.member_seq asc
     </select>
 
+    <!--    채팅방 삭제에 따른 채팅방 회원 목록 삭제-->
+    <delete id="delChatRoom">
+        delete from chat_member where chat_room_seq = #{value}
+    </delete>
+
+    <!--    회원 채팅방 나가기-->
+    <delete id="delChatMember">
+        delete from chat_member where chat_room_seq = #{chatRoomSeq} and member_seq = #{memberSeq}
+    </delete>
+
     <!-- 채팅방 멤버 프로필 이미지 -->
     <select id="selectChatMemberImg" resultType="com.fivet.buddy.dto.MemberImgDTO  ">
     select * from member_img m inner join chat_member c on m.member_img_member_seq=c.member_seq where c.member_seq = #{memberSeq} and c.chat_room_seq = #{chatRoomSeq};

@@ -51,6 +51,9 @@ public class ChatMemberService {
         return chatMemberDao.selectChatMember(chatRoomSeq);
     }
 
+    //채팅방 삭제
+    public void delChatRoom(int chatRoomSeq) { chatMemberDao.delChatRoom(chatRoomSeq);}
+
     //채팅방 멤버 프로필 이미지
     public String selectChatMemberImg(int memberSeq, int chatRoomSeq){
         return chatMemberDao.selectChatMemberImg(memberSeq,chatRoomSeq);

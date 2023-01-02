@@ -97,7 +97,7 @@ public class MemberController {
 
     // 회원가입 아이디 체크
     @ResponseBody
-    @RequestMapping(value="idCheck",produces = "text/html;charest=utf8")
+    @RequestMapping(value="idCheck",produces = "text/html;charset=utf8")
     public String idCheck(String id ) throws Exception{
         boolean result = memberService.idCheck(id);
         return String.valueOf(result);

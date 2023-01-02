@@ -53,4 +53,5 @@ public class ChatRoomDAO {
 
     // 일반채팅방 개설
     public void insertNormalChat(ChatRoomDTO chatRoomDto) { chatRoomMapper.insertNormalChat(chatRoomDto); }
+    public void delChatRoom(int chatRoomSeq) { chatRoomMapper.delChatRoom(chatRoomSeq);}
 }

@@ -19,7 +19,7 @@
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 <body>
-<div class="moblieView">
+<div class="mobileView">
   <div class="logo">
     <a href="">
       <img src="" alt="" />
@@ -83,10 +83,10 @@
       contentType: false,
       enctype: 'multipart/form-data',
       processData: false,
-      success: function(imgUrl) {
-        $(el).summernote('editor.insertImage', imgUrl);
-      }
-    });
+      success: function(sysName) {
+          $(el).summernote('editor.insertImage', sysName);
+        }
+    })
   }
 
   $("#toAdminNotice").on("click",function (){

@@ -223,7 +223,7 @@ hr {
     display: flex;
 }
 
-.moblieView {
+.mobileView {
     display: none;
 }
 
@@ -236,7 +236,7 @@ hr {
         display: none;
     }
 
-    .moblieView {
+    .mobileView {
         height: 100%;
         display: block;
         position: relative;

@@ -67,4 +67,7 @@ public class ChatRoomService {
     // 채팅방 삭제
     public void delChatRoom (int chatRoomSeq) { chatRoomDao.delChatRoom(chatRoomSeq); }
 
+    // 채팅방 이름 변경
+    public void updateChatTitle (ChatRoomDTO chatRoomDto) { chatRoomDao.updateChatTitle(chatRoomDto); }
+
 }

@@ -94,7 +94,12 @@
           <ul th:if="${chatRoomList!=null}">
             <th:block th:each="chatRoomList : ${chatRoomList}">
             <li>
-              <a th:href="@{/chatRoom/join/(chatRoomSeq=${chatRoomList.chatRoomSeq})}" th:text="${chatRoomList.chatTitle}"></a>
+              <a th:href="@{/chatRoom/join/(chatRoomSeq=${chatRoomList.chatRoomSeq})}"
+                 th:text="${chatRoomList.chatTitle}"></a>
+              <button th:if="${#strings.equals(chatRoomList.chatType,'normal')}"
+                      class="chatRename" th:data-index="${chatRoomList.chatRoomSeq}">
+                이름변경
+              </button>
             </li>
             </th:block>
           </ul>
@@ -321,6 +326,8 @@
           data: JSON.stringify({
             "chatTitle" : $("#makeChatTitle").val(),
             "makeChat": makeChatMember
+          }).done(function (resp) {
+            location.reload();
           })
         })
       }
@@ -329,10 +336,7 @@
 
     // 토픽 이름 변경 이벤트
     $(".topicRename").click(function (){
-        // let chatRoomSeq = $(this).attr("data-index");
-        // $.ajax({
-        //     url:"chatRoom/"
-        // })
+        $("#modifyTitleConfirm").attr("data-index", $(this).attr("data-index"));
     })
 
     //이름 변경 취소 버튼 이벤트
@@ -343,7 +347,19 @@
 
     //이름 변경 클릭 이벤트
     $("#modifyTitleConfirm").click(function (){
-      // $.ajax()
+      let chatRoomSeq = $(this).attr("data-index");
+      $.ajax({
+        url:"/chatRoom/updateChatTitle",
+        type:"post",
+        data:{
+          "chatRoomSeq" : chatRoomSeq,
+          "chatTitle" : $("#modifyChatTitle").val()
+        }
+      }).done(function (resp) {
+        console.log(resp);
+        alert("변경 완료.");
+        location.reload();
+      })
     })
 
     //토픽 삭제 이벤트
@@ -354,7 +370,6 @@
           url: "/chatRoom/delChatRoom",
           data: {"chatRoomSeq" : $(this).attr("data-index")}
         }).done(function (resp){
-            console.log(resp);
             alert("삭제완료!");
            location.reload();
         });

@@ -121,5 +121,12 @@ public class ChatRoomController {
         return String.valueOf(chatRoomSeq);
     }
 
+    // 채팅방 제목 변경
+    @ResponseBody
+    @PostMapping("updateChatTitle")
+    public String updateChatTitle(ChatRoomDTO chatRoomDto) {
+        chatRoomService.updateChatTitle(chatRoomDto);
+        return String.valueOf(chatRoomDto.getChatRoomSeq());
+    }
 
 }

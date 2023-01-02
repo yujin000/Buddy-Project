@@ -53,6 +53,10 @@ public class ChatRoomDAO {
 
     // 일반채팅방 개설
     public void insertNormalChat(ChatRoomDTO chatRoomDto) { chatRoomMapper.insertNormalChat(chatRoomDto); }
+
+    // 토픽, 일반채팅방 삭제
     public void delChatRoom(int chatRoomSeq) { chatRoomMapper.delChatRoom(chatRoomSeq);}
+
+    // 일반채팅방 제목 변경
     public void updateChatTitle(ChatRoomDTO chatRoomDto) { chatRoomMapper.updateChatTitle(chatRoomDto); }
 }

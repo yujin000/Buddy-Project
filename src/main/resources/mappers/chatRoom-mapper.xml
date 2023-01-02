@@ -49,7 +49,7 @@
 
     <!--    채팅방 인원 추가시, 채팅방 인원수 +1-->
     <update id="updatePlusMemberCount">
-        update team set member_count = member_count+1 where chat_room_seq = #{chatRoomSeq}
+        update chat_room set member_count = member_count+1 where chat_room_seq = #{chatRoomSeq}
     </update>
 
     <!--    토픽 생성-->
@@ -79,5 +79,36 @@
     <select id="countTopic" resultType="int">
         select count(*) from chat_room where chat_type='topic' and team_seq=#{value}
     </select>
+
+    <!-- 일반 채팅방 개설  -->
+    <insert id="insertNormalChat">
+        insert into
+        chat_room
+        values
+        (chat_room_seq.nextval, #{teamSeq}, #{chatTitle}, #{roomOwnerSeq}, 'normal', #{memberCount}, sysdate)
+        <selectKey order="AFTER" keyProperty="chatRoomSeq" resultType="int">
+            select chat_room_seq.currval from dual
+        </selectKey>
+    </insert>
+
+    <!-- 채팅방 삭제   -->
+    <delete id="delChatRoom">
+        delete from chat_room where chat_room_seq = #{value}
+    </delete>
+
+    <!--    채팅방 이름 변경-->
+    <update id="updateChatTitle">
+        update chat_room set chat_room_title = #{chatRoomTitle} where chat_room_seq = #{chat_room_seq}
+    </update>
+
+    <!--    회원 채팅방 나간경우, 인원수 1 감소-->
+    <update id="deleteChatMember">
+        update chat_room set member_count = member_count -1 where chat_room_seq = #{value}
+    </update>
+
+    <!--    회원 채팅방 초대시, 인원수 1 증가-->
+    <update id="updateChatMemberCount">
+        update chat_room set member_count = member_count +1 where chat_room_seq = #{value}
+    </update>
 
 </mapper>

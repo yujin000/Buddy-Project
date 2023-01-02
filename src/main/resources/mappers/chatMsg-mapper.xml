@@ -36,4 +36,9 @@
             1
     </select>
 
+    <!--    채팅방 삭제에 따른 메세지 삭제-->
+    <delete id="delChatRoom">
+        delete from chat_msg where chat_room_seq = #{value}
+    </delete>
+
 </mapper>

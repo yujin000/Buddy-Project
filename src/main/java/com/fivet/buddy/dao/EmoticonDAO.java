@@ -13,11 +13,18 @@ public class EmoticonDAO {
     @Autowired
     private EmoticonMapper emoticonMapper;
 
+    //이모티콘 추가
     public void insertEmoticon(EmoticonDTO emoticonDto) throws Exception{
         emoticonMapper.insertEmoticon(emoticonDto);
     }
 
+    //이모티콘 출력
     public List<EmoticonDTO> selectEmoticon() throws Exception{
         return emoticonMapper.selectEmoticon();
+    }
+
+    //이모티콘 삭제
+    public void deleteEmoticon(int emoticonSeq){
+        emoticonMapper.deleteEmoticon(emoticonSeq);
     }
 }

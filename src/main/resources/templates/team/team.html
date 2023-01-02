@@ -16,6 +16,7 @@
   <script src="/static/js/jQueryCheck.js"></script>
 </head>
 <body>
+<input type="hidden" th:value="${session.memberSeq}" id="session.memberSeq">
 <div class="wrap">
   <div class="header">
     <div class="logo">
@@ -74,7 +75,11 @@
         </div>
         <div id="topicList" class="asideItem">
           <ul th:each="topicList : ${topicList}">
-            <li><a th:href="@{/chatRoom/join/(chatRoomSeq=${topicList.chatRoomSeq})}">[[${topicList.chatTitle}]]</a></li>
+            <li>
+                <a th:href="@{/chatRoom/join/(chatRoomSeq=${topicList.chatRoomSeq})}">[[${topicList.chatTitle}]]</a>
+                <button type="button" class="topicRename" th:data-index="${topicList.chatRoomSeq}">이름변경</button>
+                <button type="button" class="topicDel" th:data-index="${topicList.chatRoomSeq}">토픽 삭제</button>
+            </li>
           </ul>
         </div>
       </div>
@@ -108,33 +113,9 @@
       <div class="chatHeader">
         <h1>team-list</h1>
         <input type="search" placeholder="검색" id="searchMsg" />
-        <button id="memberView">멤버</button>
       </div>
       <div class="msgView">
         <div id="subSection">
-          <ul id="memberList" class="subItem">
-            <h1>member</h1>
-            <li>
-              <img src="" alt="" />
-              <span>이름</span>
-              <span>직책</span>
-            </li>
-            <li>
-              <img src="" alt="" />
-              <span>이름</span>
-              <span>직책</span>
-            </li>
-            <li>
-              <img src="" alt="" />
-              <span>이름</span>
-              <span>직책</span>
-            </li>
-            <li>
-              <img src="" alt="" />
-              <span>이름</span>
-              <span>직책</span>
-            </li>
-          </ul>
 
           <ul id="resultList" class="subItem">
             <h1>검색결과</h1>
@@ -144,6 +125,9 @@
             <li>4</li>
           </ul>
         </div>
+        <input type="text" id="modifyChatTitle" placeholder=" 토픽/채팅방 제목변경">
+        <button type="button" id="modifyTitleConfirm">변경하기</button>
+        <button type="button" id="modifyCancel">취소</button>
 <!--        <div class="msg">Msg</div>-->
       </div>
       <div class="msgSend">
@@ -156,7 +140,7 @@
           />
         <div class="msgTool">
           <ul>
-            <li><button id="test" onclick="clickevnet()">1</button></li>
+            <li><button id="test" onclick="clickevent()">1</button></li>
             <li><button>2</button></li>
             <li><button>3</button></li>
             <li><button>4</button></li>
@@ -186,11 +170,11 @@
     <form action="" class="chatForm">
       <h1>😀채팅 시작하기</h1>
     <ul class="list" id="chatMemberUl">
-      <li><input type="text" placeholder="채팅방 이름"></li>
+      <li><input type="text" placeholder="채팅방 이름" id="makeChatTitle"></li>
 <!--    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>-->
     </ul>
-    <button type="submit" >대화 시작하기</button>
-    <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
+    <button type="button" id="startChat">대화 시작하기</button>
+    <button type="button" class="closeBtn" id="closeBtn" onclick="closer(this)">취소</button>
     </form>
 
     <form action="/chatRoom/insertTopic" id="form" class="topicForm" method="post">
@@ -215,6 +199,7 @@
       }
     }).done(function (rsp){
       let JsonTeamMemberList = JSON.parse(rsp);
+      //팀 화면에서 팀 목록을 출력
       for (let i=0; i<JsonTeamMemberList.length; i++) {
         let teamMemberListLi = $("<li>");
         let teamMemberListImg = $("<img>");
@@ -229,10 +214,14 @@
         $("#teamMemberList").append(teamMemberListLi);
       }
       for (let i=0; i<JsonTeamMemberList.length; i++) {
+        //채팅방 만들기에서 팀 목록을 출력
         let chatMemberLi = $("<li>");
         let chatMemberImg = $("<img>");
         let chatMemberSpan1 = $("<span>");
         let chatMemberSpan2 = $("<span>");
+        chatMemberLi.addClass("makeTeamMember");
+        chatMemberLi.attr("data-checked", "false");
+        chatMemberLi.attr("data-memberSeq", JsonTeamMemberList[i].memberSeq);
         chatMemberImg.attr("src",JsonTeamMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonTeamMemberList[i].memberImgSysName);
         chatMemberLi.append(chatMemberImg);
         chatMemberSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
@@ -297,6 +286,85 @@
 </script>
 
 <script>
+  // 채팅방 생성관련 작업
+  let makeChat = new Set();
+  $(function () {
+    $(document).on("click", ".makeTeamMember", function () {
+      if ($(this).attr("data-checked")=="false") {
+        $(this).css("background-color", "yellow");
+        $(this).attr("data-checked", true);
+        makeChat.add($(this).attr("data-memberSeq"));
+      } else {
+        $(this).css("background-color", "white");
+        $(this).attr("data-checked", false);
+        makeChat.delete($(this).attr("data-memberSeq"));
+      }
+    })
+
+    // 취소버튼 클릭시 새채팅방 후보 회원 초기화
+    $("#closeBtn").on("click", function () {
+      makeChat.clear();
+    })
+
+    // 시작하기 버튼 클릭 이벤트
+    $("#startChat").on("click", function (){
+      if (makeChat.size==0) {
+        alert("채팅방 멤버는 1인 이상의 타 회원이 포함되어야합니다.");
+      } else {
+        console.log(makeChat);
+        let makeChatMember = Array.from(makeChat);
+        console.log(makeChatMember);
+        $.ajax({
+          type:"post",
+          url:"/chatRoom/insertChat",
+          contentType:'application/json',
+          data: JSON.stringify({
+            "chatTitle" : $("#makeChatTitle").val(),
+            "makeChat": makeChatMember
+          })
+        })
+      }
+
+    })
+
+    // 토픽 이름 변경 이벤트
+    $(".topicRename").click(function (){
+        $("#modifyChatTitle").attr("data-index", $(this).attr("data-index"));
+        $.ajax({
+
+        })
+    })
+
+    //이름 변경 취소 버튼 이벤트
+    $("#modifyCancel").click(function (){
+      $("#modifyChatTitle").attr("data-index", "");
+      $("#modifyChatTitle").val("");
+    })
+
+    //이름 변경 클릭 이벤트
+    $("#modifyTitleConfirm").click(function (){
+      // $.ajax()
+    })
+
+    //토픽 삭제 이벤트
+    $(".topicDel").click(function () {
+      if (confirm("정말 삭제하시겠습니까?")) {
+        $.ajax({
+          type : "post",
+          url: "/chatRoom/delChatRoom",
+          data: {"chatRoomSeq" : $(this).attr("data-index")}
+        }).done(function (resp){
+            console.log(resp);
+            alert("삭제완료!");
+           location.reload();
+        });
+      }
+    })
+
+  })
+</script>
+
+<script>
   $(document).ready(function () {
     $("#headerToggle").click(function () {
       $("#dropdownList").toggle();
@@ -326,10 +394,6 @@
         $("#resultList").toggle();
         $("#memberList").css("display", "none");
       }
-    });
-
-    $("#memberView").click(function () {
-      $("#memberList").toggle();
     });
 
     $("#alarmView").click(function () {

@@ -13,4 +13,9 @@
     <select id="selectEmoticon" resultType="com.fivet.buddy.dto.EmoticonDTO">
         select * from emoticon
     </select>
+
+    <!-- 이모티콘 삭제 -->
+    <delete id="deleteEmoticon">
+        delete from emoticon where emoticon_seq= #{value}
+    </delete>
 </mapper>

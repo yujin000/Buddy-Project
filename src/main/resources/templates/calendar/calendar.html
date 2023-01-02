@@ -56,7 +56,7 @@
                     const location = arg.event.extendedProps.location;
                     const color = arg.event._def.ui.backgroundColor;
 
-
+                    console.log(color);
                     $("#form").css("display", "block");
                     $(".btns").css("display", "block");
                     $("#eventSeq").removeAttr("disabled");
@@ -117,7 +117,6 @@
                         return iso.substring(0, 16);
                     }
 
-
                     let startFormat = timezoneFormat(start);
                     let endFormat = dateFormat(end);
 
@@ -135,8 +134,9 @@
                     $("#eventWriter").attr("type", "hidden");
                     $("#eventLocation").val("");
                     $("#eventMemo").val("");
-                    $("#eventColor").val("purple");
-                    $("#eventColor").css("background-color", "purple");
+                    const defaultColor = "#8621F7";
+                    $("#eventColor").val(defaultColor);
+                    $("#eventColor").css("background-color", "#8621F7");
 
 
                     // month view 가 true 일 때만, date 값을 조정
@@ -169,13 +169,18 @@
                     $("#eventWriter").attr("type", "hidden");
                     $("#eventLocation").val("");
                     $("#eventMemo").val("");
-                    $("#eventColor").val("purple");
-                    $("#eventColor").css("background-color", "purple");
                 },
-
+                // events : [
+                //     {
+                //         id: 'a',
+                //         title: 'my event',
+                //         start: '2023-01-02',
+                //         color: '#8621F7'
+                //     }
+                //
+                // ]
                 // events object 이벤트 객체 [일정의 데이터가 담기는 공간 json 타입]
                 events: function (info, successCallback) {
-
                     $.ajax({
                         url: "/calendar/selectAll",
                         success: function (resp) {
@@ -220,11 +225,14 @@
     </script>
 
     <link rel="stylesheet" href="/static/css/calendar.css">
-    <title>캘린더 테스트</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <title>buddy 캘린더</title>
 </head>
 <body onload="winResize(this)">
 <div class="header">
-    캘린더
+    <h1><span>buddy&nbsp;</span>캘린더</h1>
     <div class="headerBtns">
         <button onclick="location.href='/calendar/goTeam'" class="calType" id="goTeam">
             팀
@@ -232,7 +240,7 @@
         <button onclick="location.href='/calendar/goPrivate'" class="calType" id="goPrivate">
             개인
         </button>
-        <button onclick="location.href='/calendar/moveCalendar'" class="calType" id="goAll">
+        <button onclick="location.href='/calendar/moveCalendar'" class="calType checked" id="goAll">
             전체
         </button>
 
@@ -252,22 +260,22 @@
 
                 <form action="/calendar/insertEvent" id="form" method="post">
                     <select name="eventColor" id="eventColor" class="eventSelect" onchange="selectColor(value)" data-placeholder="색상">
-                        <option value="purple" style="background: purple" id="teamColor"></option>
-                        <option value="blue" id="blue" style="background: blue"></option>
-                        <option value="red" id="red" style="background: red"></option>
-                        <option value="green" id="green" style="background: green"></option>
-                        <option value="black"  id="black" style="background: black"></option>
+                        <option value="#8621F7" style="background: #8621F7" id="teamColor"></option>
+                        <option value="#2CADF5" id="blue" style="background: #2CADF5"></option>
+                        <option value="#FF5C00" id="red" style="background: #FF5C00"></option>
+                        <option value="#06C102" id="green" style="background:#06C102"></option>
+                        <option value="#545454"  id="black" style="background: #545454"></option>
                     </select>
                     <select name="eventType" id="eventType" class="eventSelect" >
                         <option value="팀">팀 캘린더</option>
                         <option value="개인">개인 캘린더</option>
                     </select>
                     <input type="hidden"  id="eventSeq" placeholder="seq" readonly disabled >
-                    <input type="text" name="eventName" id="eventName" placeholder="제목">
+                    <input type="text" name="eventName" id="eventName" placeholder="제목 (특수문자 사용불가)">
                     <input type="hidden"  id="eventWriter" placeholder="작성자" readonly disabled>
                     <input type="datetime-local" name="eventStart" id="eventStart"  data-placeholder="시작날짜"  required aria-required="true">
                     <input type="datetime-local" name="eventEnd" id="eventEnd"  data-placeholder="마감날짜" placeholder=""  required aria-required="true">
-                    <input type="text" name="eventLocation" id="eventLocation" placeholder="장소">
+                    <input type="text" name="eventLocation" id="eventLocation" placeholder="장소 (특수문자 사용불가)">
                     <textarea name="eventMemo" id="eventMemo" cols="30" rows="10" placeholder="메모"></textarea>
                     <button type="submit" id="submitBtn" class="modalBtn">
                         완료
@@ -289,6 +297,41 @@
 
 
 </div>
+<script>
+    // 유효성 검사
+    const eventNameRegex = /^[0-9a-zA-Zㄱ-힣]{0,20}$/;
+    const eventLocationRegex = /^[0-9a-zA-Zㄱ-힣]{0,20}$/;
+    const eventMemoRegex = /^[0-9a-zA-Zㄱ-힣\{\}\[\]\/?.,;:\|\)*~`!^\-_+\<\>@\#$%&\\\=\(\'\"  ]{0,500}$/m;
+
+    $("#eventName").keyup(function (){
+        let result = eventNameRegex.test(this.value);
+        if (!result){
+            alert("일정 제목은 20자 내로 작성해주세요!😥");
+            this.value = "";
+        }
+    })
+
+    $("#eventLocation").keyup(function (){
+        let result = eventLocationRegex.test(this.value);
+        if (!result){
+            alert("일정 장소는 20자 내로 작성해주세요!😥");
+            this.value = "";
+        }
+    })
+
+    $("#eventMemo").keyup(function (){
+        let result = eventMemoRegex.test(this.value);
+        if (!result){
+            alert("일정 메모는 500자 내로 작성해주세요!😥");
+            this.value = "";
+        }else {
+            $(this).val().replace("<", "&lt;");
+        }
+    })
+
+
+
+</script>
 <script >
 
 
@@ -303,6 +346,12 @@
             $("#form").toggle();
             $(".btns").toggle();
         });
+        // 모바일로 접속시 캘린더 종료
+        let windowWidth = window.innerWidth;
+        if (windowWidth < 981) {
+            alert("캘린더 는 모바일 화면을 지원하지 않습니다.");
+            window.close();
+        }
 
     })
 
@@ -357,8 +406,10 @@
         let eventEnd =$("#eventEnd").val();
         let eventLocation =$("#eventLocation").val();
         let eventMemo =$("#eventMemo").val();
-        let eventColor =$("#eventColor").val();
+        let eventColor = document.querySelector("#eventColor").value;
         const writer = document.querySelector("#eventWriter").value;
+
+        console.log(eventColor);
 
         // 타입이 팀 이라면
         if(type === "팀"){
@@ -370,7 +421,7 @@
                     +"&eventEnd="+eventEnd
                     +"&eventLocation="+eventLocation
                     +"&eventMemo="+eventMemo
-                    +"&eventColor="+eventColor
+                    +"&eventColor="+encodeURIComponent(eventColor)
                     +"&eventWriter="+writer;
             }
 
@@ -383,19 +434,16 @@
                     +"&eventEnd="+eventEnd
                     +"&eventLocation="+eventLocation
                     +"&eventMemo="+eventMemo
-                    +"&eventColor="+eventColor
+                    +"&eventColor="+encodeURIComponent(eventColor)
                     +"&eventWriter="+writer;
             }
         }
 
     }
-
+    // evnetColor 값이 onchange 시 value 에 따라 배경색상 부여
     function selectColor(arg) {
-        $("#eventColor").css("background-color",arg);
+        $("#eventColor").css("background",arg);
     }
-
-
-
 
 </script>
 </body>

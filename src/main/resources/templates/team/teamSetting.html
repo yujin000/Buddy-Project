@@ -128,6 +128,14 @@
     </div>
   </div>
 
+  <div class="modal3">
+    <div class="modalWrap3">
+      <h1>😢</h1>
+      <h3 id="h3_3"></h3>
+      <button class="okayBtn">확인</button>
+    </div>
+  </div>
+
   <strong><a href="/member/loginIndex" id="loginIndex">뒤로가기</a></strong>
   <th:block th:if="${teamDto.getTeamOwnerSeq==sessionMemberSeq}">
   <form action="/team/deleteTeam" id="deleteTeam" method="post">
@@ -143,18 +151,27 @@
   let yesNo;
   let okNo;
   let memberSeq;
-  let teamSeq;
-
+  let teamSeq=$("#teamSeqHidden").val();
+  let subManagerCount;
   //매니저는 자기 등급 변경 불가능
   $(function (){
     $(".gradeBtn").eq(0).attr("disabled",true);
+
+    $.ajax({
+      url:"/team/SubManagerMemberCount",
+      data:{"teamSeq":teamSeq},
+      success: function () {
+      }, error: function () {
+      }
+    }).done(function (rsp) {
+      subManagerCount=rsp;
+    })
   })
 
   // modal 열림 함수 ( 등급 변경 창 )
   $(".gradeBtn").on("click",function (){
     $(".modal").css("display","block");
     memberSeq=$(this).data("memberseq");
-    teamSeq=$(this).data("teamseq");
     thisNickName=$(this).data("nick-name");
     oriGrade = $(this).text();
     $("#h3").html(thisNickName +"님의 등급을 <br/> 어떻게 변경할까요?");
@@ -169,40 +186,43 @@
   })
 
   //'예' 누르면 등급 변경 되는 ajax
-  $(".yesNoBtn").on("click",function () {
-    yesNo = $(this).text();
-    let enGrade = changeGrade;
-    if (yesNo == "예") {
-      $.ajax({
-        url: "/team/updateTeamMemberGrade",
-        data: {
-          "grade": enGrade,
-          "memberSeq": memberSeq,
-          "teamSeq":teamSeq
-        },
-        type:"post",
-        success: function () {
-        }, error: function () {
-        }
-      }).done(function () {
-        location.reload();
-        if(changeGrade=="매니저"){
-          location.href="/member/loginIndex"
-        }else {
-          $(".modal1").css("display", "none");
-        }
-      })
-    }  else {
-      $(".modal1").css("display", "none");
-    }
-  })
+  if(subManagerCount<=2) {
+    $(".yesNoBtn").on("click", function () {
+      yesNo = $(this).text();
+      let enGrade = changeGrade;
+      if (yesNo == "예") {
+        $.ajax({
+          url: "/team/updateTeamMemberGrade",
+          data: {
+            "grade": enGrade,
+            "memberSeq": memberSeq,
+            "teamSeq": teamSeq
+          },
+          type: "post",
+          success: function () {
+          }, error: function () {
+          }
+        }).done(function () {
+          location.reload();
+          if (changeGrade == "매니저") {
+            location.href = "/member/loginIndex"
+          } else {
+            $(".modal1").css("display", "none");
+          }
+        })
+      } else {
+        $(".modal1").css("display", "none");
+      }
+    })
+  }else{
+
+  }
 
   // modal2 열림 함수 ( 팀원 강퇴 )
   $(".delBtn").on("click",function (){
     $(".modal2").css("display","block");
     memberSeq=$(this).data("memberseq");
     thisNickName=$(this).data("nick-name");
-    teamSeq=$(this).data("teamseq");
     $("#h3_2").html(thisNickName +"님을 강퇴 시키겠습니까?");
   })
 

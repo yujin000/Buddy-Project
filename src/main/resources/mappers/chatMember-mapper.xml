@@ -12,4 +12,24 @@
             (#{chatRoomSeq}, #{memberSeq}, #{teamSeq}, sysdate, sysdate)
     </insert>
 
+    <!-- 채팅방 멤버 출력 -->
+    <select id="selectChatMember" resultType="com.fivet.buddy.dto.ChatMemberListDTO">
+        select * from chat_member c inner join member_img i on c.member_seq=i.member_img_member_seq
+        join team_member t on c.member_seq=t.member_seq
+        where c.chat_room_seq= #{value}
+        order by case when t.grade='매니저' then 1
+        when t.grade='부매니저' then 2
+        when t.grade='팀원' then 3
+        end, c.member_seq asc
+    </select>
+
+    <!--    채팅방 삭제에 따른 채팅방 회원 목록 삭제-->
+    <delete id="delChatRoom">
+        delete from chat_member where chat_room_seq = #{value}
+    </delete>
+
+    <!--    회원 채팅방 나가기-->
+    <delete id="delChatMember">
+        delete from chat_member where chat_room_seq = #{chatRoomSeq} and member_seq = #{memberSeq}
+    </delete>
 </mapper>

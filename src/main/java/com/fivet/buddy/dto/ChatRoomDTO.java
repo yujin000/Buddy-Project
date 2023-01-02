@@ -16,7 +16,7 @@ public class ChatRoomDTO {
     private int chatRoomSeq;
     private String chatTitle;
     private int teamSeq;
-    private int RoomOwnerSeq;
+    private int roomOwnerSeq;
     private String chatType;
     private int memberCount;
     private Timestamp chatMadeTime;

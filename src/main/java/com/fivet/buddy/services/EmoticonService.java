@@ -21,4 +21,9 @@ public class EmoticonService {
     public List<EmoticonDTO> selectEmoticon() throws Exception{
         return emoticonDAO.selectEmoticon();
     }
+
+    //이모티콘 삭제
+    public void deleteEmoticon(int emoticonSeq){
+        emoticonDAO.deleteEmoticon(emoticonSeq);
+    }
 }

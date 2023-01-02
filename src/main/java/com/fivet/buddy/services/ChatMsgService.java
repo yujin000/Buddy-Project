@@ -22,4 +22,7 @@ public class ChatMsgService {
     public List<ChatMsgDTO> selectChatMsg(int chatRoomSeq) {
         return chatMsgDao.selectChatMsg(chatRoomSeq);
     }
+
+    // 채팅방 삭제
+    public void delChatRoom(int chatRoomSeq) { chatMsgDao.delChatRoom(chatRoomSeq);}
 }

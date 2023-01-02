@@ -530,3 +530,70 @@ aside {
   width: 100%;
   height: 70%;
 }
+
+@media (max-width: 800px) {
+  .fileView{
+    bottom: 55px;
+    left: 169px;
+    width: 230px;
+    height: 150px;
+    border: 1px solid #000;
+    background-color: white;
+    display: none;
+    position: absolute;
+  }
+  .fileView ul{
+    width: 228px;
+    line-height : 40px;
+  }
+
+  .fileView h3{
+    text-align: center;
+    width: 228px;
+  }
+}
+
+.emoticonView{
+  bottom: 119px;
+  left: -1px;
+  width: 298px;
+  height: 200px;
+  border: 1px solid #000;
+  background-color: white;
+  display: none;
+  position: absolute;
+}
+
+/*이모티콘 리스트*/
+#emoticonList{
+  margin-top: 1px;
+  width: 295px;
+  height: 197px;
+  overflow-y: auto;
+}
+/*이모티콘 출력시 사이즈*/
+.emoticonImg{
+  width: 92px;
+  height: 92px;
+  cursor: pointer;
+}
+
+/*이모티콘 선택하면 뜨는 div창*/
+#emoticonClickView{
+  bottom: 119px;
+  left: -1px;
+  width: 100%;
+  height: 100px;
+  border: 1px solid #000;
+  background-color: #ffffff80;
+  display: none;
+  position: absolute;
+}
+
+/*선택된 이모티콘*/
+#emoticonClickImg{
+  margin-top: 3px;
+  margin-left: 10px;
+  width: 92px;
+  height: 92px;
+}

@@ -89,11 +89,14 @@
                       <button type="button" id="cancel">취소하기</button>
           <hr />
 
-          <div th:if="${emoticonDto!=null}">
-            <th:block th:each="emoticonDto : ${emoticonDto}">
+          <div th:if="${emoticonList!=null}">
+            <th:block th:each="emoticonList : ${emoticonList}">
               <div>
-            <img th:src="'/emoticon/'+${emoticonDto.emoticonSysName}" alt="" class="myImg" />
-                <button>삭제</button>
+            <img th:src="'/emoticon/'+${emoticonList.getEmoticonSysName()}" alt="" class="myImg" />
+                <form action="/emoticon/deleteEmoticon" method="post" id="deleteForm">
+                  <input type="hidden" name="emoticonSysName" th:value="${emoticonList.getEmoticonSysName()}">
+                <button class="delBtn" name="emoticonSeq" th:value="${emoticonList.getEmoticonSeq()}">삭제</button>
+                </form>
               </div>
           </th:block>
           </div>
@@ -169,6 +172,19 @@
       $("#updateEmoticon").val("");
       $("#emoticon").attr("src","");
     })
+</script>
+
+<script>
+  //이모티콘 삭제
+  $(".delBtn").on("click",function (){
+    if(confirm("이모티콘을 삭제하시겠습니까?")){
+      $("#deleteForm").submit();
+      alert("이모티콘이 삭제 되었습니다");
+      return true;
+    } else {
+      return false;
+    }
+  })
 </script>
 </body>
 </html>

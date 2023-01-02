@@ -16,7 +16,7 @@
     <script src="/static/js/jQueryCheck.js"></script>
 </head>
 <body>
-<div class="moblieView">
+<div class="mobileView">
     <div class="logo">
         <a href="/member/loginIndex">
             <img src="" alt="" />
@@ -60,11 +60,11 @@
             </div>
             <div class="asideTitle">
                 <img src="" alt="" />
-                <p><a href="/notice/toAdminNotice">공지 관리</a></p>
+                <p><a href="/notice/toAdminNotice?cpage=1">공지 관리</a></p>
             </div>
             <div id="checked" class="asideTitle">
                 <img src="" alt="" />
-                <p><a href="/admin/toAdminQna">문의내역 관리</a></p>
+                <p><a href="/admin/toAdminQna?cpage=1">문의내역 관리</a></p>
             </div>
             <div class="asideTitle">
                 <img src="" alt="" />
@@ -74,14 +74,16 @@
         <div class="content">
             <div class="contentHeader">
                 <h1 class="contentTitle">문의내역 관리</h1>
+                <form action="/qna/searchAdminQna">
                 <input
                         type="search"
                         id="searchBar"
                         class="searchBar"
-                        name="search"
-                        placeholder="회원검색"
+                        name="qnaWriterId"
+                        placeholder="회원 email주소로 검색"
                         style="padding-left: 10px"
-                />
+                /><button>검색</button>
+                </form>
             </div>
 
             <hr />

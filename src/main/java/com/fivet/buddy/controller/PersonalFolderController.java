@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -32,10 +33,22 @@ public class PersonalFolderController {
     // 폴더 생성
     @ResponseBody
     @RequestMapping("addFolder")
-    public boolean addFolder(String folderName,String parentKey) throws Exception {
+    public boolean addFolder(String folderName,String parentKey, String isTeam) throws Exception {
         int memberSeq = Integer.parseInt(session.getAttribute("memberSeq").toString());
+
         // 폴더 중복 체크( true : 존재함, false : 존재하지 않음)
-        boolean folderExists = personalFolderService.isFolderExists(folderName,memberSeq);
+        boolean folderExists = false;
+        List<Map<String,String>> nameList = personalFolderService.nameList(parentKey);
+
+        for(Map<String,String> map : nameList){
+            if(map.get("PERSONAL_FOLDER_NAME") == null){
+                folderExists = false;
+            }else  if(map.get("PERSONAL_FOLDER_NAME").equals(folderName)){
+                folderExists = true;
+                break;
+            }
+        };
+
 
         // 폴더가 존재하지 않는 경우( 사용이 가능한 경우 )
         if (!folderExists) {
@@ -45,7 +58,7 @@ public class PersonalFolderController {
             File file = new File(uploadFilePath + folderName);
             file.mkdir();
             // personal_folder 테이블에 insert
-            personalFolderService.insertNewFolder(folderName,parentKey,uploadFilePath,memberSeq);
+            personalFolderService.insertNewFolder(folderName,parentKey,uploadFilePath,memberSeq,isTeam);
             return true;
         } else {
             // 폴더가 이미 존재하는 경우( 사용이 불가능한 경우 )
@@ -58,5 +71,12 @@ public class PersonalFolderController {
     @RequestMapping("myFolderInfo")
     public PersonalFolderDTO myFolderInfo(String key) throws Exception{
         return personalFolderService.myFolderInfo(key);
+    }
+
+    // 부모 경로 찾기
+    @ResponseBody
+    @RequestMapping("searchPath")
+    public PersonalFolderDTO searchPath(String thisFolderKey) throws Exception{
+        return personalFolderService.pathAndType(thisFolderKey);
     }
 }

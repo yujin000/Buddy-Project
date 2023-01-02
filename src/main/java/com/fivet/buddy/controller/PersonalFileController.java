@@ -38,7 +38,7 @@ public class PersonalFileController {
 
     // 파일 첨부
     @RequestMapping("uploadFile")
-    public String uploadFile(MultipartFile multipartFile, String attachFolder) throws Exception{
+    public String uploadFile(MultipartFile multipartFile, String attachFolder, boolean isTeam) throws Exception{
         long fileSize = multipartFile.getSize();
         String uploadFilePath = personalFolderService.searchPath(attachFolder);
 
@@ -52,7 +52,23 @@ public class PersonalFileController {
         // personal_file 테이블에 insert
         personalFileService.uploadFile(oriName,sysName,attachFolder,memberSeq,filePath,fileSize);
         // basic_folder 테이블에 update
-        basicFolderService.uploadByte(memberSeq,fileSize);
+        if(!isTeam){
+            basicFolderService.uploadByte(memberSeq,fileSize);
+        }else{
+            int folderTeamSeq;
+            String searchKey = attachFolder;
+
+            while(true){
+                folderTeamSeq = personalFolderService.getTeamSeq(searchKey);
+                if(folderTeamSeq == 0){
+                    searchKey = personalFolderService.getParentKey(searchKey);
+                }else{
+                    basicFolderService.uploadTeamByte(personalFolderService.getParentKey(searchKey),fileSize);
+                    break;
+                }
+            }
+        }
+
         // personal_folder 테이블에 update
         personalFolderService.updateMyFolderByte(attachFolder,fileSize);
 

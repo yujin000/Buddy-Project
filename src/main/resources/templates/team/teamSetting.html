@@ -14,10 +14,15 @@
           crossorigin="anonymous"
   ></script>
   <script src="/static/js/jQueryCheck.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="wrap">
-  <h1 class="title">팀 관리</h1>
+  <h1 class="logoTitle">팀 관리</h1>
   <div class="contentWrap">
     <div class="teamProfile">
       <p class="subTitle">팀 프로필</p>
@@ -26,7 +31,7 @@
                 type="text"
                 name="teamName"
                 id="teamName"
-                class="input_text"
+                class="inputText"
                 th:value="${teamDto.getTeamName()}"
                 disabled
         />
@@ -70,6 +75,7 @@
               <button
                       type="button"
                       name="grade"
+                      id="gradeBtn"
                       class="gradeBtn"
                       th:data-nick-name="${teamMemberDtoList.getTeamMemberNickname}"
                       th:data-memberSeq="${teamMemberDtoList.getMemberSeq}"
@@ -132,7 +138,9 @@
   <th:block th:if="${teamDto.getTeamOwnerSeq==sessionMemberSeq}">
   <form action="/team/deleteTeam" id="deleteTeam" method="post">
     <input type="hidden" name="teamSeq" id="teamSeq" th:value="${teamDto.getTeamSeq()}">
-    <p style="text-align: center; margin-top: 20px;">팀을 삭제하시겠습니까? <a href="#" onclick="delClick()"><strong>삭제</strong></a></p>
+    <p class="cancel">
+      ⛔팀 삭제를 원하시나요? <a href="#" onclick="delClick();" onmouseenter="this.style.opacity =1;" onmouseleave="this.style.opacity=0.5;" style="opacity: 0.3;">탈퇴</a>
+    </p>
   </form>
   </th:block>
 </div>
@@ -269,7 +277,7 @@
   $("#changeTeam").on("click",function (){
     $("#teamName").attr("disabled", false);
     $("#changeTeam").css("display","none");
-    $("#teamName").css("border","2px dashed magenta");
+    $("#teamName").css("border","2px dashed #8621F7");
     $('#updateDiv').append(updateTeamNameBtn);
   })
 

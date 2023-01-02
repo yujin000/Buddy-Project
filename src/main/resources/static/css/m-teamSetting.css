@@ -31,4 +31,11 @@
         width: 160px;
         overflow-x: scroll;
     }
+
+    #gradeBtn {
+        position: absolute;
+        top: -35px;
+        border: none;
+    }
+
 }

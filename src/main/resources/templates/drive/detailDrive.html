@@ -69,21 +69,42 @@
         </div>
         <div id="chatList" class="asideItem">
           <ul>
-            <li>팀 공유 리스트 </li>
+            <div th:if="${#strings.isEmpty(teamList)}">
+              아직 팀이 없습니다.
+            </div>
+            <div th:unless="${#strings.isEmpty(teamList)}">
+              <th:block th:each="team : ${teamList}">
+                <div>
+                  <i class="fa-solid fa-chevron-right arrowBtn" arrowType="right"></i>
+                  <li th:text="${team.getPersonalFolderName()}" class="sideList" th:data-folder="${team.getPersonalFolderKey()}" data-resource-type="team"></li><br>
+                  <ul class="sub"></ul>
+                </div>
+              </th:block>
+            </div>
           </ul>
         </div>
         <div class="myFileSize">
 
         </div>
       </div>
-
-      <div class="asideTool">
-        <p>내 사용량</p>
-        <p th:data-volume="${myVolume}" id="myVolume"></p>
-        <div id="volumeLog">
-          <div id="volumeBar"></div>
+      <th:block th:if="${#strings.equals(isTeam,'true')}">
+        <div class="asideTool">
+          <p>팀 사용량</p>
+          <p th:data-volume="${teamVolume}" class="myVolume"></p>
+          <div class="volumeLog">
+            <div class="volumeBar"></div>
+          </div>
         </div>
-      </div>
+      </th:block>
+      <th:block th:if="${#strings.equals(isTeam,'false')}">
+        <div class="asideTool">
+          <p>내 사용량</p>
+          <p th:data-volume="${myVolume}" class="myVolume"></p>
+          <div class="volumeLog">
+            <div class="volumeBar"></div>
+          </div>
+        </div>
+      </th:block>
     </aside>
 
     <section class="fileSection">
@@ -99,12 +120,13 @@
       <!-- 헤더-버튼 -->
       <form action="/personalFile/uploadFile" method="post" enctype="multipart/form-data" id="uploadFileForm">
         <div class="attachBtnArea">
-          <button type="button" id="backBtn"><i class="fa-solid fa-arrow-left"></i></button>
+          <button type="button" id="backBtn" th:data-key="${parentKey}"><i class="fa-solid fa-arrow-left"></i></button>
           <th:block th:if="${#strings.equals(shared,0)}">
             <label for="uploadFile" class="fileLabel mainButton">
               업로드
               <input type="file" name="multipartFile" id="uploadFile" accept=".txt,.xls,.ppt,.hwp,.jpg,.png,.gif,.mp4,.mp3,.zip,.pptx,.xlsx" >
               <input type="hidden" th:value="${parentKey}" name="attachFolder">
+              <input type="hidden" th:value="${isTeam}" name="isTeam">
             </label>
             <button type="button" id="newFolder" class="mainButton">새 폴더</button>
             <button type="button" id="shareBtn" class="mainButton">공유</button>
@@ -131,14 +153,16 @@
               <th:block th:each="folder : ${childFolders}">
                 <li data-resource-type="folder">
                   <input type="checkbox" class='check' th:data-key="${folder.getPersonalFolderKey()}" data-resource-type="folder" th:data-name="${folder.getPersonalFolderName()}"th:data-folder-key="0">
-                  <img src='/static/img/folderImg.png' class="thisFolder" th:data-folder="${folder.getPersonalFolderKey()}">
+                  <img src='/static/img/folderImg.png' class="thisFolder" th:data-folder="${folder.getPersonalFolderKey()}" th:data-resource-type="${folder.getPersonalFolderType()}">
                   <input type='text' class="printFolderName" th:value='${folder.getPersonalFolderName()}' th:id="${'folder' + folder.getPersonalFolderKey()}" disabled>
-                  <th:block th:if="${#strings.equals(folder.getPersonalFolderShared(),'Y')}">
-                    <button type="button" class="shareUrl" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유 중단</button>
-                    <button type="button" class="copyUrl" th:data-share-url="${'localhost/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}">URL복사</button>
-                  </th:block>
-                  <th:block th:if="${#strings.equals(folder.getPersonalFolderShared(),'N')}">
-                    <button type="button" class="shareUrl" th:data-share-url="${'localhost/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유</button>
+                  <th:block th:if="${#strings.equals(folder.getPersonalFolderType(),'user')}">
+                    <th:block th:if="${#strings.equals(folder.getPersonalFolderShared(),'Y')}">
+                      <button type="button" class="shareUrl" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유 중단</button>
+                      <button type="button" class="copyUrl" th:data-share-url="${'localhost/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}">URL복사</button>
+                    </th:block>
+                    <th:block th:if="${#strings.equals(folder.getPersonalFolderShared(),'N')}">
+                      <button type="button" class="shareUrl" th:data-share-url="${'localhost/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유</button>
+                    </th:block>
                   </th:block>
                 </li>
               </th:block>
@@ -248,25 +272,45 @@
 
     // 폴더 이름 함수, 폴더 이름 가져가기
     modifyText.on("blur",function(){
+      // 현재 폴더가 팀인지, 개인인지 확인
+
+      let isTeam;
+
+      $.ajax({
+        url : "/drive/isTeam"
+        ,data : {
+          parentKey : parentKey
+        }
+        , async:false
+      }).done(function (rsp){
+        if(rsp){
+          isTeam = "team";
+        }else{
+          isTeam = "user";
+        }
+      });
+
       modifiedName = $(this).val();
       $(this).css("color","white").attr("disabled",true);
 
-        // 폴더 이름을 사용하고 있는지 조회 하고 결과 반환
-        $.ajax({
-          url:"/personalFolder/addFolder"
-          ,data:({
-            "folderName":modifiedName,
-            "parentKey":parentKey
-          })
-        }).done(function(rsp){
-          // rsp : true(사용할 수 있음), false(사용할 수 없음)
-          if(!rsp) {
-            alert("개인 드라이브 내에 이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
-            modifyText.attr("disabled",false).css("color","red");
-          }else{
-            location.reload();
-          }
+      // 폴더 이름을 사용하고 있는지 조회 하고 결과 반환
+
+      $.ajax({
+        url:"/personalFolder/addFolder"
+        ,data:({
+          "folderName" : modifiedName,
+          "parentKey" : parentKey,
+          "isTeam" : isTeam
         })
+      }).done(function(rsp){
+        // rsp : true(사용할 수 있음), false(사용할 수 없음)
+        if(!rsp) {
+          alert("개인 드라이브 내에 이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
+          modifyText.attr("disabled",false).css("color","red");
+        }else{
+          location.reload();
+        }
+      })
 
     })
 
@@ -279,7 +323,14 @@
 
   $(".thisFolder").on("click",function(){
     let thisFolderSeq = $(this).data("folder");
-    location.href = "/drive/detailDrive?resourceKey="+thisFolderSeq;
+    let thisType = $(this).data("resource-type");
+
+    if(thisType == 'user'){
+      location.href = "/drive/detailDrive?resourceKey="+thisFolderSeq;
+    }else{
+      location.href = "/drive/detailDrive?resourceKey="+thisFolderSeq+"&teamAccess=true";
+    }
+
   })
 
 </script>
@@ -429,9 +480,50 @@
 
 <!-- 뒤로가기 -->
 <script>
-  $("#backBtn").on("click",function(){
-    history.back();
+
+  $(function (){
+    let allKeyArray = new Array();
+
+    $.ajax({
+      url : "/drive/allKeys"
+      ,async:false
+    }).done(function (rsp){
+      allKeyArray = rsp;
+    });
+
+    $("#backBtn").on("click",function(){
+      let thisFolderKey = $(this).data("key");
+
+      $.ajax({
+        url:"/personalFolder/searchPath"
+        ,data : {
+          thisFolderKey : thisFolderKey
+        }
+        ,async:false
+      }).done(function (rsp){
+        let key = rsp.personalFolderParentKey;
+        let type = rsp.personalFolderType;
+        let isExist = false;
+
+        for(let i = 0; i < allKeyArray.length; i++){
+          if(rsp.personalFolderParentKey == allKeyArray[i].BASIC_FOLDER_KEY){
+            isExist = true;
+            break;
+          };
+        };
+
+        if(isExist){
+          location.href = "/drive/toFileDrive";
+        }else if(type == "team"){
+          location.href = "/drive/detailDrive?resourceKey="+key+"&teamAccess=true";
+        }else if(type == "user") {
+          location.href = "/drive/detailDrive?resourceKey=" + key;
+        }
+      })
+
+    })
   })
+
 </script>
 
 <!-- 파일 업로드 버튼 클릭 -->
@@ -582,6 +674,7 @@
       let container = $("<div>");
 
       let parentFolderKey = $(this).next("li").data("folder");
+      let type = $(this).next("li").data("resource-type");
 
       $.ajax({
         url : "/drive/getKey?parentFolderKey="+parentFolderKey
@@ -591,15 +684,22 @@
             let div = $("<div>");
             let li = $("<li>");
             let i = $("<i>").addClass("fa-solid fa-chevron-right arrowBtn newer").attr("arrowType","right");
-            let list = $("<li>").addClass("sideList").attr("data-folder",value.personalFolderKey).attr("data-resource-type","folder").html(value.personalFolderName);
+            let list = $("<li>").addClass("sideList").attr("data-folder",value.personalFolderKey).html(value.personalFolderName);
             let ul = $("<ul>").addClass("sub");
+
+            if(type == "folder"){
+              list.attr("data-resource-type","folder");
+            }else if(type == "team"){
+              list.attr("data-resource-type","team");
+            }else{
+              list.attr("data-resource-type","folder");
+            }
 
             $.ajax({
               url : "/drive/subIsExist?folderKey="+value.personalFolderKey
               ,type : "get"
               ,async: false
             }).done(function (rsp){
-              console.log(rsp);
               if(rsp == true){
                 div.append(li).append(i).append(list).append(ul);
                 container.append(div);
@@ -634,11 +734,14 @@
     if(thisType == "folder"){
       let folderData = $(this).data("folder");
       location.href = "/drive/detailDrive?resourceKey="+folderData;
+    }else if(thisType == "team"){
+      let folderData = $(this).data("folder");
+      location.href = "/drive/detailDrive?resourceKey="+folderData+"&teamAccess=true";
     }
   })
 </script>
 
-<<!-- 개인 폴더 공유 -->
+<!-- 개인 폴더 공유 -->
 
 <script>
   $(document).on('click','.shareUrl', function() {
@@ -707,14 +810,14 @@
 <!-- 데이터 사용량 -->
 <script>
   $(function(){
-    const myVolume = $('#myVolume').data('volume').toString();
+    const myVolume = $('.myVolume').data('volume').toString();
     const divide = (myVolume / 1000000).toString();
     const volumeLength = divide.slice(0,4);
     const result = volumeLength + ' MB / 100.00 MB';
-    const volumeBar = $('#volumeBar');
+    const volumeBar = $('.volumeBar');
 
     volumeBar.css("width",volumeLength*2);
-    $('#myVolume').html(result);
+    $('.myVolume').html(result);
   })
 </script>
 

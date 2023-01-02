@@ -47,7 +47,6 @@ public class PersonalFolderService {
 
     // 폴더 생성
     public void insertNewFolder(String folderName, String parentKey, String uploadFilePath,int memberSeq,String isTeam) throws Exception{
-        System.out.println(isTeam);
         PersonalFolderDTO personalFolderDto = new PersonalFolderDTO();
 
         // 폴더 이름, 멤버seq값, 부모폴더 key값, 폴더 저장경로 세팅

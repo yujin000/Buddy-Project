@@ -98,7 +98,7 @@
 
     <!--    채팅방 이름 변경-->
     <update id="updateChatTitle">
-        update chat_room set chat_room_title = #{chatRoomTitle} where chat_room_seq = #{chat_room_seq}
+        update chat_room set chat_title = #{chatRoomTitle} where chat_room_seq = #{chat_room_seq}
     </update>
 
     <!--    회원 채팅방 나간경우, 인원수 1 감소-->
@@ -109,11 +109,6 @@
     <!--    회원 채팅방 초대시, 인원수 1 증가-->
     <update id="updateChatMemberCount">
         update chat_room set member_count = member_count +1 where chat_room_seq = #{value}
-    </update>
-
-    <!--    채팅방 이름 변경-->
-    <update id="updateChatTitle">
-        update chat_room set chat_title = #{chatTitle} where chat_room_seq = #{chatRoomSeq}
     </update>
 
 </mapper>

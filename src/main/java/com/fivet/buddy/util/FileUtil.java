@@ -73,8 +73,7 @@ public class FileUtil {
 
     // 폴더 삭제
     public void deleteFolder(String path){
-        String pathh = "C:/files/n7t5h09557z0xs6k5ywr강예찬/";
-        File file = new File(pathh);
+        File file = new File(path);
         if (file.exists()) {
             try {
                 FileUtils.deleteDirectory(file);

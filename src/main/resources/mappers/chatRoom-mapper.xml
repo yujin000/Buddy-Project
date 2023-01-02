@@ -111,4 +111,9 @@
         update chat_room set member_count = member_count +1 where chat_room_seq = #{value}
     </update>
 
+    <!--    채팅방 이름 변경-->
+    <update id="updateChatTitle">
+        update chat_room set chat_title = #{chatTitle} where chat_room_seq = #{chatRoomSeq}
+    </update>
+
 </mapper>

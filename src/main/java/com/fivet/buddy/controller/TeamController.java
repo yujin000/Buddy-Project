@@ -255,9 +255,6 @@ public class TeamController {
     @PostMapping("updateTeamMemberNickName")
     public String updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
         teamMemberDto.setMemberSeq((int) session.getAttribute("memberSeq"));
-        System.out.println(teamMemberDto.getTeamSeq());
-        System.out.println(teamMemberDto.getTeamMemberNickname());
-        System.out.println(teamMemberDto.getMemberSeq());
         teamMemberService.updateTeamMemberNickName(teamMemberDto);
         return teamMemberDto.getTeamMemberNickname();
     }

@@ -8,10 +8,13 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/home.css" />
-    <link rel="stylesheet" href="/static/css/mypage.css" />
     <link rel="stylesheet" href="/static/css/m-home.css" />
-    <link rel="stylesheet" href="/static/css/m-mypage.css" />
     <script src="/static/js/jQueryCheck.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
   </head>
   <body>
   <th:block th:if="${#strings.isEmpty(session.memberSeq)}">
@@ -33,16 +36,16 @@
 
         <!-- 카카오 로그인 -->
 <!--        <button type="" id="kakao" class="snsLogin">-->
-        <a href="javascript:kakaoLogin();"><img src="/static/img/kakao_login_medium_narrow.png" alt="카카오계정 로그인" style="height: 100px;"/></a>
+        <a href="javascript:kakaoLogin();" id="kakao">카카오톡 로그인</a>
 <!--        </button>-->
-        <a href="javascript:secession();">회원탈퇴</a>
+        <div class=""style="clear: both"></div>
+
 
         <a href="/member/toSignUp" id="goSignup"
           >아직 회원이 아니신가요? <strong>회원가입</strong></a
         >
       </form>
-      <a href="/member/logout">테스트 돌아가기</a>
-      <a href="/invite/test">테스트 이메일</a>
+
     </div>
   </th:block>
   <th:block th:if="${not #strings.isEmpty(session.memberSeq)}">
@@ -51,7 +54,8 @@
       <div class="logo">
         <img src="" alt="" />
       </div>
-
+      <p class="slogan">당신의 동료, 영원한 친구</p>
+<div class="contentWrap">
       <div id="profileBox" class="profileBox">
         <p class="title">profile</p>
         <div class="myProfile">
@@ -74,7 +78,6 @@
           </button>
         </th:block>
       </div>
-      <button type="button" id="insertInviteCode">초대코드입력</button>
       <div class="temListBox" th:if="${teamDtoList!=null}">
         <p class="title">팀 리스트 <span id="teamCount">[[${teamCount}]]</span><span> / 5</span></p>
         <div class="teamProfile" th:each="teamDtoList : ${teamDtoList}">
@@ -82,23 +85,26 @@
           <div class="info">
             <h1 id="teamName" class="name" th:text="${teamDtoList.teamName}"></h1>
           </div>
-          <form action="/team/goTeam" method="post">
+          <form action="/team/goTeam" method="post" style="width: 0px;" >
             <input type="hidden" th:value="${teamDtoList.teamSeq}" th:name="teamSeq">
             <button id="goTeam" class="floatBtn">
               팀으로 가기
             </button>
           </form>
-          <form action="/team/goTeamSetting" method="post">
+          <form action="/team/goTeamSetting" method="post" style="width: 0px;">
             <input type="hidden" th:value="${teamDtoList.teamSeq}" name="teamSeq">
           <button id="managementTeam" class="floatBtn" th:if="${teamDtoList.teamOwnerSeq==session.memberSeq || SubManagerMember>0}">
             팀 관리
           </button>
           </form>
         </div>
+        <button type="button" id="insertInviteCode">초대코드입력</button>
+
       </div>
+</div>
 
         <div class="addTeam" id="addTeam">
-            팀 생성 하기
+            ✅팀 생성 하기
 
         </div>
       </div>

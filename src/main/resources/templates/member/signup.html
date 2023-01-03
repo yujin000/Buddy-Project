@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>회원가입</title>
+    <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/signup.css" />
     <link rel="stylesheet" href="/static/css/m-signup.css" />
     <script
@@ -16,13 +17,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="/static/js/jQueryCheck.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="wrap">
-      <div class="logo">
-        <img src="" alt="" />
-      </div>
-      <h1>회원가입</h1>
+
+      <h1 id="title">😀회원가입</h1>
       <form method="post" id="form">
         <p id="titleName" class="titleName">이름</p>
           <th:block th:if="${userInfo.getMemberLogtype() != 'normal'}">

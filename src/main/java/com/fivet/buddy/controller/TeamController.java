@@ -92,6 +92,7 @@ public class TeamController {
             model.addAttribute("chatRoomList", chatRoomList);
             model.addAttribute("topicList", topicList);
             model.addAttribute("topicCount", topicCount);
+            model.addAttribute("teamMemberInfo", teamMemberDto);
             return "team/team";
         }
 
@@ -195,6 +196,13 @@ public class TeamController {
         model.addAttribute("topicList", topicList);
         model.addAttribute("topicCount", topicCount);
         return "team/team";
+    }
+
+    @ResponseBody
+    @RequestMapping("SubManagerMemberCount")
+    //부매니저 수 체크
+    public int subManagerCount(int teamSeq){
+        return teamMemberService.subManagerCount(teamSeq);
     }
 
     // Exception Handler

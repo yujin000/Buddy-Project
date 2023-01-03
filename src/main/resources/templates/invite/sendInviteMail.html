@@ -79,9 +79,10 @@
     <button type="button" id="inviteBtn" th:data-team="${teamSeq}" th:data-name="${teamName}" th:data-member-name="${memberName}">초대이메일 보내기</button>
     <p id="status"></p>
 </div>
+<script>
+</script>
 
 <script>
-
     // 이메일 검증
     const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     let emailCheck = false;

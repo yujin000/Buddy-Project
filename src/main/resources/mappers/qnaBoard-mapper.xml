@@ -12,6 +12,10 @@
         </selectKey>
     </insert>
 
+    <!-- 문의글 삭제  -->
+    <delete id="delete">
+        delete from qna_board where qna_seq = #{qnaSeq}
+    </delete>
     <!-- 회원 본인의 문의글 출력   -->
     <select id="select" resultType="com.fivet.buddy.dto.QnaBoardDTO">
         select * from qna_board where qna_writer_Seq = #{qnaWriterSeq} order by qna_seq desc

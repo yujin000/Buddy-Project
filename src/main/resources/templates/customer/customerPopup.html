@@ -59,7 +59,7 @@
 
     <form action="/qna/insert" id="qnaForm" method="post" enctype="multipart/form-data">
         <p>제목</p>
-        <input type="text" name="qnaTitle" class="qnaTitle" placeholder="제목을 입력해주세요">
+        <input type="text" name="qnaTitle" id="qnaTitle" placeholder="제목을 입력해주세요">
         <p>내용</p>
         <textarea name="qnaContents" id="qnaContents" cols="30" rows="10"></textarea>
         <input type="file" id="uploadfile" name="uploadfile" multiple="multiple" accept=".jpg, .png, .gif">
@@ -74,7 +74,7 @@
             <input type="hidden" id="qnaCategory" class="qnaType" name="qnaType">
         </div>
         <div class="btn">
-            <button type="submit">
+            <button type="button" id="submitBtn">
                 전송
             </button>
             <button type="button" id="cancel">
@@ -87,6 +87,19 @@
     let cancel = $("#cancel");
     cancel.on("click",function (){
         location.href = "/qna/main";
+    });
+
+    let subminBtn =  $("#submitBtn");
+    subminBtn.on("click",function (){
+        if($("#qnaContents").val().length == 0) {
+            alert("본문을 입력해주세요");
+        } else if($("#qnaContents").val().length >= 400) {
+            alert("본문 글자 수 400글자를 초과했습니다");
+        } else if($("#qnaTitle").val().length > 15) {
+            alert("제목은 15자 이하만 입력해주세요");
+        } else{
+            $("#qnaForm").submit();
+        }
     });
 </script>
 </body>

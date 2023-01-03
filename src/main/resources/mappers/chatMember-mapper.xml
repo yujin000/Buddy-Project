@@ -16,7 +16,7 @@
     <select id="selectChatMember" resultType="com.fivet.buddy.dto.ChatMemberListDTO">
         select * from chat_member c inner join member_img i on c.member_seq=i.member_img_member_seq
         join team_member t on c.member_seq=t.member_seq
-        where c.chat_room_seq= #{value}
+        where c.chat_room_seq= #{chatRoomSeq} and t.team_seq= #{teamSeq}
         order by case when t.grade='매니저' then 1
         when t.grade='부매니저' then 2
         when t.grade='팀원' then 3

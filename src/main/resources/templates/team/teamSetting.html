@@ -128,14 +128,6 @@
     </div>
   </div>
 
-  <div class="modal3">
-    <div class="modalWrap3">
-      <h1>😢</h1>
-      <h3 id="h3_3"></h3>
-      <button class="okayBtn">확인</button>
-    </div>
-  </div>
-
   <strong><a href="/member/loginIndex" id="loginIndex">뒤로가기</a></strong>
   <th:block th:if="${teamDto.getTeamOwnerSeq==sessionMemberSeq}">
   <form action="/team/deleteTeam" id="deleteTeam" method="post">
@@ -186,37 +178,39 @@
   })
 
   //'예' 누르면 등급 변경 되는 ajax
-  if(subManagerCount<=2) {
     $(".yesNoBtn").on("click", function () {
-      yesNo = $(this).text();
-      let enGrade = changeGrade;
-      if (yesNo == "예") {
-        $.ajax({
-          url: "/team/updateTeamMemberGrade",
-          data: {
-            "grade": enGrade,
-            "memberSeq": memberSeq,
-            "teamSeq": teamSeq
-          },
-          type: "post",
-          success: function () {
-          }, error: function () {
-          }
-        }).done(function () {
-          location.reload();
-          if (changeGrade == "매니저") {
-            location.href = "/member/loginIndex"
-          } else {
-            $(".modal1").css("display", "none");
-          }
-        })
+      if (changeGrade=="부매니저" && subManagerCount >= 2) {
+        console.log("if");
+        alert("부매니저는 최대 2명까지만 가능합니다");
+        $(".modal1").css("display","none");
       } else {
-        $(".modal1").css("display", "none");
+        yesNo = $(this).text();
+        let enGrade = changeGrade;
+        if (yesNo == "예") {
+          $.ajax({
+            url: "/team/updateTeamMemberGrade",
+            data: {
+              "grade": enGrade,
+              "memberSeq": memberSeq,
+              "teamSeq": teamSeq
+            },
+            type: "post",
+            success: function () {
+            }, error: function () {
+            }
+          }).done(function () {
+            location.reload();
+            if (changeGrade == "매니저") {
+              location.href = "/member/loginIndex"
+            } else {
+              $(".modal1").css("display", "none");
+            }
+          })
+        } else {
+          $(".modal1").css("display", "none");
+        }
       }
     })
-  }else{
-
-  }
 
   // modal2 열림 함수 ( 팀원 강퇴 )
   $(".delBtn").on("click",function (){

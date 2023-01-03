@@ -31,4 +31,6 @@ public interface PersonalFileMapper {
     PersonalFileDTO myFileInfo(String key);
 
     void memberOut(int memberSeq);
+
+    void teamOut(@Param("list") List<Map<String, String>> allKeys);
 }

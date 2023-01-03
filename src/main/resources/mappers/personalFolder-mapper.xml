@@ -303,4 +303,30 @@
         where
             personal_folder_parent_key = #{value}
     </select>
+
+    <!-- 부모키로 자식 키 가져오기 -->
+    <select id="getTeamKeys" resultMap="selectKeyMap">
+        select
+            personal_folder_key
+        from
+            personal_folder
+        where
+            personal_folder_parent_key in
+        <foreach collection="list" item="list" open="(" separator="," close=")">
+            #{list.key}
+        </foreach>
+    </select>
+    <resultMap id="selectKeyMap" type="map">
+        <result column="personal_folder_key" property="key" />
+    </resultMap>
+
+    <delete id="teamOut">
+        delete from
+            personal_folder
+        where
+            personal_folder_key in
+        <foreach collection="list" item="list" open="(" separator="," close=")">
+            #{list.key}
+        </foreach>
+    </delete>
 </mapper>

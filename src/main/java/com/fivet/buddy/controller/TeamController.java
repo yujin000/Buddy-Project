@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,9 @@ public class TeamController {
 
     @Autowired
     private PersonalFolderService personalFolderService;
+
+    @Autowired
+    private PersonalFileService personalFileService;
 
     @Autowired
     private MemberService memberService;
@@ -126,6 +130,16 @@ public class TeamController {
     //팀 삭제
     @RequestMapping("deleteTeam")
     public String deleteTeam(int teamSeq){
+        String teamBasicKey = basicFolderService.myTeamFolderKey(teamSeq);
+        // 기본 폴더 삭제(db + 실제)
+        basicFolderService.teamOut(teamSeq);
+        // 모든 하위 폴더 키 가져오기
+        List<Map<String,String>> allKeys = personalFolderService.allTeamKeys(teamBasicKey);
+        // 팀 폴더들 삭제(db)
+        personalFolderService.teamOut(allKeys);
+        // 팀 파일들 삭제(db)
+        personalFileService.teamOut(allKeys);
+
         teamService.deleteTeam(teamSeq);
         return "redirect:/member/loginIndex";
     }

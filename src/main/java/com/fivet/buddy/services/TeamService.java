@@ -82,5 +82,7 @@ public class TeamService {
     //팀원 탈퇴시, 팀 인원수가 1 감소
     public void updateMinusTeamCount(int teamSeq) { teamDao.updateMinusTeamCount(teamSeq);}
 
+    //팀원이 0명인 팀 삭제
+    public void delTeamZeroCount() { teamDao.delTeamZeroCount();}
 
 }

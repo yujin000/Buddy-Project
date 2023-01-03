@@ -94,4 +94,9 @@ public class TeamMemberDAO {
     public List<TeamMemberDTO> selectMembersTeam(int memberSeq) {
         return teamMemberMapper.selectMembersTeam(memberSeq);
     }
+
+    //회원이 매니저로 있는 팀 추출
+    public List<TeamMemberDTO> selectMembersManager(int memberSeq) {
+        return teamMemberMapper.selectMembersTeam(memberSeq);
+    }
 }

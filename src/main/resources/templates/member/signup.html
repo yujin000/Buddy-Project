@@ -46,21 +46,22 @@
           </th:block>
           <th:block th:if="${userInfo.getMemberLogtype() == 'normal'}">
             <input type="text" name="memberId" class="inputEmail" id="inputId" maxlength='30' placeholder="이메일을 입력해주세요."/>
-            <button type="button" id="emailSend">인증 이메일 발송</button>
+            <button type="button" id="emailSend">✉️이메일발송</button>
             <input type="test" id="emailCheckVal" placeholder="인증번호를 입력하세요.">
-            <button type="button" id="emailConfirm" >인증</button>
+            <button type="button" id="emailConfirm" >✅인증</button>
             <!-- 타이머 생성 -->
+
+            <div class="Timer">
             <label for="emailTimer" id="emailTimerLabel">남은 시간:</label>
             <input id="emailTimer" type="text" value="" readonly/>
+            </div>
             <br>
             <span id="idStatus"></span>
           </th:block>
 
         <th:block th:if="${userInfo.getMemberLogtype() == 'normal'}">
           <p id="titlePw" class="titlePw">비밀번호</p>
-          <p id="comment" class="comment">
-            비밀번호는 영문,숫자,특수문자를 모두 포함한 8~14자로 입력하세요.
-          </p>
+
           <input type="password" name="memberPw" id="inputPw" class="inputPw" maxlength='15' placeholder="비밀번호는 영문,숫자,특수문자를 모두 포함한 8~14자로 입력하세요."/>
           <p id="titleTest" class="titleTest">비밀번호 확인</p>
           <input type="password" name="testPw" id="testPw" class="testPw" maxlength='15' placeholder="비밀번호를 다시 입력해주세요."/>
@@ -75,12 +76,15 @@
           </p>
           <input type="text" name="memberPhone" class="inputPhone" id="inputPhone" maxlength='12'/>
           <!-- 휴대폰 인증 -->
-          <button type="button" id="sendSms">인증문자발송</button>
+          <button type="button" id="sendSms">📞문자발송</button>
           <input type="test" id="phoneCheckVal" placeholder="인증번호를 입력하세요.">
+          <button type="button" id="phoneConfirm" >✅인증</button>
           <!-- 타이머 생성 -->
+          <div class="Timer">
           <label for="Timer" id="timerLabel">남은 시간:</label>
           <input id="Timer" type="text" value="" readonly/>
-          <button type="button" id="phoneConfirm" >인증번호 확인</button>
+          </div>
+
         </th:block>
         <th:block th:if="${userInfo.getMemberLogtype() == 'naver'}">
           <input type="text" name="memberPhone" class="inputPhone" th:value="${userInfo.getMemberPhone()}" readonly/>
@@ -99,10 +103,12 @@
     <script>
       // 이메일
       function emailDisBlock(){
+        $(".Timer").css("display","block");
         $("#emailCheckVal").css("display","inline-block");
-        $("#emailConfirm").css("display","block");
-        $("#emailTimer").css("display","block");
-        $("#emailTimerLabel").css("display","block");
+        $("#emailConfirm").css("display","inline");
+        $("#emailTimer").css("display","inline-block");
+        $("#emailTimerLabel").css("display","inline-block");
+        $("#idStatus").css("display","none");
       }
 
       function emailDisNone(){
@@ -114,9 +120,9 @@
       // 휴대폰
       function phoneDisBlock(){
         $("#phoneCheckVal").css("display","inline-block");
-        $("#phoneConfirm").css("display","block");
-        $("#Timer").css("display","block");
-        $("#timerLabel").css("display","block");
+        $("#phoneConfirm").css("display","inline");
+        $("#Timer").css("display","inline-block");
+        $("#timerLabel").css("display","inline-block");
       }
 
       function phoneDisNone(){

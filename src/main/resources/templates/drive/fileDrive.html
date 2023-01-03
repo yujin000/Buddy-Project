@@ -110,7 +110,7 @@
                 <div class="attachBtnArea">
                     <label for="uploadFile" class="fileLabel mainButton">
                         업로드
-                        <input type="file" name="multipartFile" id="uploadFile" accept=".txt,.xls,.ppt,.hwp,.jpg,.png,.gif,.mp4,.mp3,.zip,.pptx,.xlsx">
+                        <input type="file" name="multipartFile" id="uploadFile" accept=".txt,.xls,.ppt,.hwp,.jpg,.png,.gif,.mp4,.mp3,.zip,.pptx,.xlsx,.pdf">
                         <input type="hidden" th:value="${parentKey}" name="attachFolder">
                     </label>
                     <button type="button" id="newFolder" class="mainButton">새 폴더</button>
@@ -445,7 +445,7 @@
         let maxFileSize = 10 * 1024 * 1024;
 
         let extension = this.value.split(".").pop().toLowerCase();
-        let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip", "xlsx", "pptx"];
+        let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip", "xlsx", "pptx", "pdf"];
         let result = $.inArray(extension, accept);
 
         if (fileSize + myVolume > maxVolume){
@@ -516,7 +516,7 @@
             let maxFileSize = 10 * 1024 * 1024;
 
             let extension = file.name.split(".").pop().toLowerCase();
-            let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip", "xlsx", "pptx"];
+            let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip", "xlsx", "pptx","pdf"];
             let result = $.inArray(extension, accept);
 
             let valid = false;

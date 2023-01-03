@@ -25,7 +25,17 @@
     let memberSeq = [[${session.memberSeq}]];
     let memberImgSysName = [[${memberImgSysName}]];
     /*]]>*/
+
 </script>
+
+<!--세션 및 각종 변수를 담아 쓰는 input-->
+<input type="hidden"
+       th:data-sessionMemberSeq="${session.memberSeq}"
+       th:data-team="${session.teamSeq}"
+       th:data-grade="${teamMemberInfo.grade}"
+       th:data-teamSeq="${session.teamSeq}"
+       id="infoData"
+>
 
 <script>
 
@@ -277,15 +287,6 @@
     });
 
 </script>
-
-<!--세션 및 각종 변수를 담아 쓰는 input-->
-<input type="hidden"
-       th:data-sessionMemberSeq="${session.memberSeq}"
-       th:data-team="${session.teamSeq}"
-       th:data-grade="${teamMemberInfo.grade}"
-       th:data-teamSeq="${session.teamSeq}"
-       id="infoData"
->
 
 <div class="wrap">
     <div class="header">

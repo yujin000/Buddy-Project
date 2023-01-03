@@ -74,6 +74,10 @@ public class ChatRoomController {
             memberImgSysName = "/member/selectProfileImg/"+memberImgSysName;
             model.addAttribute("memberImgSysName",memberImgSysName);
         }
+        //토픽 수 출력
+        int topicCount = chatRoomService.countTopic(param.get("teamSeq"));
+        model.addAttribute("topicCount", topicCount);
+
         return ("/team/teamChating");
     }
 

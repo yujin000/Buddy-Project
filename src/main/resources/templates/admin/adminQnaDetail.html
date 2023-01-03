@@ -6,51 +6,181 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>관리자 페이지-문의 보기</title>
     <link rel="stylesheet" href="/static/css/reset.css">
-    <link rel="stylesheet" href="/static/css/admin.css" />
-    <link rel="stylesheet" href="/static/css/m-admin.css" />
     <script
             src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
             crossorigin="anonymous"
     ></script>
     <script src="/static/js/jQueryCheck.js"></script>
-    <script src="/js/console.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'GyeonggiBatang';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        :root {
+            --main-color: #8621F7;
+            --sub-color: #B2B2B2;
+            --sub-color2 : #1a252f;
+            --back-color: #F8F8F8;
+            --border: 1px solid rgba(0,0,0,0.3);
+            --border2: 1px solid rgba(0,0,0,0.1);
+            --shadow: 1px 1px 10px rgba(0,0,0,0.5);
+        }
+
+        *{
+            font-family: 'Noto Sans KR', sans-serif;
+            outline: none;
+        }
+
+        body {
+            width: 100vw;
+        }
+
+        #title {
+            margin-top: 5vh;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        .wrap{
+            width: 90%;
+            margin: 0 auto;
+            margin-top: 5vh;
+            border: var(--border);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            background: var(--back-color);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .table{
+            width: 100%;
+        }
+        .thead{
+            width: 30%;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 10px;
+            text-align: center;
+            border-bottom: var(--border);
+            border-right: var(--border);
+            display: inline-block;
+            float: left;
+
+        }
+        .tdata {
+            width: 70%;
+            border-bottom: var(--border);
+            height: 40px;
+            float: left;
+            display: inline-block;
+        }
+
+        .textHead {
+            width: 100%;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            border-bottom: var(--border);
+            display: block;
+        }
+        .textArea {
+            width: 100%;
+            min-height: 40px;
+            border-bottom: var(--border);
+            display: block;
+        }
+
+        #insert {
+            width: 100%;
+        }
+
+        textarea {
+            width: 100%; min-height: 100px;
+            border-bottom: var(--border);
+        }
+
+        button {
+            width: 100px;
+            height: 30px;
+            border-radius: 15px;
+            border: var(--border);
+        }
+
+        button:nth-child(2){
+            border: none;
+        }
+
+        .goBack{
+            width: 100px;
+            position: absolute;
+            font-size: 0.8rem;
+            right: 10px;
+            text-align: right;
+            opacity: 0.5;
+        }
+
+
+    </style>
+
 </head>
 <body>
-    <div>번호</div>
-    <div th:text="${qna.getQnaSeq()}"></div>
-    <div>유형</div>
-    <div th:text="${qna.getQnaType()}"></div>
-    <div>작성자</div>
-    <div th:text="${qna.getQnaWriterId()}"></div>
-    <div>제목</div>
-    <div th:text="${qna.getQnaTitle()}"></div>
-    <div>내용</div>
-    <th:block th:if="${!#lists.isEmpty(qnaFileList)}">
-        <div id="img">
-        <th:block th:each="qnaFileList : ${qnaFileList}">
-            <img id="imgSrc" th:src="@{'/qnaImg/'+${qnaFileList.qnaSysName}}">
+<h1 id="title">문의사항 답변</h1>
+<div class="wrap">
+
+
+<div class="table">
+    <div  class="thead">번호</div>
+    <div class="tdata" th:text="${qna.getQnaSeq()}"></div>
+    <div  class="thead">유형</div>
+    <div class="tdata" th:text="${qna.getQnaType()}"></div>
+    <div  class="thead">작성자</div>
+    <div class="tdata" th:text="${qna.getQnaWriterId()}"></div>
+    <div  class="thead">제목</div>
+    <div class="tdata" th:text="${qna.getQnaTitle()}"></div>
+</div>
+    <div class="" style="clear:both;"></div>
+    <div class="textHead">내용</div>
+    <div class="textArea">
+        <th:block th:if="${!#lists.isEmpty(qnaFileList)}">
+            <div id="img">
+                <th:block th:each="qnaFileList : ${qnaFileList}">
+                    <img id="imgSrc" th:src="@{'/qnaImg/'+${qnaFileList.qnaSysName}}">
+                </th:block>
+            </div>
         </th:block>
-        </div>
-    </th:block>
-    <div th:text="${qna.getQnaContents()}"></div>
+        <div th:text="${qna.getQnaContents()}"></div>
+    </div>
     <th:block th:if="${!#lists.isEmpty(qnaComment)}">
-    <div>답변</div>
-        <th:block th:each="qnaComment : ${qnaComment}">
-        <div th:text="${qnaComment.qnaCommentContents}"></div>
-        <div>작성시각</div>
-        <div th:text="${qnaComment.qnaCommentWriteDate}"></div>
-        </th:block>
+    <div class="thead">답변</div>
+            <th:block th:each="qnaComment : ${qnaComment}">
+                <div class="tdata" th:text="${qnaComment.qnaCommentContents}"></div>
+                <div class="thead">작성시간</div>
+                <div class="tdata" th:text="${qnaComment.qnaCommentWriteDate}"></div>
+            </th:block>
     </th:block>
+    <div class="" style="clear:both;"></div>
     <th:block th:if="${#lists.isEmpty(qnaComment)}">
-    <div id="insert" th:data-count="${qnaCommentCount}">답변 작성하기
-        <form action="/qna/insertComment" id="form" method="post" enctype="multipart/form-data">
-            <textarea id="content" name="qnaCommentContents"></textarea>
+    <div id="insert" th:data-count="${qnaCommentCount}">
+        <div class="textHead">답변 작성하기</div>
+        <form class="textArea" style="border: none; padding: 10px;" action="/qna/insertComment" id="form" method="post" enctype="multipart/form-data">
+            <textarea id="content" name="qnaCommentContents" ></textarea>
             <input type="hidden" name="qnaSeq" th:value="${qna.getQnaSeq()}">
         </form>
+        <div class="textHead" >
         <input type="file" id="uploadFile" name="uploadFile" multiple="multiple" accept=".jpg, .png, .gif">
-        <button type="button" id="confirm" >답변 작성</button>
-        <button type="button" id="toAdminQna"><a href="/qna/toAdminQna?cpage=1">목록으로</a></button>
+        <button type="button"  id="confirm" >답변 작성</button>
+        <a href="/qna/toAdminQna?cpage=1" class="goBack">목록으로</a>
+        </div>
     </div>
     </th:block>
     <script>
@@ -72,6 +202,6 @@
     <script>
         console.log($("#imgSrc").attr("src"));
     </script>
-
+</div>
 </body>
 </html>

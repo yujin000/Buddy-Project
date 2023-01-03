@@ -1,6 +1,7 @@
 package com.fivet.buddy.dao;
 
 import com.fivet.buddy.dto.ChatMemberDTO;
+import com.fivet.buddy.dto.ChatMemberListDTO;
 import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.mapper.ChatMemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ public class ChatMemberDAO {
     }
 
     //채팅방 멤버 출력
-    public List<ChatMemberDTO> selectChatMember(int chatRoomSeq){
-        return chatMemberMapper.selectChatMember(chatRoomSeq);
+    public List<ChatMemberListDTO> selectChatMember(ChatMemberListDTO chatMemberListDto){
+        return chatMemberMapper.selectChatMember(chatMemberListDto);
     }
 
     //채팅방 삭제

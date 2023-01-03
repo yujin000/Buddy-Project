@@ -6,15 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>관리자 페이지-문의내역</title>
     <link rel="stylesheet" href="/static/css/reset.css">
-    <link rel="stylesheet" href="/static/css/admin.css" />
-    <link rel="stylesheet" href="/static/css/m-admin.css" />
+    <link rel="stylesheet" href="/static/css/adminQna.css" />
     <script
             src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
             crossorigin="anonymous"
     ></script>
     <script src="/static/js/jQueryCheck.js"></script>
-    <script src="/js/console.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="mobileView">
@@ -37,7 +40,7 @@
             </a>
         </div>
         <p>관리자 페이지</p>
-        <button id="menu" class="iconMenu"><a href="/member/loginIndex">main</a></button>
+        <a href="/member/loginIndex" class="goBack">뒤로가기</a>
         <button id="asideClose">aside</button>
     </div>
     <div id="menuList" class="menuList">

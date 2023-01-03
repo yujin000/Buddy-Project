@@ -69,4 +69,9 @@ public class TeamMemberService {
     public int selectMemberTeam(int memberSeq) {
         return teamMemberDao.selectMemberTeam(memberSeq);
     }
+
+
+    public int selectTeamMember(int teamSeq) {
+        return teamMemberDao.selectTeamMember(teamSeq);
+    }
 }

@@ -76,4 +76,8 @@ public class TeamMemberDAO {
         return teamMemberMapper.countMemberTeam(memberSeq);
     }
 
+    public int selectTeamMember(int TeamSeq) {
+        return teamMemberMapper.countTeamMember(TeamSeq);
+    }
+
 }

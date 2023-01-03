@@ -107,8 +107,9 @@ public class ChatRoomController {
     //채팅방 멤버 출력
     @ResponseBody
     @RequestMapping("selectChatMember")
-    public String selectChatMember(int chatRoomSeq){
-        List<ChatMemberDTO> chatMemberList =  chatMemberService.selectChatMember(chatRoomSeq);
+    public String selectChatMember(ChatMemberListDTO chatMemberListDto){
+        chatMemberListDto.setTeamSeq((int) session.getAttribute("teamSeq"));
+        List chatMemberList =  chatMemberService.selectChatMember(chatMemberListDto);
         Gson g = new Gson();
         return g.toJson(chatMemberList);
     }

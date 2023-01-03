@@ -1,6 +1,7 @@
 package com.fivet.buddy.mapper;
 
 import com.fivet.buddy.dto.ChatMemberDTO;
+import com.fivet.buddy.dto.ChatMemberListDTO;
 import com.fivet.buddy.dto.TeamMemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,7 +14,7 @@ public interface ChatMemberMapper {
     //팀 합류시 기본생성되는 채팅방 목록 (생성포함)
     void insertChatMember(Map<String, String> param);
     //채팅방 멤버 출력
-    List<ChatMemberDTO> selectChatMember(int chatRoomSeq);
+    List<ChatMemberListDTO> selectChatMember(ChatMemberListDTO chatMemberListDto);
     void delChatRoom(int chatRoomSeq);
     void delChatMember(ChatMemberDTO chatMemberDto);
     //채팅방 멤버 프로필 이미지

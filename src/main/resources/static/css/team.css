@@ -604,3 +604,36 @@ aside {
   width: 92px;
   height: 92px;
 }
+
+#profileView{
+  width: 100%;
+  text-align: center;
+  line-height: 50px;
+  background-color: transparent;
+  border: transparent;
+  cursor: pointer;
+}
+
+#profileViewDiv{
+  left: 280px;
+  width: 220px;
+  height: 280px;
+  border: 1px solid #000;
+  background-color: white;
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+#profileImg{
+  width: 220px;
+  height: 220px;
+}
+
+#myImg {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: var(--border);
+  margin-left: 10px;
+}

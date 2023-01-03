@@ -84,4 +84,9 @@ public class TeamMemberDAO {
     public int subManagerCount(int teamSeq){
         return teamMemberMapper.subManagerCount(teamSeq);
     }
+
+    //팀원 닉네임 변경
+    public void updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
+        teamMemberMapper.updateTeamMemberNickName(teamMemberDto);
+    }
 }

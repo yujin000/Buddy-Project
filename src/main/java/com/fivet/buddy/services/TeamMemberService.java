@@ -84,4 +84,9 @@ public class TeamMemberService {
     public void updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
         teamMemberDao.updateTeamMemberNickName(teamMemberDto);
     }
+
+    // 회원 탈퇴(강퇴포함)시 삭제할 팀 목록 출력
+    public List<TeamMemberDTO> selectMembersTeam(int memberSeq) {
+        return teamMemberDao.selectMembersTeam(memberSeq);
+    }
 }

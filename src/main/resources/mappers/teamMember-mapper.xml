@@ -119,4 +119,10 @@
     <update id="updateTeamMemberNickName">
         update team_member set team_member_nickname = #{teamMemberNickname} where member_seq = #{memberSeq} and team_seq = #{teamSeq}
     </update>
+
+    <!--    회원 팀목록 출력-->
+    <select id="selectMembersTeam" resultType="com.fivet.buddy.dto.TeamMemberDTO">
+        select * from team_member where team_seq = #{teamSeq}
+    </select>
+
 </mapper>

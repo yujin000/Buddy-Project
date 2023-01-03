@@ -53,4 +53,7 @@ public class TeamDAO {
 
     //새로운 팀원 감소시, 팀 인원을 -1
     public void updateMinusTeamCount(int teamSeq) { teamMapper.updateMinusTeamCount(teamSeq);}
+
+    //팀원 0명인 팀 제거
+    public void delTeamZeroCount() { teamMapper.delTeamZeroCount(); };
 }

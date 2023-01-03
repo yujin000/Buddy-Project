@@ -89,4 +89,9 @@ public class TeamMemberDAO {
     public void updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
         teamMemberMapper.updateTeamMemberNickName(teamMemberDto);
     }
+
+    //회원이 속한 팀 추출
+    public List<TeamMemberDTO> selectMembersTeam(int memberSeq) {
+        return teamMemberMapper.selectMembersTeam(memberSeq);
+    }
 }

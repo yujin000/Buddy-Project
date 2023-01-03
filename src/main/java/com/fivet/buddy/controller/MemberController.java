@@ -1,8 +1,10 @@
 package com.fivet.buddy.controller;
 
+import com.fivet.buddy.dao.TeamMemberDAO;
 import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.MemberImgDTO;
 import com.fivet.buddy.dto.TeamDTO;
+import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.services.*;
 import com.fivet.buddy.util.FileUtil;
 import org.slf4j.Logger;
@@ -54,6 +56,9 @@ public class MemberController {
     // 회원 indexPage 경로
 
     private String memberIndex = "redirect:/member/loginIndex";
+
+    @Autowired
+    private ChatRoomService chatRoomService;
 
     // ExceptionHandler
     @ExceptionHandler(Exception.class)
@@ -319,7 +324,15 @@ public class MemberController {
         personalFolderService.memberOut(memberSeq);
         // 기본 폴더 삭제
         basicFolderService.memberOut(memberSeq);
+
+        // 회원 탈퇴(강퇴포함)시 삭제할 팀 목록 출력
+        List<TeamMemberDTO> teamMemberList = teamMemberService.selectMembersTeam((int)session.getAttribute("memberSeq"));
+        // 채팅방 삭제 로직을 탈퇴대상 팀으로 반복문 돌려준다.
+        for (TeamMemberDTO teamMemberdto : teamMemberList) {
+            chatRoomService.teamSelfOut(teamMemberdto);
+        }
         memberService.deleteMember(String.valueOf(session.getAttribute("memberSeq")));
+
         session.invalidate();
         return "redirect:/";
     }
@@ -383,6 +396,7 @@ public class MemberController {
 
         memberService.deleteMember(String.valueOf(session.getAttribute("memberSeq")));
         List<MemberDTO> list = memberService.selectMembers();
+
         model.addAttribute("memberList", list);
         return "redirect:member/toAdminMember";
     }

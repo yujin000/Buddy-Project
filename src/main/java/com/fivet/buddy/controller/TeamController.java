@@ -92,6 +92,7 @@ public class TeamController {
             model.addAttribute("chatRoomList", chatRoomList);
             model.addAttribute("topicList", topicList);
             model.addAttribute("topicCount", topicCount);
+            model.addAttribute("teamMemberInfo", teamMemberDto);
             return "team/team";
         }
 

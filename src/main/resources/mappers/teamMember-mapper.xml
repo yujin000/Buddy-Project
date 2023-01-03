@@ -100,4 +100,5 @@
     <select id="countMemberTeam" resultType="int">
         select count(*) from team_member where member_seq = #{value}
     </select>
+
 </mapper>

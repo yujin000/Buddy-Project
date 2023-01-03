@@ -48,4 +48,8 @@
 
     </update>
 
+    <update id="updateNickname">
+        update event set "event_writer" = #{eventWriter} where  "member_seq" = #{memberSeq}  and "team_seq" = #{teamSeq}
+    </update>
+
 </mapper>

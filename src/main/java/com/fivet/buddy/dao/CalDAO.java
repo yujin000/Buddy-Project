@@ -38,4 +38,8 @@ public class CalDAO {
     public  void updateEvent(CalDTO calDto) throws  Exception {
         calMapper.updateEvent(calDto);
     }
+
+    public void updateNickname(int teamSeq, int memberSeq, String eventWriter) throws  Exception{
+        calMapper.updateNickname(teamSeq, memberSeq, eventWriter);
+    }
 }

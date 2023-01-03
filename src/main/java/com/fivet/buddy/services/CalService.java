@@ -40,6 +40,8 @@ public class CalService {
         calDao.updateEvent(calDto);
         }
 
-
+    public void updateNickname(int memberSeq, int teamSeq, String eventWriter) throws Exception{
+        calDao.updateNickname(memberSeq,teamSeq,eventWriter);
+    }
 
 }

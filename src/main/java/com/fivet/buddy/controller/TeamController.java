@@ -34,6 +34,9 @@ public class TeamController {
     private TeamMemberService teamMemberService;
 
     @Autowired
+    private CalService calService;
+
+    @Autowired
     private BasicFolderService basicFolderService;
 
     @Autowired
@@ -253,9 +256,13 @@ public class TeamController {
     //팀원 닉네임 변경
     @ResponseBody
     @PostMapping("updateTeamMemberNickName")
-    public String updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
+    public String updateTeamMemberNickName(TeamMemberDTO teamMemberDto ,CalDTO calDto) throws Exception{
         teamMemberDto.setMemberSeq((int) session.getAttribute("memberSeq"));
         teamMemberService.updateTeamMemberNickName(teamMemberDto);
+        String eventWriter = teamMemberDto.getTeamMemberNickname();
+        int memberSeq = (int) session.getAttribute("memberSeq");
+        int teamSeq = (int)session.getAttribute("teamSeq");
+        calService.updateNickname(memberSeq,teamSeq,eventWriter);
         return teamMemberDto.getTeamMemberNickname();
     }
 

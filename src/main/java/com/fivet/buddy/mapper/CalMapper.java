@@ -20,4 +20,6 @@ public interface CalMapper {
     void deleteEvent(int eventSeq, int memberSeq);
 
     void updateEvent(CalDTO calDto);
+
+    void updateNickname(int memberSeq, int teamSeq, String eventWriter);
 }

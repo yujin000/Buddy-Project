@@ -70,8 +70,18 @@ public class TeamMemberService {
         return teamMemberDao.selectMemberTeam(memberSeq);
     }
 
+
+    public int selectTeamMember(int teamSeq) {
+        return teamMemberDao.selectTeamMember(teamSeq);
+    }
+
     //부매니저 수 체크
     public int subManagerCount(int teamSeq){
         return teamMemberDao.subManagerCount(teamSeq);
+    }
+
+    //팀원 닉네임 변경
+    public void updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
+        teamMemberDao.updateTeamMemberNickName(teamMemberDto);
     }
 }

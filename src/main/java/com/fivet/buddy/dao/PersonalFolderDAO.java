@@ -153,4 +153,14 @@ public class PersonalFolderDAO {
     public List<Map<String, String>> nameList(String parentKey) {
         return personalFolderMapper.nameList(parentKey);
     }
+
+    // 기본 키 가져오기
+    public List<Map<String,String>> getTeamKeys(List<Map<String,String>> keyList) {
+        return personalFolderMapper.getTeamKeys(keyList);
+    }
+
+    //팀 탈퇴시 폴더들 전부 삭제
+    public void teamOut(List<Map<String, String>> allKeys) {
+        personalFolderMapper.teamOut(allKeys);
+    }
 }

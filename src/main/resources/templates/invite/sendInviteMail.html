@@ -14,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <script src="/static/js/console.js"></script>
     <style>
         @font-face {
             font-family: 'GyeonggiBatang';
@@ -79,9 +80,10 @@
     <button type="button" id="inviteBtn" th:data-team="${teamSeq}" th:data-name="${teamName}" th:data-member-name="${memberName}">초대이메일 보내기</button>
     <p id="status"></p>
 </div>
+<script>
+</script>
 
 <script>
-
     // 이메일 검증
     const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     let emailCheck = false;

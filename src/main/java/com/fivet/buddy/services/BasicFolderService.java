@@ -98,4 +98,18 @@ public class BasicFolderService {
     public long getTeamVolume(String rootTeamKey) {
         return basicFolderDao.getTeamVolume(rootTeamKey);
     }
+
+    // 팀 삭제 시 기본 폴더 삭제
+    public void teamOut(int teamSeq) {
+        String path = personalFolderDAO.myBasicPath(basicFolderDao.myTeamFolderKey(teamSeq));
+        FileUtil fileUtil = new FileUtil();
+        fileUtil.deleteFolder(path);
+        basicFolderDao.teamOut(teamSeq);
+    }
+    // 팀 기본 키 가져오기
+    public String myTeamFolderKey(int teamSeq) {
+        return basicFolderDao.myTeamFolderKey(teamSeq);
+    }
+
+
 }

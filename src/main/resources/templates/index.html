@@ -15,6 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <script src="/static/js/console.js"></script>
   </head>
   <body>
   <th:block th:if="${#strings.isEmpty(session.memberSeq)}">
@@ -278,7 +279,7 @@
   <script>
     //팀 생성 이벤트
     $("#addTeam").click(function (){
-      if ($("#teamCount").val()>=5) {
+      if ($("#teamCount").text()>=5) {
         alert("5팀 이상 참여할 수 없습니다.");
       } else {
         location.href = "/team/add";

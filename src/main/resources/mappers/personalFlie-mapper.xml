@@ -114,4 +114,15 @@
         where
             personal_files_member_seq = #{value}
     </delete>
+
+    <!-- 팀 삭제 시 팀드라이브 파일 삭제 -->
+    <delete id="teamOut">
+        delete from
+            personal_files
+        where
+            personal_files_folder_key in
+        <foreach collection="list" item="list" open="(" separator="," close=")">
+            #{list.key}
+        </foreach>
+    </delete>
 </mapper>

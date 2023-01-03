@@ -129,4 +129,12 @@
         where
             basic_folder_key = #{value}
     </select>
+
+    <!-- 팀 기본 폴더 제거 -->
+    <delete id="teamOut">
+        delete from
+            basic_folder
+        where
+            basic_folder_team_seq = #{value}
+    </delete>
 </mapper>

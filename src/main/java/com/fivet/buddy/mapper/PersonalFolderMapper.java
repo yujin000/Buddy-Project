@@ -3,6 +3,7 @@ package com.fivet.buddy.mapper;
 import com.fivet.buddy.dto.MemberDTO;
 import com.fivet.buddy.dto.PersonalFolderDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import javax.mail.Folder;
 import java.util.List;
@@ -65,4 +66,8 @@ public interface PersonalFolderMapper {
     String getParentKey(String searchKey);
 
     List<Map<String, String>> nameList(String parentKey);
+
+    List<Map<String,String>> getTeamKeys(@Param("list") List<Map<String,String>> keyList);
+
+    void teamOut(@Param("list") List<Map<String, String>> allKeys);
 }

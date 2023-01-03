@@ -75,4 +75,9 @@ public class BasicFolderDAO {
     public void uploadTeamByte(Map<String, Object> map) {
         basicFolderMapper.uploadTeamByte(map);
     }
+
+    // 팀 삭제시 기본 폴더 삭제
+    public void teamOut(int teamSeq) {
+        basicFolderMapper.teamOut(teamSeq);
+    }
 }

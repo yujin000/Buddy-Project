@@ -22,7 +22,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-
     <style>
         .qnaContent {
             border: 1px solid;
@@ -90,7 +89,11 @@
                     </div>
                 </li>
             </ul>
+            <div class="listNum">
+                <div th:utext="${pageNavi}"></div>
+            </div>
         </div>
+
     </div>
 </div>
 <script>
@@ -114,7 +117,7 @@
     })
 
     function mainOut(e){
-        location.href ="/member/loginIndex";
+        location.href ="/team/teamOut";
     }
 
     // when you move thead > please print another list
@@ -153,6 +156,7 @@
                     }
                 })
             }
+
             if (rsp[0].qnaCommentContents != null && rsp[0].qnaSysName == null) {
                 qnaCmt.text("답변 : " + rsp[0].qnaCommentContents);
                 deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq);

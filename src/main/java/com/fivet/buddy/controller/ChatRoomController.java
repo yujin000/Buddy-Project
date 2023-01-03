@@ -52,10 +52,16 @@ public class ChatRoomController {
     public String insertChatMsg(TeamMemberDTO teamMemberDto,int chatRoomSeq, Model model) throws Exception {
         teamMemberDto.setTeamSeq((int)session.getAttribute("teamSeq"));
         teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+        //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
+        Map<String, Integer> param = new HashMap<>();
+        param.put("teamSeq", teamMemberDto.getTeamSeq());
+        param.put("memberSeq", teamMemberDto.getMemberSeq());
+        List<ChatRoomDTO> topicList = chatRoomService.selectTopic(param.get("teamSeq"));
         // 회원 번호를 이용하여 팀 DTO값을 불러옴.
         teamMemberDto = teamMemberService.selectOne(teamMemberDto);
         model.addAttribute("teamMemberInfo", teamMemberDto);
 
+        model.addAttribute("topicList", topicList);
         model.addAttribute("chatRoomSeq",chatRoomSeq);
         model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));
         model.addAttribute("chatMemberList",teamMemberService.selectChatMember(chatRoomSeq));

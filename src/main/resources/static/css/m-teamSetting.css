@@ -1,11 +1,18 @@
 @media (max-width: 600px) {
     .wrap {
-        margin-top: 5vh;
+        margin-top: 10vh;
         padding: 0 10px;
     }
     .memberProfile > form > .article {
         height: 120px;
         position: relative;
+    }
+
+    .contentWrap {
+        border: none;
+        box-shadow: none;
+        padding: 10px;
+        background: none;
     }
     .btns {
         right: 10px;
@@ -31,4 +38,11 @@
         width: 160px;
         overflow-x: scroll;
     }
+
+    #gradeBtn {
+        position: absolute;
+        top: -35px;
+        border: none;
+    }
+
 }

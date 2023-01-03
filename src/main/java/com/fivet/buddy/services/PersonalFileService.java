@@ -104,4 +104,8 @@ public class PersonalFileService {
     public void memberOut(int memberSeq) throws Exception{
         personalFileDao.memberOut(memberSeq);
     }
+    // 팀 삭제시 파일 삭제
+    public void teamOut(List<Map<String, String>> allKeys) {
+        personalFileDao.teamOut(allKeys);
+    }
 }

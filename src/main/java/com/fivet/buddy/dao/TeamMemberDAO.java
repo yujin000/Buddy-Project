@@ -76,4 +76,22 @@ public class TeamMemberDAO {
         return teamMemberMapper.countMemberTeam(memberSeq);
     }
 
+    public int selectTeamMember(int TeamSeq) {
+        return teamMemberMapper.countTeamMember(TeamSeq);
+    }
+
+    //부매니저 수 체크
+    public int subManagerCount(int teamSeq){
+        return teamMemberMapper.subManagerCount(teamSeq);
+    }
+
+    //팀원 닉네임 변경
+    public void updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
+        teamMemberMapper.updateTeamMemberNickName(teamMemberDto);
+    }
+
+    //회원이 속한 팀 추출
+    public List<TeamMemberDTO> selectMembersTeam(int memberSeq) {
+        return teamMemberMapper.selectMembersTeam(memberSeq);
+    }
 }

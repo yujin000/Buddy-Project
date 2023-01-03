@@ -23,6 +23,7 @@
     let chatRoomSeq = [[${chatRoomSeq}]];
     let teamMemberNickname = [[${session.teamMemberNickname}]];
     let memberSeq = [[${session.memberSeq}]];
+    let memberImgSysName = [[${memberImgSysName}]];
     /*]]>*/
 </script>
 
@@ -101,6 +102,8 @@
             let data = JSON.parse(e.data);
             let msg = $("<div>");
             msg.addClass("msg");
+            msg.append(data.memberImgSysName);
+            msg.append("<br>");
             msg.append(data.teamMemberNickname);
             msg.append("<br>");
             msg.append(data.chatContent);
@@ -118,6 +121,7 @@
                 if(file == "" && emoticonSrc=="") {
                     // Json 생성
                     let wsJson = {
+                        "memberImgSysName":"<img src="+memberImgSysName+"/>",
                         "chatRoomSeq": chatRoomSeq,
                         "teamMemberNickname": teamMemberNickname,
                         "chatContent": $(this).val(),
@@ -132,6 +136,7 @@
                 //이모티콘만 보내기
                 else if($("#inputMsg").val()=="" && emoticonSrc.length!=""){
                     let wsJson = {
+                        "memberImgSysName":"<img src="+memberImgSysName+"/>",
                         "chatRoomSeq": chatRoomSeq,
                         "teamMemberNickname": teamMemberNickname,
                         "chatContent": "<img src="+emoticonSrc+"/>",
@@ -148,6 +153,7 @@
                 //이모티콘 + 메세지 보내기
                 else if(emoticonSrc.length!="" && $("#inputMsg").val()!=""){
                     let wsJson = {
+                        "memberImgSysName":"<img src="+memberImgSysName+"/>",
                         "chatRoomSeq": chatRoomSeq,
                         "teamMemberNickname": teamMemberNickname,
                         "chatContent": "<img src="+emoticonSrc+"/><br/>"+$(this).val(),
@@ -204,6 +210,7 @@
                     let ext = chatOriName.split('.').pop().toLowerCase();
                     if ($.inArray(ext, ['jpg', 'jpeg', 'png', 'gif']) != -1) {
                         let wsJson = {
+                            "memberImgSysName":"<img src="+memberImgSysName+"/>",
                             "chatRoomSeq": chatRoomSeq,
                             "teamMemberNickname": teamMemberNickname,
                             "chatContent": "<img src='/chatImg/"+chatSysName+"' style='width: 40px'><br><a href='/chatFile/download?chatSysName=" + chatSysName + "&chatOriName=" + chatOriName + "' style='color: blue'>" + chatOriName + "</a>",
@@ -217,6 +224,7 @@
                         return false;
                     } else {
                         let wsJson = {
+                            "memberImgSysName":"<img src="+memberImgSysName+"/>",
                             "chatRoomSeq": chatRoomSeq,
                             "teamMemberNickname": teamMemberNickname,
                             "chatContent": "<img src='/static/img/fileImg.png 'style='width: 40px'><br><a href='/chatFile/download?chatSysName=" + chatSysName + "&chatOriName=" + chatOriName + "' style='color: blue'>" + chatOriName + "</a>",
@@ -269,6 +277,16 @@
     });
 
 </script>
+
+<!--세션 및 각종 변수를 담아 쓰는 input-->
+<input type="hidden"
+       th:data-sessionMemberSeq="${session.memberSeq}"
+       th:data-team="${session.teamSeq}"
+       th:data-grade="${teamMemberInfo.grade}"
+       th:data-teamSeq="${session.teamSeq}"
+       id="infoData"
+>
+
 <div class="wrap">
     <div class="header">
         <div class="logo">
@@ -295,27 +313,9 @@
     <div class="main">
         <aside>
             <div id="profile" class="asideTitle">
-                <img src="" alt=""/>
-                <h3><a href="../member/myProfile.html" th:text="${session.teamMemberNickName}"></a></h3>
-                <button id="alarmView" class="toggle">알람</button>
+                <img id="myImg" th:src="${memberImgSysName}" alt="" />
+                <div id="profileView" th:text="${session.teamMemberNickname}"></div>
             </div>
-            <ul id="alarmList" class="subItem">
-                <h1>알림</h1>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-            </ul>
 
             <div id="topic" class="asideList">
                 <div class="asideTitle">
@@ -323,17 +323,7 @@
                     <button id="topicToggle" class="toggle">v</button>
                 </div>
                 <div id="topicList" class="asideItem">
-                    <ul>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
-                    </ul>
+
                 </div>
             </div>
 
@@ -356,10 +346,19 @@
                 </div>
             </div>
         </aside>
+        <div id="profileViewDiv">
+            <img id="profileImg" th:src="${memberImgSysName}"><br/>
+            <div id="nickNameDiv">
+                <span id="nickNameSpan" th:text="${session.teamMemberNickname}" onclick="nickNameSpanClick()"/>
+                <button id="updateNickNameBtn">수정</button>
+            </div>
+            <div id="gradeDiv">
+                <span id="pGrade" th:text="${teamMemberInfo.grade}"/>
+            </div>
+        </div>
         <section class="msgSection">
             <div class="chatHeader">
                 <h1>team-list</h1>
-                <input type="search" placeholder="검색" id="searchMsg"/>
                 <button id="memberView">멤버</button>
             </div>
             <div class="msgView">
@@ -367,17 +366,11 @@
                     <ul id="memberList" class="subItem">
                         <h1>member</h1>
                     </ul>
-
-                    <ul id="resultList" class="subItem">
-                        <h1>검색결과</h1>
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                        <li>4</li>
-                    </ul>
                 </div>
                 <th:block th:each="chatMsgList : ${chatMsgList}">
                     <div class="msg">
+                        <div class="memberImg" th:utext="${chatMsgList.memberImgSysName}">
+                        </div>
                         [[${chatMsgList.teamMemberNickname}]]
                         <br>
                         <div th:if="${chatMsgList.chatMsgType == 0}" th:text="${chatMsgList.chatContent}"></div>
@@ -484,23 +477,19 @@
         $("#appToggle").click(function () {
             $("#appList").toggle();
         });
-        $("#searchMsg").keypress(function enterEvent(e) {
-            if (e.keyCode == 13) {
-                $("#resultList").toggle();
-                $("#memberList").css("display", "none");
-            }
-        });
 
         $("#memberView").click(function () {
             $("#memberList").toggle();
         });
 
-        $("#alarmView").click(function () {
-            $("#alarmList").toggle();
-        });
         $("#fileSelect").click(function () {
             $(".fileView").toggle();
         });
+
+        $("#profileView").on("click",function (){
+            $("#profileViewDiv").toggle();
+            BtnClick();
+        })
     });
 </script>
 
@@ -535,5 +524,48 @@
     })
 </script>
 
+<script>
+    //팀원 닉네임 변경
+    let input = $("<input>");
+    let button = $("<buuton>");
+    function nickNameSpanClick() {
+        $("#nickNameSpan").css("display", "none");
+        $("#updateNickNameBtn").css("display","inline-block")
+        $("#inputNickName").css("display","inline-block");
+        input.val($("#nickNameSpan").text())
+        input.attr("id", "inputNickName");
+        $("#nickNameDiv").prepend(input);
+        $("#inputNickName").focus();
+    }
+
+    function BtnClick(){
+        $("#nickNameSpan").css("display", "block");
+        $("#inputNickName").css("display","none");
+        $("#updateNickNameBtn").css("display","none");
+
+    }
+    $("#updateNickNameBtn").on("click",function (){
+        let inputNickName = $("#inputNickName").val();
+        let teamSeq=$("#infoData").data("teamseq");
+        const nickNameRegex = /^[가-힣\s]{1,15}$/;
+        let Result = nickNameRegex.test(inputNickName);
+        if(Result){
+            $.ajax({
+                url:"/team/updateTeamMemberNickName",
+                type:"post",
+                data:{"teamMemberNickname":inputNickName,
+                    "teamSeq":teamSeq},
+            }).done(function (rsp) {
+                console.log(rsp)
+                $("#profileView").html(rsp);
+                $("#nickNameSpan").text(rsp);
+                BtnClick();
+                location.reload();
+            })}
+        else{
+            alert("닉네임은 공백포함 1~15글자만 가능합니다. (특수문자 불가능)");
+        }
+    })
+</script>
 </body>
 </html>

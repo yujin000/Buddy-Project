@@ -1,3 +1,21 @@
+@font-face {
+    font-family: 'GyeonggiBatang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --main-color: #8621F7;
+    --sub-color: #B2B2B2;
+    --back-color: #F8F8F8;
+    --border: 1px solid rgba(0,0,0,0.3);
+    --shadow: 1px 1px 10px rgba(0,0,0,0.5);
+}
+
+* {
+  font-family: 'Noto Sans KR', sans-serif;
+}
 
 form {
     width: 100%;
@@ -6,7 +24,6 @@ form {
 .wrap {
     width: 100%;
     margin-top: 10vh;
-    border: 1px dashed #000;
 }
 
 .logo {
@@ -16,18 +33,30 @@ form {
     border: 1px dashed red;
 }
 
+.logoTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    /*font-family: GyeonggiBatang, serif;*/
+    text-align: center;
+    margin-top: 5px;
+}
+
 .myProfile {
-    width: 470px;
+    max-width: 500px;
+    width: 100%;
     margin: 0 auto;
+    padding: 10px;
     margin-top: 20px;
-    border: 1px solid #000;
+    border: var(--border);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    background: var(--back-color);
 }
 
 #titleImg {
     width: 100%;
     height: 40px;
     line-height: 40px;
-    border: 1px solid #000;
     padding-left: 10px;
 }
 
@@ -35,23 +64,24 @@ form {
     height: 40px;
     padding-left: 10px;
     line-height: 40px;
-    border: 1px solid #000;
     float: left;
 }
 
 .profileImg {
+    width: 100%;
     height: 120px;
     padding: 10px;
-    background: seagreen;
+    margin-bottom: 10px;
     display: flex;
     position: relative;
+    border-bottom: var(--border) ;
 }
 
 .myImg {
     width: 100px;
     height: 100px;
     border-radius: 50px;
-    border: 1px solid #000;
+    border: var(--border);
 }
 
 button[class*="Btn"] {
@@ -67,20 +97,28 @@ input[type=file] {
 
 #deleteImg {
     position: absolute;
-    margin-top: 50px;
+    top: calc(33% + 5px);
     right: 10px;
+    background: var(--main-color);
+    color: #fff;
+    border: none;
 }
-
+#deleteImg:hover {
+    opacity: 0.8;
+}
 .update {
     width: 100%;
     display: flex;
-    border: 1px solid #000;
     position: relative;
+    margin-bottom: 10px;
 }
 
 input[class^="val"] {
     width: 200px;
     height: 40px;
+    padding: 10px;
+    border: var(--border);
+    border-radius: 5px;
     position: absolute;
     right: 40px;
 }
@@ -90,15 +128,18 @@ input[class^="val"] {
     right: 0;
     height: 40px;
     position: absolute;
+    border: none;
+    background: none;
 }
 
 div[class*="hidden"] {
     width: 100%;
     height: 50px;
-    padding: 10px;
-    border: 1px solid #000;
+    padding: 20px;
+    border-top: var(--border);
     text-align: right;
-    display: none;
+    display: block;
+    position: relative;
 }
 
 #hidn3 {
@@ -127,20 +168,31 @@ div[class*="hidden"] {
 }
 .inputPw {
     display: block;
-    width: 250px;
+    width: 150px;
     height: 30px;
+    border: var(--border);
+    border-radius: 5px;
 }
 
 .inputPhone {
     display: block;
     width: 150px;
     height: 30px;
+    border: var(--border);
+    border-radius: 5px;
 }
 
 #floatBtn {
+    background: var(--main-color);
+    color: #fff;
     position: absolute;
     right: 10px;
     top: 80%;
+    border: none;
+}
+
+#floatBtn:hover {
+    opacity: 0.8;
 }
 
 #goBack {
@@ -149,25 +201,55 @@ div[class*="hidden"] {
     text-align: center;
     display: block;
 }
+#goBack:hover {
+    opacity: 1;
+}
 
 /* 휴대폰번호 css */
-#inputPhone{
-    float:left;
-}
 
 #phoneCheckVal {
     float: left;
-    margin-top: 10px;
+    display: block;
 }
 
+
 .inputPhone,#phoneCheckVal{
-    width:300px;
+    width:150px;
 }
 /* 휴대폰 인증 css */
 #Timer,#emailTimer{
     width:50px;
-    border:none;
+    border:var(--border);
+    border-radius: 5px;
 }
+#Timer {border: none;
+    background: none;
+    font-size: 14px;
+    }
 #phoneCheckVal, #phoneConfirm, #Timer, #timerLabel{
     display:none;
 }
+
+.cancel {
+    margin-top: 80px;
+    text-align: center;
+}
+
+#timerLabel {
+    display: inline-block;
+    float: left;
+    line-height: 30px;
+    height: 30px;
+    font-size: 14px;
+    margin-right: 5px;
+}
+#phoneConfirm{
+    position: absolute;
+    top: 105px;
+    right: 10px;
+}
+#sendSms {
+    position: absolute;
+    top: 75px;
+    right: 10px;}
+

@@ -1,11 +1,27 @@
 @media (max-width: 600px) {
   body {
-    background: thistle;
+    background: #fff;
   }
 
   .wrap {
     width: 100%;
     margin-top: 20vw;
+
+  }
+
+  .floatBtn {
+    height: 25px;
+    line-height: 20px;
+    padding: 0px;
+  }
+
+
+
+
+  .contentWrap {
+    border: none;
+    box-shadow: none;
+    background: none;
   }
   .logo {
     width: 110px;
@@ -56,14 +72,18 @@
     margin-bottom: 10px;
   }
 
-  .snsLogin {
-    width: 100%;
-    height: 50px;
-    border-radius: 25px;
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: bold;
+
+  #naverIdLogin {
     display: block;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    float: none;
+  }
+  #kakao {
+    display: block;
+    clear: both;
+    margin: 0 auto;
+
   }
 
   #goSignup {
@@ -72,4 +92,21 @@
     display: block;
     text-align: center;
   }
+  #myprofile{
+    top: 20px;
+    right: 10px;
+  }
+  #logout {
+    top: 50px;
+  }
+
+  #managementTeam{
+    top: 20px;
+    right: 10px;
+  }
+  #goTeam {
+    top: 50px;
+  }
+
+
 }

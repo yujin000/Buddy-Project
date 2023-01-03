@@ -22,4 +22,11 @@ public interface TeamMemberMapper {
     List<Integer> selectTeamMemberSeq(int teamSeq);
     int selectCheckMember(TeamMemberDTO teamMemberDto);
     int countMemberTeam(int memberSeq);
+
+    int countTeamMember(int TeamSeq);
+
+    int subManagerCount(int teamSeq);
+
+    void updateTeamMemberNickName(TeamMemberDTO teamMemberDto);
+    List<TeamMemberDTO> selectMembersTeam(int memberSeq);
 }

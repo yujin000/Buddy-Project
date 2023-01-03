@@ -14,10 +14,15 @@
           crossorigin="anonymous"
   ></script>
   <script src="/static/js/jQueryCheck.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="wrap">
-  <h1 class="title">팀 관리</h1>
+  <h1 class="logoTitle">팀 관리</h1>
   <div class="contentWrap">
     <div class="teamProfile">
       <p class="subTitle">팀 프로필</p>
@@ -26,7 +31,7 @@
                 type="text"
                 name="teamName"
                 id="teamName"
-                class="input_text"
+                class="inputText"
                 th:value="${teamDto.getTeamName()}"
                 disabled
         />
@@ -70,6 +75,7 @@
               <button
                       type="button"
                       name="grade"
+                      id="gradeBtn"
                       class="gradeBtn"
                       th:data-nick-name="${teamMemberDtoList.getTeamMemberNickname}"
                       th:data-memberSeq="${teamMemberDtoList.getMemberSeq}"
@@ -77,7 +83,7 @@
                       th:data-session="${sessionMemberSeq}"
                       th:data-owner="${teamDto.getTeamOwnerSeq}"
                       th:text="${teamMemberDtoList.getGrade}"
-              >
+              >등급
               </button>
               <th:block th:if="${teamMemberDtoList.getGrade!='매니저'}">
               <button type="submit" class="delBtn" id="delMember"
@@ -122,8 +128,8 @@
     <div class="modalWrap2">
       <h1>🤔</h1>
       <h3 id="h3_2"></h3>
-      <button class="okNoBtn">예</button>
-      <button class="okNoBtn">아니요</button>
+      <button class="okNoBtn" id="yes">예</button>
+      <button class="okNoBtn" id="no">아니요</button>
       <button id="goBack2" type="button" onclick="closer2()">나가기</button>
     </div>
   </div>
@@ -132,7 +138,9 @@
   <th:block th:if="${teamDto.getTeamOwnerSeq==sessionMemberSeq}">
   <form action="/team/deleteTeam" id="deleteTeam" method="post">
     <input type="hidden" name="teamSeq" id="teamSeq" th:value="${teamDto.getTeamSeq()}">
-    <p style="text-align: center; margin-top: 20px;">팀을 삭제하시겠습니까? <a href="#" onclick="delClick()"><strong>삭제</strong></a></p>
+    <p class="cancel">
+      ⛔ 팀 삭제를 원하시나요?  <a href="#" onclick="delClick();" onmouseenter="this.style.opacity =1;" onmouseleave="this.style.opacity=0.5;" style="opacity: 0.3;">탈퇴</a>
+    </p>
   </form>
   </th:block>
 </div>
@@ -143,18 +151,27 @@
   let yesNo;
   let okNo;
   let memberSeq;
-  let teamSeq;
-
+  let teamSeq=$("#teamSeqHidden").val();
+  let subManagerCount;
   //매니저는 자기 등급 변경 불가능
   $(function (){
     $(".gradeBtn").eq(0).attr("disabled",true);
+
+    $.ajax({
+      url:"/team/subManagerMemberCount",
+      data:{"teamSeq":teamSeq},
+      success: function () {
+      }, error: function () {
+      }
+    }).done(function (rsp) {
+      subManagerCount=rsp;
+    })
   })
 
   // modal 열림 함수 ( 등급 변경 창 )
   $(".gradeBtn").on("click",function (){
     $(".modal").css("display","block");
     memberSeq=$(this).data("memberseq");
-    teamSeq=$(this).data("teamseq");
     thisNickName=$(this).data("nick-name");
     oriGrade = $(this).text();
     $("#h3").html(thisNickName +"님의 등급을 <br/> 어떻게 변경할까요?");
@@ -169,40 +186,45 @@
   })
 
   //'예' 누르면 등급 변경 되는 ajax
-  $(".yesNoBtn").on("click",function () {
-    yesNo = $(this).text();
-    let enGrade = changeGrade;
-    if (yesNo == "예") {
-      $.ajax({
-        url: "/team/updateTeamMemberGrade",
-        data: {
-          "grade": enGrade,
-          "memberSeq": memberSeq,
-          "teamSeq":teamSeq
-        },
-        type:"post",
-        success: function () {
-        }, error: function () {
-        }
-      }).done(function () {
-        location.reload();
-        if(changeGrade=="매니저"){
-          location.href="/member/loginIndex"
-        }else {
+    $(".yesNoBtn").on("click", function () {
+      if (changeGrade=="부매니저" && subManagerCount >= 2) {
+        console.log("if");
+        alert("부매니저는 최대 2명까지만 가능합니다");
+        $(".modal1").css("display","none");
+      } else {
+        yesNo = $(this).text();
+        let enGrade = changeGrade;
+        if (yesNo == "예") {
+          $.ajax({
+            url: "/team/updateTeamMemberGrade",
+            data: {
+              "grade": enGrade,
+              "memberSeq": memberSeq,
+              "teamSeq": teamSeq
+            },
+            type: "post",
+            success: function () {
+            }, error: function () {
+            }
+          }).done(function () {
+            location.reload();
+            if (changeGrade == "매니저") {
+              location.href = "/member/loginIndex"
+            } else {
+              $(".modal1").css("display", "none");
+            }
+          })
+        } else {
           $(".modal1").css("display", "none");
         }
-      })
-    }  else {
-      $(".modal1").css("display", "none");
-    }
-  })
+      }
+    })
 
   // modal2 열림 함수 ( 팀원 강퇴 )
   $(".delBtn").on("click",function (){
     $(".modal2").css("display","block");
     memberSeq=$(this).data("memberseq");
     thisNickName=$(this).data("nick-name");
-    teamSeq=$(this).data("teamseq");
     $("#h3_2").html(thisNickName +"님을 강퇴 시키겠습니까?");
   })
 
@@ -269,7 +291,7 @@
   $("#changeTeam").on("click",function (){
     $("#teamName").attr("disabled", false);
     $("#changeTeam").css("display","none");
-    $("#teamName").css("border","2px dashed magenta");
+    $("#teamName").css("border","2px dashed #8621F7");
     $('#updateDiv').append(updateTeamNameBtn);
   })
 

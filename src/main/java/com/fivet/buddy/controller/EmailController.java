@@ -54,6 +54,7 @@ public class EmailController {
         for (int i = 0; i < 6; i++) { // 이메일 인증코드 6자리
             key.append((rnd.nextInt(10)));
         }
+        System.out.println(key);
         return key.toString();
     }
 
@@ -88,6 +89,7 @@ public class EmailController {
                 key.append((rnd.nextInt(10)));
             }
         }
+        System.out.println(key);
         return key.toString();
     }
 }

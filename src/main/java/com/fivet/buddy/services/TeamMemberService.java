@@ -69,4 +69,24 @@ public class TeamMemberService {
     public int selectMemberTeam(int memberSeq) {
         return teamMemberDao.selectMemberTeam(memberSeq);
     }
+
+
+    public int selectTeamMember(int teamSeq) {
+        return teamMemberDao.selectTeamMember(teamSeq);
+    }
+
+    //부매니저 수 체크
+    public int subManagerCount(int teamSeq){
+        return teamMemberDao.subManagerCount(teamSeq);
+    }
+
+    //팀원 닉네임 변경
+    public void updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
+        teamMemberDao.updateTeamMemberNickName(teamMemberDto);
+    }
+
+    // 회원 탈퇴(강퇴포함)시 삭제할 팀 목록 출력
+    public List<TeamMemberDTO> selectMembersTeam(int memberSeq) {
+        return teamMemberDao.selectMembersTeam(memberSeq);
+    }
 }

@@ -3,6 +3,7 @@ package com.fivet.buddy.services;
 import com.fivet.buddy.dao.ChatMemberDAO;
 import com.fivet.buddy.dao.TeamMemberDAO;
 import com.fivet.buddy.dto.ChatMemberDTO;
+import com.fivet.buddy.dto.ChatMemberListDTO;
 import com.fivet.buddy.dto.ChatRoomDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,12 +48,19 @@ public class ChatMemberService {
     }
 
     //채팅방 멤버 출력
-    public List<ChatMemberDTO> selectChatMember(int chatRoomSeq){
-        return chatMemberDao.selectChatMember(chatRoomSeq);
+    public List<ChatMemberListDTO> selectChatMember(ChatMemberListDTO chatMemberListDto){
+        return chatMemberDao.selectChatMember(chatMemberListDto);
     }
 
     //채팅방 삭제
     public void delChatRoom(int chatRoomSeq) { chatMemberDao.delChatRoom(chatRoomSeq);}
 
+    //채팅방 목록에서 나간 회원 삭제
+    public void delChatMember(ChatMemberDTO chatMemberDto) { chatMemberDao.delChatMember(chatMemberDto);}
+
+    //채팅방 멤버 프로필 이미지
+    public String selectChatMemberImg(int memberSeq, int chatRoomSeq){
+        return chatMemberDao.selectChatMemberImg(memberSeq,chatRoomSeq);
+    }
 
 }

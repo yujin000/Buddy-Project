@@ -14,12 +14,19 @@
           crossorigin="anonymous"
   ></script>
   <script src="/static/js/jQueryCheck.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <script src="/static/js/console.js"></script>
 </head>
 <body>
 <div class="wrap">
-  <div class="logo">
-    <img src="" alt="" />
-  </div>
+<!--  <div class="logo">-->
+<!--    <img src="" alt="" />-->
+<!--  </div>-->
+  <h1 class="logoTitle">프로필 수정</h1>
 
 
     <div class="myProfile">
@@ -41,6 +48,7 @@
               name="myName"
               id="inputName"
               disabled
+              value=""
       />
     </div>
 
@@ -64,7 +72,7 @@
                 name="myPhone"
                 id="idPhone"
                 disabled
-        /><button class="toggle" id="PhoneToggle" type="button" >tog</button>
+        /><button class="toggle" id="PhoneToggle" type="button" >✏️</button>
       </div>
       <div class="hidden" id="hidn2" >
         <p>변경할 휴대전화</p>
@@ -83,7 +91,7 @@
         />
         </form>
 
-        <button type="button" id="sendSms">인증문자발송</button>
+        <button type="button" id="sendSms">인증문자 발송</button>
         <input
                 type="text"
                 value=""
@@ -92,6 +100,7 @@
                 class="inputPhone"
                 placeholder="인증번호를 입력하세요."
         />
+        <div class="" style="clear: both"></div>
         <label for="Timer" id="timerLabel">남은 시간:</label>
         <input id="Timer" type="text" class="inputPhone" value="" readonly/>
         <button type="button" id="phoneConfirm" >인증번호 확인</button>
@@ -100,7 +109,7 @@
       <th:block th:if="${myProfile.memberLogtype == 'normal'}">
     <div class="update" id="updatePw">
       <p class="title">비밀번호 변경</p>
-      <button type="button" class="toggle" id="pwToggle">tog</button>
+      <button type="button" class="toggle" id="pwToggle">✏️</button>
     </div>
     <div class="hidden" id="hidn3">
       <p>현재 비밀번호</p>
@@ -135,7 +144,7 @@
 
 <strong><a href="/member/loginIndex" id="goBack">뒤로가기</a></strong>
   <p class="cancel">
-    회원탈퇴 하시겠습니까? <a href="#" onclick="delClick();"><strong>탈퇴</strong></a>
+    😨 회원 탈퇴를 원하세요? <a href="#" onclick="delClick();" onmouseenter="this.style.opacity =1;" onmouseleave="this.style.opacity=0.5;" style="opacity: 0.3;">탈퇴</a>
   </p>
 </div>
 

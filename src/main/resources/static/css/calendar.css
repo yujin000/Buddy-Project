@@ -1,5 +1,14 @@
+:root {
+
+    --main-color: #8621F7;
+    --sub-color: #B2B2B2;
+}
+
 *{
     box-sizing: border-box;
+    /*font-family: 'Gothic A1', sans-serif;*/
+    /*font-family: 'Nanum Gothic', sans-serif;*/
+    font-family: 'Noto Sans KR', sans-serif;
 }
 body {
     margin: 0;
@@ -8,6 +17,7 @@ body {
     max-width: 100%;
     height: calc(100vh - 50px);
     overflow-x: hidden;
+
 }
 
 
@@ -22,13 +32,20 @@ body {
 .header {
     width: 100%;
     height: 50px;
-    border: 1px solid black;
+    border: 1px solid var(--sub-color);
     position: relative;
 }
 
+.header > h1 {
+    font-size: 1rem;
+    margin-left: 10px;
+}
+.header span {
+    color: var(--main-color);
+
+}
 .headerBtns
 {
-    border: 1px solid black;
     position: absolute;
     right: 10px;
     top: 25%;
@@ -37,28 +54,39 @@ body {
 .headerBtns button {
     height: 24px;
     float: left;
+    background: var(--sub-color);
+    border: none;
+    border-radius: 10%;
+    color: #fff;
     margin-left: 5px;
 }
 
-#calendar {
-    width: calc(100% - 300px);
+.headerBtns button[class*="checked"]{
+    background: var(--main-color);
+    color: #fff;
+}
+.headerBtns button:hover {
+    opacity: 0.7;
 }
 
 #calendar {
-    width: 100%;
+    width: calc(100% - 230px);
     padding: 10px;
     font-size: 0.8rem;
 }
 
+
 .modal {
     width: 300px;
     height: calc(100vh - 50px);
-    border: 1px solid black;
-    display: inline-block;
+    border-right: 1px solid var(--sub-color);
+    border-left: 1px solid var(--sub-color);
+    display: block;
+    position: relative;
 }
 
 .modalWrap {
-    width: 100%;
+    width: 300px;
     height: 100%;
     padding: 10px;
     overflow: scroll;
@@ -90,15 +118,21 @@ body {
 }
 
 #formToggle {
-    margin-top: 10px;
     width: 100%;
-    height: 30px;
+    height: 40px;
+    border: 1px solid rgba(0,0,0,0.0);
+    border-radius: 10px;
+    background: var(--main-color);
+    font-weight: bold;
+    color: #fff;
+}
+#formToggle:hover {
+    opacity: 0.8;
 }
 
 #form {
     margin-top: 10px;
     width: 100%;
-    /*padding: 5px;*/
     text-align: center;
     position: relative;
     display: none;
@@ -108,25 +142,56 @@ body {
 
 #form input {
     width: 100%;
-    height: 30px;
-    margin-bottom: 5px;
+    height: 40px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.2);
+    color: #545454;
 }
 
 
 #form textarea {
     width: 100%;
-    margin-bottom: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.2);
 }
 
 .eventSelect {
     width: 100%;
     height: 30px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
-#eventColor{
-    background: purple;
+
+#eventColor {
+    width: 40px;
+    height: 40px;
+    background: var(--main-color);
+    display: inline;
+    float: right;
+    border: 1px solid rgba(0,0,0,0.2);
+    -webkit-appearance: none; /* 크롬 화살표 없애기 */
+    -moz-appearance: none; /* 파이어폭스 화살표 없애기 */
+    appearance: none; /* 화살표 없애기 */
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
 }
+#eventType {
+    width: calc(100% - 40px);
+    height: 40px;
+    display: inline;
+    clear: both;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding-left: 5px;
+    line-height: 40px;
+}
+
 .eventSelect option {
     width: 100%;
     height: 30px;
@@ -159,19 +224,55 @@ input[type='time']:valid::before {
     height: 110px;
 }
 
-#form button {
-    width: 100%;
-    height: 30px;
-}
-
 .modalBtn {
     width: 100%;
-    height: 30px;
+    height: 40px;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    border: none;
+    font-weight: bold;
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
 }
 
+#submitBtn {
+    border: 1px solid seagreen;
+    color: seagreen;
+}
+#submitBtn:hover {
+    background: seagreen;
+    color: #fff;
+}
 
+#closeBtn {
+    border: 1px solid #1a252f;
+}
+#closeBtn:hover {
+    background: #1a252f;
+    color: #fff;
+}
+#updateBtn {
+    border: 1px solid seagreen;
+    color: seagreen;
+}
+#updateBtn:hover {
+    background: seagreen;
+    color: #fff;
+}
 
+#delBtn {
+    border: 1px solid crimson;
+    color: crimson;
+}
 
+#delBtn:hover {
+    background: crimson;
+    color: #fff;
+}
 
+.fc .fc-button-primary{
+    background-color: #fff;
+    color: #000;
+    border: 1px solid rgba(0,0,0,0.2);
+}

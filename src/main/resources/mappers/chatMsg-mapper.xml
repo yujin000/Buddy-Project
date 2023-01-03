@@ -9,7 +9,7 @@
         insert into
             chat_msg
         values
-            (chat_msg_seq.nextval, #{chatRoomSeq}, #{teamMemberNickname}, #{chatContent}, #{memberSeq}, 1, #{chatMsgType},sysdate)
+            (chat_msg_seq.nextval, #{chatRoomSeq}, #{teamMemberNickname}, #{chatContent}, #{memberSeq}, 1, #{chatMsgType},sysdate, #{memberImgSysName})
         <selectKey order="AFTER" keyProperty="chatDate" resultType="java.sql.Timestamp">
             select
                 Max(chat_date)

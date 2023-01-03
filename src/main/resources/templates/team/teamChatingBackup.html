@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>당신의 동료, 영원한 친구 buddy</title>
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/team.css"/>
+  <link rel="stylesheet" href="/static/css/m-team.css"/>
+  <script
+          src="https://code.jquery.com/jquery-3.6.1.min.js"
+          integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+          crossorigin="anonymous"
+  ></script>
+  <script src="/static/js/jQueryCheck.js"></script>
+</head>
+<body>
+
+<script th:inline="javascript">
+  // 타임리프로 서버에서 전달받은 변수를 자바스크립트에서 사용하기 위해 변수로 선언한 공간.
+  /*<![CDATA[*/
+  let chatRoomSeq = [[${chatRoomSeq}]];
+  let teamMemberNickname = [[${session.teamMemberNickname}]];
+  let memberSeq = [[${session.memberSeq}]];
+  let memberImgSysName = [[${memberImgSysName}]];
+  if(memberImgSysName!="/static/img/defaultProfileImg.png"){
+    memberImgSysName="/member/selectProfileImg/" + memberImgSysName;
+  }
+  /*]]>*/
+</script>
+
+<script>
+
+  function updateScroll() {
+    var element = $(".msgView")[0];
+    element.scrollTop = element.scrollHeight;
+  }
+
+  $(function () {
+    // 웹소켓 영역 시작
+    // webSocket 인스턴스 생성
+    let ws = new WebSocket("ws://localhost/chat/" + chatRoomSeq);
+
+    //채팅방 목록을 출력해주는 ajax
+    $.ajax({
+      type: "post",
+      url: "/chatRoom/chatRoomList",
+    }).done(function (resp) {
+
+      let chatRoomList = JSON.parse(resp);
+
+      for (let i = 0; i < chatRoomList.length; i++) {
+        let chatRoomListLi = $("<li>");
+        let chatRoomListForm = $("<form>");
+        let chatRoomInput = $("<input>");
+        chatRoomInput.attr("type", "hidden");
+        chatRoomInput.val(chatRoomList[i].chatRoomSeq);
+        chatRoomInput.attr("name", "chatRoomSeq");
+        chatRoomListForm.append(chatRoomInput);
+        chatRoomListForm.attr("action", "/chatRoom/join");
+        chatRoomListForm.attr("method", "get");
+        chatRoomListLi.text(chatRoomList[i].chatTitle);
+        chatRoomListLi.append(chatRoomListForm);
+        chatRoomListLi.addClass("chatRoom");
+        $("#chatListUl").append(chatRoomListLi);
+      }
+    });
+
+    //팀목록을 출력해주는 ajax호출
+    $.ajax({
+      type: "post",
+      url: "/team/teamList"
+    }).done(function (resp) {
+      let teamList = JSON.parse(resp);
+      for (let i = 0; i < teamList.length; i++) {
+        let teamListLi = $("<li>");
+        let teamListForm = $("<form>");
+        let teamListInput = $("<input>");
+        teamListInput.attr("type", "hidden");
+        teamListInput.val(teamList[i].teamSeq);
+        teamListInput.attr("name", "teamSeq");
+        teamListForm.attr("action", "/team/goTeam");
+        teamListForm.attr("method", "post");
+        teamListForm.append(teamListInput);
+        teamListLi.text(teamList[i].teamName);
+        teamListLi.append(teamListForm);
+        teamListLi.addClass("goTeam");
+        $("#dropdownList").append(teamListLi);
+      }
+    });
+
+    //팀 이동 클릭이벤트
+    $(document).on("click", ".goTeam", function () {
+      $(this).children("form").submit();
+    })
+
+    //채팅방 이동 클릭이벤트
+    $(document).on("click", ".chatRoom", function () {
+      $(this).children("form").submit();
+    })
+
+    // 메세지 수신시 메세지 출력
+    ws.onmessage = function (e) {
+      let data = JSON.parse(e.data);
+      let msg = $("<div>");
+      msg.addClass("msg");
+      msg.append(data.memberImgSysName);
+      msg.append("<br>");
+      msg.append(data.teamMemberNickname);
+      msg.append("<br>");
+      msg.append(data.chatContent);
+      msg.append("<br>");
+      msg.append(data.chatDate);
+      $(".msgView").append(msg);
+      updateScroll();
+    }
+
+    let file = $("#uploadfile").val();
+    let emoticonSrc;
+    $("#inputMsg").on("keydown", function (e) {
+      emoticonSrc=$("#emoticonClickImg").attr("src");
+      if (e.keyCode == 13 && !e.shiftKey) {
+        if(file == "" && emoticonSrc=="") {
+          // Json 생성
+          let wsJson = {
+            "memberImgSysName":"<img src="+memberImgSysName+"/>",
+            "chatRoomSeq": chatRoomSeq,
+            "teamMemberNickname": teamMemberNickname,
+            "chatContent": $(this).val(),
+            "memberSeq": memberSeq,
+            "chatMsgType": 0
+          };
+          //JSON 전송
+          $(this).val("");
+          ws.send(JSON.stringify(wsJson));
+          return false;
+        }
+        //이모티콘만 보내기
+        else if($("#inputMsg").val()=="" && emoticonSrc.length!=""){
+          let wsJson = {
+            "memberImgSysName":"<img src="+memberImgSysName+"/>",
+            "chatRoomSeq": chatRoomSeq,
+            "teamMemberNickname": teamMemberNickname,
+            "chatContent": "<img src="+emoticonSrc+"/>",
+            "memberSeq": memberSeq,
+            "chatMsgType": 1
+          };
+          //JSON 전송
+          $(this).val("");
+          $("#emoticonClickImg").attr("src","");
+          $("#emoticonClickView").hide();
+          ws.send(JSON.stringify(wsJson));
+          return false;
+        }
+        //이모티콘 + 메세지 보내기
+        else if(emoticonSrc.length!="" && $("#inputMsg").val()!=""){
+          let wsJson = {
+            "memberImgSysName":"<img src="+memberImgSysName+"/>",
+            "chatRoomSeq": chatRoomSeq,
+            "teamMemberNickname": teamMemberNickname,
+            "chatContent": "<img src="+emoticonSrc+"/><br/>"+$(this).val(),
+            "memberSeq": memberSeq,
+            "chatMsgType": 1
+          };
+          //JSON 전송
+          $(this).val("");
+          $("#emoticonClickImg").attr("src","");
+          $("#emoticonClickView").hide();
+          ws.send(JSON.stringify(wsJson));
+          return false;
+        }
+      }
+      //이모티콘 클릭 후 backspace 누를 시 선택된 이모티콘 선택 해제됨
+      else if($("#inputMsg").val()=="" && emoticonSrc.length!=""){
+        if (e.keyCode == 8) {
+          $(this).val("");
+          $("#emoticonClickImg").attr("src","");
+          $("#emoticonClickView").hide();
+        }
+      }
+    });
+
+    $(".uploadfile").on('change', function () {
+
+      let filef = $(".uploadfile")[0].files[0];
+      let fileSize = filef.size;
+      let maxFileSize = 10 * 1024 * 1024;
+
+      let extension = this.value.split(".").pop().toLowerCase();
+      let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip"];
+      let result = $.inArray(extension, accept);
+
+      if (fileSize > maxFileSize) {
+        alert("첨부하려는 '" + filef.name + "' 파일은 용량이 너무 큽니다. \n 업로드 할 수 있는 최대 용량은 '10 MB' 입니다.");
+        this.value = "";
+      }
+      if (result == -1) {
+        alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .xls, .ppt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip)");
+        this.value = "";
+      }
+    });
+    $(".fileSubmitBtn").on('click', function () {
+      $.ajax({
+        type: "POST",
+        url: "/chatFile/insert",
+        data: new FormData($("#uploadfileForm")[0]),
+        processData: false,
+        contentType: false,
+        success: function (rsp) {
+          let chatSysName = rsp.chatSysName;
+          let chatOriName = rsp.chatOriName;
+          let ext = chatOriName.split('.').pop().toLowerCase();
+          if ($.inArray(ext, ['jpg', 'jpeg', 'png', 'gif']) != -1) {
+            let wsJson = {
+              "memberImgSysName":"<img src="+memberImgSysName+"/>",
+              "chatRoomSeq": chatRoomSeq,
+              "teamMemberNickname": teamMemberNickname,
+              "chatContent": "<img src='/chatImg/"+chatSysName+"' style='width: 40px'><br><a href='/chatFile/download?chatSysName=" + chatSysName + "&chatOriName=" + chatOriName + "' style='color: blue'>" + chatOriName + "</a>",
+              "memberSeq": memberSeq,
+              "chatMsgType": 1
+            };
+            //JSON 전송
+            $("#uploadfile").val("");
+            $(".fileView").toggle();
+            ws.send(JSON.stringify(wsJson));
+            return false;
+          } else {
+            let wsJson = {
+              "memberImgSysName":"<img src="+memberImgSysName+"/>",
+              "chatRoomSeq": chatRoomSeq,
+              "teamMemberNickname": teamMemberNickname,
+              "chatContent": "<img src='/static/img/fileImg.png 'style='width: 40px'><br><a href='/chatFile/download?chatSysName=" + chatSysName + "&chatOriName=" + chatOriName + "' style='color: blue'>" + chatOriName + "</a>",
+              "memberSeq": memberSeq,
+              "chatMsgType": 1
+            };
+            //JSON 전송
+            $("#uploadfile").val("");
+            $(".fileView").toggle();
+            ws.send(JSON.stringify(wsJson));
+            return false;
+          }
+        }
+      });
+    })
+  });
+
+  //이모티콘 클릭 시
+  let clickEmoticon;
+  $(document).on("click",".emoticonImg",function(){
+    clickEmoticon=$(this).data("sysname");
+    $(".emoticonView").hide();
+    $("#emoticonClickView").toggle();
+    $("#emoticonClickImg").attr("src","/emoticon/"+clickEmoticon);
+    $("#inputMsg").focus();
+  })
+
+  //채팅방 멤버들 출력
+  $.ajax({
+    url:"/chatRoom/selectChatMember",
+    data:{"chatRoomSeq": chatRoomSeq},
+    success : function (){
+    },error : function (){
+    }
+  }).done(function (rsp){
+    let JsonChatMemberList = JSON.parse(rsp);
+    for (let i=0; i<JsonChatMemberList.length; i++) {
+      let ChatMemberListLi = $("<li>");
+      let ChatMemberListImg = $("<img>");
+      let ChatMemberListSpan1 = $("<span>");
+      let ChatMemberListSpan2 = $("<span>");
+      ChatMemberListImg.attr("src",JsonChatMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonChatMemberList[i].memberImgSysName);
+      ChatMemberListLi.append(ChatMemberListImg);
+      ChatMemberListSpan1.text(JsonChatMemberList[i].teamMemberNickname);
+      ChatMemberListLi.append(ChatMemberListSpan1);
+      ChatMemberListSpan2.text(JsonChatMemberList[i].grade);
+      ChatMemberListLi.append(ChatMemberListSpan2);
+      $("#memberList").append(ChatMemberListLi);
+    }
+  });
+
+</script>
+<div class="wrap">
+  <div class="header">
+    <div class="logo">
+      <a href="../index.html">
+        <img src="" alt=""/>
+        logo
+      </a>
+    </div>
+    <div id="teamList" class="teamList">
+      <ul>
+        <li>
+          <a href="team.html" th:text="${session.teamName}"></a
+          >
+          <button id="headerToggle">toggle</button>
+        </li>
+      </ul>
+      <ul id="dropdownList">
+      </ul>
+    </div>
+
+    <button id="menu" class="iconMenu">menu</button>
+    <button id="asideClose">aside</button>
+  </div>
+  <div class="main">
+    <aside>
+      <div id="profile" class="asideTitle">
+        <img src="" alt=""/>
+        <h3><a href="../member/myProfile.html" th:text="${session.teamMemberNickName}"></a></h3>
+        <button id="alarmView" class="toggle">알람</button>
+      </div>
+      <ul id="alarmList" class="subItem">
+        <h1>알림</h1>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+      </ul>
+
+      <div id="topic" class="asideList">
+        <div class="asideTitle">
+          <h3>토픽</h3>
+          <button id="topicToggle" class="toggle">v</button>
+        </div>
+        <div id="topicList" class="asideItem">
+          <ul>
+            <li>list</li>
+            <li>list</li>
+            <li>list</li>
+            <li>list</li>
+            <li>list</li>
+            <li>list</li>
+            <li>list</li>
+            <li>list</li>
+            <li>list</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="chat" class="asideList">
+        <div class="asideTitle">
+          <h3>채팅</h3>
+          <button id="chatToggle" class="toggle">v</button>
+        </div>
+        <div id="chatList" class="asideItem">
+          <ul id="chatListUl">
+          </ul>
+        </div>
+      </div>
+
+      <div class="asideTool">
+        <button id="appToggle" class="appToggle">앱 toggle</button>
+        <div id="appList">
+          <button class="app" id="appDrive"><a href="">드라이브</a></button>
+          <button class="app" id="appCal"><a href="">캘린더</a></button>
+        </div>
+      </div>
+    </aside>
+    <section class="msgSection">
+      <div class="chatHeader">
+        <h1>team-list</h1>
+        <button id="memberView">멤버</button>
+      </div>
+      <div class="msgView">
+        <div id="subSection">
+          <ul id="memberList" class="subItem">
+            <h1>member</h1>
+          </ul>
+        </div>
+        <th:block th:each="chatMsgList : ${chatMsgList}">
+          <div class="msg">
+            <div class="memberImg" th:utext="${chatMsgList.memberImgSysName}">
+            </div>
+            [[${chatMsgList.teamMemberNickname}]]
+            <br>
+            <div th:if="${chatMsgList.chatMsgType == 0}" th:text="${chatMsgList.chatContent}"></div>
+            <div th:if="${chatMsgList.chatMsgType == 1}" th:utext="${chatMsgList.chatContent}"></div>
+            [[${chatMsgList.chatDate}]]
+            <br>
+          </div>
+        </th:block>
+      </div>
+      <div class="msgSend">
+        <input
+                type="text"
+                name="inputMsg"
+                id="inputMsg"
+                class="inputMsg"
+                placeholder="input Msg"
+        />
+        <div class="msgTool">
+          <ul>
+            <li>
+              <button id="test" onclick="clickevnet()">1</button>
+            </li>
+            <li>
+              <button>2</button>
+            </li>
+            <li>
+              <button>3</button>
+            </li>
+            <li>
+              <button>4</button>
+            </li>
+            <li><button type="button" id="emoticonBtn">😊</button></li>
+            <div id="emoticonClickView">
+              <img src="" id="emoticonClickImg">
+            </div>
+            <div class="emoticonView">
+              <div id="emoticonList">
+
+              </div>
+            </div>
+            <li>
+              <button type="button" id="fileSelect" class="aside">@</button>
+            </li>
+          </ul>
+          <form action="/chatFile/insert" method="post" enctype="multipart/form-data" id="uploadfileForm">
+            <div class="fileView">
+              <input type="hidden" th:value="${chatRoomSeq}" name="chatRoomSeq">
+              <ul>
+                <img src="/static/img/pcicon.png" id="fileIcon">
+                <h3>
+                  내 컴퓨터에서 업로드</h3>
+              </ul>
+              <div class="fileContents">
+                <input
+                        type="file"
+                        name="uploadfile"
+                        id="uploadfile"
+                        class="uploadfile"
+                        accept=".txt,.xls,.ppt,.hwp,.jpg,.png,.gif,.mp4,.mp3,.zip"/>
+
+                <button type="button" class="fileSubmitBtn" style="height: 30px">보내기</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<div id="menuList" class="menuList">
+  <ul>
+    <li><a href="/member/logout">logout</a></li>
+    <li><a href="/team/teamOut">버디 메인으로</a></li>
+    <li><a href="/qna/main">문의하기 및 news</a></li>
+    <li>list</li>
+    <li>list</li>
+    <li>list</li>
+    <li>list</li>
+  </ul>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $("#headerToggle").click(function () {
+      $("#dropdownList").toggle();
+    });
+
+    $("#menu").click(function () {
+      $("#menuList").toggle();
+    });
+
+    $("#topicToggle").click(function () {
+      $("#topicList").toggle();
+    });
+
+    $("#chatToggle").click(function () {
+      $("#chatList").toggle();
+    });
+
+    $("#asideClose").click(function () {
+      $("aside").toggle();
+    });
+
+    $("#appToggle").click(function () {
+      $("#appList").toggle();
+    });
+
+    $("#memberView").click(function () {
+      $("#memberList").toggle();
+    });
+
+    $("#alarmView").click(function () {
+      $("#alarmList").toggle();
+    });
+    $("#fileSelect").click(function () {
+      $(".fileView").toggle();
+    });
+  });
+</script>
+
+<!-- 드라이브 버튼 클릭시 fileDrive 페이지로 이동 -->
+<script>
+  $("#appDrive").on("click", function () {
+    location.href = "/drive/toFileDrive";
+  });
+</script>
+
+</script>
+<script>
+  $("#emoticonBtn").on("click",function (){
+    $("#emoticonClickView").hide();
+    $(".emoticonView").toggle();
+    $("#emoticonClickImg").attr("src","");
+  })
+  $.ajax({
+    url:"/emoticon/selectEmoticon",
+    success : function (){
+    },error : function (){
+    }
+  }).done(function (rsp){
+    let emoticonList = JSON.parse(rsp);
+    for (let i=0; i<emoticonList.length; i++) {
+      let emoticonListImg = $("<img>");
+      emoticonListImg.attr("class","emoticonImg");
+      emoticonListImg.attr("data-sysname",emoticonList[i].emoticonSysName);
+      emoticonListImg.attr("src","/emoticon/" + emoticonList[i].emoticonSysName);
+      $("#emoticonList").append(emoticonListImg);
+    }
+  })
+</script>
+
+</body>
+</html>

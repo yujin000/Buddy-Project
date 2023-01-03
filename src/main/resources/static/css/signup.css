@@ -1,34 +1,60 @@
-@import url(reset.css);
+
+@font-face {
+  font-family: 'GyeonggiBatang';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --main-color: #8621F7;
+  --sub-color: #B2B2B2;
+  --sub-color2 : #1a252f;
+  --back-color: #F8F8F8;
+  --border: 1px solid rgba(0,0,0,0.3);
+  --border2: 1px solid rgba(0,0,0,0.1);
+  --shadow: 1px 1px 10px rgba(0,0,0,0.5);
+}
+
+*{
+  font-family: 'Noto Sans KR', sans-serif;
+}
 
 .wrap {
   width: 100%;
-  border: 1px dashed #000;
   margin: 0 auto;
   margin-top: 10vh;
+  padding-bottom: 50px;
 }
 
-.logo {
-  margin: 0 auto;
-  width: 100px;
-  height: 100px;
-  border: 1px dashed red;
-}
 a {
   text-decoration: none;
   color: #000;
 }
-h1 {
+strong {
+  color: var(--main-color);
+}
+button {
+  cursor: pointer;
+}
+#title {
   margin-top: 5px;
-  font-size: 32px;
+  font-size: 3rem;
   font-weight: bold;
   text-align: center;
 }
 
 form {
-  width: 470px;
-  border: 1px solid #000;
   margin: 0 auto;
-  margin-top: 10px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 480px;
+  padding: 20px;
+  border: var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  background: var(--back-color);
+  position: relative;
 }
 
 p[class^="title"] {
@@ -40,14 +66,81 @@ p[class^="title"] {
 }
 
 #titlePw {
-  margin-bottom: 0;
+  margin-bottom: 5px;
 }
 
 input {
   width: 100%;
   height: 40px;
+  padding: 10px;
   border-radius: 10px;
+  border: var(--border);
 }
+
+.inputName,.inputEmail {
+  max-width: 300px;
+  width: 100%;
+}
+
+.inputName{
+  display: inline-block;
+}
+
+#emailSend {
+  border: var(--border);
+  width: 105px;
+  height: 40px;
+  border-radius: 10px;
+  text-align: center;
+  background: none;
+  color: #333;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  display: inline;
+}
+
+#sendSms {
+  border: var(--border);
+  width: 105px;
+  height: 40px;
+  border-radius: 10px;
+  text-align: center;
+  background: none;
+  color: #333;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  display: inline;
+}
+
+
+#emailConfirm{
+  border: var(--border);
+  width: 105px;
+  height: 40px;
+  border-radius: 10px;
+  text-align: center;
+  background: none;
+  color: #333;
+  margin-left: 5px;
+  display: inline;
+ }
+
+#phoneConfirm{
+  border: var(--border);
+  width: 105px;
+  height: 40px;
+  border-radius: 10px;
+  text-align: center;
+  background: none;
+  color: #333;
+  margin-left: 5px;
+  display: inline;
+}
+#nameStatus, #idStatus {
+  margin-left: 10px;
+}
+
+
 p[class^="comment"] {
   margin-left: 10px;
   font-size: 14px;
@@ -65,8 +158,7 @@ p[class*="Hidden"] {
   margin-top: 20px;
   border-radius: 20px;
   font-size: 18px;
-  font-weight: bold;
-  background: #222;
+  background: var(--main-color);
   color: white;
   border: none;
 }
@@ -83,6 +175,7 @@ p[class*="Hidden"] {
 #Timer,#emailTimer{
   width:50px;
   border:none;
+  background:none;
 }
 #phoneCheckVal, #phoneConfirm, #Timer, #timerLabel{
   display:none;
@@ -90,9 +183,80 @@ p[class*="Hidden"] {
 
 /* 이메일 인증 css */
 #inputId,#emailCheckVal{
-  width:300px;
+  width: 100%;
+  max-width:300px;
+  margin-bottom: 5px;
 }
 
 #emailCheckVal, #emailConfirm,#emailTimer,#emailTimerLabel{
   display: none;
+}
+#emailCheckVal {
+  max-width: 300px;
+}
+
+.Timer{
+  display: none;
+  padding-left: 10px;
+}
+
+@media (max-width: 600px) {
+
+  #form {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 10px;
+  }
+  .inputName, .inputEmail{
+    max-width: 100%;
+  }
+  .inputPhone{
+    width: 100%;
+    max-width: 100%;
+  }
+  #inputId {
+    max-width: 100%;
+  }
+
+  #emailSend {
+    width: 100%;
+    height: 30px;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    border:none;
+    text-align: center;
+  }
+
+  #sendSms {
+    width: 100%;
+    height: 30px;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    border:none;
+    text-align: center;
+  }
+  #emailConfirm {
+    width: 100%;
+    height: 30px;
+    margin: 0 auto;
+    border: none;
+    text-align: center;
+  }
+  #phoneConfirm {
+    width: 100%;
+    height: 30px;
+    margin: 0 auto;
+    border: none;
+    text-align: center;
+  }
+  #emailCheckVal {
+    max-width: 100%;
+  }
+  #phoneCheckVal {
+    width: 100%;
+    max-width: 100%;
+  }
+
+
 }

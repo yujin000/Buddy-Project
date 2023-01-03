@@ -44,12 +44,30 @@ public class ChatRoomController {
     @Autowired
     private ChatMemberService chatMemberService;
 
+    @Autowired
+    private MemberService memberService;
+
     //채팅방 입장
     @RequestMapping("join")
-    public String insertChatMsg(int chatRoomSeq, Model model) {
+    public String insertChatMsg(TeamMemberDTO teamMemberDto,int chatRoomSeq, Model model) throws Exception {
+        teamMemberDto.setTeamSeq((int)session.getAttribute("teamSeq"));
+        teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+        // 회원 번호를 이용하여 팀 DTO값을 불러옴.
+        teamMemberDto = teamMemberService.selectOne(teamMemberDto);
+        model.addAttribute("teamMemberInfo", teamMemberDto);
+
         model.addAttribute("chatRoomSeq",chatRoomSeq);
         model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));
         model.addAttribute("chatMemberList",teamMemberService.selectChatMember(chatRoomSeq));
+
+        //프로필 이미지 출력
+        String memberImgSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
+        if(memberImgSysName.equals("/static/img/defaultProfileImg.png")){
+            model.addAttribute("memberImgSysName",memberImgSysName);
+        }else{
+            memberImgSysName = "/member/selectProfileImg/"+memberImgSysName;
+            model.addAttribute("memberImgSysName",memberImgSysName);
+        }
         return ("/team/teamChating");
     }
 
@@ -105,8 +123,9 @@ public class ChatRoomController {
     //채팅방 멤버 출력
     @ResponseBody
     @RequestMapping("selectChatMember")
-    public String selectChatMember(int chatRoomSeq){
-        List<ChatMemberDTO> chatMemberList =  chatMemberService.selectChatMember(chatRoomSeq);
+    public String selectChatMember(ChatMemberListDTO chatMemberListDto){
+        chatMemberListDto.setTeamSeq((int) session.getAttribute("teamSeq"));
+        List chatMemberList =  chatMemberService.selectChatMember(chatMemberListDto);
         Gson g = new Gson();
         return g.toJson(chatMemberList);
     }
@@ -121,5 +140,23 @@ public class ChatRoomController {
         return String.valueOf(chatRoomSeq);
     }
 
+    // 채팅방 제목 변경
+    @ResponseBody
+    @PostMapping("updateChatTitle")
+    public String updateChatTitle(ChatRoomDTO chatRoomDto) {
+        chatRoomService.updateChatTitle(chatRoomDto);
+        return String.valueOf(chatRoomDto.getChatRoomSeq());
+    }
+
+    // 일반채팅방 나가기
+    @ResponseBody
+    @PostMapping("chatRoomOut")
+    public void chatRoomOut(ChatMemberDTO chatMemberDto) {
+        chatMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+        chatMemberService.delChatMember(chatMemberDto);
+        chatRoomService.delChatMember(chatMemberDto.getChatRoomSeq());
+        chatRoomService.delChatRoomCountZero();
+
+    }
 
 }

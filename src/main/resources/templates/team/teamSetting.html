@@ -83,7 +83,7 @@
                       th:data-session="${sessionMemberSeq}"
                       th:data-owner="${teamDto.getTeamOwnerSeq}"
                       th:text="${teamMemberDtoList.getGrade}"
-              >
+              >등급
               </button>
               <th:block th:if="${teamMemberDtoList.getGrade!='매니저'}">
               <button type="submit" class="delBtn" id="delMember"

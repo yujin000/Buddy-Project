@@ -24,21 +24,22 @@ public class CalService {
         return calDao.selectTeam(teamSeq);
     }
 
-    public List<CalDTO> selectPrivate(int teamSeq) throws Exception{
-        return calDao.selectPrivate(teamSeq);
+    public List<CalDTO> selectPrivate(int memberSeq, int teamSeq) throws Exception{
+        return calDao.selectPrivate(memberSeq,teamSeq);
     }
 
     public String selectGrade(String teamMemberNickname) throws Exception{
         return calDao.selectGrade(teamMemberNickname);
     }
 
-    public void deleteEvent(int eventSeq) throws Exception{
-        calDao.deleteEvent(eventSeq);
+    public void deleteEvent(int eventSeq, int memberSeq) throws Exception{
+        calDao.deleteEvent(eventSeq, memberSeq);
         }
 
         public void updateEvent(CalDTO calDto) throws Exception{
         calDao.updateEvent(calDto);
         }
+
 
 
 }

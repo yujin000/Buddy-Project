@@ -12,6 +12,9 @@ import lombok.Setter;
 public class CalDTO {
 
     private int eventSeq;
+
+    private int memberSeq;
+
     private int teamSeq;
     private String eventName;
     private String eventWriter;

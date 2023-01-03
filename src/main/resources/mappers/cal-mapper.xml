@@ -6,6 +6,7 @@
     <insert id="insertEvent" >
         insert into EVENT values (
         event_seq.nextval,
+        #{memberSeq},
         #{teamSeq},
         #{eventName},
         #{eventWriter} ,
@@ -29,7 +30,7 @@
     </select>
 
     <select id="selectPrivate" resultType="com.fivet.buddy.dto.CalDTO">
-        select * from event where "team_seq" = #{teamSeq} and "event_type" = '개인'
+        select * from event where "team_seq" = #{teamSeq} and "event_type" = '개인' and "member_seq" = #{memberSeq}
     </select>
 
     <select id="selectGrade" resultType="String">
@@ -37,13 +38,13 @@
     </select>
 
     <delete id="deleteEvent">
-        delete event where "event_seq" = #{value}
+        delete event where "event_seq" = #{eventSeq} and "member_seq" = #{memberSeq}
     </delete>
 
     <update id="updateEvent">
         update event set "event_type" = #{eventType}, "event_name" =#{eventName} ,
         "event_start"=#{eventStart}, "event_end" =#{eventEnd}, "event_location" =#{eventLocation}, "event_memo" =#{eventMemo},
-        "event_color"=#{eventColor} where "event_writer" = #{eventWriter} and "event_seq" =#{eventSeq}
+        "event_color"=#{eventColor} where "event_seq" =#{eventSeq}
 
     </update>
 

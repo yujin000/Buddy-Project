@@ -90,7 +90,11 @@
                     </div>
                 </li>
             </ul>
+            <div class="listNum">
+                <div th:utext="${pageNavi}"></div>
+            </div>
         </div>
+
     </div>
 </div>
 <script>
@@ -114,7 +118,7 @@
     })
 
     function mainOut(e){
-        location.href ="/member/loginIndex";
+        location.href ="/team/teamOut";
     }
 
     // when you move thead > please print another list
@@ -153,6 +157,7 @@
                     }
                 })
             }
+
             if (rsp[0].qnaCommentContents != null && rsp[0].qnaSysName == null) {
                 qnaCmt.text("답변 : " + rsp[0].qnaCommentContents);
                 deleteBtn.attr("href", "/qna/delete?qnaSeq=" + qnaSeq);

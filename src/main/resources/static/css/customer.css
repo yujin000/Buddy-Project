@@ -109,7 +109,14 @@ body {
     opacity: 50%;
 }
 
-
+.listNum {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    font-weight: bold;
+}
 
 .writeBtn {
     position: absolute;

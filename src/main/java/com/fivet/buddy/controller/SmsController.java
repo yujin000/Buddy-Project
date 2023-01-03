@@ -59,6 +59,7 @@ public class SmsController {
         for (int i = 0; i < 5; i++) { // 인증코드 5자리
             key.append((rnd.nextInt(10)));
         }
+        System.out.println(key);
         return key.toString();
     }
 

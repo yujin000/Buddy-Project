@@ -190,6 +190,13 @@ public class TeamController {
         return g.toJson(teamMemberDtoList);
     }
 
+    //팀원 수가 넘어가면 추가 못하게 하는 로직
+    @ResponseBody
+    @RequestMapping("teamMemberCount")
+    public int TeamMemberCount(int teamSeq){
+        return teamMemberService.selectTeamMember(teamSeq);
+    }
+
     // 컨트롤러에서 팀 메인화면으로 재이동하기 위한 mapping (팀 변경없을시)
     @RequestMapping("goTeamAgain")
     public String goTeamAgain(Model model) {
@@ -212,11 +219,26 @@ public class TeamController {
         return "team/team";
     }
 
+    //부매니저 수 체크
     @ResponseBody
     @RequestMapping("SubManagerMemberCount")
-    //부매니저 수 체크
     public int subManagerCount(int teamSeq){
         return teamMemberService.subManagerCount(teamSeq);
+    }
+
+    //회원 (자발적) 탈퇴
+    @ResponseBody
+    @PostMapping("teamSelfOut")
+    public void teamSelfOut(TeamMemberDTO teamMemberDto) {
+        teamMemberDto.setTeamSeq((int)session.getAttribute("teamSeq"));
+        teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+        teamMemberService.deleteTeamMember(teamMemberDto);
+        teamService.updateMinusTeamCount(teamMemberDto.getTeamSeq());
+        chatRoomService.teamSelfOut(teamMemberDto);
+        // 팀 관련 session값 제거.
+        session.removeAttribute("teamSeq");
+        session.removeAttribute("teamMemberNickname");
+        session.removeAttribute("teamName");
     }
 
     // Exception Handler

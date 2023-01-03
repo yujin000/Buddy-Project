@@ -126,7 +126,6 @@
     <section class="msgSection">
       <div class="chatHeader">
         <h1>team-list</h1>
-        <input type="search" placeholder="검색" id="searchMsg" />
       </div>
       <div class="msgView">
         <div id="subSection">
@@ -442,12 +441,6 @@
 
     $("#appToggle").click(function () {
       $("#appList").toggle();
-    });
-    $("#searchMsg").keypress(function enterEvent(e) {
-      if (e.keyCode == 13) {
-        $("#resultList").toggle();
-        $("#memberList").css("display", "none");
-      }
     });
 
     $("#alarmView").click(function () {

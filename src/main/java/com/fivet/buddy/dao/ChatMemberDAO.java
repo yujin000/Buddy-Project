@@ -30,5 +30,8 @@ public class ChatMemberDAO {
     //채팅방 회원 목록에서 회원 삭제
     public void delChatMember(ChatMemberDTO chatMemberDto) { chatMemberMapper.delChatMember(chatMemberDto); }
 
-
+    //채팅방 멤버 프로필 이미지
+    public String selectChatMemberImg(int memberSeq, int chatRoomSeq){
+        return chatMemberMapper.selectChatMemberImg(memberSeq,chatRoomSeq);
+    }
 }

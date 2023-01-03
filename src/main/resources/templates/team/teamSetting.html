@@ -151,18 +151,27 @@
   let yesNo;
   let okNo;
   let memberSeq;
-  let teamSeq;
-
+  let teamSeq=$("#teamSeqHidden").val();
+  let subManagerCount;
   //매니저는 자기 등급 변경 불가능
   $(function (){
     $(".gradeBtn").eq(0).attr("disabled",true);
+
+    $.ajax({
+      url:"/team/SubManagerMemberCount",
+      data:{"teamSeq":teamSeq},
+      success: function () {
+      }, error: function () {
+      }
+    }).done(function (rsp) {
+      subManagerCount=rsp;
+    })
   })
 
   // modal 열림 함수 ( 등급 변경 창 )
   $(".gradeBtn").on("click",function (){
     $(".modal").css("display","block");
     memberSeq=$(this).data("memberseq");
-    teamSeq=$(this).data("teamseq");
     thisNickName=$(this).data("nick-name");
     oriGrade = $(this).text();
     $("#h3").html(thisNickName +"님의 등급을 <br/> 어떻게 변경할까요?");
@@ -177,40 +186,45 @@
   })
 
   //'예' 누르면 등급 변경 되는 ajax
-  $(".yesNoBtn").on("click",function () {
-    yesNo = $(this).text();
-    let enGrade = changeGrade;
-    if (yesNo == "예") {
-      $.ajax({
-        url: "/team/updateTeamMemberGrade",
-        data: {
-          "grade": enGrade,
-          "memberSeq": memberSeq,
-          "teamSeq":teamSeq
-        },
-        type:"post",
-        success: function () {
-        }, error: function () {
-        }
-      }).done(function () {
-        location.reload();
-        if(changeGrade=="매니저"){
-          location.href="/member/loginIndex"
-        }else {
+    $(".yesNoBtn").on("click", function () {
+      if (changeGrade=="부매니저" && subManagerCount >= 2) {
+        console.log("if");
+        alert("부매니저는 최대 2명까지만 가능합니다");
+        $(".modal1").css("display","none");
+      } else {
+        yesNo = $(this).text();
+        let enGrade = changeGrade;
+        if (yesNo == "예") {
+          $.ajax({
+            url: "/team/updateTeamMemberGrade",
+            data: {
+              "grade": enGrade,
+              "memberSeq": memberSeq,
+              "teamSeq": teamSeq
+            },
+            type: "post",
+            success: function () {
+            }, error: function () {
+            }
+          }).done(function () {
+            location.reload();
+            if (changeGrade == "매니저") {
+              location.href = "/member/loginIndex"
+            } else {
+              $(".modal1").css("display", "none");
+            }
+          })
+        } else {
           $(".modal1").css("display", "none");
         }
-      })
-    }  else {
-      $(".modal1").css("display", "none");
-    }
-  })
+      }
+    })
 
   // modal2 열림 함수 ( 팀원 강퇴 )
   $(".delBtn").on("click",function (){
     $(".modal2").css("display","block");
     memberSeq=$(this).data("memberseq");
     thisNickName=$(this).data("nick-name");
-    teamSeq=$(this).data("teamseq");
     $("#h3_2").html(thisNickName +"님을 강퇴 시키겠습니까?");
   })
 

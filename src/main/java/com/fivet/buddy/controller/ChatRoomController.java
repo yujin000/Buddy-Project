@@ -50,6 +50,8 @@ public class ChatRoomController {
         model.addAttribute("chatRoomSeq",chatRoomSeq);
         model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));
         model.addAttribute("chatMemberList",teamMemberService.selectChatMember(chatRoomSeq));
+        String memberImgSysName = chatMemberService.selectChatMemberImg((int) session.getAttribute("memberSeq"),chatRoomSeq);
+        model.addAttribute("memberImgSysName",memberImgSysName);
         return ("/team/teamChating");
     }
 
@@ -127,6 +129,17 @@ public class ChatRoomController {
     public String updateChatTitle(ChatRoomDTO chatRoomDto) {
         chatRoomService.updateChatTitle(chatRoomDto);
         return String.valueOf(chatRoomDto.getChatRoomSeq());
+    }
+
+    // 일반채팅방 나가기
+    @ResponseBody
+    @PostMapping("chatRoomOut")
+    public void chatRoomOut(ChatMemberDTO chatMemberDto) {
+        chatMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+        chatMemberService.delChatMember(chatMemberDto);
+        chatRoomService.delChatMember(chatMemberDto.getChatRoomSeq());
+        chatRoomService.delChatRoomCountZero();
+
     }
 
 }

@@ -158,12 +158,11 @@ public class TeamController {
         return "redirect:/member/loginIndex";
     }
 
-    //회원이 가입한 팀 리스트 출력
+    //회원이 가입한 팀 리스트 출력 (ajax)
     @ResponseBody
     @PostMapping("teamList")
     public String selectTeamList() {
         Gson g = new Gson();
-        List<TeamDTO> teamList = teamService.selectMemberTeam((int)session.getAttribute("memberSeq"));
         return  g.toJson(teamService.selectMemberTeam((int)session.getAttribute("memberSeq")));
     }
 

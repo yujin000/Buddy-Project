@@ -123,11 +123,23 @@ public class ChatRoomController {
         return String.valueOf(chatRoomSeq);
     }
 
-//    채팅방 멤버 프로필 이미지
-//    @RequestMapping("selectChatMemberImg")
-//    public String selectChatMemberImg(int memberSeq, int chatRoomSeq,){
-//        String selectChatMemberImg = chatMemberService.selectChatMemberImg(memberSeq,chatRoomSeq);
-//        model("")
-//    }
+    // 채팅방 제목 변경
+    @ResponseBody
+    @PostMapping("updateChatTitle")
+    public String updateChatTitle(ChatRoomDTO chatRoomDto) {
+        chatRoomService.updateChatTitle(chatRoomDto);
+        return String.valueOf(chatRoomDto.getChatRoomSeq());
+    }
+
+    // 일반채팅방 나가기
+    @ResponseBody
+    @PostMapping("chatRoomOut")
+    public void chatRoomOut(ChatMemberDTO chatMemberDto) {
+        chatMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+        chatMemberService.delChatMember(chatMemberDto);
+        chatRoomService.delChatMember(chatMemberDto.getChatRoomSeq());
+        chatRoomService.delChatRoomCountZero();
+
+    }
 
 }

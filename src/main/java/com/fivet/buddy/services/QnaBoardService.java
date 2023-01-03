@@ -44,4 +44,6 @@ public class QnaBoardService {
     public int totalCount() {
         return qnaBoardDao.totalCount();
     }
+
+    // 문의글 페이지에 따라 출력
 }

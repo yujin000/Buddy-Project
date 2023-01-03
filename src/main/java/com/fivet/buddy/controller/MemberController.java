@@ -351,7 +351,7 @@ public class MemberController {
         return "index";
     }
 
-    // 관리자 페이지(1:1문의)로 이동
+    // 관리자 페이지(회원관리)로 이동
     @RequestMapping("toAdminMember")
     public String toAdminPage(Model model) throws Exception {
         if (session.getAttribute("memberLogtype").equals("admin")) {

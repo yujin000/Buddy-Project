@@ -15,6 +15,7 @@ public interface ChatMemberMapper {
     //채팅방 멤버 출력
     List<ChatMemberDTO> selectChatMember(int chatRoomSeq);
     void delChatRoom(int chatRoomSeq);
+    void delChatMember(ChatMemberDTO chatMemberDto);
 
     //채팅방 멤버 프로필 이미지
     String selectChatMemberImg(int memberSeq, int chatRoomSeq);

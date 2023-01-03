@@ -75,5 +75,12 @@ public class TeamService {
     public void updateTeamOwnerSeq(Map<String,Integer> param){
         teamDao.updateTeamOwnerSeq(param);
     }
+
+    //새로운 팀원 추가시, 팀 인원수가 1 증가
     public void updatePlusTeamCount(int teamSeq) { teamDao.updatePlusTeamCount(teamSeq); }
+
+    //팀원 탈퇴시, 팀 인원수가 1 감소
+    public void updateMinusTeamCount(int teamSeq) { teamDao.updateMinusTeamCount(teamSeq);}
+
+
 }

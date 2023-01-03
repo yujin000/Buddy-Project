@@ -58,4 +58,9 @@
         update team set team_count = team_count+1 where team_seq = #{teamSeq}
     </update>
 
+    <!--    팀원 탈퇴시, 팀 인원수가 1 감소-->
+    <update id="updateMinusTeamCount">
+        update team set team_count team_count-1 where team_seq = #{teamSeq}
+    </update>
+
 </mapper>

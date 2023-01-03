@@ -4,8 +4,6 @@ import com.fivet.buddy.dto.CalDTO;
 import com.fivet.buddy.services.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,7 +77,6 @@ public class CalController {
         model.addAttribute("list",calList);
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         String list = gson.toJson(calList);
-        System.out.println(list);
         return list;
     }
 
@@ -90,7 +87,6 @@ public class CalController {
         model.addAttribute("list",calList);
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         String list = gson.toJson(calList);
-        System.out.println(list);
         return list;
     }
 
@@ -110,8 +106,6 @@ public class CalController {
     public String privateEventDel(CalDTO calDto) throws Exception{
         String grade = calService.selectGrade(session.getAttribute("teamMemberNickname").toString());
         String manager = "manager";
-        System.out.println(grade);
-        System.out.println(manager);
         boolean result =  Objects.equals(grade, manager);
         if (result){
             calService.updateEvent(calDto);

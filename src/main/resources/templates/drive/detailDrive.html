@@ -138,11 +138,13 @@
       </form>
       <!-- 본문 -->
       <div class="fileMainPlace">
-        <form action="/drive/dragFile" method="post" enctype="multipart/form-data" id="dropForm">
-          <div id="dropArea"><p>파일을 여기다 끌어놓으면 업로드가 시작됩니다.</p></div>
-          <input type="file" id="dropFile" name="multipartFile">
-          <input type="hidden" th:value="${parentKey}" id="attachFolder">
-        </form>
+        <th:block th:if="${#strings.equals(shared,0)}">
+          <form action="/drive/dragFile" method="post" enctype="multipart/form-data" id="dropForm">
+            <div id="dropArea"><p>파일을 여기다 끌어놓으면 업로드가 시작됩니다.</p></div>
+            <input type="file" id="dropFile" name="multipartFile">
+            <input type="hidden" th:value="${parentKey}" id="attachFolder">
+          </form>
+        </th:block>
         <div id="listArea">
           <ul class="listThumb">
             <div th:if="${#strings.isEmpty(childFolders)} and ${#strings.isEmpty(childFiles)}">

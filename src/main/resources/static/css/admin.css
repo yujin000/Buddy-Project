@@ -1,5 +1,27 @@
 @import url(reset.css);
 
+@font-face {
+    font-family: 'GyeonggiBatang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --main-color: #8621F7;
+    --sub-color: #B2B2B2;
+    --sub-color2 : #1a252f;
+    --back-color: #F8F8F8;
+    --border: 1px solid rgba(0,0,0,0.3);
+    --border2: 1px solid rgba(0,0,0,0.1);
+    --shadow: 1px 1px 10px rgba(0,0,0,0.5);
+}
+
+*{
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+
 body {
     width: 100vw;
 }
@@ -12,14 +34,16 @@ body {
 .header {
     width: 100%;
     height: 50px;
-    border: 1px dashed #000;
+    border: var(--border);
     display: flex;
     position: fixed;
     z-index: 10;
 }
 .header p {
     line-height: 50px;
+    font-family: 'Noto Sans KR', sans-serif;
     font-weight: bold;
+    font-size: 1rem;
 }
 .logo a {
     width: 100%;
@@ -31,7 +55,7 @@ body {
     width: 120px;
     height: 50px;
     margin-right: 10px;
-    border: 1px solid magenta;
+    border: 1px dashed magenta;
 }
 
 .iconMenu {
@@ -78,8 +102,8 @@ aside {
     min-width: 280px;
     width: 280px;
     height: 100%;
-    border: 1px dashed #000;
-    background: silver;
+    border-right: var(--border);
+    background: var(--back-color);
     display: flex;
     flex-direction: column;
     position: relative;
@@ -89,8 +113,9 @@ aside {
     width: 100%;
     min-height: 50px;
     line-height: 50px;
-    border: 1px solid magenta;
+    border-bottom: var(--border);
     display: flex;
+    padding-left: 10px;
 }
 
 .asideTitle p,
@@ -102,13 +127,12 @@ a {
 }
 
 .asideTitle:hover {
-    background: #333;
 }
 .asideTitle a:hover {
-    color: white;
+    opacity: 0.8;
 }
 #checked {
-    background: #333;
+    background: #1a252f;
 }
 #checked * {
     color: white;
@@ -118,13 +142,14 @@ a {
     width: 100%;
     height: 100%;
     padding: 20px;
-    background: wheat;
+    background: none;
 }
 
 .searchBar {
     width: 200px;
     height: 40px;
     border-radius: 10px;
+    border: var(--border);
     bottom: 0;
     right: 0;
     position: absolute;
@@ -133,7 +158,6 @@ a {
 .contentHeader {
     display: flex;
     height: 45px;
-    border: 1px solid #000;
     position: relative;
 }
 
@@ -142,19 +166,18 @@ a {
 }
 
 hr {
+    width: 100%;
     margin-top: 20px;
-    border: 1px solid #000;
+    background-color: rgba(0,0,0,0.3);
 }
 
 .contentTable {
     width: 100%;
-    margin-top: 10px;
 }
 
 .tableTool {
     margin-bottom: 10px;
     border: 1px solid #000;
-
     display: flex;
 }
 
@@ -166,20 +189,17 @@ hr {
 
 .table {
     width: 100%;
-    border: 1px solid red;
 }
 
 .table li {
     height: 40px;
     line-height: 40px;
-    border: 1px solid #000;
     display: flex;
 }
 
 .table li span {
     margin: 0;
     padding: 0;
-    border: 1px solid #000;
     text-align: center;
 }
 .table li span:nth-child(1) {
@@ -206,23 +226,40 @@ hr {
     width: 40%;
 }
 
+.thead  {
+    border-bottom: var(--border);
+    margin-bottom: 20px;
+
+}
+
+.tdata span{
+    background: #000;
+    border-radius: 10px;
+    margin-left: 1px;
+}
+
 .delData {
     width: 100%;
     height: 100%;
     float: left;
+    border: var(--border);
+    border-radius: 5px;
 }
 
 .listNum {
     width: 200px;
     margin: 0 auto;
+    margin-top: 20px;
     text-align: center;
     height: 40px;
+    color: #1a252f;
     line-height: 40px;
-    border: 1px solid #000;
     font-weight: bold;
     display: flex;
 }
-
+.listNum *{
+    color: #1a252f;
+}
 .mobileView {
     display: none;
 }

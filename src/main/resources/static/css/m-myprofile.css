@@ -2,6 +2,17 @@
     .wrap {
         margin-top: 8vh;
     }
+
+    .myProfile{
+        width: 100vw;
+        border: 1px solid rgba(0,0,0,0.3);
+        border-left: 0px;
+        border-right: 0px;
+        border-radius: 0px;
+        background: #fff;
+        box-shadow: none;
+    }
+
     .logo {
         width: 100px;
         height: 100px;

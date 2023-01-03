@@ -227,6 +227,38 @@ public class PersonalFolderService {
     public List<Map<String, String>> nameList(String parentKey) {
         return personalFolderDao.nameList(parentKey);
     }
+
+    // 모든 팀 폴더 키 가져오기(해당하는 팀만)
+    public List<Map<String,String>> allTeamKeys(String teamBasicKey) {
+        // keyList = 상위폴더
+        List<Map<String,String>> keyList = new ArrayList<>();
+        Map<String,String> rootTeamKey = new HashMap<>();
+        rootTeamKey.put("key",teamBasicKey);
+        keyList.add(rootTeamKey);
+
+        // 결과
+        List<Map<String,String>> resultKeyList = new ArrayList<>();
+
+        while(true){
+            if(keyList.isEmpty()){
+                break;
+            }
+            List<Map<String,String>> folderKey = keyList;
+            for(Map<String,String> map : keyList){
+                map.get("key");
+                resultKeyList.add(map);
+            }
+            keyList = personalFolderDao.getTeamKeys(keyList);
+
+        }
+        // 하위 폴더들의 key
+        return resultKeyList;
+    }
+
+    // 팀 탈퇴시 폴더들 전부 삭제
+    public void teamOut(List<Map<String, String>> allKeys) {
+        personalFolderDao.teamOut(allKeys);
+    }
 }
 
 

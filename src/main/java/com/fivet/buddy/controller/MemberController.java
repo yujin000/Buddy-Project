@@ -374,6 +374,14 @@ public class MemberController {
     @RequestMapping("memberKickOut")
     public String memberKickOut(int memberSeq, Model model) throws Exception {
         memberService.memberKickOut(memberSeq);
+        // 파일 삭제
+        personalFileService.memberOut(memberSeq);
+        // 폴더 삭제
+        personalFolderService.memberOut(memberSeq);
+        // 기본 폴더 삭제
+        basicFolderService.memberOut(memberSeq);
+
+        memberService.deleteMember(String.valueOf(session.getAttribute("memberSeq")));
         List<MemberDTO> list = memberService.selectMembers();
         model.addAttribute("memberList", list);
         return "redirect:member/toAdminMember";

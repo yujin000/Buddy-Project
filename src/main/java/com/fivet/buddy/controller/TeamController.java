@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,9 @@ public class TeamController {
 
     @Autowired
     private PersonalFolderService personalFolderService;
+
+    @Autowired
+    private PersonalFileService personalFileService;
 
     @Autowired
     private MemberService memberService;
@@ -67,7 +71,7 @@ public class TeamController {
 
         //팀 이동
         @PostMapping("goTeam")
-        public String goTeam(TeamMemberDTO teamMemberDto, Model model) {
+        public String goTeam(TeamMemberDTO teamMemberDto, Model model) throws Exception {
             teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
             // 회원 번호를 이용하여 팀 DTO값을 불러옴.
             teamMemberDto = teamMemberService.selectOne(teamMemberDto);
@@ -88,6 +92,15 @@ public class TeamController {
             //팀 입장 시, 팀 멤버 출력
             List<TeamMemberListDTO> teamMemberDtoList =  teamMemberService.selectTeamMember(session.getAttribute("teamSeq").toString());
             List<ChatRoomDTO> topicList = chatRoomService.selectTopic(param.get("teamSeq"));
+
+            //프로필 이미지 출력
+            String memberImgSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
+            if(memberImgSysName.equals("/static/img/defaultProfileImg.png")){
+                 model.addAttribute("memberImgSysName",memberImgSysName);
+            }else{
+                memberImgSysName = "/member/selectProfileImg/"+memberImgSysName;
+                model.addAttribute("memberImgSysName",memberImgSysName);
+            }
             model.addAttribute("teamMemberDtoList", teamMemberDtoList);
             model.addAttribute("chatRoomList", chatRoomList);
             model.addAttribute("topicList", topicList);
@@ -117,6 +130,16 @@ public class TeamController {
     //팀 삭제
     @RequestMapping("deleteTeam")
     public String deleteTeam(int teamSeq){
+        String teamBasicKey = basicFolderService.myTeamFolderKey(teamSeq);
+        // 기본 폴더 삭제(db + 실제)
+        basicFolderService.teamOut(teamSeq);
+        // 모든 하위 폴더 키 가져오기
+        List<Map<String,String>> allKeys = personalFolderService.allTeamKeys(teamBasicKey);
+        // 팀 폴더들 삭제(db)
+        personalFolderService.teamOut(allKeys);
+        // 팀 파일들 삭제(db)
+        personalFileService.teamOut(allKeys);
+
         teamService.deleteTeam(teamSeq);
         return "redirect:/member/loginIndex";
     }
@@ -207,7 +230,7 @@ public class TeamController {
 
     //부매니저 수 체크
     @ResponseBody
-    @RequestMapping("SubManagerMemberCount")
+    @RequestMapping("subManagerMemberCount")
     public int subManagerCount(int teamSeq){
         return teamMemberService.subManagerCount(teamSeq);
     }
@@ -225,6 +248,18 @@ public class TeamController {
         session.removeAttribute("teamSeq");
         session.removeAttribute("teamMemberNickname");
         session.removeAttribute("teamName");
+    }
+
+    //팀원 닉네임 변경
+    @ResponseBody
+    @PostMapping("updateTeamMemberNickName")
+    public String updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
+        teamMemberDto.setMemberSeq((int) session.getAttribute("memberSeq"));
+        System.out.println(teamMemberDto.getTeamSeq());
+        System.out.println(teamMemberDto.getTeamMemberNickname());
+        System.out.println(teamMemberDto.getMemberSeq());
+        teamMemberService.updateTeamMemberNickName(teamMemberDto);
+        return teamMemberDto.getTeamMemberNickname();
     }
 
     // Exception Handler

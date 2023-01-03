@@ -26,4 +26,6 @@ public interface TeamMemberMapper {
     int countTeamMember(int TeamSeq);
 
     int subManagerCount(int teamSeq);
+
+    void updateTeamMemberNickName(TeamMemberDTO teamMemberDto);
 }

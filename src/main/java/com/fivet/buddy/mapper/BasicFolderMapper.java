@@ -34,4 +34,6 @@ public interface BasicFolderMapper {
     long getTeamVolume(String rootTeamKey);
 
     void uploadTeamByte(Map<String, Object> map);
+
+    void teamOut(int teamSeq);
 }

@@ -69,4 +69,9 @@ public class PersonalFileDAO {
     public void memberOut(int memberSeq) {
         personalFileMapper.memberOut(memberSeq);
     }
+
+    // 팀 삭제시 파일 제거
+    public void teamOut(List<Map<String, String>> allKeys) {
+        personalFileMapper.teamOut(allKeys);
+    }
 }

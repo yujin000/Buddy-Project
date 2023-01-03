@@ -94,6 +94,7 @@ public class ChatRoomController {
     }
 
     // 토픽 생성
+    @ResponseBody
     @PostMapping("insertTopic")
     public String insertTopic(ChatRoomDTO chatRoomDto) {
         TeamDTO teamDto = teamService.selectTeamOne(session.getAttribute("teamSeq").toString());

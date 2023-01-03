@@ -327,7 +327,7 @@ public class MemberController {
 
         // 회원 탈퇴(강퇴포함)시 삭제할 팀 목록 출력
         List<TeamMemberDTO> teamMemberList = teamMemberService.selectMembersTeam((int)session.getAttribute("memberSeq"));
-        // 채팅방 삭제 로직을 탈퇴대상 팀으로 반복문 돌려준다.
+        // 팀 탈퇴시 채팅방 삭제 로직을 탈퇴대상 팀으로 반복문 돌려준다.
         for (TeamMemberDTO teamMemberdto : teamMemberList) {
             chatRoomService.teamSelfOut(teamMemberdto);
         }
@@ -396,6 +396,26 @@ public class MemberController {
 
         memberService.deleteMember(String.valueOf(session.getAttribute("memberSeq")));
         List<MemberDTO> list = memberService.selectMembers();
+
+        // 회원이 매니저인 팀 목록 출력
+        List<TeamMemberDTO> teamMemberList = teamMemberService.selectMembersManager((int)session.getAttribute("memberSeq"));
+        // 반복문 돌려서 인원수 -1
+        for (TeamMemberDTO teamMemberDto : teamMemberList) {
+            teamService.updateMinusTeamCount(teamMemberDto.getTeamSeq());
+            // 팀원이 0명인 팀을 삭제 - 나중에 처리할것.
+        }
+
+
+
+
+
+        // 회원이 매니저인 팀을 제외한 나머지 목록 출력
+        teamMemberList = teamMemberService.selectMembersTeam((int)session.getAttribute("memberSeq"));
+        // 팀 탈퇴시 채팅방 삭제 로직을 탈퇴대상 팀으로 반복문 돌려준다.
+        for (TeamMemberDTO teamMemberdto : teamMemberList) {
+            chatRoomService.teamSelfOut(teamMemberdto);
+        }
+        memberService.deleteMember(String.valueOf(session.getAttribute("memberSeq")));
 
         model.addAttribute("memberList", list);
         return "redirect:member/toAdminMember";

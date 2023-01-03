@@ -122,7 +122,12 @@
 
     <!--    회원 팀목록 출력-->
     <select id="selectMembersTeam" resultType="com.fivet.buddy.dto.TeamMemberDTO">
-        select * from team_member where team_seq = #{teamSeq}
+        select * from team_member where member_seq = #{memberSeq}
+    </select>
+
+    <!--    회원이 매니저로 있는 팀 목록 출력-->
+    <select id="selectMembersManager" resultType="com.fivet.buddy.dto.TeamMemberDTO">
+        select * from team_member where member_seq = #{memberSeq}
     </select>
 
 </mapper>

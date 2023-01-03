@@ -67,7 +67,7 @@ public class TeamController {
 
         //팀 이동
         @PostMapping("goTeam")
-        public String goTeam(TeamMemberDTO teamMemberDto, Model model) {
+        public String goTeam(TeamMemberDTO teamMemberDto, Model model) throws Exception {
             teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
             // 회원 번호를 이용하여 팀 DTO값을 불러옴.
             teamMemberDto = teamMemberService.selectOne(teamMemberDto);
@@ -88,6 +88,15 @@ public class TeamController {
             //팀 입장 시, 팀 멤버 출력
             List<TeamMemberListDTO> teamMemberDtoList =  teamMemberService.selectTeamMember(session.getAttribute("teamSeq").toString());
             List<ChatRoomDTO> topicList = chatRoomService.selectTopic(param.get("teamSeq"));
+
+            //프로필 이미지 출력
+            String memberImgSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
+            if(memberImgSysName.equals("/static/img/defaultProfileImg.png")){
+                 model.addAttribute("memberImgSysName",memberImgSysName);
+            }else{
+                memberImgSysName = "/member/selectProfileImg/"+memberImgSysName;
+                model.addAttribute("memberImgSysName",memberImgSysName);
+            }
             model.addAttribute("teamMemberDtoList", teamMemberDtoList);
             model.addAttribute("chatRoomList", chatRoomList);
             model.addAttribute("topicList", topicList);
@@ -218,9 +227,14 @@ public class TeamController {
 
     //팀원 닉네임 변경
     @ResponseBody
-    @RequestMapping("updateTeamMemberNickName")
-    public void updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
+    @PostMapping("updateTeamMemberNickName")
+    public String updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
+        teamMemberDto.setMemberSeq((int) session.getAttribute("memberSeq"));
+        System.out.println(teamMemberDto.getTeamSeq());
+        System.out.println(teamMemberDto.getTeamMemberNickname());
+        System.out.println(teamMemberDto.getMemberSeq());
         teamMemberService.updateTeamMemberNickName(teamMemberDto);
+        return teamMemberDto.getTeamMemberNickname();
     }
 
     // Exception Handler

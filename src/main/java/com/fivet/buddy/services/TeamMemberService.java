@@ -75,7 +75,7 @@ public class TeamMemberService {
         return teamMemberDao.subManagerCount(teamSeq);
     }
 
-    //
+    //팀원 닉네임 변경
     public void updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
         teamMemberDao.updateTeamMemberNickName(teamMemberDto);
     }

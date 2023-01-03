@@ -1,6 +1,7 @@
 package com.fivet.buddy.dao;
 
 import com.fivet.buddy.dto.ChatMemberDTO;
+import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.mapper.ChatMemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,5 +34,15 @@ public class ChatMemberDAO {
     //채팅방 멤버 프로필 이미지
     public String selectChatMemberImg(int memberSeq, int chatRoomSeq){
         return chatMemberMapper.selectChatMemberImg(memberSeq,chatRoomSeq);
+    }
+
+    //회원의 팀 내 참여한 채팅방 목록
+    public List<ChatMemberDTO> selectMemberChatList(TeamMemberDTO teamMemberDto) {
+        return chatMemberMapper.selectMemberChatList(teamMemberDto);
+    }
+
+    //회원이 팀 내 참여한 채팅방에서 제거
+    public void delTeamChatMember(Map<String, Integer> param) {
+        chatMemberMapper.delTeamChatMember(param);
     }
 }

@@ -22,4 +22,5 @@ public interface TeamMapper {
 
     void updateTeamOwnerSeq(Map<String,Integer> param);
     void updatePlusTeamCount(int teamSeq);
+    void updateMinusTeamCount(int teamSeq);
 }

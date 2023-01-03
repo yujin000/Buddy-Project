@@ -410,9 +410,11 @@ public class MemberController {
 
         //회원이 매니저인 팀을 제외한 나머지 목록 출력
         List<TeamMemberDTO> teamMemberList = teamMemberService.selectMembersTeam(memberSeq);
-        //팀 탈퇴시 채팅방 삭제 로직을 탈퇴대상 팀으로 반복문 돌려준다.
-        for (TeamMemberDTO teamMemberdto : teamMemberList) {
-            chatRoomService.teamSelfOut(teamMemberdto);
+        //각 목록별로 팀 삭제 가동
+        for (TeamMemberDTO teamMemberDto : teamMemberList) {
+            teamMemberService.deleteTeamMember(teamMemberDto);
+            teamService.updateMinusTeamCount(teamMemberDto.getTeamSeq());
+            chatRoomService.teamSelfOut(teamMemberDto);
         }
         memberService.deleteMember(String.valueOf(memberSeq));
 

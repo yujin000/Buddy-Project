@@ -236,7 +236,7 @@ public class TeamController {
         return teamMemberService.subManagerCount(teamSeq);
     }
 
-    //회원 (자발적) 탈퇴
+    //회원 (자발적) 팀 탈퇴
     @ResponseBody
     @PostMapping("teamSelfOut")
     public void teamSelfOut(TeamMemberDTO teamMemberDto) {
@@ -245,6 +245,7 @@ public class TeamController {
         teamMemberService.deleteTeamMember(teamMemberDto);
         teamService.updateMinusTeamCount(teamMemberDto.getTeamSeq());
         chatRoomService.teamSelfOut(teamMemberDto);
+
         // 팀 관련 session값 제거.
         session.removeAttribute("teamSeq");
         session.removeAttribute("teamMemberNickname");

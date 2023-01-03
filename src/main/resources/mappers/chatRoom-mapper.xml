@@ -29,7 +29,7 @@
     <!-- 팀 및 회원 정보로 채팅방 목록을 출력 (토픽제외) -->
     <select id="chatRoomList" resultType="com.fivet.buddy.dto.ChatRoomDTO">
         select
-            cr.chat_room_seq, chat_title
+            cr.chat_room_seq, chat_title, chat_Type
         from
             chat_room cr inner join chat_member cm on cr.chat_room_seq = cm.chat_room_seq
         where
@@ -98,11 +98,11 @@
 
     <!--    채팅방 이름 변경-->
     <update id="updateChatTitle">
-        update chat_room set chat_room_title = #{chatRoomTitle} where chat_room_seq = #{chat_room_seq}
+        update chat_room set chat_title = #{chatTitle} where chat_room_seq = #{chatRoomSeq}
     </update>
 
     <!--    회원 채팅방 나간경우, 인원수 1 감소-->
-    <update id="deleteChatMember">
+    <update id="delChatMember">
         update chat_room set member_count = member_count -1 where chat_room_seq = #{value}
     </update>
 
@@ -111,9 +111,9 @@
         update chat_room set member_count = member_count +1 where chat_room_seq = #{value}
     </update>
 
-    <!--    채팅방 이름 변경-->
-    <update id="updateChatTitle">
-        update chat_room set chat_title = #{chatTitle} where chat_room_seq = #{chatRoomSeq}
-    </update>
+    <!--    회원수가 0이 된 채팅방은 지운다. delectChatMember 등과 연계하여 사용.-->
+    <delete id="delChatRoomCountZero">
+        delete from chat_room where member_count = 0
+    </delete>
 
 </mapper>

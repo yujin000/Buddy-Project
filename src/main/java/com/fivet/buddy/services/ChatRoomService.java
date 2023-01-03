@@ -40,6 +40,7 @@ public class ChatRoomService {
         param.put("chatRoomSeq", chatRoomDao.selectChatRoomSeq(param));
         chatRoomDao.insertSelfChat(param);
         chatMemberDao.insertChatMember(param);
+
     }
 
     // 토픽 생성
@@ -69,5 +70,11 @@ public class ChatRoomService {
 
     // 채팅방 이름 변경
     public void updateChatTitle (ChatRoomDTO chatRoomDto) { chatRoomDao.updateChatTitle(chatRoomDto); }
+
+    // 채팅방에서 이탈시, 회원수를 1 감소.
+    public void delChatMember (int chatRoomSeq) { chatRoomDao.delChatMember(chatRoomSeq);}
+
+    //인원수가 0명인 채팅방 삭제
+    public void delChatRoomCountZero() { chatRoomDao.delChatRoomCountZero(); }
 
 }

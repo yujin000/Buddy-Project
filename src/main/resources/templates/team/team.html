@@ -401,13 +401,13 @@
       if ($("#infoData").attr("data-grade")=="매니저") {
         alert("매니저는 팀을 탈퇴할 수 없습니다. 팀 관리에서 매니저를 이양 후 진행해 주시기 바랍니다.");
       } else {
-        // if (confirm("정말 탈퇴하시겠습니까?")) {
-        //   $.ajax({
-        //     type:"post",
-        //     url:"/team/teamOut"
-        //   }).done(function (){
-        //     alert("탈퇴완료!");
-        //     location.href = ""
+        if (confirm("정말 탈퇴하시겠습니까?")) {
+          $.ajax({
+            type:"post",
+            url:"/team/teamOut"
+          }).done(function (){
+            alert("탈퇴완료!");
+            location.href = "/";
           })
         }
       }

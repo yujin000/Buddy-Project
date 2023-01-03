@@ -233,15 +233,10 @@ hr {
     width: 25%;
 }
 .table li span:nth-child(5) {
-    width: 10%;
-}
-.table li span:nth-child(6) {
-    width: 10%;
+    width: 20%;
 }
 
-.thead > span:nth-child(4) {
-    width: 40%;
-}
+
 
 .thead  {
     border-bottom: var(--border);
@@ -349,9 +344,9 @@ hr {
     width: 100px;
     padding: 10px;
     right: 305px;
-    bottom: 0;
+    bottom: 0-radius: 10px;;
     height: 40px;
-    border-radius: 10px;
+    border
     position: absolute;
 }
 

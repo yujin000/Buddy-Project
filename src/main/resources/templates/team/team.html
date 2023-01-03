@@ -17,11 +17,7 @@
 </head>
 <body>
 <!--세션 및 각종 변수를 담아 쓰는 input-->
-<input type="hidden"
-       th:data-sessionMemberSeq="${session.memberSeq}"
-       th:data-grade="${teamMemberInfo.grade}"
-       id="infoData"
->
+<input type="hidden" th:sessionMemberSeq="${session.memberSeq}" id="session.memberSeq">
 <div class="wrap">
   <div class="header">
     <div class="logo">
@@ -76,7 +72,9 @@
         <div class="asideTitle">
           <h3>토픽 <span id="topicCount">[[${topicCount}]]</span><span> / 4</span></h3>
           <button id="topicToggle" class="toggle">v</button>
-          <button id="topicCreate" class="createBtn">+</button>
+          <th:block th:if="${teamMemberInfo.grade=='매니저'||teamMemberInfo.grade=='부매니저'}">
+            <button id="topicCreate" class="createBtn">+</button>
+          </th:block>
         </div>
         <div id="topicList" class="asideItem">
           <ul th:each="topicList : ${topicList}">
@@ -184,6 +182,7 @@
       <h1>😀채팅 시작하기</h1>
     <ul class="list" id="chatMemberUl">
       <li><input type="text" placeholder="채팅방 이름" id="makeChatTitle"></li>
+<!--    <li><img src="" alt=""><span>이름</span><span class="tag">직책</span><input type="text" name="memberSeq"></li>-->
     </ul>
     <button type="button" id="startChat">대화 시작하기</button>
     <button type="button" class="closeBtn" id="closeBtn" onclick="closer(this)">취소</button>
@@ -396,25 +395,7 @@
       }
     })
 
-    // 채팅방 탈퇴 이벤트
-    $("#teamWithdraw").click(function (){
-      if ($("#infoData").attr("data-grade")=="매니저") {
-        alert("매니저는 팀을 탈퇴할 수 없습니다. 팀 관리에서 매니저를 이양 후 진행해 주시기 바랍니다.");
-      } else {
-        // if (confirm("정말 탈퇴하시겠습니까?")) {
-        //   $.ajax({
-        //     type:"post",
-        //     url:"/team/teamOut"
-        //   }).done(function (){
-        //     alert("탈퇴완료!");
-        //     location.href = ""
-          })
-        }
-      }
-    })
   })
-
-
 </script>
 
 <script>

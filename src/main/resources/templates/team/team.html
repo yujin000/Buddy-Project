@@ -164,25 +164,24 @@
 
 <div class="createView">
   <div class="wrap">
-    <form action="" class="chatForm">
+    <div class="chatForm">
       <h1>😀채팅 시작하기</h1>
     <ul class="list" id="chatMemberUl">
       <li><input type="text" placeholder="채팅방 이름" id="makeChatTitle"></li>
     </ul>
     <button type="button" id="startChat">대화 시작하기</button>
     <button type="button" class="closeBtn" id="closeBtn" onclick="closer(this)">취소</button>
-    </form>
+    </div>
 
-    <form action="/chatRoom/insertTopic" id="form" class="topicForm" method="post">
+    <div class="topicForm">
         <h1>✨토픽 생성하기</h1>
       <ul class="list">
         <li><input id="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
       </ul>
       <button type="button" id="insertTopic">토픽 생성하기</button>
       <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
-
-    </form>
-  </div>
+    </div>
+    </div>
 </div>
 
 <!-- 팀원 목록 출력 ajax -->
@@ -260,24 +259,31 @@
     //console.log();
     $(this).children("form").submit();
   })
-
-  //채팅방 클릭 이벤트
-  $(".chatRoomList").on("click", function() {
-    $(this).find(".chatForm").submit();
-  })
 </script>
 
 <script>
   // 토픽 생성 이벤트
   $("#insertTopic").click(function (){
-      if ($("#topicTitle").val().length==0) {
-        alert("제목을 입력해주세요!");
-      } else if ($("#topicTitle").val().length>=15) {
-        alert("제목은 15자를 넘을 수 없습니다.")
-      } else {
+    let chatTitle = $("#topicTitle").val();
+    if ($("#topicTitle").val().length==0) {
+      alert("제목을 입력해주세요!");
+    } else if ($("#topicTitle").val().length>=15) {
+      alert("제목은 15자를 넘을 수 없습니다.")
+    } else {
+      $.ajax({
+        url:"/chatRoom/insertTopic",
+        type:"post",
+        data:{"chatTitle":chatTitle},
+        success : function (){
+          console.log("성공")
+        },error : function (){
+          console.log("에러")
+        }
+      }).done(function (){
         alert("토픽 생성 완료!");
-        $("#form").submit();
-      }
+        location.reload();
+      });
+    }
   })
 </script>
 

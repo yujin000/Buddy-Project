@@ -106,7 +106,7 @@
         select m.member_img_sysname from member_img m inner join chat_member c on m.member_img_member_seq=c.member_seq where c.member_seq = #{memberSeq} and c.chat_room_seq = #{chatRoomSeq}
     </select>
 
-    <!-- 부매니저 인원 수-->
+    <!-- 부매니저 수 체크-->
     <select id="subManagerCount" resultType="int">
         select count(*) from team_member where team_seq = #{value} and grade='부매니저'
     </select>

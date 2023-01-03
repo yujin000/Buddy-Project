@@ -316,16 +316,19 @@
     // 취소버튼 클릭시 새채팅방 후보 회원 초기화
     $("#closeBtn").on("click", function () {
       makeChat.clear();
+      $("#").css("background-color", "white");
     })
 
     // 시작하기 버튼 클릭 이벤트
     $("#startChat").on("click", function (){
-      if (makeChat.size==0) {
+      // 채팅 멤버에 자신이 포함되있지 않다면, 넣어줘야함.
+      if (!makeChat.has($("#infoData").attr("data-sessionMemberSeq"))) {
+        makeChat.add($("#infoData").attr("data-sessionMemberSeq"));
+      }
+      if (makeChat.size<=1) {
         alert("채팅방 멤버는 1인 이상의 타 회원이 포함되어야합니다.");
       } else {
-        console.log(makeChat);
         let makeChatMember = Array.from(makeChat);
-        console.log(makeChatMember);
         $.ajax({
           type:"post",
           url:"/chatRoom/insertChat",
@@ -362,7 +365,6 @@
           "chatTitle" : $("#modifyChatTitle").val()
         }
       }).done(function (resp) {
-        console.log(resp);
         alert("변경 완료.");
         location.reload();
       })

@@ -214,6 +214,10 @@ public class TeamController {
         teamMemberService.deleteTeamMember(teamMemberDto);
         teamService.updateMinusTeamCount(teamMemberDto.getTeamSeq());
         chatRoomService.teamSelfOut(teamMemberDto);
+        // 팀 관련 session값 제거.
+        session.removeAttribute("teamSeq");
+        session.removeAttribute("teamMemberNickname");
+        session.removeAttribute("teamName");
     }
 
     // Exception Handler

@@ -48,6 +48,9 @@ public class TeamDAO {
         teamMapper.updateTeamOwnerSeq(param);
     }
 
-    //새로운 팀원 추가시, 팀 인원을 +1 증가
+    //새로운 팀원 추가시, 팀 인원을 +1
     public void updatePlusTeamCount(int teamSeq) { teamMapper.updatePlusTeamCount(teamSeq);}
+
+    //새로운 팀원 감소시, 팀 인원을 -1
+    public void updateMinusTeamCount(int teamSeq) { teamMapper.updateMinusTeamCount(teamSeq);}
 }

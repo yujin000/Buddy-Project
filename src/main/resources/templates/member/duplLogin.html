@@ -3,9 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <title>nowLogin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <style>
+        <style>
+        @font-face {
+            font-family: 'GyeonggiBatang';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        :root {
+            --main-color: #8621F7;
+            --sub-color: #B2B2B2;
+            --sub-color2 : #1a252f;
+            --back-color: #F8F8F8;
+            --border: 1px solid rgba(0,0,0,0.3);
+            --border2: 1px solid rgba(0,0,0,0.1);
+            --shadow: 1px 1px 10px rgba(0,0,0,0.5);
+        }
+
+        *{
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        h1 {
+            margin-top: 10vh;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        button {
+            width: 100%;
+            max-width: 150px;
+            border-radius: 20px;
+            border: none;
+            background: var(--main-color);
+            color: #fff;
+            height: 35px;
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+        </style>
+
+    </style>
 </head>
 <body>
-    현재 로그인 상태입니다. 로그아웃하고 진행해주세요.
+    <h1>현재 로그인 상태입니다.<br>로그아웃하고 진행해주세요.</h1>
+
     <form action="/member/goMypage" method="post">
         <input type="hidden" th:value="${memberSeq}" name="memberSeq">
         <button>마이페이지로 돌아가기</button>

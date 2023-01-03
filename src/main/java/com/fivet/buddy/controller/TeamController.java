@@ -198,11 +198,22 @@ public class TeamController {
         return "team/team";
     }
 
+    //부매니저 수 체크
     @ResponseBody
     @RequestMapping("subManagerMemberCount")
-    //부매니저 수 체크
     public int subManagerCount(int teamSeq){
         return teamMemberService.subManagerCount(teamSeq);
+    }
+
+    //회원 (자발적) 탈퇴
+    @ResponseBody
+    @PostMapping("teamSelfOut")
+    public void teamSelfOut(TeamMemberDTO teamMemberDto) {
+        teamMemberDto.setTeamSeq((int)session.getAttribute("teamSeq"));
+        teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+        teamMemberService.deleteTeamMember(teamMemberDto);
+        teamService.updateMinusTeamCount(teamMemberDto.getTeamSeq());
+        chatRoomService.teamSelfOut(teamMemberDto);
     }
 
     //팀원 닉네임 변경

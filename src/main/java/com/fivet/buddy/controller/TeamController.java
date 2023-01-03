@@ -176,6 +176,13 @@ public class TeamController {
         return g.toJson(teamMemberDtoList);
     }
 
+    //팀원 수가 넘어가면 추가 못하게 하는 로직
+    @ResponseBody
+    @RequestMapping("teamMemberCount")
+    public int TeamMemberCount(int teamSeq){
+        return teamMemberService.selectTeamMember(teamSeq);
+    }
+
     // 컨트롤러에서 팀 메인화면으로 재이동하기 위한 mapping (팀 변경없을시)
     @RequestMapping("goTeamAgain")
     public String goTeamAgain(Model model) {

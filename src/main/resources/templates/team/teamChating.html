@@ -92,7 +92,6 @@
 
         //팀 이동 클릭이벤트
         $(document).on("click", ".goTeam", function () {
-            //console.log();
             $(this).children("form").submit();
         })
 
@@ -211,7 +210,6 @@
                 success: function (rsp) {
                     let chatSysName = rsp.chatSysName;
                     let chatOriName = rsp.chatOriName;
-                    console.log(chatOriName);
                     let ext = chatOriName.split('.').pop().toLowerCase();
                     if ($.inArray(ext, ['jpg', 'jpeg', 'png', 'gif']) != -1) {
                         let wsJson = {
@@ -245,8 +243,6 @@
                 }
             });
         })
-        // /qna/download?sysName=" + rsp[0].qnaSysName + "&oriName=" + rsp[0].qnaOriNam
-
     });
 
     //이모티콘 클릭 시
@@ -434,7 +430,9 @@
                         <div class="fileView">
                             <input type="hidden" th:value="${chatRoomSeq}" name="chatRoomSeq">
                             <ul>
-                                <h3>파일첨부</h3>
+                                <img src="/static/img/pcicon.png" id="fileIcon">
+                                <h3>
+                                    내 컴퓨터에서 업로드</h3>
                             </ul>
                             <div class="fileContents">
                                 <input
@@ -457,7 +455,7 @@
     <ul>
         <li><a href="/member/logout">logout</a></li>
         <li><a href="/team/teamOut">버디 메인으로</a></li>
-        <li>list</li>
+        <li><a href="/qna/main">문의하기 및 news</a></li>
         <li>list</li>
         <li>list</li>
         <li>list</li>

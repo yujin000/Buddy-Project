@@ -6,5 +6,5 @@ if (typeof jQuery == "undefined") {
     document.getElementsByTagName("head")[0].appendChild(script);
 } else {
     // jQuery 가 이미 존재하면 출력
-    console.log("jQuery Ready");
+    // console.log("jQuery Ready");
 }

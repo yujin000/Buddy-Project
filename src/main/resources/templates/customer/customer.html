@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/customer.css">
     <link rel="stylesheet" href="/static/css/m-customer.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
     <style>
         .qnaContent {
@@ -35,7 +40,7 @@
 <body>
 <div class="wrap">
     <div class="header">
-        <h1>buddy 고객센터</h1>
+        <h1>고객센터</h1>
         <input type="search" name="" id="searchBar" placeholder="검색">
     </div>
     <div class="main">
@@ -95,7 +100,7 @@
 <script>
 
     $("#qna").click(function () {
-        this.style.borderBottom = "4px solid purple";
+        this.style.borderBottom = "4px solid #8621F7";
         $(this).hover().css("opacity", "100%");
         $("#news").css("border", "none");
         $(".writeBtn").css("display", "block");
@@ -104,7 +109,7 @@
     })
 
     $("#news").click(function () {
-        this.style.borderBottom = "4px solid purple";
+        this.style.borderBottom = "4px solid #8621F7";
         $(this).hover().css("opacity", "100%");
         $("#qna").css("border", "none");
         $(".writeBtn").css("display", "none");

@@ -9,7 +9,68 @@
             crossorigin="anonymous"
     ></script>
     <script src="/js/jQueryCheck.js"></script>
-    <link rel="stylesheet" href="/static/css/sendInviteMail.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'GyeonggiBatang';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        :root {
+            --main-color: #8621F7;
+            --sub-color: #B2B2B2;
+            --sub-color2 : #1a252f;
+            --back-color: #F8F8F8;
+            --border: 1px solid rgba(0,0,0,0.3);
+            --border2: 1px solid rgba(0,0,0,0.1);
+            --shadow: 1px 1px 10px rgba(0,0,0,0.5);
+        }
+
+        *{
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        #text {
+            margin-top: 10vh;
+            width: 100%;
+            text-align: center;
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        #inviteEmail {
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
+            padding: 10px;
+            height: 20px;
+            display: block;
+            border-radius: 10px;
+            border: var(--border);
+        }
+
+        #inviteBtn {
+            width: 100%;
+            max-width: 150px;
+            border-radius: 20px;
+            border: none;
+            background: var(--main-color);
+            color: #fff;
+            height: 35px;
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <div class="container">

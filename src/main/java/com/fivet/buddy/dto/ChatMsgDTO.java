@@ -20,4 +20,5 @@ public class ChatMsgDTO {
     private int readCount;
     private int chatMsgType;
     private Timestamp chatDate;
+    private String memberImgSysName;
 }

@@ -24,4 +24,6 @@ public interface TeamMemberMapper {
     int countMemberTeam(int memberSeq);
 
     int countTeamMember(int TeamSeq);
+
+    int subManagerCount(int teamSeq);
 }

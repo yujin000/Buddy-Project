@@ -74,4 +74,9 @@ public class TeamMemberService {
     public int selectTeamMember(int teamSeq) {
         return teamMemberDao.selectTeamMember(teamSeq);
     }
+
+    //부매니저 수 체크
+    public int subManagerCount(int teamSeq){
+        return teamMemberDao.subManagerCount(teamSeq);
+    }
 }

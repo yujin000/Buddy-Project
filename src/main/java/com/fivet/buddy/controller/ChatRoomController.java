@@ -50,6 +50,8 @@ public class ChatRoomController {
         model.addAttribute("chatRoomSeq",chatRoomSeq);
         model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));
         model.addAttribute("chatMemberList",teamMemberService.selectChatMember(chatRoomSeq));
+        String memberImgSysName = chatMemberService.selectChatMemberImg((int) session.getAttribute("memberSeq"),chatRoomSeq);
+        model.addAttribute("memberImgSysName",memberImgSysName);
         return ("/team/teamChating");
     }
 

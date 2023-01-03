@@ -76,6 +76,10 @@ public class TeamMemberDAO {
         return teamMemberMapper.countMemberTeam(memberSeq);
     }
 
+    public int selectTeamMember(int TeamSeq) {
+        return teamMemberMapper.countTeamMember(TeamSeq);
+    }
+
     //부매니저 수 체크
     public int subManagerCount(int teamSeq){
         return teamMemberMapper.subManagerCount(teamSeq);

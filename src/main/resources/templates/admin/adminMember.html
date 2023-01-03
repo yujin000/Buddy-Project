@@ -14,6 +14,11 @@
           crossorigin="anonymous"
   ></script>
   <script src="/static/js/jQueryCheck.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="mobileView">
@@ -109,14 +114,14 @@
               <span>이메일</span>
               <span>전화번호</span>
               <span>회원유형</span>
-              <span>삭제</span>
+              <span>비고</span>
             </li>
             <li th:each="members : ${memberList}" class="tdata">
-              <span th:text="${members.memberSeq}"></span>
-              <span th:text="${members.memberName}"></span>
-              <span th:text="${members.memberId}"></span>
-              <span th:text="${members.memberPhone}"></span>
-              <span th:text="${members.memberLogtype}"></span>
+              <span th:text="${members.memberSeq}">s</span>
+              <span th:text="${members.memberName}">s</span>
+              <span th:text="${members.memberId}">s</span>
+              <span th:text="${members.memberPhone}">s</span>
+              <span th:text="${members.memberLogtype}">s</span>
               <span><button class="delData" th:value="${members.memberSeq}">탈퇴</button></span>
             </li>
           </ul>

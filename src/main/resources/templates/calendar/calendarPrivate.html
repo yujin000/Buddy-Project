@@ -128,14 +128,15 @@
           $("#closeBtn").css("display", "block");
 
           $("#eventSeq").val("");
-          $("#eventType").val("개인");
+          $("#eventType").val("팀");
           $("#eventName").val("");
           $("#eventWriter").val("");
           $("#eventWriter").attr("type", "hidden");
           $("#eventLocation").val("");
           $("#eventMemo").val("");
-          $("#eventColor").val("purple");
-          $("#eventColor").css("background-color", "purple");
+          const defaultColor = "#8621F7";
+          $("#eventColor").val(defaultColor);
+          $("#eventColor").css("background-color", "#8621F7");
 
 
           // month view 가 true 일 때만, date 값을 조정
@@ -162,14 +163,12 @@
           $("#submitBtn").css("display", "block");
 
           $("#eventSeq").val("");
-          $("#eventType").val("개인");
+          $("#eventType").val("팀");
           $("#eventName").val("");
           $("#eventWriter").val("");
           $("#eventWriter").attr("type", "hidden");
           $("#eventLocation").val("");
           $("#eventMemo").val("");
-          $("#eventColor").val("purple");
-          $("#eventColor").css("background-color", "purple");
         },
 
         // events object 이벤트 객체 [일정의 데이터가 담기는 공간 json 타입]
@@ -223,12 +222,12 @@
 </head>
 <body>
 <div class="header">
-  캘린더
+  <h1><span>buddy&nbsp;</span>캘린더</h1>
   <div class="headerBtns">
     <button onclick="location.href='/calendar/goTeam'" class="calType" id="goTeam">
       팀
     </button>
-    <button onclick="location.href='/calendar/goPrivate'" class="calType" id="goPrivate">
+    <button onclick="location.href='/calendar/goPrivate'" class="calType checked" id="goPrivate">
       개인
     </button>
     <button onclick="location.href='/calendar/moveCalendar'" class="calType" id="goAll">
@@ -250,11 +249,11 @@
 
         <form action="/calendar/insertEvent" id="form" method="post">
           <select name="eventColor" id="eventColor" class="eventSelect" onchange="selectColor(value)" data-placeholder="색상">
-            <option value="purple" style="background: purple" id="teamColor"></option>
-            <option value="blue" id="blue" style="background: blue"></option>
-            <option value="red" id="red" style="background: red"></option>
-            <option value="green" id="green" style="background: green"></option>
-            <option value="black"  id="black" style="background: black"></option>
+            <option value="#8621F7" style="background: #8621F7" id="teamColor"></option>
+            <option value="#2CADF5" id="blue" style="background: #2CADF5"></option>
+            <option value="#FF5C00" id="red" style="background: #FF5C00"></option>
+            <option value="#06C102" id="green" style="background:#06C102"></option>
+            <option value="#545454"  id="black" style="background: #545454"></option>
           </select>
           <select name="eventType" id="eventType" class="eventSelect" >
             <option value="개인">개인 캘린더</option>
@@ -286,31 +285,103 @@
 
 
 </div>
+<script>
+  // 유효성 검사
+  const eventNameRegex = /^[0-9a-zA-Zㄱ-힣]{0,20}$/;
+  const eventLocationRegex = /^[0-9a-zA-Zㄱ-힣]{0,20}$/;
+  const eventMemoRegex = /^[0-9a-zA-Zㄱ-힣\{\}\[\]\/?.,;:\|\)*~`!^\-_+\<\>@\#$%&\\\=\(\'\"  ]{0,500}$/m;
+
+  $("#eventName").keyup(function (){
+    let result = eventNameRegex.test(this.value);
+    if (!result){
+      alert("일정 제목은 20자 내로 작성해주세요!😥");
+      this.value = "";
+    }
+  })
+
+  $("#eventLocation").keyup(function (){
+    let result = eventLocationRegex.test(this.value);
+    if (!result){
+      alert("일정 장소는 20자 내로 작성해주세요!😥");
+      this.value = "";
+    }
+  })
+
+  $("#eventMemo").keyup(function (){
+    let result = eventMemoRegex.test(this.value);
+    if (!result){
+      alert("일정 메모는 500자 내로 작성해주세요!😥");
+      this.value = "";
+    }else {
+      $(this).val().replace("<", "&lt;");
+    }
+  })
+
+
+
+</script>
 <script >
 
 
 
   $(document).ready(function (){
+
     // document.ready 동작테스트
     console.log("DOMReadyPrintTest");
+
     // 일정추가 토글 동작
     $("#formToggle").click(function (){
       $("#form").toggle();
       $(".btns").toggle();
     });
-
-
+    // 모바일로 접속시 캘린더 종료
+    let windowWidth = window.innerWidth;
+    if (windowWidth < 981) {
+      alert("캘린더 는 모바일 화면을 지원하지 않습니다.");
+      window.close();
+    }
 
   })
 
+  // popUp 시 viewport 에 따른 화면 자동조정
+  function winResize()
+  {
+    var Dwidth = parseInt(document.body.scrollWidth);
+    var Dheight = parseInt(document.body.scrollHeight);
+    var divEl = document.createElement("div");
+    divEl.style.position = "absolute";
+    divEl.style.left = "0px";
+    divEl.style.top = "0px";
+    divEl.style.width = "100%";
+    divEl.style.height = "100%";
+
+    document.body.appendChild(divEl);
+    window.resizeBy(Dwidth-divEl.offsetWidth, Dheight-divEl.offsetHeight);
+    document.body.removeChild(divEl);
+  }
+
+
+  // 일정 불러오기
+  function select() {
+    location.href ="/calendar/selectAll"
+  }
   // 일정삭제 기능
   function del() {
     const seq = $("#eventSeq").val();
-    const title = $("#eventName").val();
+    const type =  $("#eventType").val();
     const writer = document.querySelector("#eventWriter").value;
-    if (confirm("<"+title+">"+"일정을 삭제하시겠습니까?")){
-      $("#eventWriter").attr("disabled",false);
-      location.href ="/calendar/deleteEvent?eventSeq="+seq+"&eventWriter="+writer;
+    if (type === "개인"){
+      const title = $("#eventName").val();
+      if (confirm("<"+title+">"+"일정을 삭제하시겠습니까?")){
+        $("#eventWriter").attr("disabled",false);
+        location.href ="/calendar/deleteEvent?eventSeq="+seq+"&eventWriter="+writer;
+      }
+    } else{
+      const title = $("#eventName").val();
+      if (confirm("<"+title+">"+"일정을 삭제하시겠습니까?,team")){
+        $("#eventWriter").attr("disabled",false);
+        location.href ="/calendar/teamEventDel?eventSeq="+seq+"&eventWriter="+writer;
+      }
     }
   }
   // 업데이트 기능
@@ -323,28 +394,44 @@
     let eventEnd =$("#eventEnd").val();
     let eventLocation =$("#eventLocation").val();
     let eventMemo =$("#eventMemo").val();
-    let eventColor =$("#eventColor").val();
+    let eventColor = document.querySelector("#eventColor").value;
     const writer = document.querySelector("#eventWriter").value;
 
-    if (confirm("<"+title+">"+"일정을 수정하시겠습니까?")){
-      location.href ="/calendar/updateEvent?eventSeq="+seq
-              +"&eventType="+type
-              +"&eventName="+title
-              +"&eventStart="+eventStart
-              +"&eventEnd="+eventEnd
-              +"&eventLocation="+eventLocation
-              +"&eventMemo="+eventMemo
-              +"&eventColor="+eventColor
-              +"&eventWriter="+writer;
+    console.log(eventColor);
+
+    // 타입이 팀 이라면
+    if(type === "팀"){
+      if (confirm("<"+title+">"+"일정을 수정하시겠습니까?")){
+        location.href ="/calendar/teamEventUpd?eventSeq="+seq
+                +"&eventType="+type
+                +"&eventName="+title
+                +"&eventStart="+eventStart
+                +"&eventEnd="+eventEnd
+                +"&eventLocation="+eventLocation
+                +"&eventMemo="+eventMemo
+                +"&eventColor="+encodeURIComponent(eventColor)
+                +"&eventWriter="+writer;
+      }
+
+    }else {
+      if (confirm("<"+title+">"+"일정을 수정하시겠습니까?")){
+        location.href ="/calendar/updateEvent?eventSeq="+seq
+                +"&eventType="+type
+                +"&eventName="+title
+                +"&eventStart="+eventStart
+                +"&eventEnd="+eventEnd
+                +"&eventLocation="+eventLocation
+                +"&eventMemo="+eventMemo
+                +"&eventColor="+encodeURIComponent(eventColor)
+                +"&eventWriter="+writer;
+      }
     }
-  }
 
+  }
+  // evnetColor 값이 onchange 시 value 에 따라 배경색상 부여
   function selectColor(arg) {
-    $("#eventColor").css("background-color",arg);
+    $("#eventColor").css("background",arg);
   }
-
-
-
 
 </script>
 </body>

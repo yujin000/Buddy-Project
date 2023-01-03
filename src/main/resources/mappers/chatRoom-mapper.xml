@@ -116,4 +116,16 @@
         delete from chat_room where member_count = 0
     </delete>
 
+    <!--    특정 회원이 1명뿐인 팀의 채팅방을 모두 삭제.-->
+    <delete id="delOnlyOneChatRoom">
+        delete from
+            (select cr.*
+                from chat_room cr
+                left outer join team t
+                on t.team_seq = cr.team_seq
+                left outer join member m
+                on t.team_owner_seq = m.member_seq
+            where m.member_seq=#{memberSeq} and t.team_count = 1);
+    </delete>
+
 </mapper>

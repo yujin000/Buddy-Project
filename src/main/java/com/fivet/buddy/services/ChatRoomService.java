@@ -95,4 +95,8 @@ public class ChatRoomService {
         chatRoomDao.delChatRoomCountZero();
     }
 
+    public void delOnlyOneChatRoom(int memberSeq) {
+        chatRoomDao.delOnlyOneChatRoom(memberSeq);
+    }
+
 }

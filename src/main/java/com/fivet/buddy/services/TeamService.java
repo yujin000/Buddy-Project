@@ -85,4 +85,13 @@ public class TeamService {
     //팀원이 0명인 팀 삭제
     public void delTeamZeroCount() { teamDao.delTeamZeroCount();}
 
+    //팀의 팀원수 추출
+    public int selectTeamCount(int teamSeq) {
+        return teamDao.selectTeamCount(teamSeq);
+    }
+
+    //팀이 특정 회원 1명뿐인 팀 목록을 삭제
+    public void delTeamOnlyOne(int memberSeq) {
+        teamDao.delTeamOnlyOne(memberSeq);
+    }
 }

@@ -94,4 +94,14 @@ public class TeamMemberService {
     public List<TeamMemberDTO> selectMembersManager(int memberSeq) {
         return teamMemberDao.selectMembersManager(memberSeq);
     }
+
+    //팀이 특정 회원 1명뿐인 팀 목록을 출력
+    public List<TeamMemberDTO> selectTeamMemberOnlyOne(int memberSeq) {
+        return teamMemberDao.selectTeamMemberOnlyOne(memberSeq);
+    }
+
+    //팀이 특정 회원 1명뿐인 팀 목록을 삭제-
+    public void delOnlyOneTeamMember(int memberSeq) {
+        teamMemberDao.delOnlyOneTeamMember(memberSeq);
+    }
 }

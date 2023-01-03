@@ -130,4 +130,16 @@
         select * from team_member where member_seq = #{memberSeq}
     </select>
 
+    <!--    팀이 특정 회원 1명뿐인 팀 목록을 삭제-->
+    <delete id="delOnlyOneTeamMember">
+        delete from
+            (select tm.*
+                from team_member tm
+                left outer join team t
+                on tm.team_seq = t.team_seq
+                left outer join member m
+                on t.team_owner_seq = t.team_owner_seq
+            where m.member_seq = #{memberSeq})
+    </delete>
+
 </mapper>

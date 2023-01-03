@@ -99,4 +99,14 @@ public class TeamMemberDAO {
     public List<TeamMemberDTO> selectMembersManager(int memberSeq) {
         return teamMemberMapper.selectMembersTeam(memberSeq);
     }
+
+    //팀이 특정 회원 1명뿐인 팀 목록을 출력
+    public List<TeamMemberDTO> selectTeamMemberOnlyOne(int memberSeq) {
+        return teamMemberMapper.selectTeamMemberOnlyOne(memberSeq);
+    };
+
+    // 팀이 특정 회원 1명뿐인 팀 목록을 삭제
+    public void delOnlyOneTeamMember(int memberSeq) {
+        teamMemberMapper.delOnlyOneTeamMember(memberSeq);
+    }
 }

@@ -406,7 +406,7 @@ public class MemberController {
         chatRoomService.delOnlyOneChatRoom(memberSeq);
         teamMemberService.delOnlyOneTeamMember(memberSeq);
         teamService.delTeamOnlyOne(memberSeq);
-        // 회원이 매니저면서, 한명 이상인 팀은 타 참여자에게 매니저를 넘겨준다.
+        // 회원이 매니저면서, 한명 이상인 팀은 채팅방 목록에서 삭제, 채팅방 인원수 -1, 타 참여자에게 매니저를 넘겨준다.
 
         // 회원이 매니저인 나머지 팀 목록 출력
 

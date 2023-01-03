@@ -30,6 +30,7 @@ public class CalController {
 
     @RequestMapping("insertEvent")
     public String insertEvent(CalDTO calDto) throws Exception{
+        calDto.setMemberSeq((Integer)session.getAttribute("memberSeq"));
         calDto.setTeamSeq((Integer)session.getAttribute("teamSeq"));
         calDto.setEventWriter(session.getAttribute("teamMemberNickname").toString());
         calService.insertEvent(calDto);
@@ -62,9 +63,8 @@ public class CalController {
 
     @ResponseBody
     @RequestMapping (value = "selectAll" , produces = "text/html;charset=utf8")
-    public String selectAll(Model model) throws Exception{
+    public String selectAll() throws Exception{
             List<CalDTO> calList = calService.selectAll((Integer) session.getAttribute("teamSeq"));
-            model.addAttribute("list",calList);
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
             String list = gson.toJson(calList);
             return list;
@@ -72,9 +72,8 @@ public class CalController {
 
     @ResponseBody
     @RequestMapping (value = "selectTeam" , produces = "text/html;charset=utf8")
-    public String selectTeam(Model model) throws Exception{
+    public String selectTeam() throws Exception{
         List<CalDTO> calList = calService.selectTeam((Integer) session.getAttribute("teamSeq"));
-        model.addAttribute("list",calList);
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         String list = gson.toJson(calList);
         return list;
@@ -82,11 +81,13 @@ public class CalController {
 
     @ResponseBody
     @RequestMapping (value = "selectPrivate" , produces = "text/html;charset=utf8")
-    public String selectPrivate(Model model) throws Exception{
-        List<CalDTO> calList = calService.selectPrivate((Integer) session.getAttribute("teamSeq"));
-        model.addAttribute("list",calList);
+    public String selectPrivate() throws Exception{
+        int memberSeq = ((Integer)session.getAttribute("memberSeq"));
+        int teamSeq = ((Integer)session.getAttribute("teamSeq"));
+        List<CalDTO> calList = calService.selectPrivate(memberSeq,teamSeq);
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         String list = gson.toJson(calList);
+        System.out.println(list);
         return list;
     }
 
@@ -96,7 +97,8 @@ public class CalController {
         String manager = "manager";
         boolean result =  Objects.equals(grade, manager);
         if (result){
-            calService.deleteEvent(eventSeq);
+            int memberSeq = (Integer)session.getAttribute("memberSeq");
+            calService.deleteEvent(eventSeq, memberSeq);
             return "redirect:/calendar/moveCalendar";
         }else {
             return "/calendar/gradeError";
@@ -108,6 +110,7 @@ public class CalController {
         String manager = "manager";
         boolean result =  Objects.equals(grade, manager);
         if (result){
+            calDto.setEventWriter(session.getAttribute("teamMemberNickname").toString());
             calService.updateEvent(calDto);
             return "redirect:/calendar/moveCalendar";
         }else {
@@ -120,7 +123,8 @@ public class CalController {
         String Session = session.getAttribute("teamMemberNickname").toString();
         boolean result = Objects.equals(eventWriter, Session);
         if (result){
-        calService.deleteEvent(eventSeq);
+            int memberSeq = (Integer)session.getAttribute("memberSeq");
+        calService.deleteEvent(eventSeq, memberSeq);
         return "redirect:/calendar/moveCalendar";
 
         }else {

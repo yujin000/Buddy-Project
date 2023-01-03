@@ -1,7 +1,6 @@
 package com.fivet.buddy.dao;
 
 import com.fivet.buddy.dto.CalDTO;
-import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.mapper.CalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,16 +23,16 @@ public class CalDAO {
     public List<CalDTO> selectTeam(int teamSeq) throws Exception{
         return calMapper.selectTeam(teamSeq);
     }
-    public List<CalDTO> selectPrivate(int teamSeq) throws Exception{
-        return calMapper.selectPrivate(teamSeq);
+    public List<CalDTO> selectPrivate(int memberSeq, int teamSeq) throws Exception{
+        return calMapper.selectPrivate(memberSeq, teamSeq);
     }
 
     public String selectGrade(String teamMemberNickname) throws Exception {
         return calMapper.selectGrade(teamMemberNickname);
     }
 
-    public void deleteEvent(int eventSeq) throws Exception{
-        calMapper.deleteEvent(eventSeq);
+    public void deleteEvent(int eventSeq, int memberSeq) throws Exception{
+        calMapper.deleteEvent(eventSeq, memberSeq);
     }
 
     public  void updateEvent(CalDTO calDto) throws  Exception {

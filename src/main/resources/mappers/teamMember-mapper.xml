@@ -110,4 +110,8 @@
     <select id="subManagerCount" resultType="int">
         select count(*) from team_member where team_seq = #{value} and grade='부매니저'
     </select>
+
+    <update id="updateTeamMemberNickName">
+        update team_member set team_member_nickname = #{teamMemberNickname} where member_seq = #{memberSeq}
+    </update>
 </mapper>

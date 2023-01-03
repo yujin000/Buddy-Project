@@ -17,7 +17,10 @@
 </head>
 <body>
 <!--세션 및 각종 변수를 담아 쓰는 input-->
-<input type="hidden" th:sessionMemberSeq="${session.memberSeq}" id="session.memberSeq">
+<input type="hidden"
+       th:sessionMemberSeq="${session.memberSeq}"
+       th:data-grade="${teamMemberInfo.grade}"
+       id="session.memberSeq">
 <div class="wrap">
   <div class="header">
     <div class="logo">
@@ -47,26 +50,10 @@
     <aside>
       <div id="profile" class="asideTitle">
         <img src="" alt="" />
-        <h3><a href="../member/myProfile.html" th:text="${session.teamMemberNickname}"></a></h3>
-        <button id="alarmView" class="toggle">알람</button>
+        <button id="profileViewBtn" th:text="${session.teamMemberNickname}"></button>
+<!--        <h3><a href="../member/myProfile.html" th:text="${session.teamMemberNickname}"></a></h3>-->
+<!--        <button id="alarmView" class="toggle">수정</button>-->
       </div>
-      <ul id="alarmList" class="subItem">
-        <h1>알림</h1>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-      </ul>
 
       <div id="topic" class="asideList">
         <div class="asideTitle">
@@ -121,6 +108,18 @@
         </div>
       </div>
     </aside>
+    <div id="profileView">
+      <img id="profileImg" src="/static/img/defaultProfileImg.png"><br/>
+      <form>
+        <div id="nickNameDiv">
+          <span id="nickNameSpan" th:text="${session.teamMemberNickname}" onclick="nickNameSpanClick()"/>
+          <button id="updateNickNameBtn">수정</button>
+        </div>
+      </form>
+      <div id="gradeDiv">
+      <span id="pGrade" th:text="${teamMemberInfo.grade}"/>
+      </div>
+    </div>
     <section class="msgSection">
       <div class="chatHeader">
         <h1>team-list</h1>
@@ -424,10 +423,6 @@
       $("#appList").toggle();
     });
 
-    $("#alarmView").click(function () {
-      $("#alarmList").toggle();
-    });
-
     $("#teamMember").click(function (){
       $("#teamMemberList").toggle();
     })
@@ -450,7 +445,10 @@
 
     })
 
-
+    $("#profileViewBtn").on("click",function (){
+      $("#profileView").toggle();
+      $("#updateNickNameBtn").css("display","none")
+    })
   });
 </script>
 
@@ -479,6 +477,32 @@
   $('.inviteMember').on('click',function (){
     window.open("/invite/sendInviteMail","팀원 초대","width = 500, height = 300, top = 50%, left = 50%, location = no, toolbars = no, status = no, scrollbars = no");
   });
+</script>
+
+<script>
+  let input = $("<input>");
+  let button = $("<buuton>");
+    function nickNameSpanClick() {
+      $("#nickNameSpan").css("display", "none");
+      $("#updateNickNameBtn").css("display","block")
+      input.val($("#nickNameSpan").text())
+      input.attr("id", "inputNickName");
+      $("#nickNameDiv").prepend(input);
+      $("#inputNickName").focus();
+    }
+
+    $("#updateNickNameBtn").on("click",function (){
+      let inputNickName = $("#inputNickName").val();
+      $.ajax({
+        url:"/team/updateTeamMemberNickName",
+        data:{"teamMemberNickname":inputNickName
+              "team_seq":},
+      }).done(function (rsp) {
+        $("#profileViewBtn").text(rsp);
+        $("#nickNameSpan").text(rsp);
+        $("#updateNickNameBtn").css("display","none");
+      })
+    })
 </script>
 </body>
 </html>

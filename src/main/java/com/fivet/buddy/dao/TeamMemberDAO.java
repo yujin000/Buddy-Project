@@ -80,4 +80,9 @@ public class TeamMemberDAO {
     public int subManagerCount(int teamSeq){
         return teamMemberMapper.subManagerCount(teamSeq);
     }
+
+    //
+    public void updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
+        teamMemberMapper.updateTeamMemberNickName(teamMemberDto);
+    }
 }

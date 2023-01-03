@@ -199,10 +199,17 @@ public class TeamController {
     }
 
     @ResponseBody
-    @RequestMapping("SubManagerMemberCount")
+    @RequestMapping("subManagerMemberCount")
     //부매니저 수 체크
     public int subManagerCount(int teamSeq){
         return teamMemberService.subManagerCount(teamSeq);
+    }
+
+    //팀원 닉네임 변경
+    @ResponseBody
+    @RequestMapping("updateTeamMemberNickName")
+    public void updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
+        teamMemberService.updateTeamMemberNickName(teamMemberDto);
     }
 
     // Exception Handler

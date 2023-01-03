@@ -74,4 +74,9 @@ public class TeamMemberService {
     public int subManagerCount(int teamSeq){
         return teamMemberDao.subManagerCount(teamSeq);
     }
+
+    //
+    public void updateTeamMemberNickName(TeamMemberDTO teamMemberDto){
+        teamMemberDao.updateTeamMemberNickName(teamMemberDto);
+    }
 }

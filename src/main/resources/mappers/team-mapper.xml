@@ -77,4 +77,9 @@
     <delete id="delTeamOnlyOne">
         delete from team where team_owner_seq = #{memberSeq} and team_count=1
     </delete>
+
+    <!--    해당 회원이 2인이상으로 구성된 팀의 매니저인지 여부를 판별-->
+    <select id="memberManagerCheck" resultType="int">
+        select count(*) from team where team_owner_seq = #{memberSeq} and team_count>=2
+    </select>
 </mapper>

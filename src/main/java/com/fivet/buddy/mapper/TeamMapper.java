@@ -26,4 +26,5 @@ public interface TeamMapper {
     void delTeamZeroCount();
     int selectTeamCount(int teamSeq);
     void delTeamOnlyOne(int memberSeq);
+    int memberManagerCheck(int memberSeq);
 }

@@ -67,4 +67,9 @@ public class TeamDAO {
         teamMapper.delTeamOnlyOne(memberSeq);
     }
 
+    //해당 회원이 2인이상으로 구성된 팀의 매니저인지 여부를 판별
+    public int memberManagerCheck(int memberSeq) {
+        return teamMapper.memberManagerCheck(memberSeq);
+    }
+
 }

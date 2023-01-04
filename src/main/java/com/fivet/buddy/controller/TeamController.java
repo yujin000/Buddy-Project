@@ -133,7 +133,7 @@ public class TeamController {
 
     //팀 삭제
     @RequestMapping("deleteTeam")
-    public String deleteTeam(int teamSeq){
+    public String deleteTeam(int teamSeq) throws Exception {
         String teamBasicKey = basicFolderService.myTeamFolderKey(teamSeq);
         // 기본 폴더 삭제(db + 실제)
         basicFolderService.teamOut(teamSeq);
@@ -143,6 +143,9 @@ public class TeamController {
         personalFolderService.teamOut(allKeys);
         // 팀 파일들 삭제(db)
         personalFileService.teamOut(allKeys);
+        // 팀 캘린더 일정 삭제
+        calService.deleteTeamAllEvent(teamSeq);
+
 
         teamService.deleteTeam(teamSeq);
         return "redirect:/member/loginIndex";

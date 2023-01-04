@@ -6,7 +6,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -37,9 +36,9 @@ public class CalController {
         return "redirect:/calendar/moveCalendar";
     }
 
-    @RequestMapping(value = "moveCalendar")
+    @RequestMapping(value = "moveCalendar" ,method = RequestMethod.GET)
     public String moveCalendar()throws Exception {
-        if ((Integer) session.getAttribute("teamSeq") != null ){
+        if (session.getAttribute("teamSeq") != null ){
         return "calendar/calendar";
         }
         return "calendar/calendarError";
@@ -47,7 +46,7 @@ public class CalController {
 
     @RequestMapping(value = "goPrivate")
     public String goPrivate()throws Exception {
-        if ((Integer) session.getAttribute("teamSeq") != null ){
+        if ( session.getAttribute("teamSeq") != null ){
             return "calendar/calendarPrivate";
         }
         return "calendar/calendarError";
@@ -55,14 +54,14 @@ public class CalController {
 
     @RequestMapping(value = "goTeam")
     public String goTeam()throws Exception {
-        if ((Integer) session.getAttribute("teamSeq") != null ){
+        if ( session.getAttribute("teamSeq") != null ){
             return "calendar/calendarTeam";
         }
         return "calendar/calendarError";
     }
 
     @ResponseBody
-    @RequestMapping (value = "selectAll" , produces = "text/html;charset=utf8")
+    @RequestMapping (value = "selectAll" , produces = "text/html;charset=utf8" ,method=RequestMethod.GET)
     public String selectAll() throws Exception{
             List<CalDTO> calList = calService.selectAll((Integer) session.getAttribute("teamSeq"));
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();

@@ -45,17 +45,18 @@
     }
 
     #teamMemberList {
-        width: 100%;
-        right: 0;
+        width: 90%;
+        left: 5vw;
         top: 50px;
         border: none;
-        height: calc(100vh - 50px);
+        height: calc(100vh - 80px);
         background: white;
     }
 
     .menuList {
-        width: 100%;
-        height: 100%;
+        width: 90%;
+        left: 5vw;
+        height: calc(100% - 80px);
         background: white;
         border: none;
         top: 50px;

@@ -112,4 +112,7 @@ public class TeamMemberDAO {
 
     //매니저가 팀에서 나갈시, 부매니저->팀원 순서대로 매니저가 이양된다. 새 매니저 후보를 추출
     public int selectNewManagerSeq(int memberSeq) { return teamMemberMapper.selectNewManagerSeq(); }
+
+    //팀 삭제시, 팀 회원 목록 전부 삭제
+    public void delTeam(int teamSeq) { teamMemberMapper.delTeam(teamSeq);}
 }

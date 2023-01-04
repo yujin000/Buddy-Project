@@ -33,4 +33,5 @@ public interface TeamMemberMapper {
     List<TeamMemberDTO> selectTeamMemberOnlyOne(int memberSeq);
     void delOnlyOneTeamMember(int memberSeq);
     int selectNewManagerSeq();
+    void delTeam(int teamSeq);
 }

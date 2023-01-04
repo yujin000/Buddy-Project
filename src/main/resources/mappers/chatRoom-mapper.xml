@@ -9,7 +9,7 @@
         insert into
             chat_room
         values
-            (chat_room_seq.nextval, #{teamSeq}, #{teamName}, #{teamOwnerSeq}, 'basic', 1, sysdate)
+            (chat_room_seq.nextval, #{teamSeq}, #{teamName}, 'basic', 1, sysdate)
         <selectKey order="AFTER" keyProperty="chatRoomSeq" resultType="String">
             select chat_room_seq.currval from dual
         </selectKey>
@@ -20,7 +20,7 @@
         insert into
             chat_room
         values
-            (chat_room_seq.nextval, #{teamSeq}, '나와의 대화', #{memberSeq}, 'self', 1, sysdate)
+            (chat_room_seq.nextval, #{teamSeq}, '나와의 대화', 'self', 1, sysdate)
         <selectKey order="AFTER" keyProperty="chatRoomSeq" resultType="String">
             select chat_room_seq.currval from dual
         </selectKey>
@@ -60,7 +60,6 @@
             chat_room_seq.nextval,
             #{teamSeq},
             #{chatTitle},
-            #{roomOwnerSeq},
             'topic',
             #{memberCount},
             sysdate
@@ -85,7 +84,7 @@
         insert into
         chat_room
         values
-        (chat_room_seq.nextval, #{teamSeq}, #{chatTitle}, #{roomOwnerSeq}, 'normal', #{memberCount}, sysdate)
+        (chat_room_seq.nextval, #{teamSeq}, #{chatTitle}, 'normal', #{memberCount}, sysdate)
         <selectKey order="AFTER" keyProperty="chatRoomSeq" resultType="int">
             select chat_room_seq.currval from dual
         </selectKey>

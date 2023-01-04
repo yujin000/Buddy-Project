@@ -3,6 +3,13 @@
 *{
     font-family: 'Noto Sans KR', sans-serif;
 }
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}
 .wrap {
     width: 100vh;
     height: 100vh;
@@ -449,9 +456,7 @@ aside {
     color:white;
     background-color: #1661ff;
 }
-.copyUrl{
-    width:120px;
-}
+
 #backBtn{
     border:none;
     background-color:#ffffff;
@@ -506,6 +511,10 @@ aside {
 }
 .bubble{
     z-index: 100;
+}
+.copyUrl{
+    width:50px;
+    display: inline-block;
 }
 /* 폴더, 파일 이름 */
 .printFolderName,.printFileName{
@@ -612,4 +621,8 @@ aside {
 }
 #dropFile{
     display: none;
+}
+.shareUrlText{
+    width:50px;
+    display:inline-block;
 }

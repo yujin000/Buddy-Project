@@ -78,7 +78,7 @@ public class ChatRoomController {
         int topicCount = chatRoomService.countTopic(param.get("teamSeq"));
         model.addAttribute("topicCount", topicCount);
 
-        return ("/team/teamChating");
+        return "team/teamChating";
     }
 
     // 채팅방 목록 출력

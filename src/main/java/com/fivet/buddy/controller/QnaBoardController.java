@@ -147,7 +147,7 @@ public class QnaBoardController {
             String pageNavi = new PageNavi().getPageNaviAll(cpage, rcpp, ncpp, rtc, "/qna/toAdminQna", "cpage");
             model.addAttribute("qnaList", QnaList);
             model.addAttribute("pageNavi", pageNavi);
-            return "/admin/adminQna";
+            return "admin/adminQna";
         } else {
             return "error";
         }
@@ -167,7 +167,7 @@ public class QnaBoardController {
             model.addAttribute("qna", qnaBoardDto);
             model.addAttribute("qnaComment", qnaComment);
             model.addAttribute("qnaCommentCount", qnaCommentCount);
-            return "/admin/adminQnaDetail";
+            return "admin/adminQnaDetail";
         } else {
             return "error";
         }

@@ -27,5 +27,6 @@ public interface ChatRoomMapper {
     void updateChatTitle(ChatRoomDTO chatRoomDto);
     void delChatMember(int chatRoomSeq);
     void delChatRoomCountZero();
+    void delOnlyOneChatRoom(int memberSeq);
 
 }

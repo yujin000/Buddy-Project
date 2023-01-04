@@ -9,7 +9,7 @@
         insert into
             chat_member
         values
-            (#{chatRoomSeq}, #{memberSeq}, #{teamSeq}, sysdate, sysdate)
+            (#{chatRoomSeq}, #{memberSeq}, #{teamSeq}, sysdate)
     </insert>
 
     <!-- 채팅방 멤버 출력 -->
@@ -46,5 +46,17 @@
     <!--    회원이 팀 내 참여한 채팅방에서 제거-->
     <delete id="delTeamChatMember">
         delete from chat_member where team_seq = #{teamSeq} and member_seq = #{memberSeq}
+    </delete>
+
+    <!--    특정 회원 한명뿐인 채팅방 회원 목록 제거-->
+    <delete id="delOnlyOneChatMember">
+        delete from
+            (select cm.*
+            from chat_member cm
+            left outer join team t
+            on t.team_seq = cm.team_seq
+            left outer join member m
+            on t.team_owner_seq = m.member_seq
+            where m.member_seq=#{memberSeq} and t.team_count = 1);
     </delete>
 </mapper>

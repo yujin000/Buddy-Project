@@ -55,5 +55,21 @@ public class TeamDAO {
     public void updateMinusTeamCount(int teamSeq) { teamMapper.updateMinusTeamCount(teamSeq);}
 
     //팀원 0명인 팀 제거
-    public void delTeamZeroCount() { teamMapper.delTeamZeroCount(); };
+    public void delTeamZeroCount() { teamMapper.delTeamZeroCount(); }
+
+    //팀의 팀원수 출력
+    public int selectTeamCount(int teamSeq) {
+        return teamMapper.selectTeamCount(teamSeq);
+    }
+
+    //팀이 특정 회원 1명뿐인 팀 목록을 삭제
+    public void delTeamOnlyOne(int memberSeq) {
+        teamMapper.delTeamOnlyOne(memberSeq);
+    }
+
+    //해당 회원이 2인이상으로 구성된 팀의 매니저인지 여부를 판별
+    public int memberManagerCheck(int memberSeq) {
+        return teamMapper.memberManagerCheck(memberSeq);
+    }
+
 }

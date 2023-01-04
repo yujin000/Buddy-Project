@@ -156,9 +156,24 @@
   // 회원 강퇴
   $(".delData").on('click',function(){
     let memberSeq = $(this).val();
-    if(confirm("회원정보를 삭제하시겠습니까?")){
-    location.href="/admin/memberKickOut?memberSeq=" + memberSeq;
+    let memberManagerCheck;
+    $.ajax({
+      type:"post",
+      data:{"memberSeq" : $(this).val()},
+      url:"/team/memberManagerCheck",
+      async:false
+    }).done(function (resp) {
+      memberManagerCheck=resp;
+    });
+
+    if (memberManagerCheck>0) {
+      alert("2인 이상의 팀의 매니저는 강퇴할 수 없습니다.")
+    } else {
+      if(confirm("회원정보를 삭제하시겠습니까?")){
+        location.href="/admin/memberKickOut?memberSeq=" + memberSeq;
+      }
     }
+
   });
 
 

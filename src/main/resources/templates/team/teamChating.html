@@ -24,11 +24,18 @@
     let teamMemberNickname = [[${session.teamMemberNickname}]];
     let memberSeq = [[${session.memberSeq}]];
     let memberImgSysName = [[${memberImgSysName}]];
-    if(memberImgSysName!="/static/img/defaultProfileImg.png"){
-        memberImgSysName="/member/selectProfileImg/" + memberImgSysName;
-    }
     /*]]>*/
+
 </script>
+
+<!--세션 및 각종 변수를 담아 쓰는 input-->
+<input type="hidden"
+       th:data-sessionMemberSeq="${session.memberSeq}"
+       th:data-team="${session.teamSeq}"
+       th:data-grade="${teamMemberInfo.grade}"
+       th:data-teamSeq="${session.teamSeq}"
+       id="infoData"
+>
 
 <script>
 
@@ -40,7 +47,7 @@
     $(function () {
         // 웹소켓 영역 시작
         // webSocket 인스턴스 생성
-        let ws = new WebSocket("ws://localhost/chat/" + chatRoomSeq);
+        let ws = new WebSocket("ws://192.168.50.50/chat/" + chatRoomSeq);
 
         //채팅방 목록을 출력해주는 ajax
         $.ajax({
@@ -181,25 +188,17 @@
             }
         });
 
-        $(".uploadfile").on('change', function () {
+        $("#uploadfile").on('change', attachType);
 
-            let filef = $(".uploadfile")[0].files[0];
-            let fileSize = filef.size;
-            let maxFileSize = 10 * 1024 * 1024;
-
-            let extension = this.value.split(".").pop().toLowerCase();
-            let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip"];
-            let result = $.inArray(extension, accept);
-
-            if (fileSize > maxFileSize) {
-                alert("첨부하려는 '" + filef.name + "' 파일은 용량이 너무 큽니다. \n 업로드 할 수 있는 최대 용량은 '10 MB' 입니다.");
-                this.value = "";
+        function attachType(e) {
+            if (e.target.files[0]) {
+                if (e.target.files[0].size > (1 * 1024 * 1024)) {
+                    alert("파일 사이즈는 1MB 이내로 등록해주세요.");
+                    this.value = "";
+                }
             }
-            if (result == -1) {
-                alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .xls, .ppt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip)");
-                this.value = "";
-            }
-        });
+        }
+
         $(".fileSubmitBtn").on('click', function () {
             $.ajax({
                 type: "POST",
@@ -280,6 +279,7 @@
     });
 
 </script>
+
 <div class="wrap">
     <div class="header">
         <div class="logo">
@@ -306,44 +306,25 @@
     <div class="main">
         <aside>
             <div id="profile" class="asideTitle">
-                <img src="" alt=""/>
-                <h3><a href="../member/myProfile.html" th:text="${session.teamMemberNickName}"></a></h3>
-                <button id="alarmView" class="toggle">알람</button>
+                <img id="myImg" th:src="${memberImgSysName}" alt="" />
+                <div id="profileView" th:text="${session.teamMemberNickname}"></div>
             </div>
-            <ul id="alarmList" class="subItem">
-                <h1>알림</h1>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-            </ul>
 
             <div id="topic" class="asideList">
                 <div class="asideTitle">
-                    <h3>토픽</h3>
+                    <h3>토픽 <span id="topicCount">[[${topicCount}]]</span><span> / 4</span></h3>
                     <button id="topicToggle" class="toggle">v</button>
+                    <th:block th:if="${teamMemberInfo.grade=='매니저'||teamMemberInfo.grade=='부매니저'}">
+                        <button id="topicCreate" class="createBtn">+</button>
+                    </th:block>
                 </div>
                 <div id="topicList" class="asideItem">
-                    <ul>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
-                        <li>list</li>
+                    <ul th:each="topicList : ${topicList}">
+                        <li>
+                            <a th:href="@{/chatRoom/join/(chatRoomSeq=${topicList.chatRoomSeq})}">[[${topicList.chatTitle}]]</a>
+                            <button type="button" class="topicRename" th:data-index="${topicList.chatRoomSeq}">이름변경</button>
+                            <button type="button" class="topicDel" th:data-index="${topicList.chatRoomSeq}">토픽 삭제</button>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -351,6 +332,7 @@
             <div id="chat" class="asideList">
                 <div class="asideTitle">
                     <h3>채팅</h3>
+                    <button id="chatCreate" class="createBtn">+</button>
                     <button id="chatToggle" class="toggle">v</button>
                 </div>
                 <div id="chatList" class="asideItem">
@@ -367,17 +349,31 @@
                 </div>
             </div>
         </aside>
+        <div id="profileViewDiv">
+            <img id="profileImg" th:src="${memberImgSysName}"><br/>
+            <div id="nickNameDiv">
+                <span id="nickNameSpan" th:text="${session.teamMemberNickname}" onclick="nickNameSpanClick()"/>
+                <button id="updateNickNameBtn">수정</button>
+            </div>
+            <div id="gradeDiv">
+                <span id="pGrade" th:text="${teamMemberInfo.grade}"/>
+            </div>
+        </div>
         <section class="msgSection">
             <div class="chatHeader">
                 <h1>team-list</h1>
                 <button id="memberView">멤버</button>
             </div>
             <div class="msgView">
+                <input type="text" id="modifyChatTitle" placeholder=" 토픽/채팅방 제목변경">
+                <button type="button" id="modifyTitleConfirm">변경하기</button>
+                <button type="button" id="modifyCancel">취소</button>
                 <div id="subSection">
                     <ul id="memberList" class="subItem">
                         <h1>member</h1>
                     </ul>
                 </div>
+
                 <th:block th:each="chatMsgList : ${chatMsgList}">
                     <div class="msg">
                         <div class="memberImg" th:utext="${chatMsgList.memberImgSysName}">
@@ -456,11 +452,32 @@
         <li><a href="/member/logout">logout</a></li>
         <li><a href="/team/teamOut">버디 메인으로</a></li>
         <li><a href="/qna/main">문의하기 및 news</a></li>
-        <li>list</li>
-        <li>list</li>
-        <li>list</li>
-        <li>list</li>
+        <li id="teamWithdraw">팀 탈퇴</li>
+        <li class="inviteMember">팀원초대</li>
     </ul>
+</div>
+
+<div class="createView">
+    <div class="wrap">
+        <div class="chatForm">
+            <h1>😀채팅 시작하기</h1>
+            <ul class="list" id="chatMemberUl">
+                <li><input type="text" placeholder="채팅방 이름" id="makeChatTitle"></li>
+            </ul>
+            <button type="button" id="startChat">대화 시작하기</button>
+            <button type="button" class="closeBtn" id="closeBtn" onclick="closer(this)">취소</button>
+        </div>
+
+        <div class="topicForm">
+            <h1>✨토픽 생성하기</h1>
+            <ul class="list">
+                <li><input id="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
+            </ul>
+            <button type="button" id="insertTopic">토픽 생성하기</button>
+            <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
+
+        </div>
+    </div>
 </div>
 
 <script>
@@ -493,12 +510,32 @@
             $("#memberList").toggle();
         });
 
-        $("#alarmView").click(function () {
-            $("#alarmList").toggle();
-        });
         $("#fileSelect").click(function () {
             $(".fileView").toggle();
         });
+
+        $("#chatCreate").click(function (){
+            $(".createView").css("display","block");
+            $(".chatForm").css("display","block");
+            $(".topicForm").css("display","none");
+        })
+
+        $("#topicCreate").click(function (){
+            console.log($("#topicCount").text());
+            if ($("#topicCount").text()>=4) {
+                alert("더이상 토픽을 생성할 수 없습니다!")
+            } else {
+                $(".createView").css("display","block");
+                $(".chatForm").css("display","none");
+                $(".topicForm").css("display","block");
+            }
+
+        })
+
+        $("#profileView").on("click",function (){
+            $("#profileViewDiv").toggle();
+            BtnClick();
+        })
     });
 </script>
 
@@ -509,7 +546,224 @@
     });
 </script>
 
+<script>
+    // 토픽 생성 이벤트
+    $("#insertTopic").click(function (){
+        let chatTitle = $("#topicTitle").val();
+        if ($("#topicTitle").val().length==0) {
+            alert("제목을 입력해주세요!");
+        } else if ($("#topicTitle").val().length>=15) {
+            alert("제목은 15자를 넘을 수 없습니다.")
+        } else {
+            $.ajax({
+                url:"/chatRoom/insertTopic",
+                type:"post",
+                data:{"chatTitle":chatTitle},
+                success : function (){
+                    console.log("성공")
+                },error : function (){
+                    console.log("에러")
+                }
+            }).done(function (){
+                alert("토픽 생성 완료!");
+                location.reload();
+            });
+        }
+    })
 </script>
+
+<script>
+    // 채팅방 생성관련 작업
+    let makeChat = new Set();
+    $(function () {
+        $(document).on("click", ".makeTeamMember", function () {
+            if ($(this).attr("data-checked")=="false") {
+                $(this).css("background-color", "yellow");
+                $(this).attr("data-checked", true);
+                makeChat.add($(this).attr("data-memberSeq"));
+            } else {
+                $(this).css("background-color", "white");
+                $(this).attr("data-checked", false);
+                makeChat.delete($(this).attr("data-memberSeq"));
+            }
+        })
+
+        // 취소버튼 클릭시 새채팅방 후보 회원 초기화
+        $("#closeBtn").on("click", function () {
+            makeChat.clear();
+            $("#").css("background-color", "white");
+        })
+
+        // 시작하기 버튼 클릭 이벤트
+        $("#startChat").on("click", function (){
+            // 채팅 멤버에 자신이 포함되있지 않다면, 넣어줘야함.
+            if (!makeChat.has($("#infoData").attr("data-sessionMemberSeq"))) {
+                makeChat.add($("#infoData").attr("data-sessionMemberSeq"));
+            }
+            if (makeChat.size<=1) {
+                alert("채팅방 멤버는 1인 이상의 타 회원이 포함되어야합니다.");
+            } else if ($("#makeChatTitle").val().length==0) {
+                   alert("채팅방 제목을 입력해주세요!");
+            } else if($("#makeChatTitle").val().length>15) {
+                alert ("채팅방 이름은 15자를 초과할 수 없습니다");
+            } else {
+                let makeChatMember = Array.from(makeChat);
+                $.ajax({
+                    type:"post",
+                    url:"/chatRoom/insertChat",
+                    contentType:'application/json',
+                    data: JSON.stringify({
+                        "chatTitle" : $("#makeChatTitle").val(),
+                        "makeChat": makeChatMember
+                    })
+                }).done(function (resp) {
+                    location.reload();
+                })
+            }
+        })
+
+        // 토픽 이름 변경 이벤트
+        $(".topicRename").click(function (){
+            $("#modifyTitleConfirm").attr("data-index", $(this).attr("data-index"));
+        })
+
+        //이름 변경 취소 버튼 이벤트
+        $("#modifyCancel").click(function (){
+            $("#modifyChatTitle").attr("data-index", "");
+            $("#modifyChatTitle").val("");
+        })
+
+        //이름 변경 클릭 이벤트
+        $("#modifyTitleConfirm").click(function (){
+            let chatRoomSeq = $(this).attr("data-index");
+            $.ajax({
+                url:"/chatRoom/updateChatTitle",
+                type:"post",
+                data:{
+                    "chatRoomSeq" : chatRoomSeq,
+                    "chatTitle" : $("#modifyChatTitle").val()
+                }
+            }).done(function (resp) {
+                alert("변경 완료.");
+                location.reload();
+            })
+        })
+
+        //토픽 삭제 이벤트
+        $(".topicDel").click(function () {
+            if (confirm("정말 삭제하시겠습니까?")) {
+                $.ajax({
+                    type : "post",
+                    url: "/chatRoom/delChatRoom",
+                    data: {"chatRoomSeq" : $(this).attr("data-index")}
+                }).done(function (resp){
+                    alert("삭제완료!");
+                    location.reload();
+                });
+            }
+        })
+
+        //일반 채팅방 나가기 이벤트
+        $(".chatOut").click(function () {
+            if (confirm("정말 채팅방을 나가시겠습니까?")) {
+                let chatRoomSeq = $(this).attr("data-index");
+                $.ajax({
+                    type:"post",
+                    url:"/chatRoom/chatRoomOut",
+                    data:{"chatRoomSeq" : chatRoomSeq}
+                }).done(function (){
+                    location.reload();
+                })
+            }
+        })
+
+        // 채팅방 탈퇴 이벤트
+        $("#teamWithdraw").click(function (){
+            if ($("#infoData").attr("data-grade")=="매니저") {
+                alert("매니저는 팀을 탈퇴할 수 없습니다. 팀 관리에서 매니저를 이양 후 진행해 주시기 바랍니다.");
+            } else {
+                if (confirm("정말 탈퇴하시겠습니까?")) {
+                    $.ajax({
+                        type:"post",
+                        url:"/team/teamOut"
+                    }).done(function (){
+                        alert("탈퇴완료!");
+                        location.href = "/";
+                    })
+                }
+            }
+        })
+    })
+
+
+</script>
+
+<!-- 팀원 목록 출력 ajax -->
+<script th:inline="javascript">
+    $(function (){
+        $.ajax({
+            url:"/team/teamMemberList",
+            success : function (){
+            },error : function (){
+            }
+        }).done(function (rsp){
+            let JsonTeamMemberList = JSON.parse(rsp);
+            //팀 화면에서 팀 목록을 출력
+            for (let i=0; i<JsonTeamMemberList.length; i++) {
+                let teamMemberListLi = $("<li>");
+                let teamMemberListImg = $("<img>");
+                let teamMemberListSpan1 = $("<span>");
+                let teamMemberListSpan2 = $("<span>");
+                teamMemberListImg.attr("src",JsonTeamMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonTeamMemberList[i].memberImgSysName);
+                teamMemberListLi.append(teamMemberListImg);
+                teamMemberListSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
+                teamMemberListLi.append(teamMemberListSpan1);
+                teamMemberListSpan2.text(JsonTeamMemberList[i].grade);
+                teamMemberListLi.append(teamMemberListSpan2);
+                $("#teamMemberList").append(teamMemberListLi);
+            }
+            for (let i=0; i<JsonTeamMemberList.length; i++) {
+                //채팅방 만들기에서 팀 목록을 출력
+                let chatMemberLi = $("<li>");
+                let chatMemberImg = $("<img>");
+                let chatMemberSpan1 = $("<span>");
+                let chatMemberSpan2 = $("<span>");
+                chatMemberLi.addClass("makeTeamMember");
+                chatMemberLi.attr("data-checked", "false");
+                chatMemberLi.attr("data-memberSeq", JsonTeamMemberList[i].memberSeq);
+                chatMemberImg.attr("src",JsonTeamMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonTeamMemberList[i].memberImgSysName);
+                chatMemberLi.append(chatMemberImg);
+                chatMemberSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
+                chatMemberLi.append(chatMemberSpan1);
+                chatMemberSpan2.attr('claas','tag');
+                chatMemberSpan2.text(JsonTeamMemberList[i].grade);
+                chatMemberLi.append(chatMemberSpan2);
+                $("#chatMemberUl").append(chatMemberLi);
+            }
+        })
+    })
+</script>
+
+<!-- 팀원 초대 -->
+<script>
+
+    let teamSeq = $('#infoData').data('team');
+
+    $('.inviteMember').on('click',function (){
+        $.ajax({
+            url: "/team/teamMemberCount",
+            type: "post",
+            data: {"teamSeq" : teamSeq},
+        }).done(function(rsp){
+            if(rsp >= 8 ){
+                alert("최대 팀원은 8명 입니다.")
+            }else {
+                window.open("/invite/sendInviteMail","팀원 초대","width = 500, height = 300, top = 50%, left = 50%, location = no, toolbars = no, status = no, scrollbars = no");
+            }
+        })
+    });
+</script>
+
 <script>
     $("#emoticonBtn").on("click",function (){
         $("#emoticonClickView").hide();
@@ -533,5 +787,53 @@
     })
 </script>
 
+<script>
+
+    function closer(arg) {
+        $(arg).parent().parent().parent().css("display","none");
+    }
+
+    //팀원 닉네임 변경
+    let input = $("<input>");
+    let button = $("<buuton>");
+    function nickNameSpanClick() {
+        $("#nickNameSpan").css("display", "none");
+        $("#updateNickNameBtn").css("display","inline-block")
+        $("#inputNickName").css("display","inline-block");
+        input.val($("#nickNameSpan").text())
+        input.attr("id", "inputNickName");
+        $("#nickNameDiv").prepend(input);
+        $("#inputNickName").focus();
+    }
+
+    function BtnClick(){
+        $("#nickNameSpan").css("display", "block");
+        $("#inputNickName").css("display","none");
+        $("#updateNickNameBtn").css("display","none");
+
+    }
+    $("#updateNickNameBtn").on("click",function (){
+        let inputNickName = $("#inputNickName").val();
+        let teamSeq=$("#infoData").data("teamseq");
+        const nickNameRegex = /^[가-힣\s]{1,15}$/;
+        let Result = nickNameRegex.test(inputNickName);
+        if(Result){
+            $.ajax({
+                url:"/team/updateTeamMemberNickName",
+                type:"post",
+                data:{"teamMemberNickname":inputNickName,
+                    "teamSeq":teamSeq},
+            }).done(function (rsp) {
+                console.log(rsp)
+                $("#profileView").html(rsp);
+                $("#nickNameSpan").text(rsp);
+                BtnClick();
+                location.reload();
+            })}
+        else{
+            alert("닉네임은 공백포함 1~15글자만 가능합니다. (특수문자 불가능)");
+        }
+    })
+</script>
 </body>
 </html>

@@ -14,4 +14,5 @@ public interface ChatMsgMapper {
     void insertFiles(ChatFilesDTO chatFilesDto);
     List<ChatMsgDTO> selectChatMsg(int chatRoomSeq);
     void delChatRoom(int chatRoomSeq);
+    void delOnlyOneMsg(int memberSeq);
 }

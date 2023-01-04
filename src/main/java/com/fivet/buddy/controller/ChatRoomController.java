@@ -44,14 +44,41 @@ public class ChatRoomController {
     @Autowired
     private ChatMemberService chatMemberService;
 
+    @Autowired
+    private MemberService memberService;
+
     //채팅방 입장
     @RequestMapping("join")
-    public String insertChatMsg(int chatRoomSeq, Model model) {
+    public String insertChatMsg(TeamMemberDTO teamMemberDto,int chatRoomSeq, Model model) throws Exception {
+        teamMemberDto.setTeamSeq((int)session.getAttribute("teamSeq"));
+        teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+        //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
+        Map<String, Integer> param = new HashMap<>();
+        param.put("teamSeq", teamMemberDto.getTeamSeq());
+        param.put("memberSeq", teamMemberDto.getMemberSeq());
+        List<ChatRoomDTO> topicList = chatRoomService.selectTopic(param.get("teamSeq"));
+        // 회원 번호를 이용하여 팀 DTO값을 불러옴.
+        teamMemberDto = teamMemberService.selectOne(teamMemberDto);
+        model.addAttribute("teamMemberInfo", teamMemberDto);
+
+        model.addAttribute("topicList", topicList);
         model.addAttribute("chatRoomSeq",chatRoomSeq);
         model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));
         model.addAttribute("chatMemberList",teamMemberService.selectChatMember(chatRoomSeq));
-        String memberImgSysName = chatMemberService.selectChatMemberImg((int) session.getAttribute("memberSeq"),chatRoomSeq);
-        model.addAttribute("memberImgSysName",memberImgSysName);
+
+        //프로필 이미지 출력
+        String memberImgSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
+        if(memberImgSysName.equals("/static/img/defaultProfileImg.png")){
+            model.addAttribute("memberImgSysName",memberImgSysName);
+        }else{
+            memberImgSysName = "/member/selectProfileImg/"+memberImgSysName;
+            memberImgSysName=memberImgSysName.replaceAll("\\s", "");
+            model.addAttribute("memberImgSysName",memberImgSysName);
+        }
+        //토픽 수 출력
+        int topicCount = chatRoomService.countTopic(param.get("teamSeq"));
+        model.addAttribute("topicCount", topicCount);
+
         return ("/team/teamChating");
     }
 
@@ -68,6 +95,7 @@ public class ChatRoomController {
     }
 
     // 토픽 생성
+    @ResponseBody
     @PostMapping("insertTopic")
     public String insertTopic(ChatRoomDTO chatRoomDto) {
         TeamDTO teamDto = teamService.selectTeamOne(session.getAttribute("teamSeq").toString());

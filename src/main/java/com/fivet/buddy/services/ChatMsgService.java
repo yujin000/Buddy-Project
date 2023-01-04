@@ -25,4 +25,7 @@ public class ChatMsgService {
 
     // 채팅방 삭제
     public void delChatRoom(int chatRoomSeq) { chatMsgDao.delChatRoom(chatRoomSeq);}
+
+    // 특정 회원이 1명뿐인 팀의 채팅방 내역을 모두 삭제.
+    public void delOnlyOneMsg(int memberSeq) { chatMsgDao.delOnlyOneMsg(memberSeq);}
 }

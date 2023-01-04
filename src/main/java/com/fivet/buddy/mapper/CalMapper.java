@@ -18,6 +18,9 @@ public interface CalMapper {
     String selectGrade(String teamMemberNickname);
 
     void deleteEvent(int eventSeq, int memberSeq);
-
+    void deleteUserEvent(int memberSeq);
+    void deleteTeamMemberEvent(String teamMemberNickname);
     void updateEvent(CalDTO calDto);
+
+    void updateNickname(int memberSeq, int teamSeq, String eventWriter);
 }

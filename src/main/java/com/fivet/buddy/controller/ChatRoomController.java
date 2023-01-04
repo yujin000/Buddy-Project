@@ -72,6 +72,7 @@ public class ChatRoomController {
             model.addAttribute("memberImgSysName",memberImgSysName);
         }else{
             memberImgSysName = "/member/selectProfileImg/"+memberImgSysName;
+            memberImgSysName=memberImgSysName.replaceAll("\\s", "");
             model.addAttribute("memberImgSysName",memberImgSysName);
         }
         //토픽 수 출력

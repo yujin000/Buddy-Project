@@ -35,7 +35,22 @@ public class CalDAO {
         calMapper.deleteEvent(eventSeq, memberSeq);
     }
 
+    public void deleteUserEvent(int memberSeq) throws Exception{
+        calMapper.deleteUserEvent(memberSeq);
+    }
+
+    public void deleteTeamMemberEvent(String teamMemberNickname) throws Exception{
+        calMapper.deleteTeamMemberEvent(teamMemberNickname);
+    }
+
     public  void updateEvent(CalDTO calDto) throws  Exception {
         calMapper.updateEvent(calDto);
     }
+
+    public void updateNickname(int teamSeq, int memberSeq, String eventWriter) throws  Exception{
+        calMapper.updateNickname(teamSeq, memberSeq, eventWriter);
+    }
+
+
+
 }

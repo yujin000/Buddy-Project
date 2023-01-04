@@ -141,14 +141,19 @@
       </th:block>
 
 </div>
-
+<input type="hidden" id="hidden" th:data-type="${myProfile.getMemberLogtype()}">
 <strong><a href="/member/loginIndex" id="goBack">뒤로가기</a></strong>
   <p class="cancel">
     😨 회원 탈퇴를 원하세요? <a href="#" onclick="delClick();" onmouseenter="this.style.opacity =1;" onmouseleave="this.style.opacity=0.5;" style="opacity: 0.3;">탈퇴</a>
   </p>
 </div>
 
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
+
+  window.Kakao.init('7916c939205e8db616216bc236bc79c3');
+
+  let type=$("#hidden").data("type");
 
   $(document).ready(function(){
       $("#PhoneToggle").click(function() {
@@ -172,12 +177,31 @@
 
   function delClick(){
     if(confirm("회원 탈퇴 하시겠습니까?")){
-      location.href = "/member/deleteMember";
-      return true;
+      if(type=='kakao'){
+        secession();
+      }
+      else {
+        location.href = "/member/deleteMember";
+        return true;
+      }
     } else {
       return false;
     }
   }
+
+  function secession() {
+    Kakao.API.request({
+      url: '/v1/user/unlink',
+      success: function(response) {
+        //callback("탈퇴 완료"); //연결끊기(탈퇴)성공시 서버에서 처리할 함수
+        window.location.href='/member/deleteMember'
+      },
+      fail: function(error) {
+        console.log('탈퇴 미완료');
+        console.log(error);
+      },
+    });
+  };
 
   //프로필 이미지 수정
   $("#myImg").click(function (){

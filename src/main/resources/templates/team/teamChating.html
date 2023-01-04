@@ -47,7 +47,7 @@
     $(function () {
         // 웹소켓 영역 시작
         // webSocket 인스턴스 생성
-        let ws = new WebSocket("ws://43.201.133.173/chat/" + chatRoomSeq);
+        let ws = new WebSocket("ws://192.168.50.50/chat/" + chatRoomSeq);
 
         //채팅방 목록을 출력해주는 ajax
         $.ajax({
@@ -602,6 +602,10 @@
             }
             if (makeChat.size<=1) {
                 alert("채팅방 멤버는 1인 이상의 타 회원이 포함되어야합니다.");
+            } else if ($("#makeChatTitle").val().length==0) {
+                   alert("채팅방 제목을 입력해주세요!");
+            } else if($("#makeChatTitle").val().length>15) {
+                alert ("채팅방 이름은 15자를 초과할 수 없습니다");
             } else {
                 let makeChatMember = Array.from(makeChat);
                 $.ajax({

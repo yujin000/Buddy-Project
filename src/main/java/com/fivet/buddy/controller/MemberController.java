@@ -34,6 +34,9 @@ public class MemberController {
     private TeamService teamService;
 
     @Autowired
+    private CalService calService;
+
+    @Autowired
     private TeamMemberService teamMemberService;
 
     @Autowired
@@ -215,6 +218,7 @@ public class MemberController {
         String ifSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
         if(ifSysName!=null) {
             if (ifSysName.equals("/static/img/defaultProfileImg.png")) {
+                ifSysName=ifSysName.replaceAll("\\s", "");
                 model.addAttribute("memberImg", ifSysName);
             } else {
                 String elseSysName = "/member/selectProfileImg/" + ifSysName;
@@ -273,6 +277,7 @@ public class MemberController {
             return ifSysName;
         }else{
             String elseSysName = "/member/selectProfileImg/"+ifSysName;
+            elseSysName.replaceAll("\\s", "");
             return elseSysName;
         }
     }
@@ -298,6 +303,7 @@ public class MemberController {
         }else{
             String memberImgOriName = file.getOriginalFilename();
             String memberImgSysName = UUID.randomUUID() + "_" + memberImgOriName;
+            memberImgSysName=memberImgSysName.replaceAll("\\s", "");
             //UUID.randomUUID() : 현재 시간과 자체 매커니즘을 통해 겹치지 않는 기다란 문자를 자동으로 생성해줌
             util.save(file,proFilePath,memberImgSysName);
 
@@ -328,6 +334,7 @@ public class MemberController {
         // 기본 폴더 삭제
         basicFolderService.memberOut(memberSeq);
 
+
         // 회원 탈퇴(강퇴포함)시 삭제할 팀 목록 출력
         List<TeamMemberDTO> teamMemberList = teamMemberService.selectMembersManager(memberSeq);
 
@@ -356,6 +363,7 @@ public class MemberController {
             String ifSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
             if(ifSysName!=null) {
                 if (ifSysName.equals("/static/img/defaultProfileImg.png")) {
+                    ifSysName.replaceAll("\\s", "");
                     model.addAttribute("memberImg", ifSysName);
                 } else {
                     String elseSysName = "/member/selectProfileImg/" + ifSysName;
@@ -397,6 +405,8 @@ public class MemberController {
         personalFolderService.memberOut(memberSeq);
         // 기본 폴더 삭제
         basicFolderService.memberOut(memberSeq);
+        // 이벤트 삭제
+        calService.deleteUserEvent(memberSeq);
 
         List<MemberDTO> list = memberService.selectMembers();
 

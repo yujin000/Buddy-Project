@@ -245,22 +245,22 @@
             modifiedName = $(this).val();
             $(this).css("color","white").attr("disabled",true);
 
-                // 폴더 이름을 사용하고 있는지 조회 하고 결과 반환
-                $.ajax({
-                    url:"/personalFolder/addFolder"
-                    ,data:({
-                        "folderName":modifiedName,
-                        "parentKey":parentKey
-                    })
-                }).done(function(rsp){
-                    // rsp : true(사용할 수 있음), false(사용할 수 없음)
-                    if(!rsp) {
-                        alert("이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
-                        modifyText.attr("disabled",false).css("color","red");
-                    }else{
-                        location.reload();
-                    }
+            // 폴더 이름을 사용하고 있는지 조회 하고 결과 반환
+            $.ajax({
+                url:"/personalFolder/addFolder"
+                ,data:({
+                    "folderName":modifiedName,
+                    "parentKey":parentKey
                 })
+            }).done(function(rsp){
+                // rsp : true(사용할 수 있음), false(사용할 수 없음)
+                if(!rsp) {
+                    alert("이미 존재하는 이름입니다. 폴더 이름을 변경해주세요.");
+                    modifyText.attr("disabled",false).css("color","red");
+                }else{
+                    location.reload();
+                }
+            })
 
         })
 
@@ -378,54 +378,54 @@
 
     $("#downloadBtn").on("click",function () {
         let checked = $("input:checkbox[class='check']:checked");
-            checked.each(function () {
-                let type = $(this).data("resource-type");
-                let key = $(this).data("key");
-                let name = $(this).data("name");
+        checked.each(function () {
+            let type = $(this).data("resource-type");
+            let key = $(this).data("key");
+            let name = $(this).data("name");
 
-                let list = [];
+            let list = [];
 
-                list.push({
-                    type: type
-                    , key: key
-                    , name: name
+            list.push({
+                type: type
+                , key: key
+                , name: name
+            })
+
+            if(type === "file"){
+                $.ajax({
+                    url: "/drive/download"
+                    , type: "post"
+                    , contentType: 'application/json'
+                    , data: JSON.stringify(list)
+                    , encoding: "UTF-8"
+                    , processData: false
+                    , headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    , xhrFields: {
+                        responseType : "blob"
+                    }
+                }).done(function (blob,status,info){
+                    let contentDisposition = decodeURI(info.getResponseHeader("content-disposition").match(dispositionRegex)[0]);
+                    let contentType = info.getResponseHeader("content-type");
+                    download(blob,contentDisposition,contentType);
                 })
-
-                if(type === "file"){
-                    $.ajax({
-                        url: "/drive/download"
-                        , type: "post"
-                        , contentType: 'application/json'
-                        , data: JSON.stringify(list)
-                        , encoding: "UTF-8"
-                        , processData: false
-                        , headers: { 'X-Requested-With': 'XMLHttpRequest' }
-                        , xhrFields: {
-                            responseType : "blob"
-                        }
-                    }).done(function (blob,status,info){
-                        let contentDisposition = decodeURI(info.getResponseHeader("content-disposition").match(dispositionRegex)[0]);
-                        let contentType = info.getResponseHeader("content-type");
-                        download(blob,contentDisposition,contentType);
-                    })
-                }else{
-                    $.ajax({
-                        url: "/drive/download"
-                        , type: "post"
-                        , contentType: 'application/json'
-                        , data: JSON.stringify(list)
-                        , encoding: "UTF-8"
-                        , processData: false
-                        , headers: { 'X-Requested-With': 'XMLHttpRequest' }
-                        ,xhrFields: {
-                            responseType : "blob"
-                        }
-                    }).done(function (blob,status,info){
-                        download(blob,name+".zip","application/octet-stream");
-                        $("input:checkbox[class='check']:checked").prop("checked",false);
-                        $(".contentBlock").css("background-color","#e5ecff");
-                    })
-                }
+            }else{
+                $.ajax({
+                    url: "/drive/download"
+                    , type: "post"
+                    , contentType: 'application/json'
+                    , data: JSON.stringify(list)
+                    , encoding: "UTF-8"
+                    , processData: false
+                    , headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    ,xhrFields: {
+                        responseType : "blob"
+                    }
+                }).done(function (blob,status,info){
+                    download(blob,name+".zip","application/octet-stream");
+                    $("input:checkbox[class='check']:checked").prop("checked",false);
+                    $(".contentBlock").css("background-color","#e5ecff");
+                })
+            }
         });
     });
 </script>
@@ -727,68 +727,68 @@
 <!-- 공유거절 -->
 <script>
     $('#reduceAccessBtn').on('click',function (){
-       location.href='/drive/toFileDrive';
+        location.href='/drive/toFileDrive';
     });
 </script>
 
 <!-- 파일 세부정보 -->
 <script>
     $(document).on('click','.check',function (){
-       let checkedType = $(this).data('resource-type');
-       let thisKey = $(this).data('key');
+        let checkedType = $(this).data('resource-type');
+        let thisKey = $(this).data('key');
 
-       if(checkedType === 'folder'){
-           $.ajax({
-               url: "/personalFolder/myFolderInfo"
-               ,method: 'POST'
-               ,data:{key:thisKey}
-           }).done(function (rsp){
-               if(rsp.personalFolderByte < 1000000){
-                   let divideByte = rsp.personalFolderByte / 1000;
-                   let toKiloByte = divideByte.toString().slice(0,3) + ' kb';
-                   $('.infoSize').html(toKiloByte);
-               }else{
-                   let divideByte = rsp.personalFolderByte / 1000000;
-                   let toMegaByte = divideByte.toString().slice(0,3) + ' MB';
-                   $('.infoSize').html(toMegaByte);
-               }
+        if(checkedType === 'folder'){
+            $.ajax({
+                url: "/personalFolder/myFolderInfo"
+                ,method: 'POST'
+                ,data:{key:thisKey}
+            }).done(function (rsp){
+                if(rsp.personalFolderByte < 1000000){
+                    let divideByte = rsp.personalFolderByte / 1000;
+                    let toKiloByte = divideByte.toString().slice(0,3) + ' kb';
+                    $('.infoSize').html(toKiloByte);
+                }else{
+                    let divideByte = rsp.personalFolderByte / 1000000;
+                    let toMegaByte = divideByte.toString().slice(0,3) + ' MB';
+                    $('.infoSize').html(toMegaByte);
+                }
 
-               let date = rsp.personalFolderDate.toString().slice(0,10);
-               let name = rsp.personalFolderName;
+                let date = rsp.personalFolderDate.toString().slice(0,10);
+                let name = rsp.personalFolderName;
 
-               $('#infoName').html(name);
-               $('.infoType').html('폴더');
-               $('.infoDate').html(date);
+                $('#infoName').html(name);
+                $('.infoType').html('폴더');
+                $('.infoDate').html(date);
 
-               $('#infoImg').attr("src","/static/img/folderImg.png");
-           })
+                $('#infoImg').attr("src","/static/img/folderImg.png");
+            })
 
-       }else{
-           $.ajax({
-               url: "/personalFile/myFileInfo"
-               ,method: 'POST'
-               ,data:{key:thisKey}
-           }).done(function (rsp){
-               if(rsp.personalFilesByte < 1000000){
-                   let divideByte = rsp.personalFilesByte / 1000;
-                   let toKiloByte = divideByte.toString().slice(0,3) + ' kb';
-                   $('.infoSize').html(toKiloByte);
-               }else{
-                   let divideByte = rsp.personalFilesByte / 1000000;
-                   let toMegaByte = divideByte.toString().slice(0,3) + ' MB';
-                   $('.infoSize').html(toMegaByte);
-               }
+        }else{
+            $.ajax({
+                url: "/personalFile/myFileInfo"
+                ,method: 'POST'
+                ,data:{key:thisKey}
+            }).done(function (rsp){
+                if(rsp.personalFilesByte < 1000000){
+                    let divideByte = rsp.personalFilesByte / 1000;
+                    let toKiloByte = divideByte.toString().slice(0,3) + ' kb';
+                    $('.infoSize').html(toKiloByte);
+                }else{
+                    let divideByte = rsp.personalFilesByte / 1000000;
+                    let toMegaByte = divideByte.toString().slice(0,3) + ' MB';
+                    $('.infoSize').html(toMegaByte);
+                }
 
-               let date = rsp.personalFilesDate.toString().slice(0,10);
-               let name = rsp.personalFilesOriname;
-               let type = name.slice(name.indexOf('.',4));
+                let date = rsp.personalFilesDate.toString().slice(0,10);
+                let name = rsp.personalFilesOriname;
+                let type = name.slice(name.indexOf('.',4));
 
-               $('#infoName').html(name);
-               $('.infoType').html(type);
-               $('.infoDate').html(date);
-               $('#infoImg').attr("src","/static/img/fileImg.png");
-           })
-       }
+                $('#infoName').html(name);
+                $('.infoType').html(type);
+                $('.infoDate').html(date);
+                $('#infoImg').attr("src","/static/img/fileImg.png");
+            })
+        }
     });
 </script>
 </body>

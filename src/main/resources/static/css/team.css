@@ -253,8 +253,6 @@ aside {
   max-height: 280px;
   overflow-y: scroll;
   overflow-x: hidden;
-  border-bottom: var(--border);
-  /* -ms-overflow-style: none; */
 }
 .asideItem::-webkit-scrollbar {
   width: 10px; /*스크롤바의 너비*/
@@ -279,10 +277,14 @@ aside {
     -ms-overflow-style: none;
   }
 }
-
+.asideItem ul {
+  width: 100%;
+}
 .asideItem ul > li {
   width: 100%;
   height: 40px;
+  padding: 10px;
+  border-bottom: var(--border);
 }
 
 .asideTool {
@@ -519,6 +521,7 @@ aside {
 .menuList ul li:last-child{
   border: none;
 }
+
 .createView {
   width: 100vw;
   height: 100vh;
@@ -529,7 +532,8 @@ aside {
   position: absolute;
   display: none;
 }
-
+.createView > .wrap > div{
+}
 .createView > .wrap{
   max-width: 600px;
   width: 90vw;
@@ -555,7 +559,6 @@ aside {
 .createView .list {
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px;
 }
 .createView .list > li{
   width: 100%;
@@ -592,7 +595,7 @@ aside {
   border-radius: 10px;
 }
 
-#topicTitle {
+.topicTitle {
   width: 80%;
   margin: 0 auto;
   padding: 10px;
@@ -604,7 +607,7 @@ aside {
   text-align: center;
 }
 
-#insertTopic {
+.insertTopic {
   margin: 0 auto;
   width: 200px;
   height: 40px;
@@ -619,6 +622,11 @@ aside {
 #insertTopic:hover {
   opacity: 0.8;
 }
+
+#topicRename {
+  display: none;
+}
+
 
 #makeChatTitle {
   width: 80%;

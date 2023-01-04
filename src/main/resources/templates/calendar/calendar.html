@@ -56,7 +56,6 @@
                     const location = arg.event.extendedProps.location;
                     const color = arg.event._def.ui.backgroundColor;
 
-                    console.log(color);
                     $("#form").css("display", "block");
                     $(".btns").css("display", "block");
                     $("#eventSeq").removeAttr("disabled");
@@ -233,7 +232,7 @@
 </head>
 <body onload="winResize(this)">
 <div class="header">
-    <img src="/static/img/logo_m.png" class="logoImg">
+    <img src="/static/img/logo_m2.png" class="logoImg">
     <h1>캘린더</h1>
     <div class="headerBtns">
         <button onclick="location.href='/calendar/goTeam'" class="calType" id="goTeam">
@@ -290,6 +289,7 @@
                 </div>
             </div>
 
+        <button id="goMain"><a href="/member/loginIndex">메인으로</a></button>
         </div>
     </div>
     <div id='calendar'>

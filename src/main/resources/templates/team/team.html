@@ -33,7 +33,7 @@
 <div class="wrap">
   <div class="header">
     <div class="logo" style="">
-        <img src="/static/img/logo_m.png" alt="" />
+        <img src="/static/img/logo_m2.png" alt="" />
       </a>
     </div>
     <div id="teamList" class="teamList">
@@ -70,7 +70,7 @@ group
     <aside>
       <div id="profile" class="asideTitle">
         <img id="myImg" th:src="${memberImgSysName}" alt="" />
-        <div id="profileView" th:text="${session.teamMemberNickname}"></div>
+        <div id="profileView" th:text="${teamMemberInfo.getTeamMemberNickname()}"></div>
       </div>
 
       <div id="topic" class="asideList">
@@ -121,23 +121,23 @@ group
       </div>
 
       <div class="asideTool">
-        <button id="appToggle" class="appToggle">버디 앱</button>
+        <button id="appToggle" class="appToggle">buddy App</button>
         <div id="appList">
           <button class="app" id="appDrive"><a href="/drive/toFileDrive">📁드라이브</a></button>
           <button class="app" id="appCal"><a href="">📅캘린더</a></button>
         </div>
       </div>
     </aside>
-    <div id="profileViewDiv">
-      <img id="profileImg" th:src="${memberImgSysName}"><br/>
-        <div id="nickNameDiv">
-          <span id="nickNameSpan" th:text="${session.teamMemberNickname}" onclick="nickNameSpanClick()">
+    <div id="profileViewDiv" class="check">
+      <img id="profileImg" th:src="${memberImgSysName}" class="check"><br/>
+        <div id="nickNameDiv" class="check">
+          <span id="nickNameSpan" class="check" th:text="${teamMemberInfo.getTeamMemberNickname()}" onclick="nickNameSpanClick()">
             nickname
           </span>
-          <button id="updateNickNameBtn">수정</button>
+          <button class="check" id="updateNickNameBtn">수정</button>
         </div>
-      <div id="gradeDiv">
-        <span id="pGrade" th:text="${teamMemberInfo.grade}">
+      <div id="gradeDiv" class="check">
+        <span id="pGrade" class="check" th:text="${teamMemberInfo.grade}">
           등급
           </span>
       </div>
@@ -185,7 +185,7 @@ group
     <div class="topicForm" id="topicForm">
         <h1>✨토픽 생성하기</h1>
       <ul class="list">
-        <li><input class="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
+        <li><input class="topicTitle" id="topicTitle" type="text" placeholder="토픽 이름" ></li>
       </ul>
       <button type="button" class="insertTopic" id="insertTopic">토픽 생성하기</button>
       <button type="button" class="closeBtn" onclick="closer(this)">나가기</button>
@@ -496,8 +496,8 @@ group
 <script>
 
   $("#appCal").on("click",function(){
-
-    window.open('/calendar/moveCalendar','calendar','scrollbars=no,resizable=yes width=1920 height=1080, left=0,top=0')
+    location.href = "/calendar/moveCalendar";
+    // window.open('/calendar/moveCalendar','calendar','scrollbars=no,resizable=yes width=1920 height=1080, left=0,top=0')
 })
 
 </script>
@@ -522,7 +522,7 @@ group
   });
 </script>
 
-<script>
+<script th:inline="javascript">
   //팀원 닉네임 변경
   let input = $("<input>");
   let button = $("<buuton>");
@@ -562,8 +562,18 @@ group
       })}
       else{
         alert("닉네임은 공백포함 1~15글자만 가능합니다. (특수문자 불가능)");
+        $("#inputNickName").focus();
       }
     })
+
+  //profileViewDiv 창 밖으로 클릭 됐을 때
+  let text = [[${teamMemberInfo.getTeamMemberNickname()}]]
+  $("html").click(function(e) {
+    if (!$(e.target).hasClass('check')) {
+      $("#inputNickName").val(text);
+      $("#nickNameSpan").text(text);
+    }
+  })
 </script>
 
 </body>

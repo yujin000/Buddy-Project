@@ -25,7 +25,7 @@ public class CalController {
     @ExceptionHandler(Exception.class)
     public String exceptionHandler(Exception e) {
         e.printStackTrace();
-        return "/calendar/calendarError";
+        return "calendar/calendarError";
     }
 
     @RequestMapping("insertEvent")
@@ -42,7 +42,7 @@ public class CalController {
         if ((Integer) session.getAttribute("teamSeq") != null ){
         return "calendar/calendar";
         }
-        return "/calendar/calendarError";
+        return "calendar/calendarError";
     }
 
     @RequestMapping(value = "goPrivate")
@@ -50,7 +50,7 @@ public class CalController {
         if ((Integer) session.getAttribute("teamSeq") != null ){
             return "calendar/calendarPrivate";
         }
-        return "/calendar/calendarError";
+        return "calendar/calendarError";
     }
 
     @RequestMapping(value = "goTeam")
@@ -58,7 +58,7 @@ public class CalController {
         if ((Integer) session.getAttribute("teamSeq") != null ){
             return "calendar/calendarTeam";
         }
-        return "/calendar/calendarError";
+        return "calendar/calendarError";
     }
 
     @ResponseBody
@@ -101,7 +101,7 @@ public class CalController {
             calService.deleteEvent(eventSeq, memberSeq);
             return "redirect:/calendar/moveCalendar";
         }else {
-            return "/calendar/gradeError";
+            return "calendar/gradeError";
         }
     }
     @GetMapping("teamEventUpd")
@@ -114,7 +114,7 @@ public class CalController {
             calService.updateEvent(calDto);
             return "redirect:/calendar/moveCalendar";
         }else {
-            return "/calendar/gradeError";
+            return "calendar/gradeError";
 
         }
     }
@@ -128,7 +128,7 @@ public class CalController {
         return "redirect:/calendar/moveCalendar";
 
         }else {
-            return "/calendar/gradeError";
+            return "calendar/gradeError";
 
         }
     }
@@ -143,7 +143,7 @@ public class CalController {
             calService.updateEvent(calDto);
             return "redirect:/calendar/moveCalendar";
         }else {
-            return "/calendar/gradeError";
+            return "calendar/gradeError";
 
         }
 

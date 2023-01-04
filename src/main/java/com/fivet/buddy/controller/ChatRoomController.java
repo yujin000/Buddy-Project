@@ -66,25 +66,25 @@ public class ChatRoomController {
             teamMemberDto = teamMemberService.selectOne(teamMemberDto);
             model.addAttribute("teamMemberInfo", teamMemberDto);
 
-            model.addAttribute("topicList", topicList);
-            model.addAttribute("chatRoomSeq", chatRoomSeq);
-            model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));
-            model.addAttribute("chatMemberList", teamMemberService.selectChatMember(chatRoomSeq));
+        model.addAttribute("topicList", topicList);
+        model.addAttribute("chatRoomSeq",chatRoomSeq);
+        model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));
+        model.addAttribute("chatMemberList",teamMemberService.selectChatMember(chatRoomSeq));
 
-            //프로필 이미지 출력
-            String memberImgSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
-            if (memberImgSysName.equals("/static/img/defaultProfileImg.png")) {
-                model.addAttribute("memberImgSysName", memberImgSysName);
-            } else {
-                memberImgSysName = "/member/selectProfileImg/" + memberImgSysName;
-                memberImgSysName = memberImgSysName.replaceAll("\\s", "");
-                model.addAttribute("memberImgSysName", memberImgSysName);
-            }
-            //토픽 수 출력
-            int topicCount = chatRoomService.countTopic(param.get("teamSeq"));
-            model.addAttribute("topicCount", topicCount);
+        //프로필 이미지 출력
+        String memberImgSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));
+        if(memberImgSysName.equals("/static/img/defaultProfileImg.png")){
+            model.addAttribute("memberImgSysName",memberImgSysName);
+        }else{
+            memberImgSysName = "/member/selectProfileImg/"+memberImgSysName;
+            memberImgSysName=memberImgSysName.replaceAll("\\s", "");
+            model.addAttribute("memberImgSysName",memberImgSysName);
+        }
+        //토픽 수 출력
+        int topicCount = chatRoomService.countTopic(param.get("teamSeq"));
+        model.addAttribute("topicCount", topicCount);
 
-            return ("/team/teamChating");
+            return "team/teamChating";
         }else{
             return "error";
         }

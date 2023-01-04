@@ -329,11 +329,10 @@ public class MemberController {
         int memberSeq = (int) session.getAttribute("memberSeq");
         // 파일 삭제
         personalFileService.memberOut(memberSeq);
-        // 폴더 삭제
-        personalFolderService.memberOut(memberSeq);
         // 기본 폴더 삭제
         basicFolderService.memberOut(memberSeq);
-
+        // 폴더 삭제
+        personalFolderService.memberOut(memberSeq);
 
         // 회원 탈퇴(강퇴포함)시 삭제할 팀 목록 출력
         List<TeamMemberDTO> teamMemberList = teamMemberService.selectMembersManager(memberSeq);
@@ -401,10 +400,11 @@ public class MemberController {
         memberService.memberKickOut(memberSeq);
         // 파일 삭제
         personalFileService.memberOut(memberSeq);
-        // 폴더 삭제
-        personalFolderService.memberOut(memberSeq);
         // 기본 폴더 삭제
         basicFolderService.memberOut(memberSeq);
+        // 폴더 삭제
+        personalFolderService.memberOut(memberSeq);
+
         // 이벤트 삭제
         calService.deleteUserEvent(memberSeq);
 

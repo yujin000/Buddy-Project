@@ -99,6 +99,7 @@ public class TeamController {
                  model.addAttribute("memberImgSysName",memberImgSysName);
             }else{
                 memberImgSysName = "/member/selectProfileImg/"+memberImgSysName;
+                memberImgSysName=memberImgSysName.replaceAll("\\s", "");
                 model.addAttribute("memberImgSysName",memberImgSysName);
             }
             model.addAttribute("teamMemberDtoList", teamMemberDtoList);

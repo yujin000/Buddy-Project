@@ -299,23 +299,29 @@
   updateTeamNameBtn.on("click",function () {
     let teamName = $("#teamName").val();
     let teamSeq = $("#teamSeqHidden").val();
-    $.ajax({
-      url: "/team/updateTeamName",
-      data: {
-        "teamName": teamName,
-        "teamSeq": teamSeq
-      },
-      success: function () {
-      }, error: function () {
-      }
-    }).done(function () {
-      alert("팀 이름이 변경되었습니다.");
-      $("#teamName").val(teamName);
-      $("#teamName").attr("disabled", true);
-      $("#changeTeam").css("display","block");
-      updateTeamNameBtn.css("display","none");
-      $("#teamName").css("border", "none");
-    })
+    const teamNameRegex = /^[가-힣\s]{1,15}$/;
+    let Result = teamNameRegex.test(teamName);
+    if(Result) {
+      $.ajax({
+        url: "/team/updateTeamName",
+        data: {
+          "teamName": teamName,
+          "teamSeq": teamSeq
+        },
+        success: function () {
+        }, error: function () {
+        }
+      }).done(function () {
+        alert("팀 이름이 변경되었습니다.");
+        $("#teamName").val(teamName);
+        $("#teamName").attr("disabled", true);
+        $("#changeTeam").css("display", "block");
+        updateTeamNameBtn.css("display", "none");
+        $("#teamName").css("border", "none");
+      })
+    }else{
+      alert("팀 이름은 공백포함 1~15글자만 가능합니다. (특수문자 불가능)");
+    }
   })
 </script>
 

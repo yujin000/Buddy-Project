@@ -48,6 +48,7 @@ public class EmoticonController {
         String emoticonOriName = file.getOriginalFilename();
         String emoticonSysName = UUID.randomUUID() + "_" + emoticonOriName;
         //UUID.randomUUID() : 현재 시간과 자체 매커니즘을 통해 겹치지 않는 기다란 문자를 자동으로 생성해줌
+        emoticonSysName=emoticonSysName.replaceAll("\\s", "");
         emoticonDto.setEmoticonOriName(emoticonOriName);
         emoticonDto.setEmoticonSysName(emoticonSysName);
         util.save(file,emoticonPath,emoticonSysName);

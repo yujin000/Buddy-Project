@@ -41,11 +41,22 @@
         delete event where "event_seq" = #{eventSeq} and "member_seq" = #{memberSeq}
     </delete>
 
+    <delete id="deleteUserEvent">
+        delete event where "member_seq" = #{memberSeq}
+    </delete>
+
+    <delete id="deleteTeamMemberEvent">
+        delete event where "event_writer" = #{value} </delete>
+
     <update id="updateEvent">
         update event set "event_type" = #{eventType}, "event_name" =#{eventName} ,
         "event_start"=#{eventStart}, "event_end" =#{eventEnd}, "event_location" =#{eventLocation}, "event_memo" =#{eventMemo},
         "event_color"=#{eventColor} where "event_seq" =#{eventSeq}
 
+    </update>
+
+    <update id="updateNickname">
+        update event set "event_writer" = #{eventWriter} where  "member_seq" = #{memberSeq}  and "team_seq" = #{teamSeq}
     </update>
 
 </mapper>

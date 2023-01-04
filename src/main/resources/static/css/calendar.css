@@ -35,10 +35,15 @@ body {
     border: 1px solid var(--sub-color);
     position: relative;
 }
+.logoImg{
+    display: inline-block;
+    float: left;
 
+}
 .header > h1 {
     font-size: 1rem;
-    margin-left: 10px;
+    display: inline-block;
+
 }
 .header span {
     color: var(--main-color);

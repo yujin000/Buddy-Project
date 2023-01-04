@@ -35,11 +35,19 @@ public class CalService {
     public void deleteEvent(int eventSeq, int memberSeq) throws Exception{
         calDao.deleteEvent(eventSeq, memberSeq);
         }
+        public  void deleteTeamMemberEvent(String TeamMemberNickname) throws Exception {
+        calDao.deleteTeamMemberEvent(TeamMemberNickname);
+        }
 
+        public void deleteUserEvent(int memberSeq) throws Exception {
+        calDao.deleteUserEvent(memberSeq);
+        }
         public void updateEvent(CalDTO calDto) throws Exception{
         calDao.updateEvent(calDto);
         }
 
-
+    public void updateNickname(int memberSeq, int teamSeq, String eventWriter) throws Exception{
+        calDao.updateNickname(memberSeq,teamSeq,eventWriter);
+    }
 
 }

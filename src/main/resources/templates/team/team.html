@@ -170,7 +170,7 @@ group
 </div>
 
 
-<div class="createView">
+<div class="createView" id="createView">
   <div class="wrap">
     <div class="chatForm">
       <h1>😀채팅 시작하기</h1>
@@ -181,7 +181,24 @@ group
     <button type="button" class="closeBtn" id="closeBtn" onclick="closer(this)">나가기</button>
     </div>
 
-    <div class="chatEditForm">
+
+    <div class="topicForm">
+        <h1>✨토픽 생성하기</h1>
+      <ul class="list">
+        <li><input class="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
+      </ul>
+      <button type="button" class="insertTopic" id="insertTopic">토픽 생성하기</button>
+      <button type="button" class="closeBtn" onclick="closer(this)">나가기</button>
+    </div>
+
+
+
+    </div>
+</div>
+
+<div class="creteView" id="renameView">
+<!--  <div class="wrap">-->
+    <div class="chatEditForm" id="chatRename" style="display: none">
       <h1>채팅방 이름변경</h1>
       <ul class="list" id="chatMemberUl2">
         <li><input type="text" placeholder="채팅방 이름" id="editChatTitle"></li>
@@ -190,25 +207,15 @@ group
       <button type="button" class="closeBtn" id="closeBtn2" onclick="closer(this)">나가기</button>
     </div>
 
-    <div class="topicForm">
-        <h1>✨토픽 생성하기</h1>
-      <ul class="list">
-        <li><input id="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
-      </ul>
-      <button type="button" id="insertTopic">토픽 생성하기</button>
-      <button type="button" class="closeBtn" onclick="closer(this)">나가기</button>
-    </div>
-
-
-    <div class="topicForm">
+    <div class="topicForm" id="topicRename" style="display: none">
       <h1>✨토픽 이름변경</h1>
       <ul class="list">
-        <li><input id="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
+        <li><input class="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
       </ul>
-      <button type="button" id="insertTopic">토픽 생성하기</button>
+      <button type="button" class="insertTopic" id="insertRename">이름 변경하기</button>
       <button type="button" class="closeBtn" onclick="closer(this)">나가기</button>
     </div>
-    </div>
+<!--  </div>-->
 </div>
 
 <!-- 팀원 목록 출력 ajax -->
@@ -470,7 +477,7 @@ group
     })
 
     $("#chatCreate").click(function (){
-      $(".createView").css("display","block");
+      $("#createView").css("display","block");
       $(".chatForm").css("display","block");
       $(".topicForm").css("display","none");
     })
@@ -480,9 +487,10 @@ group
       if ($("#topicCount").text()>=4) {
         alert("더이상 토픽을 생성할 수 없습니다!")
       } else {
-        $(".createView").css("display","block");
-        $(".chatForm").css("display","none");
+        $("#createView").toggle();
         $(".topicForm").css("display","block");
+        $(".chatForm").css("display","none");
+
       }
 
     })

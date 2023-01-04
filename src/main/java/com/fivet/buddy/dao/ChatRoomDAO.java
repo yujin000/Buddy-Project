@@ -1,5 +1,6 @@
 package com.fivet.buddy.dao;
 
+import com.fivet.buddy.dto.ChatMemberDTO;
 import com.fivet.buddy.dto.ChatRoomDTO;
 import com.fivet.buddy.mapper.ChatMemberMapper;
 import com.fivet.buddy.mapper.ChatRoomMapper;
@@ -68,4 +69,9 @@ public class ChatRoomDAO {
 
     //특정 회원이 1명뿐인 팀의 채팅방을 모두 삭제.
     public void delOnlyOneChatRoom(int memberSeq) { chatRoomMapper.delOnlyOneChatRoom(memberSeq); }
+
+    //채팅방에 실 참여자인지 여부 체크
+    public int selectChatRoom(ChatMemberDTO chatMemberDto){
+        return chatRoomMapper.selectChatRoom(chatMemberDto);
+    }
 }

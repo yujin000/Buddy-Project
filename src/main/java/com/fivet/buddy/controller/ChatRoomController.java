@@ -49,7 +49,7 @@ public class ChatRoomController {
 
     //채팅방 입장
     @RequestMapping("join")
-    public String insertChatMsg(ChatMemberDTO chatMemberDto, TeamMemberDTO teamMemberDto,int chatRoomSeq, Model model) throws Exception {
+    public String insertChatMsg(ChatMemberDTO chatMemberDto, ChatRoomDTO chatRoomDto, TeamMemberDTO teamMemberDto,int chatRoomSeq, Model model) throws Exception {
         //채팅방에 실 참여자인지 여부 체크
         chatMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
         int selectChatRoom = chatRoomService.selectChatRoom(chatMemberDto);
@@ -66,6 +66,9 @@ public class ChatRoomController {
             teamMemberDto = teamMemberService.selectOne(teamMemberDto);
             model.addAttribute("teamMemberInfo", teamMemberDto);
 
+            chatRoomDto.setTeamSeq((int) session.getAttribute("teamSeq"));
+            String chatRoomName = chatRoomService.selectChatRoomName(chatRoomDto);
+            model.addAttribute("chatRoomName",chatRoomName);
         model.addAttribute("topicList", topicList);
         model.addAttribute("chatRoomSeq",chatRoomSeq);
         model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));

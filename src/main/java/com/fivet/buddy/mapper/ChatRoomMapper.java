@@ -1,5 +1,6 @@
 package com.fivet.buddy.mapper;
 
+import com.fivet.buddy.dto.ChatMemberDTO;
 import com.fivet.buddy.dto.ChatRoomDTO;
 import com.fivet.buddy.dto.TeamDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -28,5 +29,8 @@ public interface ChatRoomMapper {
     void delChatMember(int chatRoomSeq);
     void delChatRoomCountZero();
     void delOnlyOneChatRoom(int memberSeq);
+    int selectChatRoom(ChatMemberDTO chatMemberDto);
+    //채팅방 이름 출력
+    String selectChatRoomName(ChatRoomDTO chatRoomDto);
 
 }

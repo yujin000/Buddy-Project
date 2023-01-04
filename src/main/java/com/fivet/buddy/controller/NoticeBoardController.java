@@ -66,7 +66,7 @@ public class NoticeBoardController {
             String pageNavi = new PageNavi().getPageNaviAll(cpage, rcpp, ncpp, rtc, "/notice/toAdminNotice", "cpage");
             model.addAttribute("noticeBoardList", noticeBoardList);
             model.addAttribute("pageNavi", pageNavi);
-            return "/admin/adminNotice/adminNotice";
+            return "admin/adminNotice/adminNotice";
         } else {
             return "error";
         }
@@ -76,7 +76,7 @@ public class NoticeBoardController {
     @RequestMapping("toAdminNoticeWrite")
     public String toAdminNoticeWrite() {
         if (session.getAttribute("memberLogtype").equals("admin")) {
-            return "/admin/adminNotice/adminNoticeWrite";
+            return "admin/adminNotice/adminNoticeWrite";
         } else {
             return "error";
         }
@@ -109,7 +109,7 @@ public class NoticeBoardController {
     public String adminNoticeDetail(int noticeSeq, Model model){
         if (session.getAttribute("memberLogtype").equals("admin")) {
             model.addAttribute("notice", noticeBoardService.noticeDetail(noticeSeq));
-            return "/admin/adminNotice/adminNoticeDetail";
+            return "admin/adminNotice/adminNoticeDetail";
         } else {
             return "error";
         }
@@ -121,7 +121,7 @@ public class NoticeBoardController {
         if (session.getAttribute("memberLogtype").equals("admin")) {
             NoticeBoardDTO noticeBoardDto = noticeBoardService.noticeDetail(noticeSeq);
             model.addAttribute("notice",noticeBoardDto);
-            return "/admin/adminNotice/adminNoticeModify";
+            return "admin/adminNotice/adminNoticeModify";
         } else {
             return "error";
         }

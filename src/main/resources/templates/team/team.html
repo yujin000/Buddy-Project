@@ -260,27 +260,29 @@ group
 
 <script>
   //팀목록을 출력해주는 ajax호출
-  $.ajax({
-    type:"post",
-    url:"/team/teamList"
-  }).done(function (resp){
-    let teamList = JSON.parse(resp);
-    for (let i=0; i<teamList.length; i++) {
-      let teamListLi = $("<li>");
-      let teamListForm = $("<form>");
-      let teamListInput = $("<input>");
-      teamListInput.attr("type","hidden");
-      teamListInput.val(teamList[i].teamSeq);
-      teamListInput.attr("name", "teamSeq");
-      teamListForm.attr("action", "/team/goTeam");
-      teamListForm.attr("method", "post");
-      teamListForm.append(teamListInput);
-      teamListLi.text(teamList[i].teamName);
-      teamListLi.append(teamListForm);
-      teamListLi.addClass("goTeam");
-      $("#dropdownList").append(teamListLi);
-    }
-  });
+  $(function () {
+    $.ajax({
+      type: "post",
+      url: "/team/teamList"
+    }).done(function (resp) {
+      let teamList = JSON.parse(resp);
+      for (let i = 0; i < teamList.length; i++) {
+        let teamListLi = $("<li>");
+        let teamListForm = $("<form>");
+        let teamListInput = $("<input>");
+        teamListInput.attr("type", "hidden");
+        teamListInput.val(teamList[i].teamSeq);
+        teamListInput.attr("name", "teamSeq");
+        teamListForm.attr("action", "/team/goTeam");
+        teamListForm.attr("method", "post");
+        teamListForm.append(teamListInput);
+        teamListLi.text(teamList[i].teamName);
+        teamListLi.append(teamListForm);
+        teamListLi.addClass("goTeam");
+        $("#dropdownList").append(teamListLi);
+      }
+    })
+  })
 
   //팀 이동 클릭이벤트
   $(document).on("click", ".goTeam", function (){
@@ -575,5 +577,6 @@ group
       }
     })
 </script>
+
 </body>
 </html>

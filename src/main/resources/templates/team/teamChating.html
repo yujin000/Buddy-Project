@@ -792,6 +792,11 @@
 </script>
 
 <script>
+
+    function closer(arg) {
+        $(arg).parent().parent().parent().css("display","none");
+    }
+
     //팀원 닉네임 변경
     let input = $("<input>");
     let button = $("<buuton>");

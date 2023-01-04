@@ -243,13 +243,14 @@ public class TeamController {
     //회원 (자발적) 팀 탈퇴
     @ResponseBody
     @PostMapping("teamSelfOut")
-    public void teamSelfOut(TeamMemberDTO teamMemberDto) {
+    public void teamSelfOut(TeamMemberDTO teamMemberDto) throws Exception {
         teamMemberDto.setTeamSeq((int)session.getAttribute("teamSeq"));
         teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+        String teamMemberNickname = session.getAttribute("teamMemberNickname").toString();
+        calService.deleteTeamMemberEvent(teamMemberNickname);
         teamMemberService.deleteTeamMember(teamMemberDto);
         teamService.updateMinusTeamCount(teamMemberDto.getTeamSeq());
         chatRoomService.teamSelfOut(teamMemberDto);
-
         // 팀 관련 session값 제거.
         session.removeAttribute("teamSeq");
         session.removeAttribute("teamMemberNickname");

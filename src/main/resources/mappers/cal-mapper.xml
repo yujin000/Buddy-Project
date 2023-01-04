@@ -49,7 +49,7 @@
         delete event where "event_writer" = #{value} </delete>
 
     <delete id="deleteTeamAllEvent">
-        delete evnet where "team_seq" = #{value}
+        delete event where "team_seq" = #{value}
     </delete>
 
     <update id="updateEvent">

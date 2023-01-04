@@ -39,10 +39,12 @@ public class FileUtil {
     String sysName;
 
     public void save(@RequestParam MultipartFile file, String realPath, String sysName)throws Exception {
+        sysName = sysName.replace("\\s","");
         File fileSavePath = new File(realPath);
         file.transferTo(new File(fileSavePath + "/" + sysName));
     }
     public void saves(@RequestParam MultipartFile[] uploadfile, String realPath, String sysName) throws Exception {
+        sysName = sysName.replace("\\s","");
         File fileSavePath = new File(realPath);
         for (MultipartFile file : uploadfile) {
             if (!file.isEmpty()) {

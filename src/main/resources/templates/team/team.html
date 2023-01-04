@@ -33,7 +33,7 @@
 <div class="wrap">
   <div class="header">
     <div class="logo" style="">
-        <img src="/static/img/logo_m2.png" alt="" />
+        <img src="/static/img/logo_m.png" alt="" />
       </a>
     </div>
     <div id="teamList" class="teamList">
@@ -172,7 +172,7 @@ group
 
 <div class="createView" id="createView">
   <div class="wrap">
-    <div class="chatForm">
+    <div class="chatForm" id="chatForm">
       <h1>😀채팅 시작하기</h1>
     <ul class="list" id="chatMemberUl">
       <li><input type="text" placeholder="채팅방 이름" id="makeChatTitle"></li>
@@ -182,7 +182,7 @@ group
     </div>
 
 
-    <div class="topicForm">
+    <div class="topicForm" id="topicForm">
         <h1>✨토픽 생성하기</h1>
       <ul class="list">
         <li><input class="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
@@ -196,27 +196,7 @@ group
     </div>
 </div>
 
-<div class="creteView" id="renameView">
-<!--  <div class="wrap">-->
-    <div class="chatEditForm" id="chatRename" style="display: none">
-      <h1>채팅방 이름변경</h1>
-      <ul class="list" id="chatMemberUl2">
-        <li><input type="text" placeholder="채팅방 이름" id="editChatTitle"></li>
-      </ul>
-      <button type="button" id="startChat2">대화 시작하기</button>
-      <button type="button" class="closeBtn" id="closeBtn2" onclick="closer(this)">나가기</button>
-    </div>
 
-    <div class="topicForm" id="topicRename" style="display: none">
-      <h1>✨토픽 이름변경</h1>
-      <ul class="list">
-        <li><input class="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
-      </ul>
-      <button type="button" class="insertTopic" id="insertRename">이름 변경하기</button>
-      <button type="button" class="closeBtn" onclick="closer(this)">나가기</button>
-    </div>
-<!--  </div>-->
-</div>
 
 <!-- 팀원 목록 출력 ajax -->
 <script th:inline="javascript">
@@ -478,8 +458,8 @@ group
 
     $("#chatCreate").click(function (){
       $("#createView").css("display","block");
-      $(".chatForm").css("display","block");
-      $(".topicForm").css("display","none");
+      $("#chatForm").css("display","block");
+      $("#topicForm").css("display","none");
     })
 
     $("#topicCreate").click(function (){

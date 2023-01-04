@@ -1,10 +1,7 @@
 package com.fivet.buddy.controller;
 
 import com.fivet.buddy.dao.TeamMemberDAO;
-import com.fivet.buddy.dto.MemberDTO;
-import com.fivet.buddy.dto.MemberImgDTO;
-import com.fivet.buddy.dto.TeamDTO;
-import com.fivet.buddy.dto.TeamMemberDTO;
+import com.fivet.buddy.dto.*;
 import com.fivet.buddy.services.*;
 import com.fivet.buddy.util.FileUtil;
 import org.slf4j.Logger;
@@ -51,14 +48,20 @@ public class MemberController {
     @Autowired
     private PersonalFileService personalFileService;
 
+    @Autowired
+    private ChatMsgService chatMsgService;
+
+    @Autowired
+    private ChatRoomService chatRoomService;
+
+    @Autowired
+    private ChatMemberService chatMemberService;
+
     private Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     // 회원 indexPage 경로
 
     private String memberIndex = "redirect:/member/loginIndex";
-
-    @Autowired
-    private ChatRoomService chatRoomService;
 
     // ExceptionHandler
     @ExceptionHandler(Exception.class)
@@ -326,8 +329,9 @@ public class MemberController {
         basicFolderService.memberOut(memberSeq);
 
         // 회원 탈퇴(강퇴포함)시 삭제할 팀 목록 출력
-        List<TeamMemberDTO> teamMemberList = teamMemberService.selectMembersTeam((int)session.getAttribute("memberSeq"));
-        // 채팅방 삭제 로직을 탈퇴대상 팀으로 반복문 돌려준다.
+        List<TeamMemberDTO> teamMemberList = teamMemberService.selectMembersManager(memberSeq);
+
+        // 팀 탈퇴시 채팅방 삭제 로직을 탈퇴대상 팀으로 반복문 돌려준다.
         for (TeamMemberDTO teamMemberdto : teamMemberList) {
             chatRoomService.teamSelfOut(teamMemberdto);
         }
@@ -394,8 +398,24 @@ public class MemberController {
         // 기본 폴더 삭제
         basicFolderService.memberOut(memberSeq);
 
-        memberService.deleteMember(String.valueOf(session.getAttribute("memberSeq")));
         List<MemberDTO> list = memberService.selectMembers();
+
+        // 회원이 매니저면서, 한명뿐인 팀이 있는 경우, 관련 컨텐츠를 모두 없애준다.
+        chatMsgService.delOnlyOneMsg(memberSeq);
+        chatMemberService.delOnlyOneChatMember(memberSeq);
+        chatRoomService.delOnlyOneChatRoom(memberSeq);
+        teamMemberService.delOnlyOneTeamMember(memberSeq);
+        teamService.delTeamOnlyOne(memberSeq);
+
+        //회원이 매니저인 팀을 제외한 나머지 목록 출력
+        List<TeamMemberDTO> teamMemberList = teamMemberService.selectMembersTeam(memberSeq);
+        //각 목록별로 팀 삭제 가동
+        for (TeamMemberDTO teamMemberDto : teamMemberList) {
+            teamMemberService.deleteTeamMember(teamMemberDto);
+            teamService.updateMinusTeamCount(teamMemberDto.getTeamSeq());
+            chatRoomService.teamSelfOut(teamMemberDto);
+        }
+        memberService.deleteMember(String.valueOf(memberSeq));
 
         model.addAttribute("memberList", list);
         return "redirect:member/toAdminMember";

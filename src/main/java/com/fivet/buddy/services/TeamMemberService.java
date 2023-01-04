@@ -85,8 +85,28 @@ public class TeamMemberService {
         teamMemberDao.updateTeamMemberNickName(teamMemberDto);
     }
 
-    // 회원 탈퇴(강퇴포함)시 삭제할 팀 목록 출력
+    // 회원이 속한 팀 목록 출력
     public List<TeamMemberDTO> selectMembersTeam(int memberSeq) {
         return teamMemberDao.selectMembersTeam(memberSeq);
+    }
+
+    // 회원이 매니저인 팀 목록 출력
+    public List<TeamMemberDTO> selectMembersManager(int memberSeq) {
+        return teamMemberDao.selectMembersManager(memberSeq);
+    }
+
+    //팀이 특정 회원 1명뿐인 팀 목록을 출력
+    public List<TeamMemberDTO> selectTeamMemberOnlyOne(int memberSeq) {
+        return teamMemberDao.selectTeamMemberOnlyOne(memberSeq);
+    }
+
+    //팀이 특정 회원 1명뿐인 팀 목록을 삭제-
+    public void delOnlyOneTeamMember(int memberSeq) {
+        teamMemberDao.delOnlyOneTeamMember(memberSeq);
+    }
+
+    //매니저가 팀에서 나갈시, 부매니저->팀원 순서대로 매니저가 이양된다. 새 매니저 후보를 추출
+    public int selectNewManagerSeq(int memberSeq) {
+        return teamMemberDao.selectNewManagerSeq(memberSeq);
     }
 }

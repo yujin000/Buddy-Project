@@ -13,11 +13,11 @@ public interface CalMapper {
 
     List<CalDTO> selectAll(int teamSeq);
     List<CalDTO> selectTeam(int teamSeq);
-    List<CalDTO> selectPrivate(int teamSeq);
+    List<CalDTO> selectPrivate(int memberSeq, int teamSeq);
 
     String selectGrade(String teamMemberNickname);
 
-    void deleteEvent(int eventSeq);
+    void deleteEvent(int eventSeq, int memberSeq);
 
     void updateEvent(CalDTO calDto);
 }

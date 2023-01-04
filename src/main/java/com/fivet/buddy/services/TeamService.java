@@ -82,5 +82,21 @@ public class TeamService {
     //팀원 탈퇴시, 팀 인원수가 1 감소
     public void updateMinusTeamCount(int teamSeq) { teamDao.updateMinusTeamCount(teamSeq);}
 
+    //팀원이 0명인 팀 삭제
+    public void delTeamZeroCount() { teamDao.delTeamZeroCount();}
 
+    //팀의 팀원수 추출
+    public int selectTeamCount(int teamSeq) {
+        return teamDao.selectTeamCount(teamSeq);
+    }
+
+    //팀이 특정 회원 1명뿐인 팀 목록을 삭제
+    public void delTeamOnlyOne(int memberSeq) {
+        teamDao.delTeamOnlyOne(memberSeq);
+    }
+
+    // 해당 회원이 2인이상으로 구성된 팀의 매니저인지 여부를 판별
+    public int memberManagerCheck(int memberSeq) {
+        return teamDao.memberManagerCheck(memberSeq);
+    }
 }

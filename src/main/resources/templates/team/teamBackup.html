@@ -27,8 +27,8 @@
 <div class="wrap">
   <div class="header">
     <div class="logo">
-        <img src="" alt="" />
-        logo
+      <img src="" alt="" />
+      logo
       </a>
     </div>
     <div id="teamList" class="teamList">
@@ -54,6 +54,8 @@
       <div id="profile" class="asideTitle">
         <img id="myImg" th:src="${memberImgSysName}" alt="" />
         <div id="profileView" th:text="${session.teamMemberNickname}"></div>
+        <!--        <h3><a href="../member/myProfile.html" th:text="${session.teamMemberNickname}"></a></h3>-->
+        <!--        <button id="alarmView" class="toggle">수정</button>-->
       </div>
 
       <div id="topic" class="asideList">
@@ -67,9 +69,9 @@
         <div id="topicList" class="asideItem">
           <ul th:each="topicList : ${topicList}">
             <li>
-                <a th:href="@{/chatRoom/join/(chatRoomSeq=${topicList.chatRoomSeq})}">[[${topicList.chatTitle}]]</a>
-                <button type="button" class="topicRename" th:data-index="${topicList.chatRoomSeq}">이름변경</button>
-                <button type="button" class="topicDel" th:data-index="${topicList.chatRoomSeq}">토픽 삭제</button>
+              <a th:href="@{/chatRoom/join/(chatRoomSeq=${topicList.chatRoomSeq})}">[[${topicList.chatTitle}]]</a>
+              <button type="button" class="topicRename" th:data-index="${topicList.chatRoomSeq}">이름변경</button>
+              <button type="button" class="topicDel" th:data-index="${topicList.chatRoomSeq}">토픽 삭제</button>
             </li>
           </ul>
         </div>
@@ -84,18 +86,18 @@
         <div id="chatList" class="asideItem">
           <ul th:if="${chatRoomList!=null}">
             <th:block th:each="chatRoomList : ${chatRoomList}">
-            <li>
-              <a th:href="@{/chatRoom/join/(chatRoomSeq=${chatRoomList.chatRoomSeq})}"
-                 th:text="${chatRoomList.chatTitle}"></a>
-              <button th:if="${#strings.equals(chatRoomList.chatType,'normal')}"
-                      class="chatRename" th:data-index="${chatRoomList.chatRoomSeq}">
-                이름변경
-              </button>
-              <button th:if="${#strings.equals(chatRoomList.chatType,'normal')}"
-                      class="chatOut" th:data-index="${chatRoomList.chatRoomSeq}">
-                채팅방 나가기
-              </button>
-            </li>
+              <li>
+                <a th:href="@{/chatRoom/join/(chatRoomSeq=${chatRoomList.chatRoomSeq})}"
+                   th:text="${chatRoomList.chatTitle}"></a>
+                <button th:if="${#strings.equals(chatRoomList.chatType,'normal')}"
+                        class="chatRename" th:data-index="${chatRoomList.chatRoomSeq}">
+                  이름변경
+                </button>
+                <button th:if="${#strings.equals(chatRoomList.chatType,'normal')}"
+                        class="chatOut" th:data-index="${chatRoomList.chatRoomSeq}">
+                  채팅방 나가기
+                </button>
+              </li>
             </th:block>
           </ul>
         </div>
@@ -111,12 +113,12 @@
     </aside>
     <div id="profileViewDiv">
       <img id="profileImg" th:src="${memberImgSysName}"><br/>
-        <div id="nickNameDiv">
-          <span id="nickNameSpan" th:text="${session.teamMemberNickname}" onclick="nickNameSpanClick()"/>
-          <button id="updateNickNameBtn">수정</button>
-        </div>
+      <div id="nickNameDiv">
+        <span id="nickNameSpan" th:text="${session.teamMemberNickname}" onclick="nickNameSpanClick()"/>
+        <button id="updateNickNameBtn">수정</button>
+      </div>
       <div id="gradeDiv">
-      <span id="pGrade" th:text="${teamMemberInfo.grade}"/>
+        <span id="pGrade" th:text="${teamMemberInfo.grade}"/>
       </div>
     </div>
     <section class="msgSection">
@@ -124,19 +126,29 @@
         <h1>team-list</h1>
       </div>
       <div class="msgView">
+        <div id="subSection">
+
+          <ul id="resultList" class="subItem">
+            <h1>검색결과</h1>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+          </ul>
+        </div>
         <input type="text" id="modifyChatTitle" placeholder=" 토픽/채팅방 제목변경">
         <button type="button" id="modifyTitleConfirm">변경하기</button>
         <button type="button" id="modifyCancel">취소</button>
-<!--        <div class="msg">Msg</div>-->
+        <!--        <div class="msg">Msg</div>-->
       </div>
       <div class="msgSend">
-          <input
-                  type="text"
-                  name="inputMsg"
-                  id="inputMsg"
-                  class="inputMsg"
-                  placeholder="input Msg"
-          />
+        <input
+                type="text"
+                name="inputMsg"
+                id="inputMsg"
+                class="inputMsg"
+                placeholder="input Msg"
+        />
         <div class="msgTool">
           <ul>
             <li><button id="test" onclick="clickevent()">1</button></li>
@@ -157,6 +169,8 @@
     <li><a href="/team/teamOut">버디 메인으로</a></li>
     <li><a href="/qna/main">문의하기 및 news</a></li>
     <li id="teamWithdraw">팀 탈퇴</li>
+    <li>list</li>
+    <li>list</li>
     <li class="inviteMember">팀원초대</li>
   </ul>
 </div>
@@ -164,24 +178,25 @@
 
 <div class="createView">
   <div class="wrap">
-    <div class="chatForm">
+    <form action="" class="chatForm">
       <h1>😀채팅 시작하기</h1>
-    <ul class="list" id="chatMemberUl">
-      <li><input type="text" placeholder="채팅방 이름" id="makeChatTitle"></li>
-    </ul>
-    <button type="button" id="startChat">대화 시작하기</button>
-    <button type="button" class="closeBtn" id="closeBtn" onclick="closer(this)">취소</button>
-    </div>
+      <ul class="list" id="chatMemberUl">
+        <li><input type="text" placeholder="채팅방 이름" id="makeChatTitle"></li>
+      </ul>
+      <button type="button" id="startChat">대화 시작하기</button>
+      <button type="button" class="closeBtn" id="closeBtn" onclick="closer(this)">취소</button>
+    </form>
 
-    <div class="topicForm">
-        <h1>✨토픽 생성하기</h1>
+    <form action="/chatRoom/insertTopic" id="form" class="topicForm" method="post">
+      <h1>✨토픽 생성하기</h1>
       <ul class="list">
         <li><input id="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
       </ul>
       <button type="button" id="insertTopic">토픽 생성하기</button>
       <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
-    </div>
-    </div>
+
+    </form>
+  </div>
 </div>
 
 <!-- 팀원 목록 출력 ajax -->
@@ -259,30 +274,23 @@
     //console.log();
     $(this).children("form").submit();
   })
+
+  //채팅방 클릭 이벤트
+  $(".chatRoomList").on("click", function() {
+    $(this).find(".chatForm").submit();
+  })
 </script>
 
 <script>
   // 토픽 생성 이벤트
   $("#insertTopic").click(function (){
-    let chatTitle = $("#topicTitle").val();
     if ($("#topicTitle").val().length==0) {
       alert("제목을 입력해주세요!");
     } else if ($("#topicTitle").val().length>=15) {
       alert("제목은 15자를 넘을 수 없습니다.")
     } else {
-      $.ajax({
-        url:"/chatRoom/insertTopic",
-        type:"post",
-        data:{"chatTitle":chatTitle},
-        success : function (){
-          console.log("성공")
-        },error : function (){
-          console.log("에러")
-        }
-      }).done(function (){
-        alert("토픽 생성 완료!");
-        location.reload();
-      });
+      alert("토픽 생성 완료!");
+      $("#form").submit();
     }
   })
 </script>
@@ -328,14 +336,14 @@
             "makeChat": makeChatMember
           })
         }).done(function (resp) {
-            location.reload();
-          })
-        }
+          location.reload();
+        })
+      }
     })
 
     // 토픽 이름 변경 이벤트
     $(".topicRename").click(function (){
-        $("#modifyTitleConfirm").attr("data-index", $(this).attr("data-index"));
+      $("#modifyTitleConfirm").attr("data-index", $(this).attr("data-index"));
     })
 
     //이름 변경 취소 버튼 이벤트
@@ -368,8 +376,8 @@
           url: "/chatRoom/delChatRoom",
           data: {"chatRoomSeq" : $(this).attr("data-index")}
         }).done(function (resp){
-            alert("삭제완료!");
-           location.reload();
+          alert("삭제완료!");
+          location.reload();
         });
       }
     })
@@ -480,7 +488,7 @@
   $("#appCal").on("click",function(){
 
     window.open('/calendar/moveCalendar','calendar','scrollbars=no,resizable=yes width=1920 height=1080, left=0,top=0')
-})
+  })
 
 </script>
 
@@ -505,36 +513,35 @@
 </script>
 
 <script>
-  //팀원 닉네임 변경
   let input = $("<input>");
   let button = $("<buuton>");
-    function nickNameSpanClick() {
-      $("#nickNameSpan").css("display", "none");
-      $("#updateNickNameBtn").css("display","inline-block")
-      $("#inputNickName").css("display","inline-block");
-      input.val($("#nickNameSpan").text())
-      input.attr("id", "inputNickName");
-      $("#nickNameDiv").prepend(input);
-      $("#inputNickName").focus();
-    }
+  function nickNameSpanClick() {
+    $("#nickNameSpan").css("display", "none");
+    $("#updateNickNameBtn").css("display","inline-block")
+    $("#inputNickName").css("display","inline-block");
+    input.val($("#nickNameSpan").text())
+    input.attr("id", "inputNickName");
+    $("#nickNameDiv").prepend(input);
+    $("#inputNickName").focus();
+  }
 
-    function BtnClick(){
-      $("#nickNameSpan").css("display", "block");
-      $("#inputNickName").css("display","none");
-      $("#updateNickNameBtn").css("display","none");
+  function BtnClick(){
+    $("#nickNameSpan").css("display", "block");
+    $("#inputNickName").css("display","none");
+    $("#updateNickNameBtn").css("display","none");
 
-    }
-    $("#updateNickNameBtn").on("click",function (){
-      let inputNickName = $("#inputNickName").val();
-      let teamSeq=$("#infoData").data("teamseq");
-      const nickNameRegex = /^[가-힣\s]{1,15}$/;
-      let Result = nickNameRegex.test(inputNickName);
-      if(Result){
+  }
+  $("#updateNickNameBtn").on("click",function (){
+    let inputNickName = $("#inputNickName").val();
+    let teamSeq=$("#infoData").data("teamseq");
+    const nickNameRegex = /^[가-힣\s]{1,15}$/;
+    let Result = nickNameRegex.test(inputNickName);
+    if(Result){
       $.ajax({
         url:"/team/updateTeamMemberNickName",
         type:"post",
         data:{"teamMemberNickname":inputNickName,
-              "teamSeq":teamSeq},
+          "teamSeq":teamSeq},
       }).done(function (rsp) {
         console.log(rsp)
         $("#profileView").html(rsp);
@@ -542,10 +549,10 @@
         BtnClick();
         location.reload();
       })}
-      else{
-        alert("닉네임은 공백포함 1~15글자만 가능합니다. (특수문자 불가능)");
-      }
-    })
+    else{
+      alert("닉네임은 공백포함 1~15글자만 가능합니다. (특수문자 불가능)");
+    }
+  })
 </script>
 </body>
 </html>

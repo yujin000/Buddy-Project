@@ -9,7 +9,7 @@
         insert into
             chat_msg
         values
-            (chat_msg_seq.nextval, #{chatRoomSeq}, #{teamMemberNickname}, #{chatContent}, #{memberSeq}, 1, #{chatMsgType},sysdate, #{memberImgSysName})
+            (chat_msg_seq.nextval, #{chatRoomSeq}, #{teamMemberNickname}, #{chatContent}, #{memberSeq}, #{chatMsgType},sysdate, #{memberImgSysName})
         <selectKey order="AFTER" keyProperty="chatDate" resultType="java.sql.Timestamp">
             select
                 Max(chat_date)
@@ -39,6 +39,20 @@
     <!--    채팅방 삭제에 따른 메세지 삭제-->
     <delete id="delChatRoom">
         delete from chat_msg where chat_room_seq = #{value}
+    </delete>
+
+    <!--    특정 회원이 1명뿐인 팀의 채팅방 내역을 모두 삭제.-->
+    <delete id="delOnlyOneMsg">
+        delete from
+            (select cm.*
+                from chat_msg cm
+                    left outer join chat_room cr
+                    on cm.chat_room_seq = cr.chat_room_seq
+                    left outer join team t
+                    on t.team_seq = cr.team_seq
+                    left outer join member m
+                    on t.team_owner_seq = m.member_seq
+            where m.member_seq=#{memberSeq} and t.team_count = 1);
     </delete>
 
 </mapper>

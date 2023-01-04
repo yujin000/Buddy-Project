@@ -206,27 +206,28 @@ public class TeamController {
         return teamMemberService.selectTeamMember(teamSeq);
     }
 
+    // 구동 후 문제없으면 삭제할것.
     // 컨트롤러에서 팀 메인화면으로 재이동하기 위한 mapping (팀 변경없을시)
-    @RequestMapping("goTeamAgain")
-    public String goTeamAgain(Model model) {
-        //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
-        Map<String, Integer> param = new HashMap<>();
-        param.put("teamSeq", (int)session.getAttribute("teamSeq"));
-        param.put("memberSeq", (int)session.getAttribute("memberSeq"));
-        // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
-        List<ChatRoomDTO> chatRoomList = chatRoomService.chatRoomList(param);
-        //팀 입장 시, 팀 멤버 출력
-        List<TeamMemberListDTO> teamMemberDtoList =  teamMemberService.selectTeamMember(session.getAttribute("teamSeq").toString());
-        // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
-        List<ChatRoomDTO> topicList = chatRoomService.selectTopic(param.get("teamSeq"));
-        // 팀 토픽 갯수 카운트
-        int topicCount = chatRoomService.countTopic(param.get("teamSeq"));
-        model.addAttribute("teamMemberDtoList", teamMemberDtoList);
-        model.addAttribute("chatRoomList", chatRoomList);
-        model.addAttribute("topicList", topicList);
-        model.addAttribute("topicCount", topicCount);
-        return "team/team";
-    }
+//    @RequestMapping("goTeamAgain")
+//    public String goTeamAgain(Model model) {
+//        //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
+//        Map<String, Integer> param = new HashMap<>();
+//        param.put("teamSeq", (int)session.getAttribute("teamSeq"));
+//        param.put("memberSeq", (int)session.getAttribute("memberSeq"));
+//        // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
+//        List<ChatRoomDTO> chatRoomList = chatRoomService.chatRoomList(param);
+//        //팀 입장 시, 팀 멤버 출력
+//        List<TeamMemberListDTO> teamMemberDtoList =  teamMemberService.selectTeamMember(session.getAttribute("teamSeq").toString());
+//        // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
+//        List<ChatRoomDTO> topicList = chatRoomService.selectTopic(param.get("teamSeq"));
+//        // 팀 토픽 갯수 카운트
+//        int topicCount = chatRoomService.countTopic(param.get("teamSeq"));
+//        model.addAttribute("teamMemberDtoList", teamMemberDtoList);
+//        model.addAttribute("chatRoomList", chatRoomList);
+//        model.addAttribute("topicList", topicList);
+//        model.addAttribute("topicCount", topicCount);
+//        return "team/team";
+//    }
 
     //부매니저 수 체크
     @ResponseBody
@@ -235,7 +236,7 @@ public class TeamController {
         return teamMemberService.subManagerCount(teamSeq);
     }
 
-    //회원 (자발적) 탈퇴
+    //회원 (자발적) 팀 탈퇴
     @ResponseBody
     @PostMapping("teamSelfOut")
     public void teamSelfOut(TeamMemberDTO teamMemberDto) {
@@ -244,6 +245,7 @@ public class TeamController {
         teamMemberService.deleteTeamMember(teamMemberDto);
         teamService.updateMinusTeamCount(teamMemberDto.getTeamSeq());
         chatRoomService.teamSelfOut(teamMemberDto);
+
         // 팀 관련 session값 제거.
         session.removeAttribute("teamSeq");
         session.removeAttribute("teamMemberNickname");
@@ -257,6 +259,13 @@ public class TeamController {
         teamMemberDto.setMemberSeq((int) session.getAttribute("memberSeq"));
         teamMemberService.updateTeamMemberNickName(teamMemberDto);
         return teamMemberDto.getTeamMemberNickname();
+    }
+
+    //2인 이상의 팀 매니저여부를 체크
+    @ResponseBody
+    @PostMapping("memberManagerCheck")
+    public int memberManagerCheck(int memberSeq) {
+        return teamService.memberManagerCheck(memberSeq);
     }
 
     // Exception Handler

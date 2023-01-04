@@ -65,4 +65,7 @@ public class ChatRoomDAO {
 
     //인원수가 0명인 채팅방 삭제
     public void delChatRoomCountZero() { chatRoomMapper.delChatRoomCountZero(); }
+
+    //특정 회원이 1명뿐인 팀의 채팅방을 모두 삭제.
+    public void delOnlyOneChatRoom(int memberSeq) { chatRoomMapper.delOnlyOneChatRoom(memberSeq); }
 }

@@ -94,4 +94,22 @@ public class TeamMemberDAO {
     public List<TeamMemberDTO> selectMembersTeam(int memberSeq) {
         return teamMemberMapper.selectMembersTeam(memberSeq);
     }
+
+    //회원이 매니저로 있는 팀 추출
+    public List<TeamMemberDTO> selectMembersManager(int memberSeq) {
+        return teamMemberMapper.selectMembersTeam(memberSeq);
+    }
+
+    //팀이 특정 회원 1명뿐인 팀 목록을 출력
+    public List<TeamMemberDTO> selectTeamMemberOnlyOne(int memberSeq) {
+        return teamMemberMapper.selectTeamMemberOnlyOne(memberSeq);
+    };
+
+    // 팀이 특정 회원 1명뿐인 팀 목록을 삭제
+    public void delOnlyOneTeamMember(int memberSeq) {
+        teamMemberMapper.delOnlyOneTeamMember(memberSeq);
+    }
+
+    //매니저가 팀에서 나갈시, 부매니저->팀원 순서대로 매니저가 이양된다. 새 매니저 후보를 추출
+    public int selectNewManagerSeq(int memberSeq) { return teamMemberMapper.selectNewManagerSeq(); }
 }

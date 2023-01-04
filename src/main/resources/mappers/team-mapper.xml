@@ -68,4 +68,18 @@
         delete from team where team_count = 0
     </delete>
 
+    <!--    팀의 팀원수를 출력-->
+    <select id="selectTeamCount" resultType="int">
+        select team_count from team where teamSeq = #{value}
+    </select>
+
+    <!-- 팀이 특정 회원 1명뿐인 팀 목록을 삭제   -->
+    <delete id="delTeamOnlyOne">
+        delete from team where team_owner_seq = #{memberSeq} and team_count=1
+    </delete>
+
+    <!--    해당 회원이 2인이상으로 구성된 팀의 매니저인지 여부를 판별-->
+    <select id="memberManagerCheck" resultType="int">
+        select count(*) from team where team_owner_seq = #{memberSeq} and team_count>=2
+    </select>
 </mapper>

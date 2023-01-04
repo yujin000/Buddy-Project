@@ -79,4 +79,7 @@ public class ChatRoomDAO {
     public String selectChatRoomName(ChatRoomDTO chatRoomDto){
         return chatRoomMapper.selectChatRoomName(chatRoomDto);
     }
+
+    //팀 삭제시, 해당팀 채팅방 모두 삭제
+    public void delTeam(int teamSeq) { chatRoomMapper.delTeam(teamSeq);}
 }

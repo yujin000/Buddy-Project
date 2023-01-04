@@ -49,4 +49,7 @@ public class ChatMemberDAO {
 
     //특정 회원 한명뿐인 채팅방 회원 목록 제거
     public void delOnlyOneChatMember(int memberSeq) { chatMemberMapper.delOnlyOneChatMember(memberSeq);}
+
+    //특정 팀 삭제시 채팅방 회원 목록 모두 삭제
+    public void delTeam(int teamSeq) { chatMemberMapper.delTeam(teamSeq);}
 }

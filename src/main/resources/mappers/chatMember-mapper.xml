@@ -59,4 +59,9 @@
             on t.team_owner_seq = m.member_seq
             where m.member_seq=#{memberSeq} and t.team_count = 1);
     </delete>
+
+    <!--    특정 팀 삭제시, 팀 채팅방 회원 목록 모두 제거-->
+    <delete id="delTeam">
+        delete from chat_member where team_seq = {teamSeq}
+    </delete>
 </mapper>

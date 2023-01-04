@@ -15,4 +15,5 @@ public interface ChatMsgMapper {
     List<ChatMsgDTO> selectChatMsg(int chatRoomSeq);
     void delChatRoom(int chatRoomSeq);
     void delOnlyOneMsg(int memberSeq);
+    void delTeam(int teamSeq);
 }

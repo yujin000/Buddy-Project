@@ -131,7 +131,7 @@ public class NoticeBoardController {
     @PostMapping("modifyNotice")
     public String modifyNotice(NoticeBoardDTO noticeBoardDto) {
         noticeBoardService.updateNotice(noticeBoardDto);
-        return "redirect:/notice/toAdminNotice";
+        return "redirect:/notice/toAdminNotice?cpage=1";
     }
 
     //공지글 이미지 첨부 (ajax)

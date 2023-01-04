@@ -82,7 +82,7 @@
       <div class="temListBox" th:if="${teamDtoList!=null}">
         <p class="title">팀 리스트 <span id="teamCount">[[${teamCount}]]</span><span> / 5</span></p>
         <div class="teamProfile" th:each="teamDtoList : ${teamDtoList}">
-          <img src="/static/img/logo.png" alt="" id="teamImg" class="profileImg" />
+          <img src="/static/img/teamProfile2.png" alt="" id="teamImg" class="profileImg" />
           <div class="info">
             <h1 id="teamName" class="name" th:text="${teamDtoList.teamName}"></h1>
           </div>

@@ -108,7 +108,7 @@ public class ChatRoomController {
     // 토픽 생성
     @ResponseBody
     @PostMapping("insertTopic")
-    public String insertTopic(ChatRoomDTO chatRoomDto) {
+    public void insertTopic(ChatRoomDTO chatRoomDto) {
         TeamDTO teamDto = teamService.selectTeamOne(session.getAttribute("teamSeq").toString());
 
         //ChatRoomDTO 영역 (chatRoom테이블에 topic 생성)
@@ -118,7 +118,6 @@ public class ChatRoomController {
         //ChatMember 영역(각 회원을 토픽에 가입)
         chatMemberService.insertTopicMember(chatRoomDto);
 
-        return "redirect:/team/goTeamAgain";
     }
 
     // 일반채팅방 생성

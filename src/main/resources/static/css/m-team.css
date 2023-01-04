@@ -14,14 +14,26 @@
         display: none;
         z-index: 10;
     }
-
+    #dropdownList {
+        width: 90vw;
+        left: 5vw;
+        top: 50px;
+        position: absolute;
+    }
     #asideClose {
         width: 50px;
         height: 50px;
-        border: 1px solid #000;
+        border: none;
+        background: none;
         position: absolute;
         left: 0px;
         display: block;
+    }
+
+    #asideClose img {
+        margin-top: 5px;
+        margin-left: 5px;
+        width: 40px;
     }
 
     #teamMember {
@@ -34,6 +46,9 @@
 
     #teamMemberList {
         width: 100%;
+        right: 0;
+        top: 50px;
+        border: none;
         height: calc(100vh - 50px);
         background: white;
     }
@@ -42,6 +57,8 @@
         width: 100%;
         height: 100%;
         background: white;
+        border: none;
+        top: 50px;
     }
 
     .menuList ul li {
@@ -62,5 +79,25 @@
         position: absolute;
         display: none;
         padding-bottom: 100px;
+    }
+
+    .fileView{
+        bottom: 119px;
+        left: 0px;
+        width: 100%;
+        height: 130px;
+        border: 1px solid #000;
+        background-color: white;
+        display: none;
+        position: absolute;
+    }
+    .fileView ul{
+        width: 100%;
+        line-height : 35px;
+    }
+
+    .fileView h3{
+        text-align: center;
+        width: 100%;
     }
 }

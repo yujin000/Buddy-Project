@@ -71,7 +71,6 @@
                 chatRoomListLi.append(chatRoomListForm);
                 chatRoomListLi.addClass("chatRoom");
                 $("#chatListUl").append(chatRoomListLi);
-
             }
         });
 
@@ -179,6 +178,7 @@
                     return false;
                 }
             }
+
             //이모티콘 클릭 후 backspace 누를 시 선택된 이모티콘 선택 해제됨
             else if($("#inputMsg").val()=="" && emoticonSrc.length!=""){
                 if (e.keyCode == 8) {
@@ -362,7 +362,7 @@
         </div>
         <section class="msgSection">
             <div class="chatHeader">
-                <h1 th:text="${chatRoomName}"></h1>
+                <h1>team-list</h1>
                 <button id="memberView">멤버</button>
             </div>
             <div class="msgView">

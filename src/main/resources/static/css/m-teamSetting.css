@@ -39,7 +39,7 @@
         overflow-x: scroll;
     }
 
-    #gradeBtn {
+    .gradeBtn {
         position: absolute;
         top: -35px;
         border: none;

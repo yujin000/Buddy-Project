@@ -53,7 +53,7 @@
     $(function () {
         // 웹소켓 영역 시작
         // webSocket 인스턴스 생성
-        let ws = new WebSocket("ws://43.201.133.173/chat/" + chatRoomSeq);
+        let ws = new WebSocket("ws://localhost/chat/" + chatRoomSeq);
 
         //채팅방 목록을 출력해주는 ajax
         $.ajax({
@@ -130,11 +130,9 @@
         }
 
         let file = $("#uploadfile").val();
-        let emoticonSrc;
         $("#inputMsg").on("keydown", function (e) {
-            emoticonSrc=$("#emoticonClickImg").attr("src");
             if (e.keyCode == 13 && !e.shiftKey) {
-                if(file == "" && emoticonSrc=="") {
+                if(file == "") {
                     // Json 생성
                     let wsJson = {
                         "memberImgSysName":"<img src="+memberImgSysName+"/>",
@@ -148,49 +146,6 @@
                     $(this).val("");
                     ws.send(JSON.stringify(wsJson));
                     return false;
-                }
-                //이모티콘만 보내기
-                else if($("#inputMsg").val()=="" && emoticonSrc.length!=""){
-                    let wsJson = {
-                        "memberImgSysName":"<img src="+memberImgSysName+"/>",
-                        "chatRoomSeq": chatRoomSeq,
-                        "teamMemberNickname": teamMemberNickname,
-                        "chatContent": "<img src="+emoticonSrc+"/>",
-                        "memberSeq": memberSeq,
-                        "chatMsgType": 1
-                    };
-                    //JSON 전송
-                    $(this).val("");
-                    $("#emoticonClickImg").attr("src","");
-                    $("#emoticonClickView").hide();
-                    ws.send(JSON.stringify(wsJson));
-                    return false;
-                }
-                //이모티콘 + 메세지 보내기
-                else if(emoticonSrc.length!="" && $("#inputMsg").val()!=""){
-                    let wsJson = {
-                        "memberImgSysName":"<img src="+memberImgSysName+"/>",
-                        "chatRoomSeq": chatRoomSeq,
-                        "teamMemberNickname": teamMemberNickname,
-                        "chatContent": "<img src="+emoticonSrc+"/><br/>"+$(this).val(),
-                        "memberSeq": memberSeq,
-                        "chatMsgType": 1
-                    };
-                    //JSON 전송
-                    $(this).val("");
-                    $("#emoticonClickImg").attr("src","");
-                    $("#emoticonClickView").hide();
-                    ws.send(JSON.stringify(wsJson));
-                    return false;
-                }
-            }
-
-            //이모티콘 클릭 후 backspace 누를 시 선택된 이모티콘 선택 해제됨
-            else if($("#inputMsg").val()=="" && emoticonSrc.length!=""){
-                if (e.keyCode == 8) {
-                    $(this).val("");
-                    $("#emoticonClickImg").attr("src","");
-                    $("#emoticonClickView").hide();
                 }
             }
         });
@@ -249,17 +204,31 @@
                 }
             });
         })
-    });
 
-    //이모티콘 클릭 시
-    let clickEmoticon;
-    $(document).on("click",".emoticonImg",function(){
-        clickEmoticon=$(this).data("sysname");
-        $(".emoticonView").hide();
-        $("#emoticonClickView").toggle();
-        $("#emoticonClickImg").attr("src","/emoticon/"+clickEmoticon);
-        $("#inputMsg").focus();
-    })
+        //이모티콘 클릭 시 이모티콘 보내기
+        let clickEmoticon;
+        $(document).on("click",".emoticonImg",function(){
+            clickEmoticon=$(this).data("sysname");
+            clickEmoticon="/emoticon/"+clickEmoticon;
+            //이모티콘만 보내기
+            if(clickEmoticon.length!=""){
+                let wsJson = {
+                    "memberImgSysName":"<img src="+memberImgSysName+"/>",
+                    "chatRoomSeq": chatRoomSeq,
+                    "teamMemberNickname": teamMemberNickname,
+                    "chatContent": "<img src="+clickEmoticon+"/>",
+                    "memberSeq": memberSeq,
+                    "chatMsgType": 1
+                };
+                //JSON 전송
+                $(this).val("");
+                $("#emoticonClickImg").attr("src","");
+                $(".emoticonView").hide();
+                ws.send(JSON.stringify(wsJson));
+                return false;
+            }
+        })
+    });
 
     //채팅방 멤버들 출력
     $.ajax({
@@ -326,7 +295,7 @@ group
         <aside>
             <div id="profile" class="asideTitle">
                 <img id="myImg" th:src="${memberImgSysName}" alt="" />
-                <div id="profileView" th:text="${session.teamMemberNickname}"></div>
+                <div id="profileView" th:text="${teamMemberInfo.getTeamMemberNickname()}"></div>
             </div>
 
             <div id="topic" class="asideList">
@@ -371,16 +340,20 @@ group
         <div id="profileViewDiv">
             <img id="profileImg" th:src="${memberImgSysName}"><br/>
             <div id="nickNameDiv">
-                <span id="nickNameSpan" th:text="${session.teamMemberNickname}" onclick="nickNameSpanClick()"/>
+          <span id="nickNameSpan" th:text="${teamMemberInfo.getTeamMemberNickname()}" onclick="nickNameSpanClick()">
+            nickname
+          </span>
                 <button id="updateNickNameBtn">수정</button>
             </div>
             <div id="gradeDiv">
-                <span id="pGrade" th:text="${teamMemberInfo.grade}"/>
+        <span id="pGrade" th:text="${teamMemberInfo.grade}">
+          등급
+          </span>
             </div>
         </div>
         <section class="msgSection">
             <div class="chatHeader">
-                <h1>team-list</h1>
+                <h1 th:text="${chatRoomName}"></h1>
                 <button id="memberView">멤버</button>
             </div>
             <div class="msgView">
@@ -429,9 +402,6 @@ group
                             <button>4</button>
                         </li>
                         <li><button type="button" id="emoticonBtn">😊</button></li>
-                        <div id="emoticonClickView">
-                            <img src="" id="emoticonClickImg">
-                        </div>
                         <div class="emoticonView">
                             <div id="emoticonList">
 
@@ -815,10 +785,9 @@ group
 </script>
 
 <script>
+    //이모티콘 출력
     $("#emoticonBtn").on("click",function (){
-        $("#emoticonClickView").hide();
         $(".emoticonView").toggle();
-        $("#emoticonClickImg").attr("src","");
     })
     $.ajax({
         url:"/emoticon/selectEmoticon",
@@ -837,7 +806,7 @@ group
     })
 </script>
 
-<script>
+<script th:inline="javascript">
 
     function closer(arg) {
         $(arg).parent().parent().parent().css("display","none");
@@ -882,6 +851,16 @@ group
             })}
         else{
             alert("닉네임은 공백포함 1~15글자만 가능합니다. (특수문자 불가능)");
+            $("#inputNickName").focus();
+        }
+    })
+
+    //profileViewDiv 창 밖으로 클릭 됐을 때
+    let text = [[${teamMemberInfo.getTeamMemberNickname()}]]
+    $("html").click(function(e) {
+        if (!$(e.target).hasClass('check')) {
+            $("#inputNickName").val(text);
+            $("#nickNameSpan").text(text);
         }
     })
 </script>

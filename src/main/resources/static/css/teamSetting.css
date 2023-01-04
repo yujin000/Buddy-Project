@@ -150,7 +150,7 @@ button[class*="Btn"] {
     position: absolute;
 }
 
-#gradeBtn {
+.gradeBtn {
     background: none;
     color: var(--sub-color2);
     border: 1px solid var(--sub-color2);

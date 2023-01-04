@@ -75,7 +75,6 @@
               <button
                       type="button"
                       name="grade"
-                      id="gradeBtn"
                       class="gradeBtn"
                       th:data-nick-name="${teamMemberDtoList.getTeamMemberNickname}"
                       th:data-memberSeq="${teamMemberDtoList.getMemberSeq}"
@@ -83,7 +82,8 @@
                       th:data-session="${sessionMemberSeq}"
                       th:data-owner="${teamDto.getTeamOwnerSeq}"
                       th:text="${teamMemberDtoList.getGrade}"
-              >등급
+                      th:disabled="${teamDto.getTeamOwnerSeq!=session.memberSeq}"
+              >
               </button>
               <th:block th:if="${teamMemberDtoList.getGrade!='매니저'}">
               <button type="submit" class="delBtn" id="delMember"
@@ -156,6 +156,7 @@
   //매니저는 자기 등급 변경 불가능
   $(function (){
     $(".gradeBtn").eq(0).attr("disabled",true);
+
 
     $.ajax({
       url:"/team/subManagerMemberCount",

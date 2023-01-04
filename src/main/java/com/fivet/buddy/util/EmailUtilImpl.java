@@ -24,7 +24,7 @@ public class EmailUtilImpl implements EmailUtil {
         String htmlStr = "    <div id=\"container\" style=\"border:1px solid beige; width:500px; height:590px\">\n" +
                 "        <div id=\"header\" style=\"overflow:hidden; width:100%; height:140px;\">\n" +
                 "            <div style=\"float:left; height:100%; width: 100%;\">\n" +
-                "                <a href=\"http://43.201.133.173\" target=\"blank\"><img src=\"https://i.esdrop.com/d/f/iRteJoq4AE/lkIKJvKhhn.png\" style=\"width:300px; height:80%;\"></a>\n" +
+                "                <a href=\"http://43.201.133.173\" target=\"blank\"><img src=\"https://i.esdrop.com/d/f/iRteJoq4AE/UZlnlzP5pa.png\" style=\"width:300px; height:80%;\"></a>\n" +
                 "                <hr style=\"height:10px;background-color: #8621F7; border:none;\">\n" +
                 "</div>\n" +
                 "        </div>\n" +
@@ -72,7 +72,7 @@ public class EmailUtilImpl implements EmailUtil {
         String htmlStr = "<html><body><div id=\"container\" style=\"border:1px solid beige; width:500px; height:680px\">\n" +
                 "        <div id=\"header\" style=\"overflow:hidden; width:100%; height:140px;\">\n" +
                 "            <div style=\"float:left; height:100%; width: 100%;\">\n" +
-                "                <a href=\"http://43.201.133.173\" target=\"blank\"><img src=\"https://i.esdrop.com/d/f/iRteJoq4AE/lkIKJvKhhn.png\" style=\"width:300px; height:80%;\"></a>\n" +
+                "                <a href=\"http://43.201.133.173\" target=\"blank\"><img src=\"https://i.esdrop.com/d/f/iRteJoq4AE/UZlnlzP5pa.png\" style=\"width:300px; height:80%;\"></a>\n" +
                 "                <hr style=\"height:10px;background-color: #8621F7; border:none;\">\n" +
                 "</div>\n" +
                 "        </div>\n" +

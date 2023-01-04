@@ -378,9 +378,7 @@ face
                 </button>
             </div>
             <div class="msgView">
-                <input type="text" id="modifyChatTitle" placeholder=" 토픽/채팅방 제목변경">
-                <button type="button" id="modifyTitleConfirm">변경하기</button>
-                <button type="button" id="modifyCancel">취소</button>
+
                 <div id="subSection">
                     <ul id="memberList" class="subItem">
                         <h1>채팅멤버</h1>
@@ -477,6 +475,27 @@ face
             <button type="button" class="insertTopic" id="insertTopic">토픽 생성하기</button>
             <button type="button" class="closeBtn" onclick="closer(this)">나가기</button>
         </div>
+    </div>
+
+    </div>
+
+<div class="renameView" id="renameView">
+    <div class="wrap2">
+
+        <div class="renameForm" id="renameTopic" >
+            <h1>토픽 이름 변경</h1>
+            <input type="text" id="modifyTopicTitle" class="modifyTitle" placeholder=" 토픽/채팅방 제목변경">
+            <button type="button" id="modifyTopicConfirm" class="modifyBtn">변경하기</button>
+            <button type="button" id="modifyCancel" class="closeBtn" onclick="closer(this)">나가기</button>
+        </div>
+
+        <div class="renameForm" id="renameChat" >
+            <h1>채팅 이름 변경</h1>
+            <input type="text" id="modifyChatTitle" class="modifyTitle" placeholder=" 토픽/채팅방 제목변경">
+            <button type="button" id="modifyChatConfirm" class="modifyBtn">변경하기</button>
+            <button type="button" id="modifyCancel2" class="closeBtn" onclick="closer(this)">나가기</button>
+        </div>
+
     </div>
 </div>
     <script th:inline="javascript">
@@ -713,6 +732,16 @@ face
 
         // 토픽 이름 변경 이벤트
         $(".topicRename").click(function (){
+            $(".renameView").css("display","block");
+            $("#renameTopic").css("display","block");
+            $("#renameChat").css("display","none");
+            $("#modifyTitleConfirm").attr("data-index", $(this).attr("data-index"));
+        })
+
+        $(".chatRename").click(function (){
+            $(".renameView").css("display","block");
+            $("#renameTopic").css("display","none");
+            $("#renameChat").css("display","block");
             $("#modifyTitleConfirm").attr("data-index", $(this).attr("data-index"));
         })
 

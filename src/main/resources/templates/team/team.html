@@ -352,7 +352,17 @@ group
 
     // 토픽 이름 변경 이벤트
     $(".topicRename").click(function (){
-        $("#modifyTitleConfirm").attr("data-index", $(this).attr("data-index"));
+      $(".renameView").css("display","block");
+      $("#renameTopic").css("display","block");
+      $("#renameChat").css("display","none");
+      $("#modifyTitleConfirm").attr("data-index", $(this).attr("data-index"));
+    })
+
+    $(".chatRename").click(function (){
+      $(".renameView").css("display","block");
+      $("#renameTopic").css("display","none");
+      $("#renameChat").css("display","block");
+      $("#modifyTitleConfirm").attr("data-index", $(this).attr("data-index"));
     })
 
     //이름 변경 취소 버튼 이벤트
@@ -480,6 +490,8 @@ group
       BtnClick();
     })
   });
+
+
 </script>
 
 <!-- 드라이브 버튼 클릭시 fileDrive 페이지로 이동 -->

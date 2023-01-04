@@ -99,4 +99,9 @@ public class ChatRoomService {
         chatRoomDao.delOnlyOneChatRoom(memberSeq);
     }
 
+    //채팅방에 실 참여자인지 여부 체크
+    public int selectChatRoom(ChatMemberDTO chatMemberDto){
+        return chatRoomDao.selectChatRoom(chatMemberDto);
+    }
+
 }

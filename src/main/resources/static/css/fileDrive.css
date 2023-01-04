@@ -512,7 +512,7 @@ aside {
 .bubble{
     z-index: 100;
 }
-.copyUrl{
+.copy{
     width:50px;
     display: inline-block;
 }

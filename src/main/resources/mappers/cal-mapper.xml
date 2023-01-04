@@ -46,7 +46,7 @@
     </delete>
 
     <delete id="deleteTeamMemberEvent">
-        delete event where "member_seq" = #{memberSeq}  and "team_seq" =#{teamSeq}   </delete>
+        delete event where "event_writer" = #{value} </delete>
 
     <update id="updateEvent">
         update event set "event_type" = #{eventType}, "event_name" =#{eventName} ,

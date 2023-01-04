@@ -188,25 +188,17 @@
             }
         });
 
-        $(".uploadfile").on('change', function () {
+        $("#uploadfile").on('change', attachType);
 
-            let filef = $(".uploadfile")[0].files[0];
-            let fileSize = filef.size;
-            let maxFileSize = 10 * 1024 * 1024;
-
-            let extension = this.value.split(".").pop().toLowerCase();
-            let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip"];
-            let result = $.inArray(extension, accept);
-
-            if (fileSize > maxFileSize) {
-                alert("첨부하려는 '" + filef.name + "' 파일은 용량이 너무 큽니다. \n 업로드 할 수 있는 최대 용량은 '10 MB' 입니다.");
-                this.value = "";
+        function attachType(e) {
+            if (e.target.files[0]) {
+                if (e.target.files[0].size > (1 * 1024 * 1024)) {
+                    alert("파일 사이즈는 1MB 이내로 등록해주세요.");
+                    this.value = "";
+                }
             }
-            if (result == -1) {
-                alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .xls, .ppt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip)");
-                this.value = "";
-            }
-        });
+        }
+
         $(".fileSubmitBtn").on('click', function () {
             $.ajax({
                 type: "POST",

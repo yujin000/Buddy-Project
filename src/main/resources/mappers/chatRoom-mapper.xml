@@ -131,4 +131,8 @@
     <select id="selectChatRoom" resultType="int">
         select count(*) from chat_member where chat_room_seq = #{chatRoomSeq} and member_seq = #{memberSeq}
     </select>
+
+    <select id="selectChatRoomName" resultType="String">
+        select chat_title from chat_room where chat_room_seq = #{chatRoomSeq} and team_seq = #{teamSeq}
+    </select>
 </mapper>

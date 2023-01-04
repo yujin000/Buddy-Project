@@ -74,4 +74,9 @@ public class ChatRoomDAO {
     public int selectChatRoom(ChatMemberDTO chatMemberDto){
         return chatRoomMapper.selectChatRoom(chatMemberDto);
     }
+
+    //채팅방 이름 출력
+    public String selectChatRoomName(ChatRoomDTO chatRoomDto){
+        return chatRoomMapper.selectChatRoomName(chatRoomDto);
+    }
 }

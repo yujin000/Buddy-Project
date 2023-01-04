@@ -71,6 +71,7 @@
                 chatRoomListLi.append(chatRoomListForm);
                 chatRoomListLi.addClass("chatRoom");
                 $("#chatListUl").append(chatRoomListLi);
+
             }
         });
 
@@ -361,7 +362,7 @@
         </div>
         <section class="msgSection">
             <div class="chatHeader">
-                <h1>team-list</h1>
+                <h1 th:text="${chatRoomName}"></h1>
                 <button id="memberView">멤버</button>
             </div>
             <div class="msgView">

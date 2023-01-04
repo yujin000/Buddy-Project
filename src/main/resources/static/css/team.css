@@ -84,6 +84,7 @@ img {
   background: #fff;
   border: var(--border);
   border-radius: 10px;
+  box-shadow: var(--shadow);
 }
 #dropdownTitle {
   font-size: 1.2rem;
@@ -117,7 +118,8 @@ img {
 .teamMemberList {
   width: 300px;
   border: var(--border);
-  margin-top: 1px;
+  box-shadow: var(--shadow);
+
   border-radius: 10px;
   position: absolute;
   padding: 10px;
@@ -383,24 +385,28 @@ aside {
 }
 
 #subSection {
-  top: 50px;
+  top: 52px;
   right: 0;
   width: 300px;
   height: auto;
-  border: var(--border);
+  background: #fff;
   position: absolute;
 }
 .subItem {
   width: 100%;
-  border: 1px solid #000;
+  border-radius: 10px;
+  border: var(--border);
   background: white;
+  box-shadow: var(--shadow);
+  padding: 10px;
   position: relative;
 }
 
 .subItem h1 {
   height: 40px;
   text-align: center;
-  border: 1px solid #000;
+  font-size: 1.2rem;
+  border-bottom: var(--border);
   line-height: 30px;
 }
 
@@ -510,17 +516,19 @@ aside {
 .menuList {
   position: absolute;
   top: 52px;
+  padding: 10px;
   right: 2px;
   width: 200px;
   border: var(--border);
+  box-shadow: var(--shadow);
   border-radius: 10px;
-  padding: 10px;
   z-index: 10;
   display: none;
   background: white;
 }
 
 .menuList ul li {
+  padding: 5px;
   height: 40px;
   line-height: 40px;
   border-bottom: var(--border);
@@ -638,9 +646,19 @@ aside {
 }
 
 #topicRename {
+  border: none;
   display: none;
 }
 
+.topicRename{
+  border: none;
+  background: none;
+}
+.topicDel {
+  border: none;
+  background: none;
+
+}
 
 #makeChatTitle {
   width: 80%;

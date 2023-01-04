@@ -275,6 +275,9 @@ arrow_drop_down
                 </li>
             </ul>
             <ul id="dropdownList">
+                <h1 id="dropdownTitle">
+                    팀리스트
+                </h1>
             </ul>
         </div>
 
@@ -301,17 +304,17 @@ group
             <div id="topic" class="asideList">
                 <div class="asideTitle">
                     <h3>토픽 <span id="topicCount">[[${topicCount}]]</span><span> / 4</span></h3>
-                    <button id="topicToggle" class="toggle">v</button>
+                    <button id="topicToggle" class="toggle">➖</button>
                     <th:block th:if="${teamMemberInfo.grade=='매니저'||teamMemberInfo.grade=='부매니저'}">
-                        <button id="topicCreate" class="createBtn">+</button>
+                        <button id="topicCreate" class="createBtn">➕</button>
                     </th:block>
                 </div>
                 <div id="topicList" class="asideItem">
                     <ul th:each="topicList : ${topicList}">
                         <li>
                             <a th:href="@{/chatRoom/join/(chatRoomSeq=${topicList.chatRoomSeq})}">[[${topicList.chatTitle}]]</a>
-                            <button type="button" class="topicRename" th:data-index="${topicList.chatRoomSeq}">이름변경</button>
-                            <button type="button" class="topicDel" th:data-index="${topicList.chatRoomSeq}">토픽 삭제</button>
+                            <button type="button" class="topicRename" th:data-index="${topicList.chatRoomSeq}">✏️</button>
+                            <button type="button" class="topicDel" th:data-index="${topicList.chatRoomSeq}">❌</button>
                         </li>
                     </ul>
                 </div>
@@ -320,8 +323,8 @@ group
             <div id="chat" class="asideList">
                 <div class="asideTitle">
                     <h3>채팅</h3>
-                    <button id="chatCreate" class="createBtn">+</button>
-                    <button id="chatToggle" class="toggle">v</button>
+                    <button id="chatCreate" class="createBtn">➕</button>
+                    <button id="chatToggle" class="toggle">➖</button>
                 </div>
                 <div id="chatList" class="asideItem">
                     <ul id="chatListUl">
@@ -366,7 +369,7 @@ face
                 <button type="button" id="modifyCancel">취소</button>
                 <div id="subSection">
                     <ul id="memberList" class="subItem">
-                        <h1>member</h1>
+                        <h1>채팅멤버</h1>
                     </ul>
                 </div>
 
@@ -450,25 +453,25 @@ face
     </ul>
 </div>
 
-<div class="createView">
+<div class="createView" id="createView">
     <div class="wrap">
-        <div class="chatForm">
+        <div class="chatForm" id="chatForm">
             <h1>😀채팅 시작하기</h1>
             <ul class="list" id="chatMemberUl">
                 <li><input type="text" placeholder="채팅방 이름" id="makeChatTitle"></li>
             </ul>
             <button type="button" id="startChat">대화 시작하기</button>
-            <button type="button" class="closeBtn" id="closeBtn" onclick="closer(this)">취소</button>
+            <button type="button" class="closeBtn" id="closeBtn" onclick="closer(this)">나가기</button>
         </div>
 
-        <div class="topicForm">
+
+        <div class="topicForm" id="topicForm">
             <h1>✨토픽 생성하기</h1>
             <ul class="list">
-                <li><input id="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
+                <li><input class="topicTitle" id="topicTitle" type="text" placeholder="토픽 이름" ></li>
             </ul>
-            <button type="button" id="insertTopic">토픽 생성하기</button>
-            <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
-
+            <button type="button" class="insertTopic" id="insertTopic">토픽 생성하기</button>
+            <button type="button" class="closeBtn" onclick="closer(this)">나가기</button>
         </div>
     </div>
 </div>
@@ -576,6 +579,11 @@ face
             $("#appList").toggle();
         });
 
+        $("#teamMember").click(function (){
+            $("#teamMemberList").toggle();
+        })
+
+
         $("#memberView").click(function () {
             $("#memberList").toggle();
         });
@@ -585,9 +593,9 @@ face
         });
 
         $("#chatCreate").click(function (){
-            $(".createView").css("display","block");
-            $(".chatForm").css("display","block");
-            $(".topicForm").css("display","none");
+            $("#createView").css("display","block");
+            $("#chatForm").css("display","block");
+            $("#topicForm").css("display","none");
         })
 
         $("#topicCreate").click(function (){
@@ -595,9 +603,10 @@ face
             if ($("#topicCount").text()>=4) {
                 alert("더이상 토픽을 생성할 수 없습니다!")
             } else {
-                $(".createView").css("display","block");
-                $(".chatForm").css("display","none");
+                $("#createView").toggle();
                 $(".topicForm").css("display","block");
+                $(".chatForm").css("display","none");
+
             }
 
         })
@@ -606,6 +615,8 @@ face
             $("#profileViewDiv").toggle();
             BtnClick();
         })
+
+
     });
 </script>
 
@@ -614,6 +625,10 @@ face
     $("#appDrive").on("click", function () {
         location.href = "/drive/toFileDrive";
     });
+
+    function closer(arg) {
+        $(arg).parent().parent().parent().css("display","none");
+    }
 </script>
 
 <script>
@@ -858,9 +873,7 @@ face
 
 <script th:inline="javascript">
 
-    function closer(arg) {
-        $(arg).parent().parent().parent().css("display","none");
-    }
+
 
     //팀원 닉네임 변경
     let input = $("<input>");

@@ -87,8 +87,8 @@ group
           <ul th:each="topicList : ${topicList}">
             <li>
                 <a th:href="@{/chatRoom/join/(chatRoomSeq=${topicList.chatRoomSeq})}">[[${topicList.chatTitle}]]</a>
-                <button type="button" class="topicRename" th:data-index="${topicList.chatRoomSeq}">이름변경</button>
-                <button type="button" class="topicDel" th:data-index="${topicList.chatRoomSeq}">토픽 삭제</button>
+                <button type="button" class="topicRename" th:data-index="${topicList.chatRoomSeq}">✏️</button>
+                <button type="button" class="topicDel" th:data-index="${topicList.chatRoomSeq}">❌</button>
             </li>
           </ul>
         </div>

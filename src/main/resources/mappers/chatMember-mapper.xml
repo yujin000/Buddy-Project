@@ -9,7 +9,7 @@
         insert into
             chat_member
         values
-            (#{chatRoomSeq}, #{memberSeq}, #{teamSeq}, sysdate, sysdate)
+            (#{chatRoomSeq}, #{memberSeq}, #{teamSeq}, sysdate)
     </insert>
 
     <!-- 채팅방 멤버 출력 -->

@@ -398,7 +398,6 @@ public class MemberController {
         // 기본 폴더 삭제
         basicFolderService.memberOut(memberSeq);
 
-        memberService.deleteMember(String.valueOf(session.getAttribute("memberSeq")));
         List<MemberDTO> list = memberService.selectMembers();
 
         // 회원이 매니저면서, 한명뿐인 팀이 있는 경우, 관련 컨텐츠를 모두 없애준다.

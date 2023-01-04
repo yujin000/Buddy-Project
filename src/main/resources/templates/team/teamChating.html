@@ -266,7 +266,7 @@
         <div id="teamList" class="teamList">
             <ul>
                 <li>
-                    <a href="team.html" th:text="${session.teamName}"></a
+                    <span class="teamName" href="team.html" th:text="${session.teamName}"></span
                     >
                     <button id="headerToggle">
                         <span class="material-symbols-outlined">
@@ -327,16 +327,30 @@ group
                     <button id="chatToggle" class="toggle">➖</button>
                 </div>
                 <div id="chatList" class="asideItem">
-                    <ul id="chatListUl">
+                    <ul th:if="${chatRoomList!=null}">
+                        <th:block th:each="chatRoomList : ${chatRoomList}">
+                            <li>
+                                <a th:href="@{/chatRoom/join/(chatRoomSeq=${chatRoomList.chatRoomSeq})}"
+                                   th:text="${chatRoomList.chatTitle}"></a>
+                                <button th:if="${#strings.equals(chatRoomList.chatType,'normal')}"
+                                        class="chatRename" th:data-index="${chatRoomList.chatRoomSeq}">
+                                    ✏️
+                                </button>
+                                <button th:if="${#strings.equals(chatRoomList.chatType,'normal')}"
+                                        class="chatOut" th:data-index="${chatRoomList.chatRoomSeq}">
+                                    ❌
+                                </button>
+                            </li>
+                        </th:block>
                     </ul>
                 </div>
             </div>
 
             <div class="asideTool">
-                <button id="appToggle" class="appToggle">앱 toggle</button>
+                <button id="appToggle" class="appToggle">buddy App</button>
                 <div id="appList">
-                    <button class="app" id="appDrive"><a href="">드라이브</a></button>
-                    <button class="app" id="appCal"><a href="">캘린더</a></button>
+                    <button class="app" id="appDrive"><a href="">📁드라이브</a></button>
+                    <button class="app" id="appCal"><a href="">📅캘린더</a></button>
                 </div>
             </div>
         </aside>
@@ -375,14 +389,15 @@ face
 
                 <th:block th:each="chatMsgList : ${chatMsgList}">
                     <div class="msg">
-                        <div class="memberImg" th:utext="${chatMsgList.memberImgSysName}">
+                        <div  class="memberImg" th:utext="${chatMsgList.memberImgSysName}">
+                            <img src="/static/img/teamProfile2.png" alt="">
                         </div>
-                        [[${chatMsgList.teamMemberNickname}]]
-                        <br>
-                        <div th:if="${chatMsgList.chatMsgType == 0}" th:text="${chatMsgList.chatContent}"></div>
-                        <div th:if="${chatMsgList.chatMsgType == 1}" th:utext="${chatMsgList.chatContent}"></div>
-                        [[${chatMsgList.chatDate}]]
-                        <br>
+                        <div class="msgData">
+                            <p class="teamMemberNickname">[[${chatMsgList.teamMemberNickname}]]</p>
+                            <div th:if="${chatMsgList.chatMsgType == 0}" th:text="${chatMsgList.chatContent}"></div>
+                            <div th:if="${chatMsgList.chatMsgType == 1}" th:utext="${chatMsgList.chatContent}"></div>
+                            <p class="chaDate">[[${chatMsgList.chatDate}]]</p>
+                        </div>
                     </div>
                 </th:block>
             </div>
@@ -392,22 +407,11 @@ face
                         name="inputMsg"
                         id="inputMsg"
                         class="inputMsg"
-                        placeholder="input Msg"
+                        placeholder="메세지를 입력해주세요"
                 />
                 <div class="msgTool">
                     <ul>
-                        <li>
-                            <button id="test" onclick="clickevnet()">1</button>
-                        </li>
-                        <li>
-                            <button>2</button>
-                        </li>
-                        <li>
-                            <button>3</button>
-                        </li>
-                        <li>
-                            <button>4</button>
-                        </li>
+
                         <li><button type="button" id="emoticonBtn">😊</button></li>
                         <div class="emoticonView">
                             <div id="emoticonList">
@@ -422,9 +426,9 @@ face
                         <div class="fileView">
                             <input type="hidden" th:value="${chatRoomSeq}" name="chatRoomSeq">
                             <ul>
-                                <img src="/static/img/pcicon.png" id="fileIcon">
+
                                 <h3>
-                                    내 컴퓨터에서 업로드</h3>
+                                    ✅내 컴퓨터에서 업로드</h3>
                             </ul>
                             <div class="fileContents">
                                 <input

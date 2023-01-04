@@ -108,11 +108,11 @@ group
                  th:text="${chatRoomList.chatTitle}"></a>
               <button th:if="${#strings.equals(chatRoomList.chatType,'normal')}"
                       class="chatRename" th:data-index="${chatRoomList.chatRoomSeq}">
-                이름변경
+                ✏️
               </button>
               <button th:if="${#strings.equals(chatRoomList.chatType,'normal')}"
                       class="chatOut" th:data-index="${chatRoomList.chatRoomSeq}">
-                채팅방 나가기
+                ❌
               </button>
             </li>
             </th:block>

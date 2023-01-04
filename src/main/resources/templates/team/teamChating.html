@@ -288,7 +288,7 @@ group
         <ul id="teamMemberList" class="teamMemberList">
             <h1>팀원 목록</h1>
         </ul>
-    </div>
+
     </div>
 
     <div class="main">
@@ -354,7 +354,11 @@ group
         <section class="msgSection">
             <div class="chatHeader">
                 <h1 th:text="${chatRoomName}"></h1>
-                <button id="memberView">멤버</button>
+                <button id="memberView">
+                    <span class="material-symbols-outlined">
+face
+</span>
+                </button>
             </div>
             <div class="msgView">
                 <input type="text" id="modifyChatTitle" placeholder=" 토픽/채팅방 제목변경">
@@ -468,7 +472,53 @@ group
         </div>
     </div>
 </div>
+    <script th:inline="javascript">
+        $(function (){
+        $.ajax({
+            url:"/team/teamMemberList",
+            success : function (){
+            },error : function (){
+            }
+        }).done(function (rsp){
+            let JsonTeamMemberList = JSON.parse(rsp);
+            //팀 화면에서 팀 목록을 출력
+            for (let i=0; i<JsonTeamMemberList.length; i++) {
+                let teamMemberListLi = $("<li>");
+                let teamMemberListImg = $("<img>");
+                let teamMemberListSpan1 = $("<span>");
+                let teamMemberListSpan2 = $("<span>");
+                teamMemberListImg.attr("src",JsonTeamMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonTeamMemberList[i].memberImgSysName);
+                teamMemberListLi.append(teamMemberListImg);
+                teamMemberListSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
+                teamMemberListLi.append(teamMemberListSpan1);
+                teamMemberListSpan2.text(JsonTeamMemberList[i].grade);
+                teamMemberListLi.append(teamMemberListSpan2);
+                $("#teamMemberList").append(teamMemberListLi);
+            }
+            for (let i=0; i<JsonTeamMemberList.length; i++) {
+                //채팅방 만들기에서 팀 목록을 출력
+                let chatMemberLi = $("<li>");
+                let chatMemberImg = $("<img>");
+                let chatMemberSpan1 = $("<span>");
+                let chatMemberSpan2 = $("<span>");
+                chatMemberLi.addClass("makeTeamMember");
+                chatMemberLi.attr("data-checked", "false");
+                chatMemberLi.attr("data-memberSeq", JsonTeamMemberList[i].memberSeq);
+                chatMemberImg.attr("src",JsonTeamMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonTeamMemberList[i].memberImgSysName);
+                chatMemberLi.append(chatMemberImg);
+                chatMemberSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
+                chatMemberLi.append(chatMemberSpan1);
+                chatMemberSpan2.attr('claas','tag');
+                chatMemberSpan2.css('color','#8621F7')
+                chatMemberSpan2.text(JsonTeamMemberList[i].grade);
+                chatMemberLi.append(chatMemberSpan2);
+                $("#chatMemberUl").append(chatMemberLi);
+            }
+        })
+    })
+</script>
 <script>
+
     //팀목록을 출력해주는 ajax호출
     $(function () {
         $.ajax({

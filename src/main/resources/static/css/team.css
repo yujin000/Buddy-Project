@@ -360,7 +360,16 @@ aside {
   height: 49px;
   right: 0px;
   position: absolute;
-  border: 1px solid #000;
+  border: none;
+  background: none;
+  color: var(--sub-color);
+}
+
+#memberView:hover {
+  color: var(--main-color);
+}
+#memberView span {
+  line-height: 50px;
 }
 
 #searchMsg {
@@ -377,7 +386,8 @@ aside {
   top: 50px;
   right: 0;
   width: 300px;
-  border: 1px solid #000;
+  height: auto;
+  border: var(--border);
   position: absolute;
 }
 .subItem {

@@ -130,7 +130,7 @@
               <input type="hidden" th:value="${isTeam}" name="isTeam">
             </label>
             <button type="button" id="newFolder" class="mainButton">새 폴더</button>
-            <button type="button" class="copyUrl mainButton" th:data-share-url="${'http://43.201.133.173/drive/detailDrive?resourceKey='+parentKey}">  현재 폴더 공유  </button>
+            <button type="button" class="copyUrl mainButton" th:data-share-url="${'http://192.168.50.50/drive/detailDrive?resourceKey='+parentKey}">  현재 폴더 공유  </button>
             <button type="button" id="deleteBtn" class="mainButton">삭제</button>
           </th:block>
           <button type="button" id="downloadBtn" class="mainButton">내려받기</button>
@@ -160,10 +160,10 @@
                   <th:block th:if="${#strings.equals(folder.getPersonalFolderType(),'user')}">
                     <th:block th:if="${#strings.equals(folder.getPersonalFolderShared(),'Y')}">
                       <button type="button" class="shareUrl nowShare" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유 중단</button>
-                      <button type="button" class="copyUrl nowShare" th:data-share-url="${'http://43.201.133.173/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}">URL복사</button>
+                      <button type="button" class="copyUrl nowShare" th:data-share-url="${'http://192.168.50.50/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}">URL복사</button>
                     </th:block>
                     <th:block th:if="${#strings.equals(folder.getPersonalFolderShared(),'N')}">
-                      <button type="button" class="shareUrl nowShare" th:data-share-url="${'http://43.201.133.173/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유</button>
+                      <button type="button" class="shareUrl nowShare" th:data-share-url="${'http://192.168.50.50/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유</button>
                     </th:block>
                   </th:block>
                 </li>

@@ -34,6 +34,9 @@ public class MemberController {
     private TeamService teamService;
 
     @Autowired
+    private CalService calService;
+
+    @Autowired
     private TeamMemberService teamMemberService;
 
     @Autowired
@@ -331,6 +334,7 @@ public class MemberController {
         // 기본 폴더 삭제
         basicFolderService.memberOut(memberSeq);
 
+
         // 회원 탈퇴(강퇴포함)시 삭제할 팀 목록 출력
         List<TeamMemberDTO> teamMemberList = teamMemberService.selectMembersManager(memberSeq);
 
@@ -401,6 +405,8 @@ public class MemberController {
         personalFolderService.memberOut(memberSeq);
         // 기본 폴더 삭제
         basicFolderService.memberOut(memberSeq);
+        // 이벤트 삭제
+        calService.deleteUserEvent(memberSeq);
 
         List<MemberDTO> list = memberService.selectMembers();
 

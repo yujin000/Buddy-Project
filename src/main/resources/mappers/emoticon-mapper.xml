@@ -11,7 +11,7 @@
 
     <!-- 이모티콘 출력 -->
     <select id="selectEmoticon" resultType="com.fivet.buddy.dto.EmoticonDTO">
-        select * from emoticon
+        select * from emoticon order by emoticon_seq
     </select>
 
     <!-- 이모티콘 삭제 -->

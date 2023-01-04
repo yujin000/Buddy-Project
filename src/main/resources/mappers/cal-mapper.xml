@@ -48,6 +48,10 @@
     <delete id="deleteTeamMemberEvent">
         delete event where "event_writer" = #{value} </delete>
 
+    <delete id="deleteTeamAllEvent">
+        delete evnet where "team_seq" = #{value}
+    </delete>
+
     <update id="updateEvent">
         update event set "event_type" = #{eventType}, "event_name" =#{eventName} ,
         "event_start"=#{eventStart}, "event_end" =#{eventEnd}, "event_location" =#{eventLocation}, "event_memo" =#{eventMemo},

@@ -133,7 +133,7 @@ public class TeamController {
 
     //팀 삭제
     @RequestMapping("deleteTeam")
-    public String deleteTeam(int teamSeq){
+    public String deleteTeam(int teamSeq) throws Exception {
         String teamBasicKey = basicFolderService.myTeamFolderKey(teamSeq);
         // 기본 폴더 삭제(db + 실제)
         basicFolderService.teamOut(teamSeq);
@@ -143,6 +143,8 @@ public class TeamController {
         personalFolderService.teamOut(allKeys);
         // 팀 파일들 삭제(db)
         personalFileService.teamOut(allKeys);
+        // 팀 캘린더 일정 삭제
+        calService.deleteTeamAllEvent(teamSeq);
 
         teamService.deleteTeam(teamSeq);
         return "redirect:/member/loginIndex";
@@ -209,29 +211,6 @@ public class TeamController {
     public int TeamMemberCount(int teamSeq){
         return teamMemberService.selectTeamMember(teamSeq);
     }
-
-    // 구동 후 문제없으면 삭제할것.
-    // 컨트롤러에서 팀 메인화면으로 재이동하기 위한 mapping (팀 변경없을시)
-//    @RequestMapping("goTeamAgain")
-//    public String goTeamAgain(Model model) {
-//        //teamSeq와 memberSeq를 담아 서비스 및 sql문에 전달할 Map
-//        Map<String, Integer> param = new HashMap<>();
-//        param.put("teamSeq", (int)session.getAttribute("teamSeq"));
-//        param.put("memberSeq", (int)session.getAttribute("memberSeq"));
-//        // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
-//        List<ChatRoomDTO> chatRoomList = chatRoomService.chatRoomList(param);
-//        //팀 입장 시, 팀 멤버 출력
-//        List<TeamMemberListDTO> teamMemberDtoList =  teamMemberService.selectTeamMember(session.getAttribute("teamSeq").toString());
-//        // 팀 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
-//        List<ChatRoomDTO> topicList = chatRoomService.selectTopic(param.get("teamSeq"));
-//        // 팀 토픽 갯수 카운트
-//        int topicCount = chatRoomService.countTopic(param.get("teamSeq"));
-//        model.addAttribute("teamMemberDtoList", teamMemberDtoList);
-//        model.addAttribute("chatRoomList", chatRoomList);
-//        model.addAttribute("topicList", topicList);
-//        model.addAttribute("topicCount", topicCount);
-//        return "team/team";
-//    }
 
     //부매니저 수 체크
     @ResponseBody

@@ -55,4 +55,14 @@
             where m.member_seq=#{memberSeq} and t.team_count = 1);
     </delete>
 
+    <!--    특정 팀이 삭제될때, 팀의 모든 채팅방이 삭제되며 채팅방 내역도 같이 삭제.-->
+    <delete id="delTeam">
+        delete from
+            (select cmsg.*
+            from chat_msg cmsg
+            left outer join chat_room cr
+            on cmsg.chat_room_seq = cr.chat_room_seq
+            where cr.team_seq = #{teamSeq}
+    </delete>
+
 </mapper>

@@ -30,4 +30,7 @@ public class ChatMsgDAO {
     public void delOnlyOneMsg(int memberSeq) {
         chatMsgMapper.delOnlyOneMsg(memberSeq);
     }
+
+    // 팀 삭제시, 채팅방 내역 모두 삭제
+    public void delTeam(int teamSeq) { chatMsgMapper.delTeam(teamSeq); }
 }

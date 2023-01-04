@@ -83,7 +83,7 @@
                     </a>
                     <span class="date">날짜 : [[${notice.noticeWriteDate}]]</span>
                     <div class="hidden">
-                        <img src="" class="noticeSysName" style="width: 500px">
+<!--                        <img src="" class="noticeSysName" style="width: 500px">-->
                         <div class="noticeContent" contenteditable="false" th:utext="${notice.noticeContents}">
                         </div>
                     </div>
@@ -216,22 +216,20 @@
         })
     });
 
-    $(".articleNotice").on("click", function () {
-        let noticeSeq = $(this).children("a").find($(".noticeSeq")).val();
-        let noticeSysName = $(this).children($(".hidden")).find($(".noticeSysName"));
-        console.log(noticeSeq);
-        console.log(noticeSysName);
-        $.ajax({
-            url: "/notice/detail",
-            type: "post",
-            data: {"noticeSeq": noticeSeq},
-            success: function () {
-            }, error: function () {
-            }
-        }).done(function (rsp) {
-            noticeSysName.attr("src", "/noticeImg/" + rsp[0].noticeSysName);
-        })
-    });
+    // $(".articleNotice").on("click", function () {
+    //     let noticeSeq = $(this).children("a").find($(".noticeSeq")).val();
+    //     let noticeSysName = $(this).children($(".hidden")).find($(".noticeSysName"));
+    //     $.ajax({
+    //         url: "/notice/detail",
+    //         type: "post",
+    //         data: {"noticeSeq": noticeSeq},
+    //         success: function () {
+    //         }, error: function () {
+    //         }
+    //     }).done(function (rsp) {
+    //         noticeSysName.attr("src", "/noticeImg/" + rsp[0].noticeSysName);
+    //     })
+    // });
 </script>
 </body>
 </html>

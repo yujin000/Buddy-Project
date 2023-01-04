@@ -49,7 +49,7 @@ public class ChatRoomController {
 
     //채팅방 입장
     @RequestMapping("join")
-    public String insertChatMsg(ChatMemberDTO chatMemberDto, TeamMemberDTO teamMemberDto,int chatRoomSeq, Model model) throws Exception {
+    public String insertChatMsg(ChatMemberDTO chatMemberDto, ChatRoomDTO chatRoomDto, TeamMemberDTO teamMemberDto,int chatRoomSeq, Model model) throws Exception {
         //채팅방에 실 참여자인지 여부 체크
         chatMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
         int selectChatRoom = chatRoomService.selectChatRoom(chatMemberDto);
@@ -66,6 +66,9 @@ public class ChatRoomController {
             teamMemberDto = teamMemberService.selectOne(teamMemberDto);
             model.addAttribute("teamMemberInfo", teamMemberDto);
 
+            chatRoomDto.setTeamSeq((int) session.getAttribute("teamSeq"));
+            String chatRoomName = chatRoomService.selectChatRoomName(chatRoomDto);
+            model.addAttribute("chatRoomName",chatRoomName);
         model.addAttribute("topicList", topicList);
         model.addAttribute("chatRoomSeq",chatRoomSeq);
         model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));
@@ -105,7 +108,7 @@ public class ChatRoomController {
     // 토픽 생성
     @ResponseBody
     @PostMapping("insertTopic")
-    public String insertTopic(ChatRoomDTO chatRoomDto) {
+    public void insertTopic(ChatRoomDTO chatRoomDto) {
         TeamDTO teamDto = teamService.selectTeamOne(session.getAttribute("teamSeq").toString());
 
         //ChatRoomDTO 영역 (chatRoom테이블에 topic 생성)
@@ -115,7 +118,6 @@ public class ChatRoomController {
         //ChatMember 영역(각 회원을 토픽에 가입)
         chatMemberService.insertTopicMember(chatRoomDto);
 
-        return "redirect:/team/goTeamAgain";
     }
 
     // 일반채팅방 생성

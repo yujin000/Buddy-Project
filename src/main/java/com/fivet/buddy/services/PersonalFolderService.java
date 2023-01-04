@@ -31,7 +31,7 @@ public class PersonalFolderService {
     @Autowired
     private BasicFolderDAO basicFolderDao;
 
-    @Value("${spring.servlet.multipart.location}")
+    @Value("${drive.save.path}")
     private String uploadFilePath;
 
     // (개인)회원 별 기본폴더의 하위폴더 및 파일 불러오기

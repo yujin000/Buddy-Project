@@ -22,5 +22,6 @@ public interface ChatMemberMapper {
     List<ChatMemberDTO> selectMemberChatList(TeamMemberDTO teamMemberDto);
     void delTeamChatMember(Map<String, Integer> param);
     void delOnlyOneChatMember(int memberSeq);
+    void delTeam(int teamSeq);
 
 }

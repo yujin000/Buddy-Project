@@ -145,4 +145,9 @@
                 on t.team_owner_seq = t.team_owner_seq
             where m.member_seq = #{memberSeq})
     </delete>
+
+    <!-- 특정 팀 삭제시, 팀원이 전부 삭제   -->
+    <delete id="delTeam">
+        delete from team_member where tema_seq=#{teamSeq}
+    </delete>
 </mapper>

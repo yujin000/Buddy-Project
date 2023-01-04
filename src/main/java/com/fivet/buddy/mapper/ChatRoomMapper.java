@@ -30,5 +30,8 @@ public interface ChatRoomMapper {
     void delChatRoomCountZero();
     void delOnlyOneChatRoom(int memberSeq);
     int selectChatRoom(ChatMemberDTO chatMemberDto);
+    //채팅방 이름 출력
+    String selectChatRoomName(ChatRoomDTO chatRoomDto);
+    void delTeam(int teamSeq);
 
 }

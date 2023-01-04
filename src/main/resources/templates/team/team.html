@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -19,6 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
 <body>
 <!--세션 및 각종 변수를 담아 쓰는 input-->
@@ -31,25 +32,36 @@
 >
 <div class="wrap">
   <div class="header">
-    <div class="logo">
+    <div class="logo" style="">
         <img src="/static/img/logo_m2.png" alt="" />
-        logo
       </a>
     </div>
     <div id="teamList" class="teamList">
       <ul>
         <li>
-          <a th:text="${session.teamName}"></a
-          ><button id="headerToggle">toggle</button>
+          <span class="teamName" th:text="${session.teamName}"></span>
+          <button id="headerToggle"><span class="material-symbols-outlined">
+arrow_drop_down
+</span></button>
         </li>
       </ul>
       <ul id="dropdownList">
+        <h1 id="dropdownTitle">
+          팀리스트
+        </h1>
       </ul>
     </div>
 
-    <button id="menu" class="iconMenu">menu</button>
-    <button id="asideClose">aside</button>
-    <button id="teamMember">team</button>
+    <button id="menu" class="iconMenu"><span class="material-symbols-outlined">
+menu
+</span></button>
+
+    <div id="asideClose">
+      <img src="/static/img/logo_emotion.png" alt="" >
+    </div>
+    <button id="teamMember"><span class="material-symbols-outlined">
+group
+</span></button>
     <ul id="teamMemberList" class="teamMemberList">
       <h1>팀원 목록</h1>
     </ul>
@@ -64,9 +76,11 @@
       <div id="topic" class="asideList">
         <div class="asideTitle">
           <h3>토픽 <span id="topicCount">[[${topicCount}]]</span><span> / 4</span></h3>
-          <button id="topicToggle" class="toggle">v</button>
+          <button id="topicToggle" class="toggle">➖</button>
           <th:block th:if="${teamMemberInfo.grade=='매니저'||teamMemberInfo.grade=='부매니저'}">
-            <button id="topicCreate" class="createBtn">+</button>
+            <button id="topicCreate" class="createBtn">
+                ➕
+            </button>
           </th:block>
         </div>
         <div id="topicList" class="asideItem">
@@ -83,8 +97,8 @@
       <div id="chat" class="asideList">
         <div class="asideTitle">
           <h3>채팅</h3>
-          <button id="chatCreate" class="createBtn">+</button>
-          <button id="chatToggle" class="toggle">v</button>
+          <button id="chatCreate" class="createBtn">➕</button>
+          <button id="chatToggle" class="toggle">➖</button>
         </div>
         <div id="chatList" class="asideItem">
           <ul th:if="${chatRoomList!=null}">
@@ -107,52 +121,41 @@
       </div>
 
       <div class="asideTool">
-        <button id="appToggle" class="appToggle">앱 toggle</button>
+        <button id="appToggle" class="appToggle">버디 앱</button>
         <div id="appList">
-          <button class="app" id="appDrive"><a href="/drive/toFileDrive">드라이브</a></button>
-          <button class="app" id="appCal"><a>캘린더</a></button>
+          <button class="app" id="appDrive"><a href="/drive/toFileDrive">📁드라이브</a></button>
+          <button class="app" id="appCal"><a href="">📅캘린더</a></button>
         </div>
       </div>
     </aside>
     <div id="profileViewDiv">
       <img id="profileImg" th:src="${memberImgSysName}"><br/>
         <div id="nickNameDiv">
-          <span id="nickNameSpan" th:text="${session.teamMemberNickname}" onclick="nickNameSpanClick()"/>
+          <span id="nickNameSpan" th:text="${session.teamMemberNickname}" onclick="nickNameSpanClick()">
+            nickname
+          </span>
           <button id="updateNickNameBtn">수정</button>
         </div>
       <div id="gradeDiv">
-      <span id="pGrade" th:text="${teamMemberInfo.grade}"/>
+        <span id="pGrade" th:text="${teamMemberInfo.grade}">
+          등급
+          </span>
       </div>
     </div>
     <section class="msgSection">
-      <div class="chatHeader">
-        <h1>team-list</h1>
+
+<!--      <div class="msgView">-->
+<!--        <input type="text" id="modifyChatTitle" placeholder=" 토픽/채팅방 제목변경">-->
+<!--        <button type="button" id="modifyTitleConfirm">변경하기</button>-->
+<!--        <button type="button" id="modifyCancel">취소</button>-->
+<!--&lt;!&ndash;        <div class="msg">Msg</div>&ndash;&gt;-->
+<!--      </div>-->
+      <div class="loading">
+      <img src="/static/img/logo.png" alt="" >
+      <p style="text-align: center">채팅을 시작해보세요!</p>
       </div>
-      <div class="msgView">
-        <input type="text" id="modifyChatTitle" placeholder=" 토픽/채팅방 제목변경">
-        <button type="button" id="modifyTitleConfirm">변경하기</button>
-        <button type="button" id="modifyCancel">취소</button>
-<!--        <div class="msg">Msg</div>-->
-      </div>
-      <div class="msgSend">
-          <input
-                  type="text"
-                  name="inputMsg"
-                  id="inputMsg"
-                  class="inputMsg"
-                  placeholder="input Msg"
-          />
-        <div class="msgTool">
-          <ul>
-            <li><button id="test" onclick="clickevent()">1</button></li>
-            <li><button>2</button></li>
-            <li><button>3</button></li>
-            <li><button>4</button></li>
-            <li><button>5</button></li>
-            <li><button>6</button></li>
-          </ul>
-        </div>
-      </div>
+
+
     </section>
   </div>
 </div>
@@ -167,7 +170,7 @@
 </div>
 
 
-<div class="createView">
+<div class="createView" id="createView">
   <div class="wrap">
     <div class="chatForm">
       <h1>😀채팅 시작하기</h1>
@@ -175,18 +178,44 @@
       <li><input type="text" placeholder="채팅방 이름" id="makeChatTitle"></li>
     </ul>
     <button type="button" id="startChat">대화 시작하기</button>
-    <button type="button" class="closeBtn" id="closeBtn" onclick="closer(this)">취소</button>
+    <button type="button" class="closeBtn" id="closeBtn" onclick="closer(this)">나가기</button>
     </div>
+
 
     <div class="topicForm">
         <h1>✨토픽 생성하기</h1>
       <ul class="list">
-        <li><input id="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
+        <li><input class="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
       </ul>
-      <button type="button" id="insertTopic">토픽 생성하기</button>
-      <button type="button" class="closeBtn" onclick="closer(this)">취소</button>
+      <button type="button" class="insertTopic" id="insertTopic">토픽 생성하기</button>
+      <button type="button" class="closeBtn" onclick="closer(this)">나가기</button>
     </div>
+
+
+
     </div>
+</div>
+
+<div class="creteView" id="renameView">
+<!--  <div class="wrap">-->
+    <div class="chatEditForm" id="chatRename" style="display: none">
+      <h1>채팅방 이름변경</h1>
+      <ul class="list" id="chatMemberUl2">
+        <li><input type="text" placeholder="채팅방 이름" id="editChatTitle"></li>
+      </ul>
+      <button type="button" id="startChat2">대화 시작하기</button>
+      <button type="button" class="closeBtn" id="closeBtn2" onclick="closer(this)">나가기</button>
+    </div>
+
+    <div class="topicForm" id="topicRename" style="display: none">
+      <h1>✨토픽 이름변경</h1>
+      <ul class="list">
+        <li><input class="topicTitle" name="chatTitle" type="text" placeholder="토픽 이름" ></li>
+      </ul>
+      <button type="button" class="insertTopic" id="insertRename">이름 변경하기</button>
+      <button type="button" class="closeBtn" onclick="closer(this)">나가기</button>
+    </div>
+<!--  </div>-->
 </div>
 
 <!-- 팀원 목록 출력 ajax -->
@@ -227,6 +256,7 @@
         chatMemberSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
         chatMemberLi.append(chatMemberSpan1);
         chatMemberSpan2.attr('claas','tag');
+        chatMemberSpan2.css('color','#8621F7')
         chatMemberSpan2.text(JsonTeamMemberList[i].grade);
         chatMemberLi.append(chatMemberSpan2);
         $("#chatMemberUl").append(chatMemberLi);
@@ -447,7 +477,7 @@
     })
 
     $("#chatCreate").click(function (){
-      $(".createView").css("display","block");
+      $("#createView").css("display","block");
       $(".chatForm").css("display","block");
       $(".topicForm").css("display","none");
     })
@@ -457,9 +487,10 @@
       if ($("#topicCount").text()>=4) {
         alert("더이상 토픽을 생성할 수 없습니다!")
       } else {
-        $(".createView").css("display","block");
-        $(".chatForm").css("display","none");
+        $("#createView").toggle();
         $(".topicForm").css("display","block");
+        $(".chatForm").css("display","none");
+
       }
 
     })

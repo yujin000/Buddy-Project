@@ -43,6 +43,10 @@ public class CalDAO {
         calMapper.deleteTeamMemberEvent(teamMemberNickname);
     }
 
+    public void deleteTeamAllEvent(int teamSeq) throws Exception {
+        calMapper.deleteTeamAllEvent(teamSeq);
+    }
+
     public  void updateEvent(CalDTO calDto) throws  Exception {
         calMapper.updateEvent(calDto);
     }

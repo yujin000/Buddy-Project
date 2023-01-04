@@ -131,4 +131,15 @@
     <select id="selectChatRoom" resultType="int">
         select count(*) from chat_member where chat_room_seq = #{chatRoomSeq} and member_seq = #{memberSeq}
     </select>
+
+    <!-- 채팅방 이름 출력   -->
+    <select id="selectChatRoomName" resultType="String">
+        select chat_title from chat_room where chat_room_seq = #{chatRoomSeq} and team_seq = #{teamSeq}
+    </select>
+
+    <!--    특정 팀의 채팅방 전부 삭제-->
+    <delete id="delTeam">
+        delete chat_room where team_seq = #{teamSeq}
+    </delete>
+
 </mapper>

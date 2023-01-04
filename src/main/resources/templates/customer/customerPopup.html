@@ -105,8 +105,10 @@
             alert("본문을 입력해주세요");
         } else if($("#qnaContents").val().length >= 400) {
             alert("본문 글자 수 400글자를 초과했습니다");
+        } else if($("#qnaTitle").val().length == 0){
+            alert("제목을 입력해주세요");
         } else if($("#qnaTitle").val().length > 15) {
-            alert("제목은 15자 이하만 입력해주세요");
+                alert("제목은 15자 이하만 입력해주세요");
         } else{
             $("#qnaForm").submit();
         }

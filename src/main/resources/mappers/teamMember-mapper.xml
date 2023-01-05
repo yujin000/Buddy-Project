@@ -148,6 +148,6 @@
 
     <!-- 특정 팀 삭제시, 팀원이 전부 삭제   -->
     <delete id="delTeam">
-        delete from team_member where tema_seq=#{teamSeq}
+        delete from team_member where team_seq=#{teamSeq}
     </delete>
 </mapper>

@@ -5,14 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>관리자 페이지-공지 글쓰기</title>
-    <link rel="stylesheet" href="/css/reset.css">
-    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/adminNotice.css" />
     <link rel="stylesheet" href="/static/css/m-admin.css" />
     <script
             src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
             crossorigin="anonymous"
     ></script>
+    <script src="/static/js/jQueryCheck.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <!--    <script src="/js/jQueryCheck.js"></script>-->
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -39,17 +46,22 @@
     </h1>
     <button><a href="../../index.html">뒤로가기</a></button>
 </div>
-<form action="/notice/modifyNotice" id="form" method="post">
-    <div id="title">
-        <input type="text" placeholder="제목을 입력하세요." name="noticeTitle" id="noticeTitle" th:value="${notice.getNoticeTitle()}">
-    </div>
-    <div id="summernote" th:utext="${notice.getNoticeContents()}"></div>
-    <div>
-        <button type="button" id="insertAdminNotice">수정하기</button>
-        <button type="button" id="toAdminNotice">목록으로</button>
-    </div>
-    <input type="hidden" name="noticeSeq" th:value="${notice.getNoticeSeq()}">
-</form>
+<div class="wrap">
+    <h1>공지 수정</h1>
+    <form action="/notice/modifyNotice" id="form" method="post">
+        <div id="title">
+            <input type="text" placeholder="제목을 입력하세요." name="noticeTitle" id="noticeTitle" th:value="${notice.getNoticeTitle()}">
+        </div>
+        <div id="summernote" th:utext="${notice.getNoticeContents()}"></div>
+        <div class="btns">
+            <button type="button" id="insertAdminNotice">수정하기</button>
+            <button type="button" id="toAdminNotice">목록으로</button>
+        </div>
+        <input type="hidden" name="noticeSeq" th:value="${notice.getNoticeSeq()}">
+    </form>
+</div>
+
+
 <script>
     $('#summernote').summernote({
         placeholder: '내용을 입력하세요.',

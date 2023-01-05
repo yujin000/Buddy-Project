@@ -53,7 +53,7 @@
     $(function () {
         // 웹소켓 영역 시작
         // webSocket 인스턴스 생성
-        let ws = new WebSocket("ws://43.201.133.173/chat/" + chatRoomSeq);
+        let ws = new WebSocket("ws://localhost/chat/" + chatRoomSeq);
 
         //채팅방 목록을 출력해주는 ajax
         $.ajax({
@@ -375,16 +375,16 @@ group
                 </div>
             </div>
         </aside>
-        <div id="profileViewDiv">
-            <img id="profileImg" th:src="${memberImgSysName}"><br/>
-            <div id="nickNameDiv">
-          <span id="nickNameSpan" th:text="${teamMemberInfo.getTeamMemberNickname()}" onclick="nickNameSpanClick()">
+        <div id="profileViewDiv" class="check">
+            <img id="profileImg" class="check" th:src="${memberImgSysName}"><br/>
+            <div id="nickNameDiv" class="check">
+          <span id="nickNameSpan" class="check" th:text="${teamMemberInfo.getTeamMemberNickname()}" onclick="nickNameSpanClick()">
             nickname
           </span>
-                <button id="updateNickNameBtn">수정</button>
+                <button id="updateNickNameBtn" class="check elseCheck">수정</button>
             </div>
-            <div id="gradeDiv">
-        <span id="pGrade" th:text="${teamMemberInfo.grade}">
+            <div id="gradeDiv" class="check">
+        <span id="pGrade" class="check" th:text="${teamMemberInfo.grade}">
           등급
           </span>
             </div>
@@ -861,15 +861,13 @@ face
 </script>
 
 <script th:inline="javascript">
-
-
-
     //팀원 닉네임 변경
     let input = $("<input>");
     let button = $("<buuton>");
     function nickNameSpanClick() {
         $("#nickNameSpan").css("display", "none");
-        $("#updateNickNameBtn").css("display","inline-block")
+        $("#updateNickNameBtn").css("display","inline-block");
+        input.attr("class","check");
         $("#inputNickName").css("display","inline-block");
         input.val($("#nickNameSpan").text())
         input.attr("id", "inputNickName");
@@ -902,7 +900,7 @@ face
                 location.reload();
             })}
         else{
-            alert("닉네임은 공백포함 1~15글자만 가능합니다. (특수문자 불가능)");
+            alert("닉네임은 공백포함 한글 1~15글자만 가능합니다. (특수문자 불가능)");
             $("#inputNickName").focus();
         }
     })
@@ -913,7 +911,7 @@ face
         if (!$(e.target).hasClass('check')) {
             $("#inputNickName").val(text);
             $("#nickNameSpan").text(text);
-        }else{
+        }else if(!$(e.target).hasClass('elseCheck')){
             $("#inputNickName").focus();
         }
     })

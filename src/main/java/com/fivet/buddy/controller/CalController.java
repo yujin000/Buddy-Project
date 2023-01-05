@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -90,6 +91,7 @@ public class CalController {
         return list;
     }
 
+    @Transactional
     @GetMapping("teamEventDel")
     public String teamEventDel(int eventSeq) throws Exception{
         String grade = calService.selectGrade(session.getAttribute("teamMemberNickname").toString());
@@ -103,6 +105,8 @@ public class CalController {
             return "calendar/gradeError";
         }
     }
+
+    @Transactional
     @GetMapping("teamEventUpd")
     public String privateEventDel(CalDTO calDto) throws Exception{
         String grade = calService.selectGrade(session.getAttribute("teamMemberNickname").toString());
@@ -117,6 +121,8 @@ public class CalController {
 
         }
     }
+
+    @Transactional
     @GetMapping("deleteEvent")
     public String deleteEvent(int eventSeq , String eventWriter ) throws Exception{
         String Session = session.getAttribute("teamMemberNickname").toString();

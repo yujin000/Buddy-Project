@@ -129,13 +129,13 @@ group
       </div>
     </aside>
     <div id="profileViewDiv" class="check">
-      <img id="profileImg" th:src="${memberImgSysName}" class="check"><br/>
-        <div id="nickNameDiv" class="check">
+      <img id="profileImg" class="check" th:src="${memberImgSysName}"><br/>
+      <div id="nickNameDiv" class="check">
           <span id="nickNameSpan" class="check" th:text="${teamMemberInfo.getTeamMemberNickname()}" onclick="nickNameSpanClick()">
             nickname
           </span>
-          <button class="check" id="updateNickNameBtn">수정</button>
-        </div>
+        <button id="updateNickNameBtn" class="check elseCheck">수정</button>
+      </div>
       <div id="gradeDiv" class="check">
         <span id="pGrade" class="check" th:text="${teamMemberInfo.grade}">
           등급
@@ -525,22 +525,23 @@ group
   //팀원 닉네임 변경
   let input = $("<input>");
   let button = $("<buuton>");
-    function nickNameSpanClick() {
-      $("#nickNameSpan").css("display", "none");
-      $("#updateNickNameBtn").css("display","inline-block")
-      $("#inputNickName").css("display","inline-block");
-      input.val($("#nickNameSpan").text())
-      input.attr("id", "inputNickName");
-      $("#nickNameDiv").prepend(input);
-      $("#inputNickName").focus();
-    }
+  function nickNameSpanClick() {
+    $("#nickNameSpan").css("display", "none");
+    $("#updateNickNameBtn").css("display","inline-block");
+    input.attr("class","check");
+    $("#inputNickName").css("display","inline-block");
+    input.val($("#nickNameSpan").text())
+    input.attr("id", "inputNickName");
+    $("#nickNameDiv").prepend(input);
+    $("#inputNickName").focus();
+  }
 
     function BtnClick(){
       $("#nickNameSpan").css("display", "block");
       $("#inputNickName").css("display","none");
       $("#updateNickNameBtn").css("display","none");
-
     }
+
     $("#updateNickNameBtn").on("click",function (){
       let inputNickName = $("#inputNickName").val();
       let teamSeq=$("#infoData").data("teamseq");
@@ -560,7 +561,7 @@ group
         location.reload();
       })}
       else{
-        alert("닉네임은 공백포함 1~15글자만 가능합니다. (특수문자 불가능)");
+        alert("닉네임은 공백포함 한글 1~15글자만 가능합니다. (특수문자 불가능)");
         $("#inputNickName").focus();
       }
     })
@@ -571,6 +572,8 @@ group
     if (!$(e.target).hasClass('check')) {
       $("#inputNickName").val(text);
       $("#nickNameSpan").text(text);
+    }else if(!$(e.target).hasClass('elseCheck')){
+      $("#inputNickName").focus();
     }
   })
 </script>

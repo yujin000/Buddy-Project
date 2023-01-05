@@ -5,8 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>관리자 페이지-공지사항 보기</title>
-  <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="/css/admin.css" />
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/adminNotice.css" />
   <link rel="stylesheet" href="/static/css/m-admin.css" />
   <script
           src="https://code.jquery.com/jquery-3.6.1.min.js"
@@ -21,24 +21,32 @@
   <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
-<body>
-  <div>
-    <div>
-      <div>번호</div>
-      <div>작성자</div>
-      <div>작성날짜</div>
+<body style="width: 100vw;">
+  <div class="wrap">
+    <h1>공지</h1>
+
+    <div class="table">
+      <div class="thead">
+        <div>번호</div>
+        <div>작성자</div>
+        <div>작성날짜</div>
+      </div>
+      <div class="tdata">
+        <div th:text="${notice.noticeSeq}"></div>
+        <div th:text="${notice.noticeWriterName}"></div>
+        <div th:text="${notice.noticeWriteDate}"></div>
+      </div>
     </div>
-    <div>
-      <div th:text="${notice.noticeSeq}"></div>
-      <div th:text="${notice.noticeWriterName}"></div>
-      <div th:text="${notice.noticeWriteDate}"></div>
-    </div>
+
     <!-- 본문   -->
     <div th:utext="${notice.getNoticeContents}"></div>
+     <div class="btns">
+    <button type="button" id="deleteNotice" th:data-index="${notice.noticeSeq}">삭제하기</button>
+    <button type="button" id="toNoticeModify" th:data-index="${notice.noticeSeq}">수정하기</button>
+    <button type="button" id="toNoticeList">목록으로</button>
+     </div>
   </div>
-  <button type="button" id="deleteNotice" th:data-index="${notice.noticeSeq}">삭제하기</button>
-  <button type="button" id="toNoticeModify" th:data-index="${notice.noticeSeq}">수정하기</button>
-  <button type="button" id="toNoticeList">목록으로</button>
+
 
   <script>
 

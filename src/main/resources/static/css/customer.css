@@ -193,3 +193,15 @@ body {
     height: 250px;
 }
 
+.qnaContent {
+    border: var(--border);
+    border-radius: 10px;
+    padding: 10px;
+}
+.noticeContent {
+    border: 1px solid;
+}
+
+.btnDelete {
+    float: right;
+}

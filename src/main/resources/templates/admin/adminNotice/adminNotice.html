@@ -38,9 +38,7 @@
       </a>
     </div>
     <p>관리자 페이지</p>
-    <button id="menu" class="iconMenu"><span class="material-symbols-outlined">
-menu
-</span></button>
+    <a href="/member/loginIndex" class="goBack">뒤로가기</a>
     <button id="asideClose">aside</button>
   </div>
   <div id="menuList" class="menuList">
@@ -91,11 +89,11 @@ menu
           <ul>
             <li class="thead">
               <span>번호</span><span>작성자</span><span>제목</span
-            ><span>작성일</span><span>삭제</span>
+            ><span>작성일</span><span style="">삭제</span>
             </li>
             <li class="tdata" th:each="noticeBoardList : ${noticeBoardList}">
               <span>[[${noticeBoardList.noticeSeq}]]</span><span>[[${noticeBoardList.noticeWriterName}]]</span>
-              <span class="detail" th:data-noticeSeq="${noticeBoardList.noticeSeq}">[[${noticeBoardList.noticeTitle}]]</span
+              <span class="detail" th:data-noticeSeq="${noticeBoardList.noticeSeq}" style="cursor: pointer">[[${noticeBoardList.noticeTitle}]]</span
             ><span>[[${noticeBoardList.noticeWriteDate}]]</span>
               <span><form class="delForm" action="/notice/deleteNotice" method="post">
                 <input type="hidden" name="noticeSeq" th:value="${noticeBoardList.noticeSeq}">

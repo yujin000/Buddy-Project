@@ -124,7 +124,7 @@ group
         <button id="appToggle" class="appToggle">buddy App</button>
         <div id="appList">
           <button class="app" id="appDrive"><a href="/drive/toFileDrive">📁드라이브</a></button>
-          <button class="app" id="appCal"><a href="">📅캘린더</a></button>
+          <button class="app" id="appCal"><a href="/calendar/moveCalendar">📅캘린더</a></button>
         </div>
       </div>
     </aside>
@@ -144,12 +144,6 @@ group
     </div>
     <section class="msgSection">
 
-<!--      <div class="msgView">-->
-<!--        <input type="text" id="modifyChatTitle" placeholder=" 토픽/채팅방 제목변경">-->
-<!--        <button type="button" id="modifyTitleConfirm">변경하기</button>-->
-<!--        <button type="button" id="modifyCancel">취소</button>-->
-<!--&lt;!&ndash;        <div class="msg">Msg</div>&ndash;&gt;-->
-<!--      </div>-->
       <div class="loading">
       <img src="/static/img/logo.png" alt="" >
       <p style="text-align: center">채팅을 시작해보세요!</p>
@@ -505,14 +499,7 @@ group
     $(arg).parent().parent().parent().css("display","none");
   }
 </script>
-<script>
 
-  $("#appCal").on("click",function(){
-    location.href = "/calendar/moveCalendar";
-    // window.open('/calendar/moveCalendar','calendar','scrollbars=no,resizable=yes width=1920 height=1080, left=0,top=0')
-})
-
-</script>
 
 <!-- 팀원 초대 -->
 <script>

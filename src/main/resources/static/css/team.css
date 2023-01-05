@@ -881,6 +881,7 @@ aside {
 }
 #profile {
   padding: 10px;
+  min-height: 70px;
 }
 #profileView{
   width: 100%;

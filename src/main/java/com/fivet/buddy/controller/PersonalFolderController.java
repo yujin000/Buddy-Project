@@ -4,6 +4,7 @@ import com.fivet.buddy.dto.PersonalFolderDTO;
 import com.fivet.buddy.services.PersonalFolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +32,7 @@ public class PersonalFolderController {
     }
 
     // 폴더 생성
+    @Transactional
     @ResponseBody
     @RequestMapping("addFolder")
     public boolean addFolder(String folderName,String parentKey, String isTeam) throws Exception {

@@ -5,9 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>관리자 페이지-공지 글쓰기</title>
-  <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="/css/admin.css" />
-  <link rel="stylesheet" href="/static/css/m-admin.css" />
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/m-admin.css">
+  <link rel="stylesheet" href="/static/css/adminNotice.css">
   <script
           src="https://code.jquery.com/jquery-3.6.1.min.js"
           integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
@@ -31,16 +31,20 @@
   </h1>
   <button><a href="../../index.html">뒤로가기</a></button>
 </div>
-<form action="/notice/insertNotice" id="form" method="post">
-  <div id="title">
-    <input type="text" placeholder="제목을 입력하세요." name="noticeTitle" id="noticeTitle">
-  </div>
-  <div id="summernote"></div>
-  <div>
-  <button type="button" id="insertAdminNotice">작성하기</button>
-  <button type="button" id="toAdminNotice">목록으로</button>
-  </div>
-</form>
+<div class="wrap">
+<h1> 공지 등록</h1>
+  <form action="/notice/insertNotice" id="form" method="post">
+    <div id="title">
+      <input type="text" placeholder="제목을 입력하세요." name="noticeTitle" id="noticeTitle">
+    </div>
+    <div id="summernote"></div>
+    <div class="btns">
+      <button type="button" id="insertAdminNotice">작성하기</button>
+      <button type="button" id="toAdminNotice">목록으로</button>
+    </div>
+  </form>
+</div>
+
 <script>
   $('#summernote').summernote({
     placeholder: '내용을 입력하세요.',

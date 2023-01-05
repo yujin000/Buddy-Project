@@ -28,9 +28,8 @@
 <div class="wrap">
   <div class="header">
     <div class="logo">
-      <a href="/member/loginIndex">
-        <img src="/static/img/logo.png" />
-      </a>
+      <img src="/static/img/logo_m2.png" class="logoImg">
+      <h1>드라이브</h1>
     </div>
     <button id="asideClose">aside</button>
   </div>
@@ -125,7 +124,7 @@
           <th:block th:if="${#strings.equals(shared,0)}">
             <label for="uploadFile" class="fileLabel mainButton">
               업로드
-              <input type="file" name="multipartFile" id="uploadFile" accept=".txt,.xls,.ppt,.hwp,.jpg,.png,.gif,.mp4,.mp3,.zip,.pptx,.xlsx,.pdf" >
+              <input type="file" name="multipartFile" id="uploadFile" accept=".txt,.jpg,.png,.gif,.mp4,.mp3,.zip,.pdf" >
               <input type="hidden" th:value="${parentKey}" name="attachFolder">
               <input type="hidden" th:value="${isTeam}" name="isTeam">
             </label>
@@ -160,8 +159,8 @@
                   <th:block th:if="${#strings.equals(folder.getPersonalFolderType(),'user')}">
                     <th:block th:if="${#strings.equals(folder.getPersonalFolderShared(),'Y')}">
                       <button type="button" class="shareUrl nowShare" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유 중단</button>
-                      <input type="text" class="shareUrlText" th:value="${'http://43.201.133.173/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}">
-                      <button type="button" class="copyUrl nowShare copy" th:data-share-url="${'http://43.201.133.173/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}">URL복사</button>
+                      <input type="text" class="shareUrlText" th:value="${'http://43.201.133.173/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}" readonly>
+                      <button type="button" class="copyUrl nowShare copy" th:data-share-url="${'http://43.201.133.173/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}">복사</button>
                     </th:block>
                     <th:block th:if="${#strings.equals(folder.getPersonalFolderShared(),'N')}">
                       <button type="button" class="shareUrl nowShare" th:data-share-url="${'http://43.201.133.173/drive/detailDrive?resourceKey='+folder.getPersonalFolderKey()}" th:data-key="${folder.getPersonalFolderKey()}" th:data-status="${folder.getPersonalFolderShared()}">공유</button>
@@ -199,7 +198,7 @@
             </li>
           </ul>
         </div>
-        <input type="text" class="thisPageFolder" th:value="${'http://43.201.133.173/drive/detailDrive?resourceKey='+parentKey}">
+        <input type="text" class="thisPageFolder" th:value="${'http://43.201.133.173/drive/detailDrive?resourceKey='+parentKey}" readonly>
       </div>
     </section>
   </div>
@@ -529,7 +528,7 @@
     let maxFileSize = 10 * 1024 * 1024;
 
     let extension = this.value.split(".").pop().toLowerCase();
-    let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip", "xlsx", "pptx", "pdf"];
+    let accept = ["txt", "jpg", "png", "gif", "mp4", "mp3", "zip", "pdf"];
     let result = $.inArray(extension, accept);
 
     if (fileSize + myVolume > maxVolume){
@@ -543,7 +542,7 @@
     }
 
     if (result == -1) {
-      alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .xls, .ppt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip, .pdf)");
+      alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip, .pdf)");
       this.value = "";
     }
 
@@ -600,7 +599,7 @@
       let maxFileSize = 10 * 1024 * 1024;
 
       let extension = file.name.split(".").pop().toLowerCase();
-      let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip", "xlsx", "pptx", "pdf"];
+      let accept = ["txt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip", "pdf"];
       let result = $.inArray(extension, accept);
 
       let valid = false;
@@ -616,7 +615,7 @@
       }
 
       if (result == -1) {
-        alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .xls, .ppt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip)");
+        alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip)");
         return;
       }
 
@@ -780,16 +779,16 @@
       "color":"white",
       "text-align":"center"
     });
-    $(this).after(bubble);
-    $('.shareUrlText').select();
+    $(this).prev('.shareUrlText').select();
     document.execCommand('copy');
-    //navigator.clipboard.writeText(inputValue).then(function() {
-      setTimeout(function() {
-        $(".bubble").fadeOut(1500, function(){
-          $(".bubble").remove();
-        });
-      }, 1100);
-    //});
+    $(this).after(bubble);
+    // navigator.clipboard.writeText(inputValue).then(function() {
+    setTimeout(function() {
+      $(".bubble").fadeOut(1500, function(){
+        $(".bubble").remove();
+      });
+    }, 1100);
+    // });
   })
 
   $('.nowFolderShare').on('click',function(){

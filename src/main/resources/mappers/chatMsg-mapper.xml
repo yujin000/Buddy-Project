@@ -62,7 +62,7 @@
             from chat_msg cmsg
             left outer join chat_room cr
             on cmsg.chat_room_seq = cr.chat_room_seq
-            where cr.team_seq = #{teamSeq}
+            where cr.team_seq = #{teamSeq})
     </delete>
 
 </mapper>

@@ -349,8 +349,8 @@ group
             <div class="asideTool">
                 <button id="appToggle" class="appToggle">buddy App</button>
                 <div id="appList">
-                    <button class="app" id="appDrive"><a href="">📁드라이브</a></button>
-                    <button class="app" id="appCal"><a href="">📅캘린더</a></button>
+                    <button class="app" id="appDrive"><a href="/drive/toFileDrive">📁드라이브</a></button>
+                    <button class="app" id="appCal"><a href="/calendar/moveCalendar">📅캘린더</a></button>
                 </div>
             </div>
         </aside>
@@ -544,31 +544,6 @@ face
 </script>
 <script>
 
-    //팀목록을 출력해주는 ajax호출
-    $(function () {
-        $.ajax({
-            type: "post",
-            url: "/team/teamList"
-        }).done(function (resp) {
-            let teamList = JSON.parse(resp);
-            for (let i = 0; i < teamList.length; i++) {
-                let teamListLi = $("<li>");
-                let teamListForm = $("<form>");
-                let teamListInput = $("<input>");
-                teamListInput.attr("type", "hidden");
-                teamListInput.val(teamList[i].teamSeq);
-                teamListInput.attr("name", "teamSeq");
-                teamListForm.attr("action", "/team/goTeam");
-                teamListForm.attr("method", "post");
-                teamListForm.append(teamListInput);
-                teamListLi.text(teamList[i].teamName);
-                teamListLi.append(teamListForm);
-                teamListLi.addClass("goTeam");
-                $("#dropdownList").append(teamListLi);
-            }
-        })
-    })
-
     //팀 이동 클릭이벤트
     $(document).on("click", ".goTeam", function (){
         //console.log();
@@ -576,6 +551,11 @@ face
     })
 </script>
 <script>
+
+    $("#appCal").on("click",function(){
+        location.href = "/calendar/moveCalendar";
+    })
+
     $(document).ready(function () {
         $("#headerToggle").click(function () {
             $("#dropdownList").toggle();
@@ -612,6 +592,7 @@ face
 
         $("#fileSelect").click(function () {
             $(".fileView").toggle();
+            $(".emoticonView").hide();
         });
 
         $("#chatCreate").click(function (){
@@ -815,52 +796,6 @@ face
 
 </script>
 
-<!-- 팀원 목록 출력 ajax -->
-<script th:inline="javascript">
-    $(function (){
-        $.ajax({
-            url:"/team/teamMemberList",
-            success : function (){
-            },error : function (){
-            }
-        }).done(function (rsp){
-            let JsonTeamMemberList = JSON.parse(rsp);
-            //팀 화면에서 팀 목록을 출력
-            for (let i=0; i<JsonTeamMemberList.length; i++) {
-                let teamMemberListLi = $("<li>");
-                let teamMemberListImg = $("<img>");
-                let teamMemberListSpan1 = $("<span>");
-                let teamMemberListSpan2 = $("<span>");
-                teamMemberListImg.attr("src",JsonTeamMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonTeamMemberList[i].memberImgSysName);
-                teamMemberListLi.append(teamMemberListImg);
-                teamMemberListSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
-                teamMemberListLi.append(teamMemberListSpan1);
-                teamMemberListSpan2.text(JsonTeamMemberList[i].grade);
-                teamMemberListLi.append(teamMemberListSpan2);
-                $("#teamMemberList").append(teamMemberListLi);
-            }
-            for (let i=0; i<JsonTeamMemberList.length; i++) {
-                //채팅방 만들기에서 팀 목록을 출력
-                let chatMemberLi = $("<li>");
-                let chatMemberImg = $("<img>");
-                let chatMemberSpan1 = $("<span>");
-                let chatMemberSpan2 = $("<span>");
-                chatMemberLi.addClass("makeTeamMember");
-                chatMemberLi.attr("data-checked", "false");
-                chatMemberLi.attr("data-memberSeq", JsonTeamMemberList[i].memberSeq);
-                chatMemberImg.attr("src",JsonTeamMemberList[i].memberImgSysName=='/static/img/defaultProfileImg.png' ? '/static/img/defaultProfileImg.png' : '/member/selectProfileImg/' + JsonTeamMemberList[i].memberImgSysName);
-                chatMemberLi.append(chatMemberImg);
-                chatMemberSpan1.text(JsonTeamMemberList[i].teamMemberNickname);
-                chatMemberLi.append(chatMemberSpan1);
-                chatMemberSpan2.attr('claas','tag');
-                chatMemberSpan2.text(JsonTeamMemberList[i].grade);
-                chatMemberLi.append(chatMemberSpan2);
-                $("#chatMemberUl").append(chatMemberLi);
-            }
-        })
-    })
-</script>
-
 <!-- 팀원 초대 -->
 <script>
 
@@ -885,6 +820,7 @@ face
     //이모티콘 출력
     $("#emoticonBtn").on("click",function (){
         $(".emoticonView").toggle();
+        $(".fileView").hide();
     })
     $.ajax({
         url:"/emoticon/selectEmoticon",

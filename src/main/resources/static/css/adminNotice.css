@@ -1,0 +1,75 @@
+@font-face {
+    font-family: 'GyeonggiBatang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --main-color: #8621F7;
+    --sub-color: #B2B2B2;
+    --sub-color2: #1a252f ;
+    --back-color: #F8F8F8;
+    --border: 1px solid rgba(0,0,0,0.3);
+    --shadow: 1px 1px 10px rgba(0,0,0,0.5);
+}
+
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+
+.mobileView {
+    display: none;
+}
+
+.wrap {
+    width: 100vw;
+    padding: 100px;
+}
+
+h1 {
+    width: 60%;
+    height: 100px;
+    line-height: 100px;
+    margin: 0 auto;
+    background: var(--main-color);
+    color: #fff;
+    font-size: 2rem;
+    text-align: center;
+    border-radius: 10px;
+}
+#title {
+    padding: 20px;
+    text-align: center;
+}
+#noticeTitle {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 80%;
+    height: 40px;
+    border-radius: 5px;
+    border:var(--border);
+    padding: 10px;
+    text-align: center;
+}
+
+#summernote {
+    padding: 20px;
+}
+
+ .btns {
+     width: 100%;
+     text-align: center;
+     padding: 20px;
+ }
+.btns > button{
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    border: var(--border);
+}
+
+.btns > button:hover {
+    font-weight: bold;
+}

@@ -95,6 +95,7 @@ body {
     height: 100%;
     padding: 10px;
     overflow: scroll;
+    position: relative;
 }
 
 .modalWrap::-webkit-scrollbar {
@@ -290,6 +291,7 @@ input[type='time']:valid::before {
     background: none;
     position: absolute;
     bottom: 10px;
+    left: 0px;
 }
 
 #goMain a {

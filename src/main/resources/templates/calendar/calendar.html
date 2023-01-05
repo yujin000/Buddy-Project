@@ -83,6 +83,7 @@
                     $("#eventEnd").val(timeFormat(eventEnd));
                     $("#eventColor").val(color);
                     $("#eventColor").css("background-color", color);
+                    $("#goMain").css("display","none");
 
                 },
                 // date click event 날짜 클릭 이벤트
@@ -151,7 +152,7 @@
                         $("#eventStart").val(startFormat);
                         $("#eventEnd").val(timezoneFormat(end));
                     }
-
+                    $("#goMain").css("display","none");
 
                 },
 
@@ -168,6 +169,8 @@
                     $("#eventWriter").attr("type", "hidden");
                     $("#eventLocation").val("");
                     $("#eventMemo").val("");
+                    $("#goMain").css("display","none");
+
                 },
                 // events : [
                 //     {
@@ -211,6 +214,7 @@
                 },
             // other events here
             // document.ready 동작테스트
+
 
 
             })
@@ -347,6 +351,7 @@
         $("#formToggle").click(function (){
             $("#form").toggle();
             $(".btns").toggle();
+            $("#goMain").css("display","block");
         });
         // 모바일로 접속시 캘린더 종료
         let windowWidth = window.innerWidth;

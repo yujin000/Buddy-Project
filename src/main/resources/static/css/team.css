@@ -500,6 +500,15 @@ aside {
   border-radius: 10px;
   border: var(--border);
   display: inline-block;
+
+
+
+}
+
+.msgData > div {
+  display: block;
+  width: 100%;
+  word-break: break-all;
 }
 
 .teamMemberNickname {
@@ -872,6 +881,7 @@ aside {
 }
 #profile {
   padding: 10px;
+  min-height: 70px;
 }
 #profileView{
   width: 100%;

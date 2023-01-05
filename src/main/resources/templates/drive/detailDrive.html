@@ -28,9 +28,8 @@
 <div class="wrap">
   <div class="header">
     <div class="logo">
-      <a href="/member/loginIndex">
-        <img src="/static/img/logo.png" />
-      </a>
+      <img src="/static/img/logo_m2.png" class="logoImg">
+      <h1>드라이브</h1>
     </div>
     <button id="asideClose">aside</button>
   </div>
@@ -125,7 +124,7 @@
           <th:block th:if="${#strings.equals(shared,0)}">
             <label for="uploadFile" class="fileLabel mainButton">
               업로드
-              <input type="file" name="multipartFile" id="uploadFile" accept=".txt,.xls,.ppt,.hwp,.jpg,.png,.gif,.mp4,.mp3,.zip,.pptx,.xlsx,.pdf" >
+              <input type="file" name="multipartFile" id="uploadFile" accept=".txt,.jpg,.png,.gif,.mp4,.mp3,.zip,.pdf" >
               <input type="hidden" th:value="${parentKey}" name="attachFolder">
               <input type="hidden" th:value="${isTeam}" name="isTeam">
             </label>
@@ -529,7 +528,7 @@
     let maxFileSize = 10 * 1024 * 1024;
 
     let extension = this.value.split(".").pop().toLowerCase();
-    let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip", "xlsx", "pptx", "pdf"];
+    let accept = ["txt", "jpg", "png", "gif", "mp4", "mp3", "zip", "pdf"];
     let result = $.inArray(extension, accept);
 
     if (fileSize + myVolume > maxVolume){
@@ -543,7 +542,7 @@
     }
 
     if (result == -1) {
-      alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .xls, .ppt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip, .pdf)");
+      alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip, .pdf)");
       this.value = "";
     }
 
@@ -600,7 +599,7 @@
       let maxFileSize = 10 * 1024 * 1024;
 
       let extension = file.name.split(".").pop().toLowerCase();
-      let accept = ["txt", "xls", "ppt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip", "xlsx", "pptx", "pdf"];
+      let accept = ["txt", "hwp", "jpg", "png", "gif", "mp4", "mp3", "zip", "pdf"];
       let result = $.inArray(extension, accept);
 
       let valid = false;
@@ -616,7 +615,7 @@
       }
 
       if (result == -1) {
-        alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .xls, .ppt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip)");
+        alert("지원하기 않는 확장자입니다. \n (지원하는 형식 : .txt, .hwp, .jpg, .png, .gif, .mp4, .mp3, .zip)");
         return;
       }
 

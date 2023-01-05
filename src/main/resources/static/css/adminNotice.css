@@ -33,7 +33,7 @@ h1 {
     height: 100px;
     line-height: 100px;
     margin: 0 auto;
-    background: var(--main-color);
+    background: var(--sub-color2);
     color: #fff;
     font-size: 2rem;
     text-align: center;

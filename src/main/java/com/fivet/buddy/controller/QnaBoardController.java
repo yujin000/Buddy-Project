@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,6 +60,7 @@ public class QnaBoardController {
     }
 
     //Qna글쓰기
+    @Transactional
     @RequestMapping("insert")
     public String insert(@RequestParam MultipartFile[] uploadfile, Model model, QnaBoardDTO qnaDto, QnaFileDTO qnaFileDto, FileUtil util) throws Exception {
         qnaDto.setQnaWriterSeq((int) session.getAttribute("memberSeq"));
@@ -109,6 +111,7 @@ public class QnaBoardController {
 
     //Qna삭제
     @RequestMapping("delete")
+    @Transactional
     public String delete(int qnaSeq, FileUtil util, String qnaSysName) throws Exception {
         if (qnaSysName == null) {
             qnaBoardService.delete(qnaSeq);

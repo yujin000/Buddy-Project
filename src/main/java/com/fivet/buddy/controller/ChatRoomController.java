@@ -48,6 +48,7 @@ public class ChatRoomController {
     private MemberService memberService;
 
     //채팅방 입장
+    @Transactional
     @RequestMapping("join")
     public String insertChatMsg(ChatMemberDTO chatMemberDto, ChatRoomDTO chatRoomDto, TeamMemberDTO teamMemberDto,int chatRoomSeq, Model model) throws Exception {
         //채팅방에 실 참여자인지 여부 체크
@@ -124,6 +125,7 @@ public class ChatRoomController {
     }
 
     // 일반채팅방 생성
+    @Transactional
     @ResponseBody
     @PostMapping("insertChat")
     public String insertChat(@RequestBody MakeChatDTO makeChatDto) {
@@ -156,6 +158,7 @@ public class ChatRoomController {
     }
 
     // 채팅방 삭제
+    @Transactional
     @ResponseBody
     @PostMapping("delChatRoom")
     public String delChatRoom(int chatRoomSeq) {
@@ -174,6 +177,7 @@ public class ChatRoomController {
     }
 
     // 일반채팅방 나가기
+    @Transactional
     @ResponseBody
     @PostMapping("chatRoomOut")
     public void chatRoomOut(ChatMemberDTO chatMemberDto) {

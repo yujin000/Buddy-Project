@@ -62,6 +62,8 @@ public class ChatRoomController {
             param.put("teamSeq", teamMemberDto.getTeamSeq());
             param.put("memberSeq", teamMemberDto.getMemberSeq());
             List<ChatRoomDTO> topicList = chatRoomService.selectTopic(param.get("teamSeq"));
+            // 채팅방 입장시, 해당 팀 해당 회원의 채팅방 목록 출력
+            List<ChatRoomDTO> chatRoomList = chatRoomService.chatRoomList(param);
             // 회원 번호를 이용하여 팀 DTO값을 불러옴.
             teamMemberDto = teamMemberService.selectOne(teamMemberDto);
             model.addAttribute("teamMemberInfo", teamMemberDto);
@@ -69,10 +71,11 @@ public class ChatRoomController {
             chatRoomDto.setTeamSeq((int) session.getAttribute("teamSeq"));
             String chatRoomName = chatRoomService.selectChatRoomName(chatRoomDto);
             model.addAttribute("chatRoomName",chatRoomName);
-        model.addAttribute("topicList", topicList);
-        model.addAttribute("chatRoomSeq",chatRoomSeq);
-        model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));
-        model.addAttribute("chatMemberList",teamMemberService.selectChatMember(chatRoomSeq));
+            model.addAttribute("topicList", topicList);
+            model.addAttribute("chatRoomSeq",chatRoomSeq);
+            model.addAttribute("chatMsgList", chatMsgService.selectChatMsg(chatRoomSeq));
+            model.addAttribute("chatMemberList",teamMemberService.selectChatMember(chatRoomSeq));
+            model.addAttribute("chatRoomList", chatRoomList);
 
         //프로필 이미지 출력
         String memberImgSysName = memberService.selectProfileImg(String.valueOf(session.getAttribute("memberSeq")));

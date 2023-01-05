@@ -349,8 +349,8 @@ group
             <div class="asideTool">
                 <button id="appToggle" class="appToggle">buddy App</button>
                 <div id="appList">
-                    <button class="app" id="appDrive"><a href="">📁드라이브</a></button>
-                    <button class="app" id="appCal"><a href="">📅캘린더</a></button>
+                    <button class="app" id="appDrive"><a href="/drive/toFileDrive">📁드라이브</a></button>
+                    <button class="app" id="appCal"><a href="/calendar/moveCalendar">📅캘린더</a></button>
                 </div>
             </div>
         </aside>
@@ -576,6 +576,12 @@ face
     })
 </script>
 <script>
+
+    $("#appCal").on("click",function(){
+        location.href = "/calendar/moveCalendar";
+        // window.open('/calendar/moveCalendar','calendar','scrollbars=no,resizable=yes width=1920 height=1080, left=0,top=0')
+    })
+
     $(document).ready(function () {
         $("#headerToggle").click(function () {
             $("#dropdownList").toggle();

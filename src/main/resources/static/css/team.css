@@ -845,14 +845,15 @@ aside {
   position: absolute;
   box-shadow: var(--shadow);
   border-radius: 10px;
+  overflow: hidden;
 
 }
 
 /*이모티콘 리스트*/
 #emoticonList{
   margin-top: 1px;
-  width: 295px;
-  height: 197px;
+  width: 100%;
+  height: 200px;
   overflow-y: auto;
 }
 /*이모티콘 출력시 사이즈*/

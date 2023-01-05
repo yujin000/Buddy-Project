@@ -139,7 +139,7 @@
   <form action="/team/deleteTeam" id="deleteTeam" method="post">
     <input type="hidden" name="teamSeq" id="teamSeq" th:value="${teamDto.getTeamSeq()}">
     <p class="cancel">
-      ⛔ 팀 삭제를 원하시나요?  <a href="#" onclick="delClick();" onmouseenter="this.style.opacity =1;" onmouseleave="this.style.opacity=0.5;" style="opacity: 0.3;">탈퇴</a>
+      ⛔ 팀 삭제를 원하시나요?  <a href="#" onclick="delClick();" onmouseenter="this.style.opacity =1;" onmouseleave="this.style.opacity=0.5;" style="opacity: 0.3;">삭제</a>
     </p>
   </form>
   </th:block>
@@ -320,7 +320,7 @@
         $("#teamName").css("border", "none");
       })
     }else{
-      alert("팀 이름은 공백포함 1~15글자만 가능합니다. (특수문자 불가능)");
+      alert("팀 이름은 공백포함 한글 1~15글자만 가능합니다. (특수문자 불가능)");
     }
   })
 </script>

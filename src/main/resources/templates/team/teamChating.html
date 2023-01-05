@@ -177,7 +177,7 @@
                             "memberImgSysName":"<img src="+memberImgSysName+"/>",
                             "chatRoomSeq": chatRoomSeq,
                             "teamMemberNickname": teamMemberNickname,
-                            "chatContent": "<img src='/chatImg/"+chatSysName+"' style='width: 40px'><br><a href='/chatFile/download?chatSysName=" + chatSysName + "&chatOriName=" + chatOriName + "' style='color: blue'>" + chatOriName + "</a>",
+                            "chatContent": "<img src='/chatImg/"+chatSysName+"' style='width: 200px'><br><a href='/chatFile/download?chatSysName=" + chatSysName + "&chatOriName=" + chatOriName + "' style='color: blue'>" + chatOriName + "</a>",
                             "memberSeq": memberSeq,
                             "chatMsgType": 1
                         };
@@ -191,7 +191,7 @@
                             "memberImgSysName":"<img src="+memberImgSysName+"/>",
                             "chatRoomSeq": chatRoomSeq,
                             "teamMemberNickname": teamMemberNickname,
-                            "chatContent": "<img src='/static/img/fileImg.png 'style='width: 40px'><br><a href='/chatFile/download?chatSysName=" + chatSysName + "&chatOriName=" + chatOriName + "' style='color: blue'>" + chatOriName + "</a>",
+                            "chatContent": "<img src='/static/img/fileImg.png 'style='width: 200px'><br><a href='/chatFile/download?chatSysName=" + chatSysName + "&chatOriName=" + chatOriName + "' style='color: blue'>" + chatOriName + "</a>",
                             "memberSeq": memberSeq,
                             "chatMsgType": 1
                         };
@@ -213,10 +213,10 @@
             //이모티콘만 보내기
             if(clickEmoticon.length!=""){
                 let wsJson = {
-                    "memberImgSysName":"<img src="+memberImgSysName+"/>",
+                    "memberImgSysName":"<img src='"+memberImgSysName+">",
                     "chatRoomSeq": chatRoomSeq,
                     "teamMemberNickname": teamMemberNickname,
-                    "chatContent": "<img src="+clickEmoticon+"/>",
+                    "chatContent": "<img src='"+clickEmoticon+"'style='width: 140px'>",
                     "memberSeq": memberSeq,
                     "chatMsgType": 1
                 };

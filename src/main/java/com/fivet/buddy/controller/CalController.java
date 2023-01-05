@@ -95,7 +95,7 @@ public class CalController {
     @GetMapping("teamEventDel")
     public String teamEventDel(int eventSeq) throws Exception{
         String grade = calService.selectGrade(session.getAttribute("teamMemberNickname").toString());
-        String manager = "manager";
+        String manager = "매니저";
         boolean result =  Objects.equals(grade, manager);
         if (result){
             int memberSeq = (Integer)session.getAttribute("memberSeq");
@@ -110,7 +110,7 @@ public class CalController {
     @GetMapping("teamEventUpd")
     public String privateEventDel(CalDTO calDto) throws Exception{
         String grade = calService.selectGrade(session.getAttribute("teamMemberNickname").toString());
-        String manager = "manager";
+        String manager = "매니저";
         boolean result =  Objects.equals(grade, manager);
         if (result){
             calDto.setEventWriter(session.getAttribute("teamMemberNickname").toString());

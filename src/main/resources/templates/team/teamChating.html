@@ -117,14 +117,35 @@
         ws.onmessage = function (e) {
             let data = JSON.parse(e.data);
             let msg = $("<div>");
+            let memberImg = $("<div>");
+            let msgData = $("<div>");
+
+            let pTag = $("<p>");
+            let content = $("<div>");
+            let chatDate = $("<p>");
+
+            pTag.addClass("teamMemberNickname");
+            pTag.append(data.teamMemberNickname);
+            content.append(data.chatContent);
+
+            chatDate.addClass("chaDate");
+            chatDate.append(data.chatDate);
+
             msg.addClass("msg");
-            msg.append(data.memberImgSysName);
-            msg.append("<br>");
-            msg.append(data.teamMemberNickname);
-            msg.append("<br>");
-            msg.append(data.chatContent);
-            msg.append("<br>");
-            msg.append(data.chatDate);
+            memberImg.addClass('memberImg');
+            memberImg.append(data.memberImgSysName);
+            msgData.addClass('msgData');
+            msgData.append(pTag);
+            msgData.append(content);
+            msgData.append(chatDate);
+
+
+            msg.append(memberImg);
+            msg.append(msgData);
+            //msgData.append(data.teamMemberNickname);
+            //msgData.append(data.chatContent);
+            //msgData.append(data.chatDate);
+
             $(".msgView").append(msg);
             updateScroll();
         }

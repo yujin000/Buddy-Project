@@ -62,6 +62,6 @@
 
     <!--    특정 팀 삭제시, 팀 채팅방 회원 목록 모두 제거-->
     <delete id="delTeam">
-        delete from chat_member where team_seq = {teamSeq}
+        delete from chat_member where team_seq = #{teamSeq}
     </delete>
 </mapper>

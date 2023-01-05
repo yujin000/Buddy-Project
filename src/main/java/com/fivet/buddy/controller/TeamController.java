@@ -5,6 +5,7 @@ import com.fivet.buddy.services.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,6 +56,7 @@ public class TeamController {
     }
 
     //팀 생성
+    @Transactional
     @PostMapping("createTeam")
     public String create(TeamDTO teamDto, ChatRoomDTO chatRoomDto) throws Exception {
         teamDto.setTeamOwnerSeq((Integer) session.getAttribute("memberSeq"));
@@ -73,6 +75,7 @@ public class TeamController {
     }
 
         //팀 이동
+        @Transactional
         @PostMapping("goTeam")
         public String goTeam(TeamMemberDTO teamMemberDto, Model model) throws Exception {
             teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
@@ -132,6 +135,7 @@ public class TeamController {
     }
 
     //팀 삭제
+    @Transactional
     @RequestMapping("deleteTeam")
     public String deleteTeam(int teamSeq) throws Exception {
         String teamBasicKey = basicFolderService.myTeamFolderKey(teamSeq);
@@ -151,6 +155,7 @@ public class TeamController {
     }
 
     //멤버 등급 변경
+    @Transactional
     @ResponseBody
     @PostMapping("updateTeamMemberGrade")
     public void updateTeamMemberGrade(TeamMemberDTO teamMemberDto) {
@@ -220,6 +225,7 @@ public class TeamController {
     }
 
     //회원 (자발적) 팀 탈퇴
+    @Transactional
     @ResponseBody
     @PostMapping("teamSelfOut")
     public void teamSelfOut(TeamMemberDTO teamMemberDto) throws Exception {
@@ -237,6 +243,7 @@ public class TeamController {
     }
 
     //팀원 닉네임 변경
+    @Transactional
     @ResponseBody
     @PostMapping("updateTeamMemberNickName")
     public String updateTeamMemberNickName(TeamMemberDTO teamMemberDto ,CalDTO calDto) throws Exception{

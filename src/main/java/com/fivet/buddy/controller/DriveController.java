@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,6 +57,7 @@ public class DriveController {
     }
 
     // fileDrive.html로 이동
+    @Transactional
     @RequestMapping("toFileDrive")
     public String toFileDrive(Model model, String accessRights) throws Exception {
         // 접근 제한
@@ -97,7 +99,9 @@ public class DriveController {
         return "drive/fileDrive";
     }
 
+
     // 폴더 세부내역으로 이동
+    @Transactional
     @RequestMapping("detailDrive")
     public String detailDrive(String resourceKey,String teamAccess, Model model) throws Exception {
         int memberSeq = (Integer)session.getAttribute("memberSeq");
@@ -185,6 +189,7 @@ public class DriveController {
     }
 
     // 파일 삭제하기
+    @Transactional
     @ResponseBody
     @RequestMapping("delete")
     public void delete(@RequestBody List<Map<String, String>> deleteList, String parentKey) throws Exception {
@@ -246,6 +251,7 @@ public class DriveController {
     }
 
     // 파일 및 폴더 다운로드하기
+    @Transactional
     @ResponseBody
     @RequestMapping("download")
     public ResponseEntity<Resource> download(@RequestBody List<Map<String, String>> downloadList, FileUtil fileUtil) throws Exception {

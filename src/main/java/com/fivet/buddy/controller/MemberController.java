@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,6 +75,7 @@ public class MemberController {
     }
 
     // 회원가입 페이지 이동
+    @Transactional
     @RequestMapping("toSignUp")
     public String toSignUp(MemberDTO memberDto,Model model) throws Exception{
         // 세션확인
@@ -93,6 +95,7 @@ public class MemberController {
     }
 
     // 회원가입 (signUp)
+    @Transactional
     @RequestMapping("signUp")
     public String signUp(MemberDTO memberDto) throws Exception{
         memberService.signUp(memberDto);
@@ -100,7 +103,6 @@ public class MemberController {
         basicFolderService.newBasicFolder(memberDto);
         // 회원 가입 시 개인 폴더 생성
         personalFolderService.newPersonalFolder(memberDto);
-
         // 회원 가입시 member_img 테이블에 컬럼 추가
         memberService.insertProfileImg(memberDto.getMemberSeq());
         return "redirect:/";
@@ -115,6 +117,7 @@ public class MemberController {
     }
 
     // 로그인
+    @Transactional
     @PostMapping("login")
     public String login(MemberDTO memberDto, Model model) throws Exception{
         // 세션확인
@@ -147,6 +150,7 @@ public class MemberController {
     }
 
     // 카카오 로그인
+    @Transactional
     @RequestMapping("kakaoLogin")
     public String kakaoLogin(MemberDTO memberDto,Model model) throws Exception{
         // 세션확인
@@ -173,6 +177,7 @@ public class MemberController {
     }
 
     // 네이버 로그인
+    @Transactional
     @RequestMapping("naverLogin")
     public String naverLogin(MemberDTO memberDto,Model model) throws Exception{
         // 세션확인
@@ -203,6 +208,7 @@ public class MemberController {
     }
 
     // 에러페이지 >> 마이페이지 이동
+    @Transactional
     @RequestMapping("goMypage")
     public String selectMyInfo(String memberSeq,Model model) throws Exception{
         MemberDTO dto = memberService.selectMyInfo(memberSeq);
@@ -230,6 +236,7 @@ public class MemberController {
     }
 
     //계정설정으로 이동
+    @Transactional
     @RequestMapping("goMyProfile")
     public String selectMyProfile(Model model) throws Exception {
         MemberDTO memberDto = memberService.selectMyProfile(String.valueOf(session.getAttribute("memberSeq")));
@@ -238,6 +245,7 @@ public class MemberController {
     }
 
     //휴대전화 수정
+    @Transactional
     @RequestMapping ("updatePhone")
     public String updatePhone(MemberDTO memberDto,Model model) throws Exception{
         memberDto.setMemberSeq((Integer) session.getAttribute("memberSeq"));
@@ -266,6 +274,7 @@ public class MemberController {
     String proFilePath;
 
     //프로필 이미지 출력
+    @Transactional
     @ResponseBody
     @RequestMapping("selectProfileImg")
     public String selectProfileImg() throws Exception{
@@ -284,6 +293,7 @@ public class MemberController {
 
 
     //프로필 이미지 수정
+    @Transactional
     @ResponseBody
     @RequestMapping("updateProfileImg")
     public void updateProfileImg(MemberImgDTO memberImgDto, MultipartFile file, FileUtil util) throws Exception{
@@ -324,6 +334,7 @@ public class MemberController {
     }
 
     //회원 탈퇴
+    @Transactional
     @RequestMapping("deleteMember")
     public String deleteMember() throws Exception{
         int memberSeq = (int) session.getAttribute("memberSeq");
@@ -348,6 +359,7 @@ public class MemberController {
     }
 
     // 로그인시 회원이 가입한 팀 목록 출력을 위한 통로
+    @Transactional
     @RequestMapping("loginIndex")
     public String loginIndex(Model model) throws Exception {
         if (session.getAttribute("memberSeq")!=null) {
@@ -395,6 +407,7 @@ public class MemberController {
     }
 
     // 회원 강퇴(관리자)
+    @Transactional
     @RequestMapping("memberKickOut")
     public String memberKickOut(int memberSeq, Model model) throws Exception {
         memberService.memberKickOut(memberSeq);

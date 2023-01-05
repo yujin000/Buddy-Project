@@ -5,6 +5,7 @@ import com.fivet.buddy.dto.TeamMemberDTO;
 import com.fivet.buddy.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -75,6 +76,7 @@ public class InviteController {
     }
 
     // 초대된 팀으로 입장
+    @Transactional
     @RequestMapping("enterTeam")
     public String enterTeam(TeamMemberDTO teamMemberDto) throws Exception{
         teamMemberDto.setMemberSeq(Integer.parseInt(session.getAttribute("memberSeq").toString()));
@@ -93,6 +95,7 @@ public class InviteController {
     }
 
     // 사용자 코드 일치 >> 사용한 초대 코드 delete
+    @Transactional
     @ResponseBody
     @RequestMapping("codeDelete")
     public int codeDelete(String inviteCode) throws Exception{

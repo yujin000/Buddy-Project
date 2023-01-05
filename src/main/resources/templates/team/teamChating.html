@@ -618,6 +618,7 @@ face
 
         $("#fileSelect").click(function () {
             $(".fileView").toggle();
+            $(".emoticonView").hide();
         });
 
         $("#chatCreate").click(function (){
@@ -891,6 +892,7 @@ face
     //이모티콘 출력
     $("#emoticonBtn").on("click",function (){
         $(".emoticonView").toggle();
+        $(".fileView").hide();
     })
     $.ajax({
         url:"/emoticon/selectEmoticon",

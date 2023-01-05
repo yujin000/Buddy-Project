@@ -582,10 +582,6 @@ face
             $("#dropdownList").toggle();
         });
 
-        $("#menu").click(function () {
-            $("#menuList").toggle();
-        });
-
         $("#topicToggle").click(function () {
             $("#topicList").toggle();
         });
@@ -604,11 +600,20 @@ face
 
         $("#teamMember").click(function (){
             $("#teamMemberList").toggle();
+            $("#memberList").hide();
+            $("#menuList").hide();
         })
 
+        $("#menu").click(function () {
+            $("#menuList").toggle();
+            $("#memberList").hide();
+            $("#teamMemberList").hide();
+        });
 
         $("#memberView").click(function () {
             $("#memberList").toggle();
+            $("#menuList").hide();
+            $("#teamMemberList").hide();
         });
 
         $("#fileSelect").click(function () {

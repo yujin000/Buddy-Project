@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,8 +42,10 @@ public class EmoticonController {
     }
 
     //이모티콘 추가
+
     @Value("C:/files/emoticon/")
     String emoticonPath;
+    @Transactional
     @RequestMapping("insertEmoticon")
     public String insertEmoticon(EmoticonDTO emoticonDto, MultipartFile file, FileUtil util) throws Exception {
         String emoticonOriName = file.getOriginalFilename();

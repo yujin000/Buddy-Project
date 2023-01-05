@@ -42,13 +42,21 @@
 
         body {
             width: 100vw;
+            padding: 100px;
         }
 
         #title {
+            width: 80%;
+            margin: 0 auto;
             margin-top: 5vh;
             font-size: 1.5rem;
             font-weight: bold;
             text-align: center;
+            background: var(--main-color);
+            color: #fff;
+            border-radius: 10px;
+            height: 100px;
+            line-height: 100px;
         }
         .wrap{
             width: 90%;
@@ -114,6 +122,8 @@
             height: 30px;
             border-radius: 15px;
             border: var(--border);
+            color: #fff;
+            background: var(--main-color);
         }
 
         button:nth-child(2){
@@ -178,7 +188,7 @@
         </form>
         <div class="textHead" >
         <input type="file" id="uploadFile" name="uploadFile" multiple="multiple" accept=".jpg, .png, .gif">
-        <button type="button"  id="confirm" >답변 작성</button>
+        <button type="button"  id="confirm" >완료</button>
         <a href="/qna/toAdminQna?cpage=1" class="goBack">목록으로</a>
         </div>
     </div>

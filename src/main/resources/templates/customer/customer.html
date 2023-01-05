@@ -23,17 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <style>
-        .qnaContent {
-            border: 1px solid;
-        }
 
-        .noticeContent {
-            border: 1px solid;
-        }
-
-        .btnDelete {
-            float: right;
-        }
     </style>
 </head>
 <body>
@@ -73,7 +63,7 @@
             </ul>
         </div>
 
-        <div class="boardNews" th:if="${notice != null}">
+        <div class="boardNews" th:if="${notice != null}" style="display: none;">
             <ul th:each="notice : ${notice}">
                 <li class="articleNotice" onclick="toggle(this)">
                     <span class="tag">공지</span>

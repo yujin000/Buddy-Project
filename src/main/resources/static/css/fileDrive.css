@@ -24,10 +24,27 @@ img {
     z-index: 10;
     margin-left: 10px;
 }
+
+.logoImg{
+
+    display: inline-block;
+    float: left;
+
+}
+#logoTitle {
+    font-size: 1rem;
+    display: inline-block;
+}
 .logo {
     width: 50px;
     height: 100%;
     margin-right: 10px;
+    display: flex;
+}
+
+.logo img {
+    width: 120px;
+    display: inline-block;
 }
 
 .secondLogo{

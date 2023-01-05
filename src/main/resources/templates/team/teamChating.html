@@ -266,7 +266,7 @@
         <div id="teamList" class="teamList">
             <ul>
                 <li>
-                    <a href="team.html" th:text="${session.teamName}"></a
+                    <span class="teamName" href="team.html" th:text="${session.teamName}"></span
                     >
                     <button id="headerToggle">
                         <span class="material-symbols-outlined">
@@ -327,16 +327,30 @@ group
                     <button id="chatToggle" class="toggle">➖</button>
                 </div>
                 <div id="chatList" class="asideItem">
-                    <ul id="chatListUl">
+                    <ul th:if="${chatRoomList!=null}">
+                        <th:block th:each="chatRoomList : ${chatRoomList}">
+                            <li>
+                                <a th:href="@{/chatRoom/join/(chatRoomSeq=${chatRoomList.chatRoomSeq})}"
+                                   th:text="${chatRoomList.chatTitle}"></a>
+                                <button th:if="${#strings.equals(chatRoomList.chatType,'normal')}"
+                                        class="chatRename" th:data-index="${chatRoomList.chatRoomSeq}">
+                                    ✏️
+                                </button>
+                                <button th:if="${#strings.equals(chatRoomList.chatType,'normal')}"
+                                        class="chatOut" th:data-index="${chatRoomList.chatRoomSeq}">
+                                    ❌
+                                </button>
+                            </li>
+                        </th:block>
                     </ul>
                 </div>
             </div>
 
             <div class="asideTool">
-                <button id="appToggle" class="appToggle">앱 toggle</button>
+                <button id="appToggle" class="appToggle">buddy App</button>
                 <div id="appList">
-                    <button class="app" id="appDrive"><a href="">드라이브</a></button>
-                    <button class="app" id="appCal"><a href="">캘린더</a></button>
+                    <button class="app" id="appDrive"><a href="">📁드라이브</a></button>
+                    <button class="app" id="appCal"><a href="">📅캘린더</a></button>
                 </div>
             </div>
         </aside>
@@ -364,9 +378,7 @@ face
                 </button>
             </div>
             <div class="msgView">
-                <input type="text" id="modifyChatTitle" placeholder=" 토픽/채팅방 제목변경">
-                <button type="button" id="modifyTitleConfirm">변경하기</button>
-                <button type="button" id="modifyCancel">취소</button>
+
                 <div id="subSection">
                     <ul id="memberList" class="subItem">
                         <h1>채팅멤버</h1>
@@ -375,14 +387,15 @@ face
 
                 <th:block th:each="chatMsgList : ${chatMsgList}">
                     <div class="msg">
-                        <div class="memberImg" th:utext="${chatMsgList.memberImgSysName}">
+                        <div  class="memberImg" th:utext="${chatMsgList.memberImgSysName}">
+                            <img src="/static/img/teamProfile2.png" alt="">
                         </div>
-                        [[${chatMsgList.teamMemberNickname}]]
-                        <br>
-                        <div th:if="${chatMsgList.chatMsgType == 0}" th:text="${chatMsgList.chatContent}"></div>
-                        <div th:if="${chatMsgList.chatMsgType == 1}" th:utext="${chatMsgList.chatContent}"></div>
-                        [[${chatMsgList.chatDate}]]
-                        <br>
+                        <div class="msgData">
+                            <p class="teamMemberNickname">[[${chatMsgList.teamMemberNickname}]]</p>
+                            <div th:if="${chatMsgList.chatMsgType == 0}" th:text="${chatMsgList.chatContent}"></div>
+                            <div th:if="${chatMsgList.chatMsgType == 1}" th:utext="${chatMsgList.chatContent}"></div>
+                            <p class="chaDate">[[${chatMsgList.chatDate}]]</p>
+                        </div>
                     </div>
                 </th:block>
             </div>
@@ -392,22 +405,11 @@ face
                         name="inputMsg"
                         id="inputMsg"
                         class="inputMsg"
-                        placeholder="input Msg"
+                        placeholder="메세지를 입력해주세요"
                 />
                 <div class="msgTool">
                     <ul>
-                        <li>
-                            <button id="test" onclick="clickevnet()">1</button>
-                        </li>
-                        <li>
-                            <button>2</button>
-                        </li>
-                        <li>
-                            <button>3</button>
-                        </li>
-                        <li>
-                            <button>4</button>
-                        </li>
+
                         <li><button type="button" id="emoticonBtn">😊</button></li>
                         <div class="emoticonView">
                             <div id="emoticonList">
@@ -422,9 +424,9 @@ face
                         <div class="fileView">
                             <input type="hidden" th:value="${chatRoomSeq}" name="chatRoomSeq">
                             <ul>
-                                <img src="/static/img/pcicon.png" id="fileIcon">
+
                                 <h3>
-                                    내 컴퓨터에서 업로드</h3>
+                                    ✅내 컴퓨터에서 업로드</h3>
                             </ul>
                             <div class="fileContents">
                                 <input
@@ -473,6 +475,27 @@ face
             <button type="button" class="insertTopic" id="insertTopic">토픽 생성하기</button>
             <button type="button" class="closeBtn" onclick="closer(this)">나가기</button>
         </div>
+    </div>
+
+    </div>
+
+<div class="renameView" id="renameView">
+    <div class="wrap2">
+
+        <div class="renameForm" id="renameTopic" >
+            <h1>토픽 이름 변경</h1>
+            <input type="text" id="modifyTopicTitle" class="modifyTitle" placeholder=" 토픽/채팅방 제목변경">
+            <button type="button" id="modifyTopicConfirm" class="modifyBtn">변경하기</button>
+            <button type="button" id="modifyCancel" class="closeBtn" onclick="closer(this)">나가기</button>
+        </div>
+
+        <div class="renameForm" id="renameChat" >
+            <h1>채팅 이름 변경</h1>
+            <input type="text" id="modifyChatTitle" class="modifyTitle" placeholder=" 토픽/채팅방 제목변경">
+            <button type="button" id="modifyChatConfirm" class="modifyBtn">변경하기</button>
+            <button type="button" id="modifyCancel2" class="closeBtn" onclick="closer(this)">나가기</button>
+        </div>
+
     </div>
 </div>
     <script th:inline="javascript">
@@ -709,6 +732,16 @@ face
 
         // 토픽 이름 변경 이벤트
         $(".topicRename").click(function (){
+            $(".renameView").css("display","block");
+            $("#renameTopic").css("display","block");
+            $("#renameChat").css("display","none");
+            $("#modifyTitleConfirm").attr("data-index", $(this).attr("data-index"));
+        })
+
+        $(".chatRename").click(function (){
+            $(".renameView").css("display","block");
+            $("#renameTopic").css("display","none");
+            $("#renameChat").css("display","block");
             $("#modifyTitleConfirm").attr("data-index", $(this).attr("data-index"));
         })
 

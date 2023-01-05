@@ -353,7 +353,7 @@ aside {
 }
 
 .chatHeader h1 {
-  line-height: 40px;
+  line-height: 50px;
   margin-left: 10px;
 }
 
@@ -402,37 +402,37 @@ aside {
   position: relative;
 }
 
-.subItem h1 {
-  height: 40px;
-  text-align: center;
-  font-size: 1.2rem;
-  border-bottom: var(--border);
-  line-height: 30px;
-}
 
 #memberList {
   display: none;
+}
+#memberList h1 {
+  font-size: 1.2rem;
+  height: 50px;
+  line-height: 50px;
+  border-bottom: var(--border);
+  text-align: center;
 }
 
 #memberList li {
   padding: 10px;
   height: 60px;
-  border: 1px solid #000;
   display: flex;
+  border-bottom: var(--border);
+
 }
 
 #memberList li img {
   width: 40px;
   height: 40px;
   border-radius: 40px;
-  border: 1px solid #000;
+  border: var(--border);
 }
 
 #memberList li span {
   margin-left: 10px;
   height: 40px;
   line-height: 40px;
-  border: 1px solid #000;
 }
 
 #memberList li span:last-child {
@@ -441,9 +441,11 @@ aside {
   height: 20px;
   line-height: 20px;
   border-radius: 20px;
-  border: 1px solid red;
   position: absolute;
   right: 10px;
+  font-size: 0.8rem;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
   margin-top: 10px;
 }
 
@@ -482,10 +484,45 @@ aside {
   overflow: scroll;
 }
 .msg {
-  width: 200px;
-  margin-bottom: 10px;
-  height: 50px;
-  border: 1px solid #000;
+  max-width: 80%;
+  min-width: auto;
+  width: 100%;
+  margin: 10px;
+  height: auto;
+  display: flex;
+
+}
+
+.msgData{
+  max-width: 100%;
+  min-width: 100px;
+  padding: 10px;
+  border-radius: 10px;
+  border: var(--border);
+  display: inline-block;
+}
+
+.teamMemberNickname {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.chaDate {
+  font-size: 0.7rem;
+  color: var(--sub-color);
+}
+.memberImg{
+  width: 40px;
+  margin-right: 10px;
+
+}
+.memberImg img {
+  width: 40px;
+  border: var(--border);
+  border-radius: 50%;
+}
+.memberImg p {
+  font-size: 1.2rem;
 }
 
 .msgSend {
@@ -508,9 +545,19 @@ aside {
 .msgTool ul {
   width: 300px;
   display: flex;
+  padding-left: 10px;
 }
 .msgTool ul li {
   margin-right: 8px;
+}
+
+.msgTool button {
+  width: 50px;
+  height: 30px;
+  line-height: 30px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 
 .menuList {
@@ -660,6 +707,16 @@ aside {
 
 }
 
+.chatRename{
+  border: none;
+  background: none;
+}
+.chatOut {
+  border: none;
+  background: none;
+
+}
+
 #makeChatTitle {
   width: 80%;
   margin: 0 auto;
@@ -725,25 +782,26 @@ aside {
 
 .fileView{
   border-radius: 10px;
-  bottom: 122px;
-  left: 3px;
+  bottom: 125px;
+  padding: 10px;
+  left: 5px;
   width: 300px;
   height: 110px;
-  border: 1px solid #000;
   background-color: white;
+  box-shadow: var(--shadow);
   display: none;
-  box-shadow: 0 4px 4px -4px black;
   position: absolute;
 }
 
 .fileView ul{
-  width: 299px;
+  width: 100%;
   line-height : 40px;
 }
 
 .fileView h3{
+  width: 100%;
   text-align: center;
-  width: 299px;
+
 }
 #uploadfile{
   width: 70%;
@@ -766,14 +824,17 @@ aside {
   height: 25px;
 }
 .emoticonView{
-  bottom: 119px;
-  left: -1px;
+  bottom: 125px;
+  left: 5px;
   width: 298px;
   height: 200px;
-  border: 1px solid #000;
+  padding: 10px;
   background-color: white;
   display: none;
   position: absolute;
+  box-shadow: var(--shadow);
+  border-radius: 10px;
+
 }
 
 /*이모티콘 리스트*/
@@ -889,4 +950,68 @@ aside {
 
 .loading p {
   font-size: 1rem;
+}
+
+.renameView {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.3);
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: none;
+}
+
+.wrap2 {
+  max-width: 600px;
+  width: 90vw;
+  height: auto;
+  border-radius: 10px;
+  background: #fff;
+  margin: 20vh auto 0;
+  min-height: 230px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+
+.modifyTitle {
+  width: 80%;
+  margin: 0 auto;
+  padding: 10px;
+  border: 2px solid var(--main-color);
+  outline: none;
+  color: var(--main-color);
+  border-radius: 10px;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modifyBtn {
+  margin: 0 auto;
+  width: 200px;
+  height: 40px;
+  display: block;
+  border-radius: 20px;
+  text-align: center;
+  border: none;
+  background: var(--main-color);
+  color: #fff;
+}
+
+.renameForm {
+  width: 100%;
+  height: auto;
+  position: relative;
+  display: none;
+}
+
+.renameForm > h1 {
+  font-size: 1.5rem;
+  height: 60px;
+  line-height: 60px;
+  position: relative;
 }

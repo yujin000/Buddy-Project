@@ -18,6 +18,7 @@
                 // 맨 처음 띄우는 캘린더 화면
                 initialView: 'dayGridMonth',
                 // 테마 : 부트스트랩 적용 / 미적용
+                // 원하는 부트스트랩 템플릿을 적용할 수 있음
                 themeSystem: 'bootstrap5',
                 // 툴바 설정
                 headerToolbar: {
@@ -29,6 +30,7 @@
 
                 // 언어 설정
                 locale: 'ko',
+                // 각 날짜를 길게 또는 간략하게 나타냄
                 weekday: 'short',
                 day: 'short',
                 // Allows a user to highlight multiple days or timeslots by clicking and dragging.
@@ -44,35 +46,41 @@
                 dayMaxEvents: true,
                 //Whether or not to display a marker indicating the current time.
                 nowIndicator: true,
+                // 이미 생성된 이벤트를 클릭 시
                 eventClick: function (arg) {
+                    // 이벤트 오브젝트 값
+                    const seq = arg.event.extendedProps.seq; // 이벤트 seq 값
+                    const title = arg.event.title; // 이벤트 제목
+                    const writer = arg.event.extendedProps.writer; // 작성자
+                    const type = arg.event.extendedProps.type; // 팀/ 개인 타입
+                    const eventStart = arg.event._instance.range.start; // 시작날짜 및 시간
+                    const eventEnd = arg.event._instance.range.end; // 마감날짜 및 시간
+                    const memo = arg.event.extendedProps.memo; // 메모
+                    const location = arg.event.extendedProps.location; // 장소
+                    const color = arg.event._def.ui.backgroundColor; // 이벤트 컬러값
 
-                    const seq = arg.event.extendedProps.seq;
-                    const title = arg.event.title;
-                    const writer = arg.event.extendedProps.writer;
-                    const type = arg.event.extendedProps.type;
-                    const eventStart = arg.event._instance.range.start;
-                    const eventEnd = arg.event._instance.range.end;
-                    const memo = arg.event.extendedProps.memo;
-                    const location = arg.event.extendedProps.location;
-                    const color = arg.event._def.ui.backgroundColor;
-
+                    // 애니메이션
                     $("#form").css("display", "block");
                     $(".btns").css("display", "block");
+                    // 이벤트 seq 및 작성자는 hidden 처리 되어있음
+                    // controller 에서 값을 넣어주기 때문에 disabled 로 처리
                     $("#eventSeq").removeAttr("disabled");
                     $("#eventWriter").removeAttr("disabled");
+                    $("#eventWriter").attr("type", "text");
                     //수정 및 삭제 버튼 생성
                     $("#updateBtn").css("display", "block");
                     $("#delBtn").css("display", "block");
                     $("#submitBtn").css("display", "none");
                     $("#closeBtn").css("display", "block");
-                    $("#eventWriter").attr("type", "text");
 
+                    // iso date value 를 형식에 맞게 수정
                     function timeFormat(t) {
                         return t.toISOString().substring(0, 16);
                     }
-
+                    // 데이터 대입
                     $("#eventType").val(type);
                     $("#eventSeq").val(seq);
+                    // 타입을 나타내는 텍스트 제외
                     $("#eventName").val(title.replace("[팀]", "").replace("[개인]", ""));
                     $("#eventWriter").val(writer);
                     $("#eventMemo").val(memo);
@@ -172,6 +180,8 @@
                     $("#goMain").css("display","none");
 
                 },
+                // events object 이벤트 객체 [일정의 데이터가 담기는 공간 json 타입]
+                // 이벤트 오브젝트 예제
                 // events : [
                 //     {
                 //         id: 'a',
@@ -181,7 +191,7 @@
                 //     }
                 //
                 // ]
-                // events object 이벤트 객체 [일정의 데이터가 담기는 공간 json 타입]
+
                 events: function (info, successCallback) {
                     $.ajax({
                         url: "/calendar/selectAll",
@@ -213,13 +223,12 @@
 
                 },
             // other events here
-            // document.ready 동작테스트
 
 
 
             })
-            calendar.render();
             //캘린더 렌더링 함수 호출
+            calendar.render();
         });
 
 
@@ -305,8 +314,8 @@
 </div>
 <script>
     // 유효성 검사
-    const eventNameRegex = /^[0-9a-zA-Zㄱ-힣]{0,20}$/;
-    const eventLocationRegex = /^[0-9a-zA-Zㄱ-힣]{0,20}$/;
+    const eventNameRegex = /^[0-9a-zA-Zㄱ-힣 ]{0,20}$/;
+    const eventLocationRegex = /^[0-9a-zA-Zㄱ-힣 ]{0,20}$/;
     const eventMemoRegex = /^[0-9a-zA-Zㄱ-힣\{\}\[\]\/?.,;:\|\)*~`!^\-_+\<\>@\#$%&\\\=\(\'\"  ]{0,500}$/m;
 
     $("#eventName").keyup(function (){
@@ -361,24 +370,6 @@
         }
 
     })
-
-   // popUp 시 viewport 에 따른 화면 자동조정
-    function winResize()
-    {
-        var Dwidth = parseInt(document.body.scrollWidth);
-        var Dheight = parseInt(document.body.scrollHeight);
-        var divEl = document.createElement("div");
-        divEl.style.position = "absolute";
-        divEl.style.left = "0px";
-        divEl.style.top = "0px";
-        divEl.style.width = "100%";
-        divEl.style.height = "100%";
-
-        document.body.appendChild(divEl);
-        window.resizeBy(Dwidth-divEl.offsetWidth, Dheight-divEl.offsetHeight);
-        document.body.removeChild(divEl);
-    }
-
 
     // 일정 불러오기
     function select() {
@@ -447,6 +438,7 @@
         }
 
     }
+
     // evnetColor 값이 onchange 시 value 에 따라 배경색상 부여
     function selectColor(arg) {
         $("#eventColor").css("background",arg);

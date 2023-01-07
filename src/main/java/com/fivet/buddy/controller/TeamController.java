@@ -179,7 +179,12 @@ public class TeamController {
     //팀 관리 페이지에서 팀원 강퇴
     @ResponseBody
     @RequestMapping("deleteTeamMember")
-    public void deleteTeamMember(TeamMemberDTO teamMemberDto){
+    public void deleteTeamMember(TeamMemberDTO teamMemberDto) throws Exception {
+
+        // 해당하는 멤버 캘린더 삭제
+        String teamMemberNickname = session.getAttribute("teamMemberNickname").toString();
+        calService.deleteTeamMemberEvent(teamMemberNickname);
+
         teamMemberService.deleteTeamMember(teamMemberDto);
     }
 
@@ -231,8 +236,10 @@ public class TeamController {
     public void teamSelfOut(TeamMemberDTO teamMemberDto) throws Exception {
         teamMemberDto.setTeamSeq((int)session.getAttribute("teamSeq"));
         teamMemberDto.setMemberSeq((int)session.getAttribute("memberSeq"));
+        // 캘린더 일정 삭제
         String teamMemberNickname = session.getAttribute("teamMemberNickname").toString();
         calService.deleteTeamMemberEvent(teamMemberNickname);
+        //
         teamMemberService.deleteTeamMember(teamMemberDto);
         teamService.updateMinusTeamCount(teamMemberDto.getTeamSeq());
         chatRoomService.teamSelfOut(teamMemberDto);
@@ -250,6 +257,8 @@ public class TeamController {
         teamMemberDto.setMemberSeq((int) session.getAttribute("memberSeq"));
         teamMemberService.updateTeamMemberNickName(teamMemberDto);
         String eventWriter = teamMemberDto.getTeamMemberNickname();
+
+        // 캘린더 일정에서도 작성자 업데이트
         int memberSeq = (int) session.getAttribute("memberSeq");
         int teamSeq = (int)session.getAttribute("teamSeq");
         calService.updateNickname(memberSeq,teamSeq,eventWriter);

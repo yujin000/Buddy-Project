@@ -32,8 +32,9 @@
     <select id="selectPrivate" resultType="com.fivet.buddy.dto.CalDTO">
         select * from event where "team_seq" = #{teamSeq} and "event_type" = '개인' and "member_seq" = #{memberSeq}
     </select>
-
+    <!-- resultType 이 String 으로 적용되어야 함-->
     <select id="selectGrade" resultType="String">
+    <!--  닉네임에 해당하는 팀 내 등급 가져오기 -->
         select GRADE from TEAM_MEMBER where "TEAM_MEMBER_NICKNAME" = #{value}
     </select>
 

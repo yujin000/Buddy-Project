@@ -27,7 +27,7 @@ public class CalService {
     public List<CalDTO> selectPrivate(int memberSeq, int teamSeq) throws Exception{
         return calDao.selectPrivate(memberSeq,teamSeq);
     }
-
+    // 팀 내 등급 색출
     public String selectGrade(String teamMemberNickname) throws Exception{
         return calDao.selectGrade(teamMemberNickname);
     }
@@ -35,6 +35,7 @@ public class CalService {
     public void deleteEvent(int eventSeq, int memberSeq) throws Exception{
         calDao.deleteEvent(eventSeq, memberSeq);
         }
+        // 팀 캘린더 일정 삭제 시
         public  void deleteTeamMemberEvent(String TeamMemberNickname) throws Exception {
         calDao.deleteTeamMemberEvent(TeamMemberNickname);
         }
@@ -48,12 +49,12 @@ public class CalService {
         calDao.updateEvent(calDto);
         }
 
-
+        // 팀에서 탈퇴 시 , 해당하는 모든 일정 삭제
         public  void   deleteTeamAllEvent(int teamSeq) throws  Exception{
         calDao.deleteTeamAllEvent(teamSeq);
         }
 
-
+    // 닉네임 변경 시 캘린더 일정에 닉네임도 같이 업데이트
     public void updateNickname(int memberSeq, int teamSeq, String eventWriter) throws Exception{
         calDao.updateNickname(memberSeq,teamSeq,eventWriter);
     }

@@ -101,10 +101,19 @@
                     ,data:{
                         inviteCode: inputInviteCode
                     },success: function (rsp){
-                        location.href="/invite/enterTeam?teamSeq="+rsp;
-                        opener.parent.location.reload();
-                        window.close();
+                        $.ajax({
+                            url:"/invite/enterTeam",
+                            data:{
+                                teamSeq : rsp
+                            }
+                        }).done(function () {
+                            opener.parent.location.reload();
+                            window.close();
+                        })
+
                     }
+                }).done(function (rsp) {
+
                 })
             }
         })

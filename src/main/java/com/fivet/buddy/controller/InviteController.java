@@ -76,9 +76,14 @@ public class InviteController {
     }
 
     // 초대된 팀으로 입장
+    @ResponseBody
     @Transactional
     @RequestMapping("enterTeam")
-    public String enterTeam(TeamMemberDTO teamMemberDto) throws Exception{
+    public void enterTeam(TeamMemberDTO teamMemberDto) throws Exception{
+        System.out.println("enterTeam 입성.");
+        System.out.println(session.getAttribute("memberSeq").toString());
+        System.out.println(session.getAttribute("memberName").toString());
+        System.out.println(memberService.getMemberId((Integer)session.getAttribute("memberSeq")));
         teamMemberDto.setMemberSeq(Integer.parseInt(session.getAttribute("memberSeq").toString()));
         // 팀 닉네임 (default : 이름)
         teamMemberDto.setTeamMemberNickname(session.getAttribute("memberName").toString());
@@ -90,8 +95,6 @@ public class InviteController {
         Map<String, String> param = new HashMap<>();
         param.put("memberSeq", session.getAttribute("memberSeq").toString());
         chatRoomService.addBasicAndSelfChat(teamMemberDto, param);
-
-        return "redirect:/member/loginIndex";
     }
 
     // 사용자 코드 일치 >> 사용한 초대 코드 delete
@@ -102,6 +105,7 @@ public class InviteController {
         // 해당 코드와 일치하는 팀 번호 추출
         int teamIndex = inviteService.selectTeamSeqByCode(inviteCode);
         inviteService.codeDelete(inviteCode);
+        System.out.println("teamIndex : " + teamIndex);
         return teamIndex;
     }
 

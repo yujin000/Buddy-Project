@@ -39,7 +39,6 @@ public class ChatRoomService {
         chatRoomDao.updatePlusMemberCount(param);
         //나와의 채팅 개설 및 추가
         param.put("chatType", "self");
-        param.put("chatRoomSeq", chatRoomDao.selectChatRoomSeq(param));
         chatRoomDao.insertSelfChat(param);
         chatMemberDao.insertChatMember(param);
 

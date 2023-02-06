@@ -1,8 +1,6 @@
 # 💬Buddy
 Third Project
 
-### [📚PDF 발표자료 보기](https://drive.google.com/file/d/1bQDCzWmHd29F6kM-AXXTEGf9GxBb0GZI/view?usp=share_link)
---------------
 ### **① 팀원별 이름 및 역할**
 * 팀장 : 박세진 (프로젝트 총괄 / 팀 관련 기능 / 채팅 기본 기능 / 관리자(문의,공지))
 * 팀원 : 정택구 (일정 관리(캘린더 API) / 웹 페이지 디자인)
@@ -31,3 +29,6 @@ Third Project
 * **Tool** : Gradle, IntelliJ IDEA
 * **etc** : Git, Tomcat 8.5
 * **Library** : Thyemleaf, fullCalendar API, download,js
+
+--------------
+### [📚PDF 발표자료 보기](https://drive.google.com/file/d/1bQDCzWmHd29F6kM-AXXTEGf9GxBb0GZI/view?usp=share_link)

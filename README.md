@@ -31,4 +31,10 @@ Third Project
 * **Library** : Thyemleaf, fullCalendar API, download,js
 
 --------------
-### [📚PDF 발표자료 보기](https://drive.google.com/file/d/1bQDCzWmHd29F6kM-AXXTEGf9GxBb0GZI/view?usp=share_link)
+# [📄PDF 발표자료 보기](https://drive.google.com/file/d/1bQDCzWmHd29F6kM-AXXTEGf9GxBb0GZI/view?usp=share_link)
+
+**[메인 화면]**
+![image](https://user-images.githubusercontent.com/101914200/217018605-f1308697-3386-4db3-a099-5fe44748be55.png)
+**[채팅 화면] - 채팅방 생성, 토픽 생성, 채팅 기능, 이모티콘 기능, 파일 기능**
+![image](https://user-images.githubusercontent.com/101914200/217018249-6ce4929a-f984-4594-8e66-f1ae8c09a05c.png)
+

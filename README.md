@@ -52,19 +52,17 @@
 
 # 2. 기획 & 관리
 * **요구사항 정의서**
+<img src="https://user-images.githubusercontent.com/101914200/220872252-a4a685d3-230c-4fd0-8fde-b9b8d7a82da8.jpg" height="50%" width="50%">
+<img src="https://user-images.githubusercontent.com/101914200/220872304-8a1be048-2dfc-4254-9bce-b45fa51dfc91.jpg" height="50%" width="50%">
 
-![5조_요구사항 정의서 xlsx - Sheet1_1](https://user-images.githubusercontent.com/101914200/220701711-ae8c8bd5-514e-42a5-9c76-e93868162106.jpg)
-![5조_요구사항 정의서 xlsx - Sheet1_2](https://user-images.githubusercontent.com/101914200/220701727-fb0c3dcc-4247-4dda-bd7a-9bde3bef4832.jpg)
+
 
 * **작업 일정**
-
 <img width="575" alt="파이널_작업일정" src="https://user-images.githubusercontent.com/101914200/220702637-b93c778e-bdbd-4dc1-a543-23a9e3ad70b1.png">
 
 
 * **ERD**
-
-![erderd](https://user-images.githubusercontent.com/101914200/220703483-19f17f8b-f518-4e8d-807e-efa95cc031a3.png)
-
+<img src="https://user-images.githubusercontent.com/101914200/220873079-f919574b-7f91-4459-ad39-4d3efafe88c2.png" height="70%" width="70%">
 
 -------------
 **[메인 화면]**

@@ -67,6 +67,10 @@
 -------------
 **[메인 화면]**
 ![image](https://user-images.githubusercontent.com/101914200/217018605-f1308697-3386-4db3-a099-5fe44748be55.png)
-**[채팅 화면] - 채팅방 생성, 토픽 생성, 채팅 기능, 이모티콘 기능, 파일 기능**
+![image](https://github.com/ChaSeokHo/Buddy-Project/assets/116864886/91d72198-7f31-4d05-b818-a1c6b225a5be)
+**[채팅 화면] - 채팅방 생성, 토픽 생성, 채팅 기능, 이모티콘 기능, 파일 첨부 기능**
 ![image](https://user-images.githubusercontent.com/101914200/217018249-6ce4929a-f984-4594-8e66-f1ae8c09a05c.png)
-
+**[파일 드라이브 화면]**
+<img width="1269" alt="228264555-63a79b7c-60ae-4f2f-b323-74a3a31863b3" src="https://github.com/ChaSeokHo/Buddy-Project/assets/116864886/c031ed10-bedb-45a6-a8f0-8921461d8dc3">
+**[일정관리 캘린더 화면]**
+<img width="1273" alt="228264715-afce99d0-9f6e-4137-8605-2d756d11e4ef" src="https://github.com/ChaSeokHo/Buddy-Project/assets/116864886/ee7feb79-e023-4678-85e5-69f8d7bad7a1">

@@ -67,7 +67,7 @@
 -------------
 ### **[메인 화면]**
 ![image](https://user-images.githubusercontent.com/101914200/217018605-f1308697-3386-4db3-a099-5fe44748be55.png)
-![image](<img width="1127" alt="228262598-5bfb0c38-1b78-45f6-ac2d-e90c8d609edd" src="https://github.com/yujin000/Buddy-Project/assets/101914200/8a707caa-13c1-4a16-8487-c927065ca860">)
+<img width="1127" alt="228262598-5bfb0c38-1b78-45f6-ac2d-e90c8d609edd" src="https://github.com/yujin000/Buddy-Project/assets/101914200/8a707caa-13c1-4a16-8487-c927065ca860">
 
 ### **[채팅 화면] - 채팅방 생성, 토픽 생성, 채팅 기능, 이모티콘 기능, 파일 첨부 기능**
 ![image](https://user-images.githubusercontent.com/101914200/217018249-6ce4929a-f984-4594-8e66-f1ae8c09a05c.png)

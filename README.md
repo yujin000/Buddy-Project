@@ -4,7 +4,7 @@
 <img src="https://user-images.githubusercontent.com/101914200/220711683-d702c7ce-cf57-4169-ae2f-64c2ea0393c7.PNG" height="20%" width="20%">
 
 
-# [📄PDF 발표자료 보기](https://drive.google.com/file/d/1Timr6MiZU6wj127MCiYJmNx-nAZJvG3u/view?usp=drive_link)
+# [📄PDF 발표자료 보기](https://drive.google.com/file/d/1j6hIK8pugKLjwkASWmZ9feR84wTMW3F9/view?usp=drive_link)
 
 # 목차
 
